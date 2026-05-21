@@ -1,0 +1,61 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const guides = (await getCollection('guides'))
+  .filter((guide) => !guide.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<Layout
+  title="Guides d'éducation canine — Kind Dog Training"
+  description="Guides et conseils pour éduquer votre chien avec des méthodes positives : rappel, marche en laisse, socialisation, réactivité et plus."
+>
+  <section class="page-header">
+    <div class="container">
+      <p class="eyebrow" style="margin-bottom: var(--sp-4);">Guides</p>
+      <h1>Guides d'éducation <span class="accent">canine</span></h1>
+      <p>
+        Conseils pratiques et astuces pour le quotidien avec votre chien.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: var(--sp-8);">
+    <div class="container">
+      {guides.length === 0 ? (
+        <p style="text-align: center; color: var(--kd-fawn);">
+          Les premiers guides arrivent bientôt. Revenez vite !
+        </p>
+      ) : (
+        <div class="guides-grid">
+          {guides.map((guide) => {
+            const formattedDate = guide.data.date.toLocaleDateString('fr-FR', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            });
+            return (
+              <a href={`/guides/${guide.id}/`} class="guide-card-link">
+                <article class="card">
+                  <p class="guide-card-meta">
+                    <time datetime={guide.data.date.toISOString()}>{formattedDate}</time>
+                  </p>
+                  <h2 class="guide-card-title" style="font-size: var(--fs-xl);">{guide.data.title}</h2>
+                  <p class="guide-card-desc">{guide.data.description}</p>
+                  {guide.data.tags.length > 0 && (
+                    <ul class="guide-tags">
+                      {guide.data.tags.map((tag) => (
+                        <li class="tag">{tag}</li>
+                      ))}
+                    </ul>
+                  )}
+                </article>
+              </a>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>

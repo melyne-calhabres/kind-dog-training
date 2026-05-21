@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm.astro';
+---
+
+<Layout
+  title="Prendre rendez-vous — Kind Dog Training, éducateur canin à Bordeaux"
+  description="Prenez rendez-vous avec Mélyne, éducatrice canine à Bordeaux. Bilan comportemental gratuit à votre domicile. Réponse sous 48h."
+>
+  <section class="section section-warm">
+    <div class="container">
+      <div class="booking-grid">
+        <header class="booking-info">
+          <p class="eyebrow">Prendre RDV</p>
+          <h1>Réservez votre <span class="accent">bilan gratuit</span>.</h1>
+          <p style="font-size: 16px; line-height: 1.65; color: var(--kd-bark); max-width: 460px;">
+            Un premier rendez-vous à votre domicile pour comprendre votre situation,
+            observer votre chien dans son environnement, et vous proposer un plan d'action sur-mesure.
+            Aucun engagement à ce stade.
+          </p>
+          <address class="booking-contacts">
+            <p class="contact-row">
+              <span class="contact-icon">
+                <i data-lucide="mail" style="width:18px;height:18px;stroke-width:1.75"></i>
+              </span>
+              <span class="contact-label">kindogtraining@gmail.com</span>
+            </p>
+            <p class="contact-row">
+              <span class="contact-icon">
+                <i data-lucide="at-sign" style="width:18px;height:18px;stroke-width:1.75"></i>
+              </span>
+              <span class="contact-label">@kind_dog_training</span>
+            </p>
+            <p class="contact-row">
+              <span class="contact-icon">
+                <i data-lucide="map-pin" style="width:18px;height:18px;stroke-width:1.75"></i>
+              </span>
+              <span class="contact-label">Bordeaux + 30 km</span>
+            </p>
+            <p class="contact-row">
+              <span class="contact-icon">
+                <i data-lucide="message-circle" style="width:18px;height:18px;stroke-width:1.75"></i>
+              </span>
+              <span class="contact-label">Suivi WhatsApp 7j/7 · réponse sous 48h</span>
+            </p>
+          </address>
+        </header>
+
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+</Layout>

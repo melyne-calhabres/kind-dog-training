@@ -1,0 +1,146 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const packs = [
+  {
+    icon: 'sparkles',
+    tag: 'Chiot · 2–8 mois',
+    title: 'Pack chiots & ados',
+    subtitle: "Les bases d'un bon chien citoyen",
+    blurb: "Socialisation, propreté, solitude, gestion des émotions. Bases d'obéissance et de sécurité : assis, couché, marche en laisse, rappel.",
+    sessions: '8 cours',
+    price: '360 €',
+    featured: false,
+  },
+  {
+    icon: 'heart-handshake',
+    tag: 'Chien adulte',
+    title: 'Pack chiens adultes',
+    subtitle: 'pour les chiens qui ont séché quelques leçons',
+    blurb: "Accueil des invités, croisements avec d'autres chiens, marche en laisse, auto-contrôle, obéissance globale.",
+    sessions: '5 cours',
+    price: '230 €',
+    featured: true,
+  },
+  {
+    icon: 'shield',
+    tag: 'Réactivité / agressivité',
+    title: 'Pack chien réactif',
+    subtitle: 'pour les chiens en plus grande difficulté',
+    blurb: "Gestion de la réactivité au quotidien, travail sur les déclencheurs, renforcement de la relation, sécurité émotionnelle.",
+    sessions: '5 cours',
+    price: '230 €',
+    featured: false,
+  },
+  {
+    icon: 'book-open',
+    tag: "À l'unité",
+    title: 'Cours individuels',
+    subtitle: 'pour ceux qui préfèrent la simplicité',
+    blurb: "Si les packs ne sont pas adaptés à votre situation. Peu importe le problème, nous trouverons une solution.",
+    sessions: '1 cours',
+    price: '50 €',
+    featured: false,
+  },
+];
+
+const faqItems = [
+  {
+    question: "Le bilan est-il payant ?",
+    answer: "Le bilan comportemental est gratuit à votre domicile si vous êtes dans un rayon de 20 km. Au-delà, un forfait de 20 € s'applique pour les frais de déplacement."
+  },
+  {
+    question: "Quels moyens de paiement acceptez-vous ?",
+    answer: "J'accepte les paiements par virement bancaire, chèque et espèces. Le paiement en plusieurs fois est possible pour les packs."
+  },
+  {
+    question: "Que se passe-t-il si je dois annuler un cours ?",
+    answer: "Toute annulation est possible sans frais jusqu'à 24h avant le cours. Au-delà, le cours sera décompté du pack ou facturé."
+  },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+---
+
+<Layout
+  title="Tarifs — Kind Dog Training, éducateur canin à Bordeaux"
+  description="Tarifs éducateur canin à Bordeaux : bilan gratuit, pack chiots 360 €, pack adultes 230 €, pack réactif 230 €, cours individuel 50 €. Toutes races."
+>
+  <section class="page-header">
+    <div class="container">
+      <p class="eyebrow" style="margin-bottom: var(--sp-4);">Tarifs</p>
+      <h1>Une formule pour <span class="accent">chaque chien</span>.</h1>
+      <p style="max-width: 640px;">
+        Chaque accompagnement débute toujours par un <strong>bilan comportemental gratuit à votre domicile</strong>. Sans engagement.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: var(--sp-8);">
+    <div class="container">
+      <div class="pricing-grid">
+        {packs.map((pack) => (
+          <article class:list={['card', 'pricing-card', { 'card-featured': pack.featured }]}>
+            {pack.featured && <strong class="pricing-badge">RECOMMANDÉ</strong>}
+            <span class="icon-box">
+              <i data-lucide={pack.icon} style="width:20px;height:20px;stroke-width:1.75"></i>
+            </span>
+            <p class="pricing-tag">{pack.tag}</p>
+            <header>
+              <h3>{pack.title}</h3>
+              <p class="pricing-subtitle">{pack.subtitle}</p>
+            </header>
+            <p class="pricing-desc">{pack.blurb}</p>
+            <footer class="pricing-footer">
+              <span class="pricing-sessions">{pack.sessions}</span>
+              <data class="pricing-price" value={pack.price.replace(/\s/g, '').replace('€', '')}>{pack.price}</data>
+            </footer>
+            <a href="/prendre-rdv/" class="pricing-cta">
+              Prendre RDV
+              <i data-lucide="arrow-right" style="width:14px;height:14px;stroke-width:1.75"></i>
+            </a>
+          </article>
+        ))}
+      </div>
+
+      <p style="margin-top: var(--sp-8); font-size: 13px; color: var(--kd-fawn); font-style: italic; text-align: center;">
+        * Bilan comportemental à 20 € si > 20 km. Suivi WhatsApp 7j/7 et bilan écrit inclus dans tous les packs.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--color-surface);">
+    <div class="container" style="max-width: 750px;">
+      <p class="eyebrow" style="margin-bottom: var(--sp-4);">Questions sur les tarifs</p>
+      <h2 style="margin-bottom: var(--sp-8);">Des réponses <span class="accent">claires</span>.</h2>
+      <div class="faq-list">
+        {faqItems.map((item) => (
+          <details class="faq-item">
+            <summary class="faq-question">
+              {item.question}
+              <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+</Layout>

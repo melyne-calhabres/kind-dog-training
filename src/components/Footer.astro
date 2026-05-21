@@ -1,0 +1,49 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <p class="site-logo" style="color: var(--kd-cream); font-size: 28px; margin-bottom: 12px;">
+          Kind <span class="logo-accent">Dog</span> Training
+        </p>
+        <p class="footer-brand-desc">
+          Education canine à Bordeaux et ses alentours.
+        </p>
+      </div>
+
+      <nav aria-label="Menu du site">
+        <p class="footer-col-title">Menu</p>
+        <ul class="footer-col-links">
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/tarifs/">Tarifs</a></li>
+          <li><a href="/qui-suis-je/">Qui suis-je ?</a></li>
+          <li><a href="/guides/">Guides</a></li>
+          <li><a href="/prendre-rdv/">Prendre RDV</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-label="Pages légales">
+        <p class="footer-col-title">Pages légales</p>
+        <ul class="footer-col-links">
+          <li><a href="/mentions-legales/" class="muted">Mentions légales & confidentialité</a></li>
+        </ul>
+      </nav>
+
+      <address>
+        <p class="footer-col-title">Contact</p>
+        <ul class="footer-col-links">
+          <li>kindogtraining@gmail.com</li>
+          <li>@kind_dog_training</li>
+          <li>Bordeaux + 30 km</li>
+        </ul>
+      </address>
+    </div>
+
+    <p class="footer-bottom">
+      Copyright &copy;{year} Kind Dog Training &middot; Tous droits réservés
+    </p>
+  </div>
+</footer>

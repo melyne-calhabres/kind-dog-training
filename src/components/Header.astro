@@ -1,0 +1,78 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { label: 'Accueil', href: '/' },
+  { label: 'Tarifs', href: '/tarifs/' },
+  { label: 'Qui suis-je ?', href: '/qui-suis-je/' },
+  { label: 'Guides', href: '/guides/' },
+  { label: 'Prendre RDV', href: '/prendre-rdv/' },
+];
+
+function isActive(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a href="/" class="site-logo" aria-label="Kind Dog Training — Accueil">
+      Kind <span class="logo-accent">Dog</span> Training
+    </a>
+    <button
+      class="nav-toggle"
+      aria-expanded="false"
+      aria-controls="main-nav"
+      aria-label="Menu de navigation"
+    >
+      <span></span>
+    </button>
+    <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+      <ul class="nav-list">
+        {navItems.map(({ label, href }) => (
+          <li>
+            <a
+              href={href}
+              class="nav-link"
+              aria-current={isActive(href) ? 'page' : undefined}
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <a href="/prendre-rdv/" class="btn btn-primary nav-cta-desktop">
+      <i data-lucide="calendar" style="width:18px;height:18px;stroke-width:1.75"></i>
+      Prendre RDV
+    </a>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.main-nav');
+  const header = document.getElementById('site-header');
+
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      nav.classList.toggle('is-open');
+    });
+  }
+
+  if (header) {
+    const onScroll = () => {
+      header.classList.toggle('scrolled', window.scrollY > 8);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  if (window.lucide) lucide.createIcons();
+  else document.addEventListener('DOMContentLoaded', () => {
+    if (window.lucide) lucide.createIcons();
+  });
+</script>
