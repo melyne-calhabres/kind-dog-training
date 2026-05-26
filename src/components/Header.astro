@@ -18,7 +18,10 @@ function isActive(href: string): boolean {
 <header class="site-header" id="site-header">
   <div class="container header-inner">
     <a href="/" class="site-logo" aria-label="Kind Dog Training — Accueil">
-      <img src="/images/logo.png" alt="Kind Dog Training" width="60" height="60" />
+      <picture>
+        <source srcset="/images/logo.webp" type="image/webp" />
+        <img src="/images/logo.png" alt="Kind Dog Training" width="60" height="60" />
+      </picture>
     </a>
     <button
       class="nav-toggle"

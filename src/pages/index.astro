@@ -394,17 +394,13 @@ const promises = [
       var safe = Math.min(index, maxIndex());
       index = safe;
       var gap = 20;
-      var cardWidth = 100 / perView;
-      var basis = 'calc(' + cardWidth + '% - ' + (gap * (perView - 1) / perView) + 'px)';
-      [].forEach.call(track.children, function(c) { c.style.flexBasis = basis; });
-      var firstCard = track.children[0];
-      var targetCard = track.children[safe];
-      if (firstCard && targetCard) {
-        var offset = targetCard.offsetLeft - firstCard.offsetLeft;
-        track.style.transform = 'translateX(-' + offset + 'px)';
-      } else {
-        track.style.transform = 'translateX(0)';
-      }
+      // Lire le DOM AVANT d'écrire : évite le reflow forcé (offsetLeft après écriture flexBasis)
+      // viewport a margin: 0 -8px → son offsetWidth dépasse de 16px la zone utile
+      // track a padding: 8px de chaque côté → soustraire 16px pour obtenir la largeur réelle des cartes
+      var cardPx = (viewport.offsetWidth - 16 - gap * (perView - 1)) / perView;
+      var offset = safe > 0 ? safe * (cardPx + gap) : 0;
+      [].forEach.call(track.children, function(c) { c.style.flexBasis = cardPx + 'px'; });
+      track.style.transform = safe > 0 ? 'translateX(-' + offset + 'px)' : 'translateX(0)';
       prevBtn.disabled = safe === 0;
       nextBtn.disabled = safe >= maxIndex();
       renderDots();
