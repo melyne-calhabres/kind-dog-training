@@ -20,7 +20,10 @@ const {
 } = Astro.props;
 
 const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
-const canonical = canonicalUrl ?? Astro.url.href;
+const resolvedCanonical = canonicalUrl
+  ? (canonicalUrl.startsWith('http') ? canonicalUrl : `${siteUrl}${canonicalUrl}`)
+  : Astro.url.href;
+const canonical = resolvedCanonical;
 const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 ---
 
