@@ -32,14 +32,15 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
 
-<!-- Google Fonts — preconnect first, then stylesheet (non-blocking) -->
+<!-- Google Fonts — preconnect + chargement asynchrone (non-bloquant) -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=Nunito:wght@400;500;600;700;800&display=swap" />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=Nunito:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=Nunito:wght@400;500;600;700;800&display=swap" /></noscript>
 
 <!-- Preload above-the-fold images -->
 {preloadImages?.map(img => (
-  <link rel="preload" as="image" href={img.href} media={img.media} type="image/webp" />
+  <link rel="preload" as="image" href={img.href} media={img.media} type="image/webp" fetchpriority="high" />
 ))}
 
 <!-- Open Graph -->

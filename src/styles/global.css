@@ -539,6 +539,12 @@ p {
   display: none;
 }
 
+.nav-cta-mobile {
+  display: flex;
+  margin: var(--sp-3) var(--sp-4) var(--sp-2);
+  justify-content: center;
+}
+
 /* ===== FOOTER ===== */
 .site-footer {
   margin-top: auto;
@@ -1668,6 +1674,10 @@ p {
 
   .nav-cta-desktop {
     display: inline-flex;
+  }
+
+  .nav-cta-mobile {
+    display: none;
   }
 
   .hero {

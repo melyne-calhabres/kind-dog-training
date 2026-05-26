@@ -96,6 +96,12 @@ import Icon from '../components/Icon.astro';
     background: var(--color-surface-raised);
   }
 
+  @media (max-width: 767px) {
+    .booking-section {
+      padding-top: var(--sp-8);
+    }
+  }
+
   .booking-grid {
     display: grid;
     gap: var(--sp-10);
@@ -109,7 +115,6 @@ import Icon from '../components/Icon.astro';
   }
 
   .booking-info h2 {
-    font-size: clamp(1.4rem, 3vw, 2rem);
     margin-bottom: var(--sp-4);
   }
 
