@@ -5,14 +5,16 @@ const siteUrl = Astro.site?.origin ?? 'https://mondomaine.fr';
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
+  '@type': 'ProfessionalService',
   name: 'Kind Dog Training',
   description: "Éducateur canin à Bordeaux. Méthodes positives et bienveillantes pour chiots et chiens adultes, toutes races. Bilan comportemental gratuit à domicile.",
   url: siteUrl,
   email: 'kindogtraining@gmail.com',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Bordeaux',
+    streetAddress: '415 route du Médoc',
+    postalCode: '33520',
+    addressLocality: 'Bruges',
     addressRegion: 'Nouvelle-Aquitaine',
     addressCountry: 'FR',
   },
@@ -25,6 +27,7 @@ const jsonLd = {
     },
     geoRadius: '30000',
   },
+  telephone: '+33642648914',
   priceRange: '€€',
   image: `${siteUrl}/images/og-default.jpg`,
   sameAs: ['https://www.instagram.com/kind_dog_training/'],
@@ -32,20 +35,32 @@ const jsonLd = {
 
 const faqItems = [
   {
-    question: "À partir de quel âge peut-on éduquer un chiot ?",
-    answer: "Dès son arrivée à la maison, généralement vers 2 mois. Plus tôt on commence, plus c'est facile. Mais il n'est jamais trop tard pour éduquer un chien adulte."
+    question: "À quoi sert le bilan comportemental et pourquoi est-il gratuit ?",
+    answer: "Le bilan est un premier rendez-vous à votre domicile, sans engagement. Il me permet de comprendre votre situation, d'observer votre chien dans son environnement et de vous proposer un plan d'action sur-mesure. Si la méthode vous convient, on planifie un premier cours. Sinon, vous n'avez rien perdu."
   },
   {
-    question: "Quelles races acceptez-vous ?",
-    answer: "Toutes les races sans exception. Staff, Malinois, Rottweiler, Bully, et toutes les autres. Je ne refuse jamais un chien en raison de sa race."
+    question: "Combien coûte un éducateur canin à Bordeaux ?",
+    answer: "Chaque accompagnement pour votre chiot/chien démarre par un bilan gratuit à votre domicile (ou 20€ si >20km). Vous avez ensuite la possibilité de prendre vos cours de manière individuelle pour 50€/cours ou de payer plusieurs cours à l'avance grâce aux packs."
   },
   {
-    question: "Combien de cours faut-il en moyenne ?",
-    answer: "Cela dépend de votre chien et de vos objectifs. Les packs vont de 5 à 8 cours. Je vous donne un avis personnalisé lors du bilan comportemental gratuit."
+    question: "Quelle est votre zone d'intervention ?",
+    answer: "J'interviens à Bordeaux et dans toutes les communes de la métropole : Mérignac, Pessac, Talence, Bègles, Villenave-d'Ornon, Bruges, Le Bouscat, Eysines, Floirac et alentours. J'accompagne également des chiens qui sont dans le médoc."
   },
   {
-    question: "Intervenez-vous à domicile ?",
-    answer: "Oui, tous les cours se font à votre domicile ou dans votre environnement quotidien (parc, quartier…). C'est la meilleure façon de travailler en conditions réelles."
+    question: "Pour quelles races donnez-vous des cours d'éducation canine à Bordeaux ?",
+    answer: "Je donne des cours d'éducation canine autour de Bordeaux pour TOUTES les races !"
+  },
+  {
+    question: "Combien de séances faut-il pour éduquer un chien ?",
+    answer: "Cela dépend d'énormément de facteurs qui vont impacter les progrès de votre chien : le/les problèmes que l'on va traiter, la capacité du chien à répondre aux exercices proposés, votre capacité de travail en dehors des cours, la régularité des cours. Je serais en mesure de vous donner une estimation même grossière après un bilan mais il est impossible de donner une réponse à une question aussi générique."
+  },
+  {
+    question: "À quel âge commencer l'éducation de mon chiot ?",
+    answer: "Il n'y a pas vraiment d'âge plus adapté. Vous pouvez très bien démarrer les cours pour votre chiot dès son arrivée à 2 mois ou plus tard si vous en ressentez le besoin. Néanmoins, le plus tôt est le mieux afin d'être sûr de construire l'éducation et le comportement de votre chiot sur de bonnes bases !"
+  },
+  {
+    question: "Les cours se déroulent-ils en groupe ou de manière individuelle ?",
+    answer: "Je propose des cours individuels et collectifs. Pour ce qui est de la problématique principale de votre chien vous aurez bien évidemment accès à des cours individuels. Cependant, si votre situation le permet, vous pourrez également participer à des cours collectifs qui sont organisés régulièrement sur Bordeaux."
   },
 ];
 
@@ -76,17 +91,17 @@ const steps = [
   {
     icon: 'clock',
     title: "Cours d'une heure maximum",
-    desc: "Un objectif clair, on travaille la problématique, on conclut, on planifie. Pas de remplissage.",
+    desc: "Vous avez l'assurance que votre chien progresse à chaque cours. Je suis éducateur & comportementaliste canin et je suis donc là pour vous aider à faire progresser votre chien et à améliorer votre relation avec lui, pas pour vous prendre votre argent à travers des dizaines de cours inutiles.",
   },
   {
     icon: 'book-open',
     title: 'Bilan écrit après chaque cours',
-    desc: "Un document récapitulatif : objectifs, exercices, progrès, devoirs à travailler chez vous.",
+    desc: "Après chaque cours, vous aurez accès à un bilan écrit de manière à vous rappeler les objectifs du cours, les exercices travaillés, les progrès de votre chien et les petits devoirs que vous aurez à faire (exercices à travailler chez vous).",
   },
   {
     icon: 'message-circle',
     title: 'Suivi WhatsApp 7j/7',
-    desc: "Une question entre deux cours ? Je réponds à tous les messages sous 48h maximum.",
+    desc: "Vous aurez également un suivi WhatsApp 7j/7 pour toute question. Je réponds à tous les messages sous 48h maximum.",
   },
 ];
 
@@ -99,111 +114,83 @@ const promises = [
   "Je m'adapte à VOTRE situation et VOTRE quotidien, pas l'inverse.",
 ];
 
-const testimonials = [
-  {
-    quote: "Après deux séances, mon chien ne tire plus en laisse. Mais surtout, j'ai appris à le lire, et c'est ça qui a tout changé.",
-    who: 'Camille',
-    where: 'Caudéran · Berger australien, 14 mois',
-    mono: 'C',
-  },
-  {
-    quote: "On était au bord de l'abandon. Aujourd'hui, Nala dort sur le canapé pendant que les enfants jouent. Merci pour la patience et l'écoute.",
-    who: 'Famille Lefèvre',
-    where: 'Bordeaux-Bastide · Nala, adoptée 3 ans',
-    mono: 'L',
-  },
-  {
-    quote: "Mélyne ne juge pas. Elle observe, elle explique, elle adapte. Mon Staff a enfin trouvé quelqu'un qui ne le réduit pas à sa race.",
-    who: 'Antoine',
-    where: 'Chartrons · Staffie, 4 ans',
-    mono: 'A',
-  },
-];
-
-const communes = [
-  'Bordeaux', 'Mérignac', 'Pessac', 'Talence', 'Bègles', 'Villenave-d’Ornon',
-  'Le Bouscat', 'Bruges', 'Eysines', 'Le Haillan', 'Saint-Médard-en-Jalles',
-  'Blanquefort', 'Parempuyre', 'Cenon', 'Floirac', 'Lormont', 'Bouliac',
-  'Ambarès-et-Lagrave', 'Artigues-près-Bordeaux', 'Bassens', 'Ambès',
-  'Canéjan', 'Gradignan', 'Saint-Aubin-de-Médoc', 'Saint-Jean-d’Illac',
-  'Le Taillan-Médoc', 'Martignas-sur-Jalle',
-];
 ---
 
 <Layout
   title="Kind Dog Training — Educateur canin à Bordeaux"
-  description="Éducateur canin à Bordeaux. Méthodes positives pour chiots et chiens adultes, toutes races. Bilan comportemental gratuit à domicile. ACACED."
+  description="Besoin d'un éducateur canin à Bordeaux ? Faites appel à Kind Dog Training ! Pour chiens agressifs/réactifs, petits problèmes de comportement/obéissance ou chiots"
   jsonLd={jsonLd}
 >
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero" aria-labelledby="hero-heading">
     <div class="container">
-      <div class="hero-grid">
-        <div class="hero-content">
-          <p class="eyebrow">Kind Dog Training</p>
-          <h1>Educateur canin à <span class="accent">Bordeaux</span></h1>
-          <p class="hero-subtitle">
-            Education & rééducation pour chiots et chiens adultes — toutes races.
-          </p>
-          <div class="hero-actions">
-            <a href="/prendre-rdv/" class="btn btn-primary">
-              <i data-lucide="calendar" style="width:18px;height:18px;stroke-width:1.75"></i>
-              Prendre RDV
-            </a>
-            <a href="/tarifs/" class="btn btn-secondary">Voir les tarifs</a>
-          </div>
-          <ul class="hero-badges">
-            <li class="hero-badge">
-              <i data-lucide="map-pin" style="width:14px;height:14px;stroke-width:1.75"></i>
-              Bordeaux + 30 km
-            </li>
-            <li class="hero-badge">
-              <i data-lucide="home" style="width:14px;height:14px;stroke-width:1.75"></i>
-              Bilan gratuit à domicile
-            </li>
-            <li class="hero-badge">
-              <i data-lucide="message-circle" style="width:14px;height:14px;stroke-width:1.75"></i>
-              Suivi WhatsApp 7j/7
-            </li>
-          </ul>
+      <div class="hero-content">
+        <p class="eyebrow" aria-hidden="true">Kind Dog Training</p>
+        <h1 id="hero-heading">Educateur canin à <span class="accent">Bordeaux</span></h1>
+        <p class="hero-subtitle">
+          Education & rééducation pour chiots et chiens adultes <span class="accent">toutes races</span>.
+        </p>
+        <div class="hero-actions">
+          <a href="/tarif-educateur-canin-bordeaux" class="btn btn-secondary">
+            Voir les tarifs
+            <i data-lucide="arrow-right" style="width:16px;height:16px;stroke-width:2" aria-hidden="true"></i>
+          </a>
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            Prendre RDV
+            <i data-lucide="calendar" style="width:16px;height:16px;stroke-width:2" aria-hidden="true"></i>
+          </a>
         </div>
-        <figure>
-          <img
-            src="https://kind-dog-training.fr/data/files/img_3295.jpg"
-            alt="Mélyne, éducatrice canin à Bordeaux, avec son chien Ramsey"
-            class="hero-photo"
-            width="560"
-            height="560"
-            loading="eager"
-          />
-        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY SECTION -->
+  <section class="section why-section" id="pourquoi" aria-labelledby="pourquoi-heading">
+    <div class="container">
+      <div class="why-header">
+        <h2 id="pourquoi-heading">Pourquoi faire appel à un <span class="accent">éducateur comportementaliste canin ?</span></h2>
+        <div class="separator"></div>
+      </div>
+      <div class="why-grid">
+        <div class="why-card">
+          <span class="why-icon" aria-hidden="true">
+            <i data-lucide="paw-print" style="width:32px;height:32px;stroke-width:1.75"></i>
+          </span>
+          <h3 class="why-card-title">Les débuts du chiot</h3>
+          <p class="why-card-desc">Créer une relation solide et apprendre à se contrôler en toutes circonstances.</p>
+        </div>
+        <div class="why-card why-card-bordered">
+          <span class="why-icon" aria-hidden="true">
+            <i data-lucide="dog" style="width:32px;height:32px;stroke-width:1.75"></i>
+          </span>
+          <h3 class="why-card-title">Les basiques du chien adulte</h3>
+          <p class="why-card-desc">Connaître/retravailler les ordres de base et approfondir sa capacité à se gérer face à tous types de stimulations.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon" aria-hidden="true">
+            <i data-lucide="shield-alert" style="width:32px;height:32px;stroke-width:1.75"></i>
+          </span>
+          <h3 class="why-card-title">Problèmes de comportement</h3>
+          <p class="why-card-desc">Trouver des solutions adaptées pour le chien peureux, anxieux, ou agressif.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- APPROACH -->
-  <section class="section" id="methode">
+  <section class="section" id="methode" aria-labelledby="methode-heading">
     <div class="container">
       <div class="approach-grid">
         <div class="approach-sticky">
-          <p class="eyebrow">La méthode</p>
-          <h2>Une approche <span class="accent">transparente</span>, jamais punitive.</h2>
-          <p style="font-size: 17px; line-height: 1.65; color: var(--kd-bark);">
-            Méthode née de Ramsey, mon staffie qui a rencontré des problèmes de comportement.
-            Des mois passés à chercher, puis à trouver ce qui fonctionne vraiment.
-            Aujourd'hui, je mets cette expérience au service de votre chien.
-          </p>
-          <p class="acaced-badge">
-            <i data-lucide="badge-check" style="width:14px;height:14px;stroke-width:1.75"></i>
-            ACACED · Mélyne
-          </p>
+          <h2 id="methode-heading">La méthode <span class="accent">Kind Dog Training</span></h2>
+          <img src="/images/melyneetramsey.png" alt="Mélyne, éducateur canin à Bordeaux, avec son chien Ramsey" width="1080" height="900" class="approach-photo" />
         </div>
 
         <div>
           <ol>
             {steps.map((step) => (
               <li class="step-item">
-                <span class="icon-box icon-box-lg">
+                <span class="icon-box icon-box-lg" aria-hidden="true">
                   <i data-lucide={step.icon} style="width:22px;height:22px;stroke-width:1.75"></i>
                 </span>
                 <div>
@@ -214,95 +201,415 @@ const communes = [
             ))}
           </ol>
 
-          <aside class="promises-box">
-            <h3 style="font-family: var(--font-serif); font-weight: 500; font-size: 24px; line-height: 1.2;">
-              Pourquoi me choisir ?
-            </h3>
-            <p style="font-size: 14px; color: var(--kd-fawn); font-style: italic; margin-bottom: 0;">
-              Chacune de ces situations a malheureusement déjà été rencontrée par les personnes que j'accompagne.
-            </p>
-            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
-              {promises.map((p) => (
-                <li class="promise-item">
-                  <span class="promise-check">
-                    <i data-lucide="check" style="width:18px;height:18px;stroke-width:1.75"></i>
-                  </span>
-                  <span class="promise-text">{p}</span>
-                </li>
-              ))}
-            </ul>
-          </aside>
+        </div>
+      </div>
+      <div class="approach-ctas">
+        <a href="/tarif-educateur-canin-bordeaux" class="btn btn-secondary">
+          Voir les tarifs
+          <i data-lucide="arrow-right" style="width:16px;height:16px;stroke-width:2" aria-hidden="true"></i>
+        </a>
+        <a href="/prendre-rdv/" class="btn btn-primary">
+          Prendre RDV
+          <i data-lucide="calendar" style="width:16px;height:16px;stroke-width:2" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <div class="wave-separator" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C320,80 640,0 960,50 C1120,70 1320,30 1440,40 L1440,80 L0,80 Z" fill="#2A1E15"/>
+    </svg>
+  </div>
+  <section class="kdtA" aria-label="Avis Google clients" id="temoignages">
+    <div class="kdtA__header">
+      <div class="kdtA__intro">
+        <div class="kdtA__eyebrow">Avis Google</div>
+        <h2 class="kdtA__title">Ce qu'en disent <span class="accent">les humains & leurs chiens</span></h2>
+        <p class="kdtA__lede">Des binômes de Bordeaux et alentours qui ont retrouvé du calme, de la complicité et de la confiance.</p>
+      </div>
+      <div class="kdtA__rating">
+        <div class="kdtA__rating-num" data-kdt-rating-num>5.0</div>
+        <div class="kdtA__rating-meta">
+          <div class="kdtA__rating-stars" data-kdt-rating-stars></div>
+          <div>Basé sur <span data-kdt-rating-count>13</span> avis Google</div>
+          <a class="kdtA__rating-link" data-kdt-rating-link href="#" target="_blank" rel="noopener">
+            <span data-kdt-rating-link-icon></span> Voir sur Google
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="kdtA__carousel">
+      <div class="kdtA__viewport" data-kdt-viewport>
+        <div class="kdtA__track" data-kdt-track></div>
+      </div>
+      <div class="kdtA__controls">
+        <div class="kdtA__dots" data-kdt-dots></div>
+        <div class="kdtA__arrows">
+          <button class="kdtA__arrow" data-kdt-prev aria-label="Précédent">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="11 6 5 12 11 18"/></svg>
+          </button>
+          <button class="kdtA__arrow" data-kdt-next aria-label="Suivant">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+          </button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
-  <section class="section section-dark" id="temoignages">
-    <div class="container">
-      <header class="testimonial-header">
-        <p class="eyebrow" style="color: var(--kd-terracotta-soft);">Avis Google · 5,0 / 5</p>
-        <h2>Ce qu'en disent <span class="accent">les humains & leurs chiens</span>.</h2>
-        <p>
-          Des binômes de Bordeaux et alentours qui ont retrouvé du calme, de la complicité et de la confiance.
-        </p>
-      </header>
+  <script is:inline>
+  (function() {
+    var KDT_REVIEWS = [
+      { name: "M H", rating: 5, date: "Il y a une semaine",
+        text: "Quand vous pensez que rien ne fonctionnera et que vous êtes à deux doigts de renoncer, allez il faut y croire encore une dernière fois et appeler Mélyne (en vrai, faites le dès le début, vous gagnerez du temps et beaucoup beaucoup d'énergie). Au-delà de ses qualités personnelles (Mélyne est vraiment super), elle est une professionnelle qui ne s'est pas improvisée éducateur canin du jour au lendemain. Il y a du boulot derrière, de l'expérience, de la formation, etc. Et quand on a eu affaire à d'autres éducateurs, ça se voit mais alors de suite et on peut dire que ça fait une énorme différence, évidemment. Ce qui est aussi cool, c'est que les séances sont très agréables, Mélyne s'adapte tant à l'humain qu'à son chien. Les exercices sont très efficaces et demandent de la régularité mais pas non plus d'y passer des heures entières chaque jour. Ma petite Staffie n'écoutait rien du tout, quasi aucun rappel, la marche en laisse c'était plutôt du tirage en laisse, bref, le quotidien était vraiment compliqué. Et grâce à Mélyne, en très peu de temps (la marche en laisse ça a été réglé en 1/2 séance par exemple), les bases (et même plus) sont désormais acquises et ça change la vie! Et même quand ça roule, on a envie de progresser sur d'autres aspects éducatifs, juste parce que c'est cool d'apprendre et de travailler avec notre chien, pas uniquement parce que c'est nécessaire. Donc mille mercis à Mélyne." },
+      { name: "Bastien Dupont", rating: 5, date: "Il y a 2 semaines",
+        text: "Ma compagne et moi avons fait appel à Mélyne car nous étions en difficulté. Elle a su nous conseiller et nous orienter de la meilleur façon possible de façon très réactive et à notre écoute ! Elle aide autant nos amis à quatre pattes que leurs propriétaires." },
+      { name: "Coralie Bonnet", rating: 5, date: "Il y a 2 semaines",
+        text: "Mélyne est d'une écoute précieuse et s'adapte parfaitement au chien comme à son maître. Elle nous a aidé grandement à faire évoluer Mucho qui est beaucoup plus serein dans les rencontres avec les congénères et beaucoup moins réactif ! C'est LA meilleure éducatrice de Bordeaux." },
+      { name: "Aub'Animaux", rating: 5, date: "Il y a 3 semaines",
+        text: "Mélyne est une passionnée du chien et de son travail d'éducatrice. Elle est le genre de professionnelle à persévérer : elle ne s'arrête pas à un protocole ou à une méthode qui ne correspond pas à un chien. Elle a tout un tas d'outils dans sa besace, elle sort des sentiers battus et se creuse la tête pour trouver ce qui correspond au chien. Mon chien est un cas très complexe. J'ai vu des éducateurs l'ayant considéré comme « le pire chien qu'ils aient vu », « un tueur », et qui agit par « méchanceté gratuite ». Mélyne, elle, a vu plus loin. Elle a pris le temps, elle a observé dans tous les contextes possibles. Aucun jugement de sa part, uniquement des faits, des conseils, des explications. Nous avons du coup pu trouver des pistes et des choses à travailler pour avancer dans la bonne direction. Merci KDT, À bientôt 🐾" },
+      { name: "Victoria Pointet", rating: 5, date: "Il y a un mois",
+        text: "J'ai commencé à travailler avec Mélyne quand Brooklyn avait 4 mois, et honnêtement… quelle chance on a eue de la rencontrer ! Elle nous a accompagnés sur toutes les bases à instaurer, ainsi que la gestion des émotions, le rappel, la marche en laisse… toujours avec douceur et bonne humeur. Les résultats ont été rapides et durables." },
+      { name: "twinzeko", rating: 5, date: "Il y a 2 mois",
+        text: "Mélyne nous suit depuis bientôt un an et c'est un réel bonheur. Une écoute attentive et de très bons conseils. On voit une vraie différence dans le comportement de notre petite Appa qui a frôlé la réactivité mais qu'on a réussi à corriger ! Une éducatrice qui met le chien au centre de la discussion et fait passer le bien-être animal en priorité." },
+      { name: "Cleora", rating: 5, date: "Il y a 2 mois",
+        text: "J'ai contacté Mélyne car je voulais mieux comprendre mon chien Vaillant, récemment adopté en refuge. Le contact a tout de suite été très naturel et Vaillant a eu un vrai coup de cœur pour notre coach ! Mélyne est très bienveillante et à l'écoute. Petit bonus, chaque séance fait l'objet d'un compte-rendu écrit, ce qui est très appréciable !" },
+      { name: "Cathy Le Corre", rating: 5, date: "Il y a 2 mois",
+        text: "Une Educ au top, plein de bons conseils, consultée pour un toutou réactif ayant une mauvaise gestion des émotions (frustration, difficulté de renoncement, tirage en laisse, aboiements…) et des progrès dès la première séance ! Un accompagnement étape par étape avec un bilan à chaque séance, rien à dire, parfait !" },
+      { name: "Jacques", rating: 5, date: "Il y a 3 mois",
+        text: "J'ai fait appel à Mélyne pour régler quelques problèmes avec mon staffy de 7 ans, notamment pour un problème de communication avec ses congénères. Les cours ont été très concluants, les exercices sont simples et efficaces. Bilan gratuit, éducation positive et rempli d'amour. On voit que c'est pour Mélyne une vraie passion avant tout." },
+      { name: "axelmrquand", rating: 5, date: "Il y a 3 mois",
+        text: "Mélyne suit notre Shikoku depuis plusieurs mois à distance et fait un travail remarquable, à tel point que nous avons fait un stage avec elle. Elle donne des exercices faciles à mettre en place et efficaces. Son bilan est très synthétique, clair et ordonné. Mélyne ne fuit pas la difficulté, propose un service honnête, efficace, bienveillant et fonctionnel." },
+      { name: "Pauline", rating: 5, date: "Il y a 3 mois",
+        text: "Je recommande Mélyne sans hésiter. J'ai une staffie de 2 ans qui montait beaucoup en excitation avec son grand frère chien, qui avait peur des vélos et pour qui la marche en laisse au pied était compliquée. Grâce à l'écoute et le professionnalisme de Mélyne, les progrès ont été rapides et concrets." },
+      { name: "Marie L.", rating: 5, date: "Il y a 4 mois",
+        text: "Mélyne est une éducatrice exceptionnelle. Patiente, à l'écoute et toujours dans la bienveillance, elle a su comprendre Nala et nous donner les clés pour mieux communiquer avec elle. Les progrès ont été visibles dès les premières séances. Je la recommande chaudement !" }
+    ];
 
-      {testimonials.map((t) => (
-        <blockquote style="margin-bottom: var(--sp-10); padding-bottom: var(--sp-10); border-bottom: 1px solid var(--kd-bark);">
-          <div style="display: flex; gap: var(--sp-6); align-items: flex-start;">
-            <span class="quote-mark" aria-hidden="true">"</span>
-            <div>
-              <p class="testimonial-quote">{t.quote}</p>
-              <footer class="testimonial-author">
-                <span class="testimonial-avatar">{t.mono}</span>
-                <div>
-                  <cite class="testimonial-name">{t.who}</cite>
-                  <p class="testimonial-where">{t.where}</p>
-                </div>
-              </footer>
-            </div>
+    var KDT_GOOGLE_URL = "https://share.google/y9oqE2AvoPW7WO68S";
+    var KDT_RATING = 5.0;
+    var KDT_REVIEW_COUNT = 13;
+
+    var PALETTES = [
+      ["#C8623A", "#E8A33D"], ["#9B6B47", "#C8623A"], ["#5A8084", "#8FB4B8"],
+      ["#C8623A", "#E8B89A"], ["#7A5A3F", "#C8623A"], ["#A0764D", "#E8A33D"]
+    ];
+    function initials(name) {
+      if (!name) return "?";
+      var parts = name.trim().split(/\s+/).filter(Boolean);
+      if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    function avatarBg(idx) {
+      var p = PALETTES[idx % PALETTES.length];
+      return "linear-gradient(135deg, " + p[0] + ", " + p[1] + ")";
+    }
+    function starSvg(filled, size) {
+      size = size || 17;
+      return '<svg viewBox="0 0 24 24" width="' + size + '" height="' + size + '" aria-hidden="true">' +
+        '<path d="M12 2.5l2.95 6.6 7.05.7-5.35 4.85 1.6 7.35L12 18l-6.25 4 1.6-7.35L2 9.8l7.05-.7L12 2.5z" ' +
+        'fill="' + (filled ? '#E8A33D' : 'transparent') + '" stroke="#E8A33D" stroke-width="1.2" stroke-linejoin="round"/></svg>';
+    }
+    function starsHtml(rating, size) {
+      var html = '';
+      for (var i = 0; i < 5; i++) html += starSvg(i < rating, size);
+      return html;
+    }
+    function googleMark(size) {
+      size = size || 22;
+      return '<svg viewBox="0 0 48 48" width="' + size + '" height="' + size + '" aria-hidden="true">' +
+        '<path fill="#4285F4" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.3-.4-3.5z"/>' +
+        '<path fill="#34A853" d="M6.3 14.1l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.1z"/>' +
+        '<path fill="#FBBC05" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2c-2 1.4-4.5 2.4-7.2 2.4-5.2 0-9.6-3.3-11.2-7.9l-6.5 5C9.6 39.6 16.2 44 24 44z"/>' +
+        '<path fill="#EA4335" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.5l6.2 5.2C40.7 35.7 44 30.3 44 24c0-1.2-.1-2.3-.4-3.5z"/></svg>';
+    }
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function(c) {
+        return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+      });
+    }
+
+    var widget = document.getElementById('temoignages');
+    if (!widget) return;
+
+    widget.querySelector('[data-kdt-rating-num]').textContent = KDT_RATING.toFixed(1);
+    widget.querySelector('[data-kdt-rating-count]').textContent = KDT_REVIEW_COUNT;
+    widget.querySelector('[data-kdt-rating-stars]').innerHTML = starsHtml(5, 16);
+    var ratingLink = widget.querySelector('[data-kdt-rating-link]');
+    ratingLink.href = KDT_GOOGLE_URL;
+    widget.querySelector('[data-kdt-rating-link-icon]').innerHTML = googleMark(14);
+
+    var track = widget.querySelector('[data-kdt-track]');
+    KDT_REVIEWS.forEach(function(r, i) {
+      var card = document.createElement('article');
+      card.className = 'kdtA__card';
+      card.innerHTML =
+        '<div class="kdtA__card-head">' +
+          '<div class="kdtA__avatar" style="background:' + avatarBg(i) + '">' + escapeHtml(initials(r.name)) + '</div>' +
+          '<div class="kdtA__name-block">' +
+            '<div class="kdtA__name">' + escapeHtml(r.name) + '</div>' +
+            '<div class="kdtA__date">' + escapeHtml(r.date) + '</div>' +
+          '</div>' +
+          googleMark(20) +
+        '</div>' +
+        '<div class="kdtA__stars">' + starsHtml(r.rating, 17) + '</div>' +
+        '<p class="kdtA__text">' + escapeHtml(r.text) + '</p>';
+      track.appendChild(card);
+    });
+
+    var index = 0, perView = 3;
+    var paused = false;
+    var dotsContainer = widget.querySelector('[data-kdt-dots]');
+    var prevBtn = widget.querySelector('[data-kdt-prev]');
+    var nextBtn = widget.querySelector('[data-kdt-next]');
+    var viewport = widget.querySelector('[data-kdt-viewport]');
+
+    function computePerView() {
+      var w = window.innerWidth;
+      if (w < 640) return 1;
+      if (w < 960) return 2;
+      return 3;
+    }
+    function maxIndex() { return Math.max(0, KDT_REVIEWS.length - perView); }
+
+    function renderDots() {
+      dotsContainer.innerHTML = '';
+      for (var i = 0; i <= maxIndex(); i++) {
+        var d = document.createElement('button');
+        d.className = 'kdtA__dot' + (i === Math.min(index, maxIndex()) ? ' kdtA__dot--active' : '');
+        d.setAttribute('aria-label', 'Aller à la position ' + (i + 1));
+        (function(i) { d.addEventListener('click', function() { goTo(i); }); })(i);
+        dotsContainer.appendChild(d);
+      }
+    }
+
+    function update() {
+      var safe = Math.min(index, maxIndex());
+      index = safe;
+      var gap = 20;
+      var cardWidth = 100 / perView;
+      var basis = 'calc(' + cardWidth + '% - ' + (gap * (perView - 1) / perView) + 'px)';
+      [].forEach.call(track.children, function(c) { c.style.flexBasis = basis; });
+      var firstCard = track.children[0];
+      var targetCard = track.children[safe];
+      if (firstCard && targetCard) {
+        var offset = targetCard.offsetLeft - firstCard.offsetLeft;
+        track.style.transform = 'translateX(-' + offset + 'px)';
+      } else {
+        track.style.transform = 'translateX(0)';
+      }
+      prevBtn.disabled = safe === 0;
+      nextBtn.disabled = safe >= maxIndex();
+      renderDots();
+    }
+
+    function goTo(i) {
+      index = Math.max(0, Math.min(maxIndex(), i));
+      update();
+    }
+
+    prevBtn.addEventListener('click', function() { goTo(index - 1); });
+    nextBtn.addEventListener('click', function() { goTo(index + 1); });
+
+    window.addEventListener('resize', function() {
+      perView = computePerView();
+      update();
+    });
+
+    widget.addEventListener('mouseenter', function() { paused = true; });
+    widget.addEventListener('mouseleave', function() { paused = false; });
+    setInterval(function() {
+      if (paused) return;
+      if (index >= maxIndex()) goTo(0); else goTo(index + 1);
+    }, 5500);
+
+    var dragStart = null;
+    function onDown(e) {
+      dragStart = (e.touches ? e.touches[0].clientX : e.clientX);
+    }
+    function onUp(e) {
+      if (dragStart === null) return;
+      var endX = (e.changedTouches ? e.changedTouches[0].clientX : e.clientX);
+      var dx = endX - dragStart;
+      if (Math.abs(dx) > 50) goTo(index + (dx < 0 ? 1 : -1));
+      dragStart = null;
+    }
+    viewport.addEventListener('mousedown', onDown);
+    viewport.addEventListener('mouseup', onUp);
+    viewport.addEventListener('touchstart', onDown, { passive: true });
+    viewport.addEventListener('touchend', onUp);
+
+    perView = computePerView();
+    update();
+  })();
+  </script>
+
+  <div class="wave-separator wave-separator--from-dark" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C360,70 720,10 1080,50 C1260,65 1380,35 1440,40 L1440,80 L0,80 Z" fill="#FFFFFF"/>
+    </svg>
+  </div>
+
+  <!-- DOG TYPES -->
+  <section class="section dog-types-section" id="types-de-chiens" aria-labelledby="dog-types-heading">
+    <div class="container">
+      <div class="dog-types-layout">
+        <div class="dog-types-text">
+          <h2 class="dog-types-title" id="dog-types-heading">Un accompagnement pour quels <span class="accent">types de chiens ?</span></h2>
+          <div class="dog-types-sep"></div>
+          <p>Chez Kind Dog Training, votre éducateur canin de référence à Bordeaux, nous sommes là pour vous soutenir, <strong>quelle que soit la race de la boule qui partage votre quotidien !</strong></p>
+          <p>Que vous ayez un berger attentif, un molosse affectueux, un terrier plein d'énergie, un chien de chasse curieux ou un chien primitif, nous avons la solution adaptée à chaque comportement, chaque besoin et chaque personnalité. Parce que <strong>chaque chien est unique, chaque accompagnement l'est aussi</strong>. Ensemble, nous allons transformer les défis en moments de complicité et de joie !</p>
+        </div>
+        <div class="dog-photos-column">
+          <div class="dog-photos-wrapper" id="dog-carousel">
+            <img src="/images/chien-shiba.png" alt="Education d'un chien Shiba Inu à Bordeaux" class="dog-photo" loading="lazy" width="1080" height="900" />
+            <img src="/images/chien-berger-australien.png" alt="Rééducation d'un berger australien par un éducateur canin à Bordeaux" class="dog-photo" loading="lazy" width="1080" height="900" />
+            <img src="/images/chien-croise.png" alt="Rééducation d'un chien agressif par un éducateur canin à Bordeaux" class="dog-photo" loading="lazy" width="1080" height="900" />
+            <img src="/images/chien-bully.png" alt="Cours d'éducation canine pour un Bully à Bordeaux" class="dog-photo" loading="lazy" width="1080" height="900" />
           </div>
-        </blockquote>
-      ))}
+          <div class="dog-carousel-nav">
+            <button class="dog-carousel-btn" data-kdt-dog-prev aria-label="Photo précédente">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="11 6 5 12 11 18"/></svg>
+            </button>
+            <button class="dog-carousel-btn" data-kdt-dog-next aria-label="Photo suivante">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+  (function () {
+    var carousel = document.getElementById('dog-carousel');
+    if (!carousel) return;
+    var prev = document.querySelector('[data-kdt-dog-prev]');
+    var next = document.querySelector('[data-kdt-dog-next]');
+    if (!prev || !next) return;
+    function scrollByOne(dir) {
+      var photo = carousel.querySelector('.dog-photo');
+      if (!photo) return;
+      carousel.scrollBy({ left: dir * (photo.offsetWidth + 12), behavior: 'smooth' });
+    }
+    prev.addEventListener('click', function () { scrollByOne(-1); });
+    next.addEventListener('click', function () { scrollByOne(1); });
+  })();
+  </script>
+
+  <!-- ABOUT MELYNE -->
+  <section class="section melyne-section" id="melyne" aria-labelledby="melyne-heading">
+    <div class="container">
+      <div class="melyne-inner">
+        <h2 class="melyne-title" id="melyne-heading">Mélyne, <span class="accent">éducatrice canin</span> certifiée à Bordeaux</h2>
+        <p class="melyne-text">Titulaire de l'ACACED et formée auprès d'éducateurs canins reconnus du monde francophone, j'interviens sur Bordeaux et la métropole pour vous aider à <strong>construire une relation saine et durable</strong> avec votre chien.</p>
+        <p class="melyne-text">Mon approche n'est pas née dans un manuel. Elle est née de Ramsey, mon staffie qui a rencontré des problèmes de comportement et d'agressivité, et des mois passés à chercher, <strong>puis à trouver</strong>, ce qui fonctionne vraiment. Aujourd'hui, je mets cette expérience au service de votre chien, qu'il soit chiot en apprentissage ou turbulent ou chien adulte en difficulté. Chaque chien est un cas unique. Chaque accompagnement l'est aussi.</p>
+        <a href="/qui-suis-je/" class="melyne-cta">
+          En savoir plus sur mon parcours
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="16" y2="12"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="16" x2="16" y2="12"/></svg>
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- ZONE -->
-  <section class="section section-paper" id="zone">
-    <div class="container">
-      <div class="zone-grid">
-        <div>
-          <p class="eyebrow">Zone d'intervention</p>
-          <h2>Education canine à Bordeaux <span class="accent">&</span> alentours.</h2>
-          <p style="font-size: 17px; line-height: 1.65; color: var(--kd-bark);">
-            Je me déplace à votre domicile dans Bordeaux et toutes les communes alentours, jusqu'à 30 km.
-          </p>
-          <dl class="zone-stats">
-            <div>
-              <dt class="stat-label">de rayon</dt>
-              <dd class="stat-number">~30 km</dd>
-            </div>
-            <div>
-              <dt class="stat-label">communes</dt>
-              <dd class="stat-number">28</dd>
-            </div>
-          </dl>
-        </div>
-        <ul class="commune-grid">
-          {communes.map((c) => (
-            <li class="commune-tag">{c}</li>
-          ))}
-        </ul>
+  <section class="kdt-map" id="zone" aria-label="Zone d'intervention de Kind Dog Training">
+    <div class="kdt-map__body">
+
+      <div class="kdt-map__content">
+        <p class="eyebrow">Zone d'intervention</p>
+        <h2 class="kdt-map__title">Education canine à Bordeaux <span class="accent">&amp;</span> alentours</h2>
+        <p class="kdt-map__lede">Je me déplace à votre domicile dans Bordeaux et toutes les communes alentours, jusqu'à 30&nbsp;km. Cela comprend notamment Ambarès-et-Lagrave, Ambès, Artigues-près-Bordeaux, Bassens, Bègles, Blanquefort, Bouliac, Le Bouscat, Bruges, Canéjan, Cenon, Eysines, Floirac, Gradignan, Le Haillan, Lormont, Martignas-sur-Jalle, Mérignac, Parempuyre, Pessac, Saint-Aubin-de-Médoc, Saint-Jean-d'Illac, Saint-Médard-en-Jalles, Le Taillan-Médoc, Talence, Villenave-d'Ornon…</p>
+        <p class="kdt-map__meta">~30&nbsp;km de rayon · 28&nbsp;communes</p>
       </div>
+
+      <div class="kdt-map__visual">
+        <svg class="kdt-map__svg" viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <defs>
+            <filter id="kdtWobble" x="-5%" y="-5%" width="110%" height="110%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="3"/>
+              <feDisplacementMap in="SourceGraphic" scale="3"/>
+            </filter>
+            <filter id="kdtGrain">
+              <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+              <feColorMatrix values="0 0 0 0 0.165  0 0 0 0 0.118  0 0 0 0 0.082  0 0 0 0.08 0"/>
+            </filter>
+          </defs>
+
+          <rect x="-200" y="-200" width="1400" height="1200" fill="#F4ECDC"/>
+          <rect x="-200" y="-200" width="1400" height="1200" filter="url(#kdtGrain)" opacity="0.6"/>
+
+          <path d="M 240,270 C 200,310 200,380 240,440 C 260,500 250,580 310,620 C 380,660 480,680 560,660 C 640,650 720,610 740,540 C 770,470 770,380 740,300 C 710,230 640,200 560,210 C 490,215 400,210 340,225 C 290,235 260,250 240,270 Z"
+                fill="#E6A487" fill-opacity="0.18" filter="url(#kdtWobble)"/>
+          <path d="M 240,270 C 200,310 200,380 240,440 C 260,500 250,580 310,620 C 380,660 480,680 560,660 C 640,650 720,610 740,540 C 770,470 770,380 740,300 C 710,230 640,200 560,210 C 490,215 400,210 340,225 C 290,235 260,250 240,270 Z"
+                fill="none" stroke="#2A1E15" stroke-opacity="0.4" stroke-width="1.5" stroke-dasharray="4 5" filter="url(#kdtWobble)"/>
+
+          <path d="M 720,780 C 700,720 640,650 600,560 C 570,490 540,440 520,390 C 500,340 510,290 530,220 C 545,165 560,110 580,40"
+                fill="none" stroke="#A8B8C2" stroke-opacity="0.55" stroke-width="14" stroke-linecap="round" filter="url(#kdtWobble)"/>
+          <path d="M 720,780 C 700,720 640,650 600,560 C 570,490 540,440 520,390 C 500,340 510,290 530,220 C 545,165 560,110 580,40"
+                fill="none" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="1" stroke-linecap="round"/>
+          <text x="640" y="710" font-size="14" fill="#8A9EA8" font-style="italic" letter-spacing="0.2em" font-family="Nunito, sans-serif">La Garonne</text>
+
+          <g font-family="Nunito, sans-serif" font-size="13" font-weight="500" fill="#2A1E15">
+            <circle cx="460" cy="230" r="4"/><text x="469" y="234">Blanquefort</text>
+            <circle cx="530" cy="270" r="4"/><text x="539" y="274">Bruges</text>
+            <circle cx="470" cy="320" r="4"/><text x="479" y="324">Le Bouscat</text>
+            <circle cx="410" cy="290" r="4"/><text x="419" y="294">Eysines</text>
+            <circle cx="360" cy="320" r="4"/><text x="369" y="324">Le Haillan</text>
+            <circle cx="280" cy="290" r="4"/><text x="271" y="294" text-anchor="end">Saint-Médard-en-Jalles</text>
+            <circle cx="360" cy="410" r="4"/><text x="369" y="414">Mérignac</text>
+            <circle cx="380" cy="490" r="4"/><text x="389" y="494">Pessac</text>
+            <circle cx="470" cy="510" r="4"/><text x="479" y="514">Talence</text>
+            <circle cx="510" cy="580" r="4"/><text x="519" y="584">Gradignan</text>
+            <circle cx="520" cy="540" r="4"/><text x="529" y="544">Bègles</text>
+            <circle cx="580" cy="620" r="4"/><text x="589" y="624">Villenave-d'Ornon</text>
+            <circle cx="600" cy="400" r="4"/><text x="609" y="404">Cenon</text>
+            <circle cx="620" cy="470" r="4"/><text x="629" y="474">Floirac</text>
+            <circle cx="600" cy="320" r="4"/><text x="609" y="324">Lormont</text>
+            <circle cx="660" cy="540" r="4"/><text x="669" y="544">Bouliac</text>
+            <circle cx="660" cy="250" r="4"/><text x="669" y="254">Ambarès-et-Lagrave</text>
+            <circle cx="700" cy="380" r="4"/><text x="709" y="384">Artigues-près-Bordeaux</text>
+          </g>
+
+          <g>
+            <circle cx="500" cy="410" r="18" fill="none" stroke="#C8623A" stroke-width="2" opacity="0">
+              <animate attributeName="r" from="18" to="220" dur="3s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" from="0.7" to="0" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="500" cy="410" r="18" fill="none" stroke="#C8623A" stroke-width="2" opacity="0">
+              <animate attributeName="r" from="18" to="220" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" from="0.7" to="0" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="500" cy="410" r="14" fill="#F4ECDC" stroke="#C8623A" stroke-width="3"/>
+            <circle cx="500" cy="410" r="6" fill="#C8623A"/>
+            <text x="522" y="416" font-family="Newsreader, Georgia, serif" font-size="22" font-weight="600" fill="#2A1E15" letter-spacing="-0.01em">Bordeaux</text>
+          </g>
+        </svg>
+
+        <div class="kdt-map__footer">
+          <div class="kdt-map__compass">
+            <svg width="22" height="22" viewBox="-12 -12 24 24" aria-hidden="true">
+              <polygon points="0,-10 3,0 0,10 -3,0" fill="#C8623A" opacity="0.9"/>
+              <text x="0" y="-12" font-size="7" fill="#2A1E15" text-anchor="middle" font-weight="700" font-family="Nunito, sans-serif">N</text>
+            </svg>
+            <div class="kdt-map__scale">
+              <span class="kdt-map__scale-bar"></span>
+              <span>5 km</span>
+            </div>
+          </div>
+          <div class="kdt-map__credit">Kind Dog Training · Educateur canin</div>
+        </div>
+      </div>
+
     </div>
   </section>
 
   <!-- FAQ -->
-  <section class="section" id="faq">
+  <section class="section" id="faq" aria-labelledby="faq-heading">
     <div class="container" style="max-width: 750px;">
-      <p class="eyebrow" style="margin-bottom: var(--sp-4);">Questions fréquentes</p>
-      <h2>Tout ce que vous voulez <span class="accent">savoir</span>.</h2>
+      <h2 id="faq-heading" style="text-align: center;">Questions fréquentes sur <span class="accent">l'éducation canine</span></h2>
       <div class="faq-list" style="margin-top: var(--sp-8);">
         {faqItems.map((item) => (
           <details class="faq-item">
@@ -322,17 +629,26 @@ const communes = [
   </section>
 
   <!-- CTA -->
-  <section class="section section-warm" style="text-align: center;">
-    <div class="container" style="max-width: 640px;">
-      <p class="eyebrow" style="margin-bottom: var(--sp-4);">Premier pas</p>
-      <h2>Réservez votre <span class="accent">bilan gratuit</span>.</h2>
-      <p style="color: var(--kd-bark); margin-bottom: var(--sp-6);">
-        Un premier rendez-vous à votre domicile pour comprendre votre situation, observer votre chien et vous proposer un plan d'action. Aucun engagement.
-      </p>
-      <a href="/prendre-rdv/" class="btn btn-primary">
-        <i data-lucide="calendar" style="width:18px;height:18px;stroke-width:1.75"></i>
-        Prendre RDV
-      </a>
+  <section class="section section-dark cta-section" aria-labelledby="cta-heading">
+    <div class="container">
+      <div class="cta-bilan-card">
+        <h2 id="cta-heading" style="text-align: center; margin-bottom: var(--sp-5);">Réservez votre bilan comportemental <span class="accent">100% GRATUIT</span>*</h2>
+        <p style="text-align: center; margin-bottom: var(--sp-4);">
+          Chaque accompagnement débute par un bilan comportemental <strong>à votre domicile</strong>. Le but est de comprendre en profondeur votre situation, les problèmes que vous rencontrez, l'historique de votre chien et de vous proposer un plan d'action.
+        </p>
+        <p style="text-align: center; margin-bottom: var(--sp-6);">
+          <strong>Aucun engagement</strong> n'est demandé à ce stade et c'est la politique de Kind Dog Training ! Si vous êtes satisfait de ce premier rdv et de la méthode alors on fixe une date pour un premier cours, sinon vous n'aurez rien perdu.
+        </p>
+        <div style="text-align: center;">
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            <i data-lucide="calendar" style="width:18px;height:18px;stroke-width:1.75" aria-hidden="true"></i>
+            Prendre RDV
+          </a>
+        </div>
+        <p style="text-align: center; margin-top: var(--sp-5); font-size: 0.8rem; color: var(--kd-fawn);">
+          *Bilan comportemental à 20&nbsp;€ si &gt;20&nbsp;km.
+        </p>
+      </div>
     </div>
   </section>
 

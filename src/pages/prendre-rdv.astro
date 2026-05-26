@@ -7,12 +7,23 @@ import ContactForm from '../components/ContactForm.astro';
   title="Prendre rendez-vous — Kind Dog Training, éducateur canin à Bordeaux"
   description="Prenez rendez-vous avec Mélyne, éducatrice canine à Bordeaux. Bilan comportemental gratuit à votre domicile. Réponse sous 48h."
 >
-  <section class="section section-warm">
+  <!-- HERO -->
+  <section class="hero hero--rdv" aria-labelledby="hero-rdv-heading">
+    <div class="container">
+      <div class="hero-content">
+        <h1 id="hero-rdv-heading">Prise de rendez-vous avec <span class="accent">Kind Dog Training</span></h1>
+        <p class="hero-subtitle">
+          Vous pouvez me contacter via le formulaire ou directement par téléphone. Planifiez dès maintenant votre bilan comportemental offert&nbsp;!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section booking-section">
     <div class="container">
       <div class="booking-grid">
         <header class="booking-info">
-          <p class="eyebrow">Prendre RDV</p>
-          <h1>Réservez votre <span class="accent">bilan gratuit</span>.</h1>
+          <h2>Réservez votre <span class="accent">bilan gratuit</span>.</h2>
           <p style="font-size: 16px; line-height: 1.65; color: var(--kd-bark); max-width: 460px;">
             Un premier rendez-vous à votre domicile pour comprendre votre situation,
             observer votre chien dans son environnement, et vous proposer un plan d'action sur-mesure.
@@ -27,9 +38,19 @@ import ContactForm from '../components/ContactForm.astro';
             </p>
             <p class="contact-row">
               <span class="contact-icon">
-                <i data-lucide="at-sign" style="width:18px;height:18px;stroke-width:1.75"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
               </span>
-              <span class="contact-label">@kind_dog_training</span>
+              <span class="contact-label">
+                <a href="https://www.instagram.com/kind_dog_training/" target="_blank" rel="noopener noreferrer" class="contact-link">@kind_dog_training</a>
+              </span>
+            </p>
+            <p class="contact-row">
+              <span class="contact-icon">
+                <i data-lucide="phone" style="width:18px;height:18px;stroke-width:1.75"></i>
+              </span>
+              <span class="contact-label">
+                <a href="tel:+33642648914" class="contact-link">+33 6 42 64 89 14</a>
+              </span>
             </p>
             <p class="contact-row">
               <span class="contact-icon">
@@ -51,3 +72,52 @@ import ContactForm from '../components/ContactForm.astro';
     </div>
   </section>
 </Layout>
+
+<style>
+  .hero--rdv {
+    background-image: url('/images/hero-rdv-mobile.svg');
+  }
+
+  @media (min-width: 768px) {
+    .hero--rdv {
+      background-image: url('/images/hero-rdv-desktop.svg');
+      align-items: center;
+      padding-bottom: 0;
+    }
+  }
+
+  /* Fond blanc pour la section booking */
+  .booking-section {
+    background-color: var(--kd-white);
+  }
+
+  /* Icône contact sur fond blanc : fond crème pour le contraste */
+  .booking-section .contact-icon {
+    background: var(--kd-cream);
+  }
+
+  /* Carte formulaire : légèrement crème pour se détacher du blanc */
+  .booking-section :global(.form-card) {
+    background: var(--kd-cream);
+    border: 1.5px solid var(--kd-cream-deep);
+  }
+
+  /* Champs inputs : fond blanc pour contraster avec la carte crème */
+  .booking-section :global(.form-input),
+  .booking-section :global(.form-textarea) {
+    background: var(--kd-white);
+    border-color: var(--kd-stone);
+  }
+
+  /* Liens dans les contact-label */
+  .contact-link {
+    color: var(--kd-ink);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .contact-link:hover {
+    color: var(--kd-terracotta);
+  }
+</style>

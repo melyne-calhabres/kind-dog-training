@@ -1,3 +1,13 @@
 [build]
-  command = "npm run build"
+  command = "npm run build && npm run seo-check"
   publish = "dist"
+
+[[redirects]]
+  from = "/tarifs"
+  to = "/tarif-educateur-canin-bordeaux"
+  status = 301
+
+[[redirects]]
+  from = "/tarifs/"
+  to = "/tarif-educateur-canin-bordeaux"
+  status = 301

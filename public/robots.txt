@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://mondomaine.fr/sitemap-index.xml
+Disallow: /mentions-legales/
+Sitemap: https://mondomaine.fr/sitemap.xml
