@@ -659,6 +659,7 @@ p {
 }
 
 .form-message {
+  display: block;
   padding: var(--sp-4);
   border-radius: var(--radius-md);
   font-weight: 500;
