@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
 
 const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
 
@@ -120,6 +121,10 @@ const promises = [
   title="Kind Dog Training — Educateur canin à Bordeaux"
   description="Besoin d'un éducateur canin à Bordeaux ? Faites appel à Kind Dog Training ! Pour chiens agressifs/réactifs, petits problèmes de comportement/obéissance ou chiots"
   jsonLd={jsonLd}
+  preloadImages={[
+    { href: '/images/hero-banner-mobile-photo.webp', media: '(max-width: 767px)' },
+    { href: '/images/hero-banner-desktop-photo.webp', media: '(min-width: 768px)' },
+  ]}
 >
   <!-- HERO -->
   <section class="hero" aria-labelledby="hero-heading">
@@ -133,11 +138,11 @@ const promises = [
         <div class="hero-actions">
           <a href="/tarif-educateur-canin-bordeaux" class="btn btn-secondary">
             Voir les tarifs
-            <i data-lucide="arrow-right" style="width:16px;height:16px;stroke-width:2" aria-hidden="true"></i>
+            <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
           </a>
           <a href="/prendre-rdv/" class="btn btn-primary">
             Prendre RDV
-            <i data-lucide="calendar" style="width:16px;height:16px;stroke-width:2" aria-hidden="true"></i>
+            <Icon name="calendar" width={16} height={16} strokeWidth={2} />
           </a>
         </div>
       </div>
@@ -154,21 +159,21 @@ const promises = [
       <div class="why-grid">
         <div class="why-card">
           <span class="why-icon" aria-hidden="true">
-            <i data-lucide="paw-print" style="width:32px;height:32px;stroke-width:1.75"></i>
+            <Icon name="paw-print" width={32} height={32} strokeWidth={1.75} />
           </span>
           <h3 class="why-card-title">Les débuts du chiot</h3>
           <p class="why-card-desc">Créer une relation solide et apprendre à se contrôler en toutes circonstances.</p>
         </div>
         <div class="why-card why-card-bordered">
           <span class="why-icon" aria-hidden="true">
-            <i data-lucide="dog" style="width:32px;height:32px;stroke-width:1.75"></i>
+            <Icon name="dog" width={32} height={32} strokeWidth={1.75} />
           </span>
           <h3 class="why-card-title">Les basiques du chien adulte</h3>
           <p class="why-card-desc">Connaître/retravailler les ordres de base et approfondir sa capacité à se gérer face à tous types de stimulations.</p>
         </div>
         <div class="why-card">
           <span class="why-icon" aria-hidden="true">
-            <i data-lucide="shield-alert" style="width:32px;height:32px;stroke-width:1.75"></i>
+            <Icon name="shield-alert" width={32} height={32} strokeWidth={1.75} />
           </span>
           <h3 class="why-card-title">Problèmes de comportement</h3>
           <p class="why-card-desc">Trouver des solutions adaptées pour le chien peureux, anxieux, ou agressif.</p>
@@ -183,7 +188,7 @@ const promises = [
       <div class="approach-grid">
         <div class="approach-sticky">
           <h2 id="methode-heading">La méthode <span class="accent">Kind Dog Training</span></h2>
-          <img src="/images/melyneetramsey.png" alt="Mélyne, éducateur canin à Bordeaux, avec son chien Ramsey" width="1080" height="900" class="approach-photo" />
+          <img src="/images/melyneetramsey.webp" alt="Mélyne, éducateur canin à Bordeaux, avec son chien Ramsey" width="1080" height="900" class="approach-photo" loading="lazy" decoding="async" />
         </div>
 
         <div>
@@ -191,7 +196,7 @@ const promises = [
             {steps.map((step) => (
               <li class="step-item">
                 <span class="icon-box icon-box-lg" aria-hidden="true">
-                  <i data-lucide={step.icon} style="width:22px;height:22px;stroke-width:1.75"></i>
+                  <Icon name={step.icon} width={22} height={22} strokeWidth={1.75} />
                 </span>
                 <div>
                   <h3 class="step-title">{step.title}</h3>
@@ -206,11 +211,11 @@ const promises = [
       <div class="approach-ctas">
         <a href="/tarif-educateur-canin-bordeaux" class="btn btn-secondary">
           Voir les tarifs
-          <i data-lucide="arrow-right" style="width:16px;height:16px;stroke-width:2" aria-hidden="true"></i>
+          <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
         </a>
         <a href="/prendre-rdv/" class="btn btn-primary">
           Prendre RDV
-          <i data-lucide="calendar" style="width:16px;height:16px;stroke-width:2" aria-hidden="true"></i>
+          <Icon name="calendar" width={16} height={16} strokeWidth={2} />
         </a>
       </div>
     </div>
@@ -464,10 +469,10 @@ const promises = [
         </div>
         <div class="dog-photos-column">
           <div class="dog-photos-wrapper" id="dog-carousel">
-            <img src="/images/chien-shiba.png" alt="Education d'un chien Shiba Inu à Bordeaux" class="dog-photo" loading="lazy" width="1080" height="900" />
-            <img src="/images/chien-berger-australien.png" alt="Rééducation d'un berger australien par un éducateur canin à Bordeaux" class="dog-photo" loading="lazy" width="1080" height="900" />
-            <img src="/images/chien-croise.png" alt="Rééducation d'un chien agressif par un éducateur canin à Bordeaux" class="dog-photo" loading="lazy" width="1080" height="900" />
-            <img src="/images/chien-bully.png" alt="Cours d'éducation canine pour un Bully à Bordeaux" class="dog-photo" loading="lazy" width="1080" height="900" />
+            <img src="/images/chien-shiba.webp" alt="Education d'un chien Shiba Inu à Bordeaux" class="dog-photo" loading="lazy" decoding="async" width="1080" height="900" />
+            <img src="/images/chien-berger-australien.webp" alt="Rééducation d'un berger australien par un éducateur canin à Bordeaux" class="dog-photo" loading="lazy" decoding="async" width="1080" height="900" />
+            <img src="/images/chien-croise.webp" alt="Rééducation d'un chien agressif par un éducateur canin à Bordeaux" class="dog-photo" loading="lazy" decoding="async" width="1080" height="900" />
+            <img src="/images/chien-bully.webp" alt="Cours d'éducation canine pour un Bully à Bordeaux" class="dog-photo" loading="lazy" decoding="async" width="1080" height="900" />
           </div>
           <div class="dog-carousel-nav">
             <button class="dog-carousel-btn" data-kdt-dog-prev aria-label="Photo précédente">
@@ -641,7 +646,7 @@ const promises = [
         </p>
         <div style="text-align: center;">
           <a href="/prendre-rdv/" class="btn btn-primary">
-            <i data-lucide="calendar" style="width:18px;height:18px;stroke-width:1.75" aria-hidden="true"></i>
+            <Icon name="calendar" width={18} height={18} strokeWidth={1.75} />
             Prendre RDV
           </a>
         </div>

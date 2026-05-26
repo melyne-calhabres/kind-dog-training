@@ -1,11 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ContactForm from '../components/ContactForm.astro';
+import Icon from '../components/Icon.astro';
 ---
 
 <Layout
   title="Prendre rendez-vous — Kind Dog Training, éducateur canin à Bordeaux"
   description="Prenez rendez-vous avec Mélyne, éducatrice canine à Bordeaux. Bilan comportemental gratuit à votre domicile. Réponse sous 48h."
+  preloadImages={[
+    { href: '/images/hero-rdv-mobile-photo.webp', media: '(max-width: 767px)' },
+    { href: '/images/hero-rdv-desktop-photo.webp', media: '(min-width: 768px)' },
+  ]}
 >
   <!-- HERO -->
   <section class="hero hero--rdv" aria-labelledby="hero-rdv-heading">
@@ -32,7 +37,7 @@ import ContactForm from '../components/ContactForm.astro';
           <address class="booking-contacts">
             <p class="contact-row">
               <span class="contact-icon">
-                <i data-lucide="mail" style="width:18px;height:18px;stroke-width:1.75"></i>
+                <Icon name="mail" width={18} height={18} strokeWidth={1.75} />
               </span>
               <span class="contact-label">kindogtraining@gmail.com</span>
             </p>
@@ -46,7 +51,7 @@ import ContactForm from '../components/ContactForm.astro';
             </p>
             <p class="contact-row">
               <span class="contact-icon">
-                <i data-lucide="phone" style="width:18px;height:18px;stroke-width:1.75"></i>
+                <Icon name="phone" width={18} height={18} strokeWidth={1.75} />
               </span>
               <span class="contact-label">
                 <a href="tel:+33642648914" class="contact-link">+33 6 42 64 89 14</a>
@@ -54,13 +59,13 @@ import ContactForm from '../components/ContactForm.astro';
             </p>
             <p class="contact-row">
               <span class="contact-icon">
-                <i data-lucide="map-pin" style="width:18px;height:18px;stroke-width:1.75"></i>
+                <Icon name="map-pin" width={18} height={18} strokeWidth={1.75} />
               </span>
               <span class="contact-label">Bordeaux + 30 km</span>
             </p>
             <p class="contact-row">
               <span class="contact-icon">
-                <i data-lucide="message-circle" style="width:18px;height:18px;stroke-width:1.75"></i>
+                <Icon name="message-circle" width={18} height={18} strokeWidth={1.75} />
               </span>
               <span class="contact-label">Suivi WhatsApp 7j/7 · réponse sous 48h</span>
             </p>
@@ -75,12 +80,12 @@ import ContactForm from '../components/ContactForm.astro';
 
 <style>
   .hero--rdv {
-    background-image: url('/images/hero-rdv-mobile.svg');
+    background-image: url('/images/hero-rdv-mobile-photo.webp');
   }
 
   @media (min-width: 768px) {
     .hero--rdv {
-      background-image: url('/images/hero-rdv-desktop.svg');
+      background-image: url('/images/hero-rdv-desktop-photo.webp');
       align-items: center;
       padding-bottom: 0;
     }
@@ -88,36 +93,64 @@ import ContactForm from '../components/ContactForm.astro';
 
   /* Fond blanc pour la section booking */
   .booking-section {
-    background-color: var(--kd-white);
+    background: var(--color-surface-raised);
   }
 
-  /* Icône contact sur fond blanc : fond crème pour le contraste */
-  .booking-section .contact-icon {
+  .booking-grid {
+    display: grid;
+    gap: var(--sp-10);
+  }
+
+  @media (min-width: 900px) {
+    .booking-grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+
+  .booking-info h2 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    margin-bottom: var(--sp-4);
+  }
+
+  .booking-contacts {
+    margin-top: var(--sp-8);
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+  }
+
+  .contact-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
     background: var(--kd-cream);
+    border-radius: 8px;
+    color: var(--kd-terracotta);
+    flex-shrink: 0;
   }
 
-  /* Carte formulaire : légèrement crème pour se détacher du blanc */
-  .booking-section :global(.form-card) {
-    background: var(--kd-cream);
-    border: 1.5px solid var(--kd-cream-deep);
+  .contact-label {
+    font-size: var(--fs-base);
+    color: var(--kd-bark);
   }
 
-  /* Champs inputs : fond blanc pour contraster avec la carte crème */
-  .booking-section :global(.form-input),
-  .booking-section :global(.form-textarea) {
-    background: var(--kd-white);
-    border-color: var(--kd-stone);
-  }
-
-  /* Liens dans les contact-label */
   .contact-link {
-    color: var(--kd-ink);
+    color: var(--kd-terracotta);
     text-decoration: none;
-    font-weight: 500;
-    transition: color var(--dur-fast) var(--ease-out);
+    font-weight: 600;
   }
 
   .contact-link:hover {
-    color: var(--kd-terracotta);
+    text-decoration: underline;
   }
 </style>

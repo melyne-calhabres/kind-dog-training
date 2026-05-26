@@ -1,12 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
 
 const packs = [
   {
     tag: 'Chiots/ados de 2 à 8 mois',
     title: 'Pack chiots & ados',
     subtitle: "Les bases d'un bon chien citoyen",
-    image: '/images/pack-chiots.png',
+    image: '/images/pack-chiots.webp',
     imageAlt: 'Chiot staffie pendant une séance d\'éducation canine',
     sections: [
       {
@@ -35,7 +36,7 @@ const packs = [
     tag: 'Pour les chiens de 8 mois et +',
     title: 'Pack chiens adultes',
     subtitle: 'pour les chiens qui ont séché quelques leçons',
-    image: '/images/pack-adultes.png',
+    image: '/images/pack-adultes.webp',
     imageAlt: 'Chien cocker anglais pendant une séance d\'éducation canine',
     imagePosition: 'center 30%',
     sections: [
@@ -59,7 +60,7 @@ const packs = [
     tag: 'Pour les chiots ou chiens adultes',
     title: 'Pack chien réactif/agressif',
     subtitle: 'pour les chiens en plus grande difficulté',
-    image: '/images/pack-reactif.png',
+    image: '/images/pack-reactif.webp',
     imageAlt: 'Chien réactif pendant un travail de désensibilisation',
     imagePosition: 'center 30%',
     intro: "Pour les chiens présentant de l'agressivité envers les autres chiens.",
@@ -93,7 +94,7 @@ const packs = [
     tag: "À l'unité",
     title: 'Cours individuels',
     subtitle: 'pour ceux qui préfèrent la simplicité',
-    image: '/images/chien-shiba.png',
+    image: '/images/chien-shiba.webp',
     imageAlt: 'Éducation d\'un chien Shiba Inu à Bordeaux',
     imagePosition: 'center 15%',
     blurb: "Si les packs de plusieurs cours ne sont pas adaptés à votre situation, vous avez la possibilité de prendre des cours à l'unité. Peu importe votre problème et votre situation, nous trouverons toujours une solution qui conviendra à votre chien.",
@@ -107,7 +108,7 @@ const specialFormats = [
   {
     title: 'Cours collectifs',
     subtitle: 'apprendre ensemble dans un cadre convivial',
-    image: '/images/cours-collectifs.jpg',
+    image: '/images/cours-collectifs.webp',
     imageAlt: 'Cours collectifs d\'éducation canine avec Kind Dog Training',
     imagePosition: 'center 70%',
     description: "Travaillez en groupe avec d'autres propriétaires et leurs chiens. Idéal pour travailler l'obéissance en présence de distractions et profiter d'un cadre de socialisation stimulant.\n\nJe constitue toujours les groupes de manière précise afin de répondre aux différents besoins de chacun et d'être sûr que tout le monde s'entende bien. Les groupes sont composés de maximum 6 chiens.",
@@ -157,6 +158,10 @@ const faqJsonLd = {
   title="Quel Tarif pour un Educateur Canin à Bordeaux ?"
   description="Tarifs éducateur canin à Bordeaux : bilan gratuit, pack chiots 360 €, pack adultes 230 €, pack réactif 230 €, cours individuel 50 €. Toutes races."
   canonicalUrl="/tarif-educateur-canin-bordeaux"
+  preloadImages={[
+    { href: '/images/hero-tarifs-mobile-photo.webp', media: '(max-width: 767px)' },
+    { href: '/images/hero-tarifs-desktop-photo.webp', media: '(min-width: 768px)' },
+  ]}
 >
   <!-- HERO -->
   <section class="hero hero--tarifs" aria-labelledby="hero-tarifs-heading">
@@ -196,7 +201,7 @@ const faqJsonLd = {
         <h2 id="why-kdt-heading" class="why-kdt-title">Pourquoi choisir <span class="accent">Kind Dog Training</span>&nbsp;?</h2>
         <div class="why-kdt-image-wrap">
           <img
-            src="/images/why-kind-dog.png"
+            src="/images/why-kind-dog.webp"
             alt="Mélyne, éducatrice canin à Bordeaux et son chien Ramsey"
             class="why-kdt-img"
             loading="lazy"
@@ -276,7 +281,7 @@ const faqJsonLd = {
             </footer>
             <a href="/prendre-rdv/" class="pricing-cta">
               Prendre RDV
-              <i data-lucide="arrow-right" style="width:14px;height:14px;stroke-width:1.75"></i>
+              <Icon name="arrow-right" width={14} height={14} strokeWidth={1.75} />
             </a>
           </article>
         ))}
@@ -317,7 +322,7 @@ const faqJsonLd = {
             </footer>
             <a href="/prendre-rdv/" class="pricing-cta">
               {format.price === 'Sur devis' ? 'Demander un devis' : 'Prendre RDV'}
-              <i data-lucide="arrow-right" style="width:14px;height:14px;stroke-width:1.75"></i>
+              <Icon name="arrow-right" width={14} height={14} strokeWidth={1.75} />
             </a>
           </article>
         ))}
@@ -534,12 +539,12 @@ const faqJsonLd = {
 
   /* Override hero background for the tarifs page */
   .hero--tarifs {
-    background-image: url('/images/hero-tarifs-mobile.svg');
+    background-image: url('/images/hero-tarifs-mobile-photo.webp');
   }
 
   @media (min-width: 768px) {
     .hero--tarifs {
-      background-image: url('/images/hero-tarifs-desktop.svg');
+      background-image: url('/images/hero-tarifs-desktop-photo.webp');
       align-items: center;
       padding-bottom: 0;
     }

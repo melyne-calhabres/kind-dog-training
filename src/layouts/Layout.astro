@@ -11,6 +11,7 @@ interface Props {
   canonicalUrl?: string;
   type?: 'website' | 'article';
   jsonLd?: Record<string, unknown>;
+  preloadImages?: Array<{ href: string; media?: string }>;
 }
 
 const props = Astro.props;
@@ -28,13 +29,5 @@ const props = Astro.props;
       <slot />
     </main>
     <Footer />
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        if (window.lucide) window.lucide.createIcons();
-      });
-      window.addEventListener('load', () => {
-        if (window.lucide) window.lucide.createIcons();
-      });
-    </script>
   </body>
 </html>
