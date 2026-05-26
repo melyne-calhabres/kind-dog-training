@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /mentions-legales/
-Sitemap: https://mondomaine.fr/sitemap.xml
+Sitemap: https://kind-dog-training.fr/sitemap.xml
