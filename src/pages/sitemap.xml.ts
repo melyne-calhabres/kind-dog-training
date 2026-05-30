@@ -14,7 +14,7 @@ export const GET: APIRoute = ({ site }) => {
   const urls = pages
     .map(
       path =>
-        `  <url>\n    <loc>${base}${path}</loc>\n    <changefreq>quarterly</changefreq>\n  </url>`
+        `  <url>\n    <loc>${base}${path}</loc>\n    <changefreq>monthly</changefreq>\n  </url>`
     )
     .join('\n');
 
