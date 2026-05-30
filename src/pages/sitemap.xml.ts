@@ -5,7 +5,6 @@ const pages = [
   '/qui-suis-je/',
   '/tarif-educateur-canin-bordeaux',
   '/prendre-rdv/',
-  '/guides/',
 ];
 
 export const GET: APIRoute = ({ site }) => {
