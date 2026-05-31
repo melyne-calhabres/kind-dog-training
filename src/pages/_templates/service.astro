@@ -1,0 +1,808 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+
+// ── À personnaliser pour chaque page service ──────────────────────────────────
+const page = {
+  metaTitle:       'Éducation du chiot à Bordeaux — Kind Dog Training',
+  metaDescription: 'Cours d\'éducation pour chiots à Bordeaux. Méthodes positives à domicile. Premier bilan comportemental offert.',
+};
+
+const hero = {
+  eyebrow:        'Bordeaux + 30 km',
+  headline:       'Les bonnes bases,',
+  headlineLine2:  'dès le',
+  accent:         'départ.',
+  lede:           'Un chiot, ça s\'apprend — pour lui comme pour vous. Ensemble, on pose des fondations solides, bienveillantes et durables.',
+};
+
+const desc = {
+  eyebrow:         'Éducation du chiot',
+  headline:        'Ce qu\'on travaille',
+  headlineAccent:  'ensemble',
+  intro:           'Les premières semaines sont décisives. J\'interviens à votre domicile pour que votre chiot apprenne dans son environnement — là où les habitudes se construisent vraiment.',
+  benefits: [
+    'Marche en laisse sans tirer',
+    'Les ordres fondamentaux — assis, couché, rappel',
+    'La propreté et la gestion de la solitude',
+    'La socialisation et les interactions',
+  ],
+  price:        'xx €',
+  priceUnit:    '/ cours',
+  packText:     'Pack x cours · xx €',
+  packSavings:  'soit x € d\'économie',
+};
+
+const inclus = [
+  {
+    icon:  'book-open',
+    title: 'Bilan écrit',
+    desc:  'À l\'issue de chaque cours, vous recevez un compte-rendu de la séance et les points à travailler avant la prochaine.',
+  },
+  {
+    icon:  'message-circle',
+    title: 'Suivi WhatsApp 7j/7',
+    desc:  'Une question entre deux séances ? Je suis joignable tout au long de l\'accompagnement, sans délai.',
+  },
+  {
+    icon:  'home',
+    title: 'À votre domicile',
+    desc:  'J\'interviens là où vous vivez — l\'environnement réel, pas celui d\'un club ou d\'une salle neutre.',
+  },
+];
+
+const zones = [
+  'Bordeaux', 'Mérignac', 'Pessac', 'Talence', 'Bègles',
+  'Le Bouscat', 'Bruges', 'Eysines', 'Cenon', 'Floirac', 'Lormont',
+];
+
+// 3 avis les plus récents (source : page d'accueil)
+const reviews = [
+  {
+    name:     'M H',
+    date:     'Il y a une semaine',
+    text:     'Quand vous pensez que rien ne fonctionnera et que vous êtes à deux doigts de renoncer, allez il faut y croire encore une dernière fois et appeler Mélyne (en vrai, faites le dès le début, vous gagnerez du temps et beaucoup beaucoup d\'énergie). Au-delà de ses qualités personnelles (Mélyne est vraiment super), elle est une professionnelle qui ne s\'est pas improvisée éducateur canin du jour au lendemain.',
+    gradient: 'linear-gradient(135deg, #C8623A, #E8A33D)',
+  },
+  {
+    name:     'Bastien Dupont',
+    date:     'Il y a 2 semaines',
+    text:     'Ma compagne et moi avons fait appel à Mélyne car nous étions en difficulté. Elle a su nous conseiller et nous orienter de la meilleur façon possible de façon très réactive et à notre écoute ! Elle aide autant nos amis à quatre pattes que leurs propriétaires.',
+    gradient: 'linear-gradient(135deg, #9B6B47, #C8623A)',
+  },
+  {
+    name:     'Coralie Bonnet',
+    date:     'Il y a 2 semaines',
+    text:     'Mélyne est d\'une écoute précieuse et s\'adapte parfaitement au chien comme à son maître. Elle nous a aidé grandement à faire évoluer Mucho qui est beaucoup plus serein dans les rencontres avec les congénères et beaucoup moins réactif ! C\'est LA meilleure éducatrice de Bordeaux.',
+    gradient: 'linear-gradient(135deg, #5A8084, #8FB4B8)',
+  },
+];
+
+// Initiales avatar
+function initials(name: string) {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+---
+
+<Layout title={page.metaTitle} description={page.metaDescription}>
+
+  <!-- ── HERO ─────────────────────────────────────────────────────────── -->
+  <!--
+    Photo hero : remplacer le gradient par une image réelle via style inline :
+    style="--svc-bg-mobile: url('/images/xxx-mobile.webp'); --svc-bg-desktop: url('/images/xxx-desktop.webp');"
+  -->
+  <section class="hero svc-hero" aria-labelledby="svc-h1">
+    <div class="container">
+      <div class="svc-hero-content">
+        <span class="svc-location-pill">
+          <Icon name="map-pin" width={13} height={13} strokeWidth={2} />
+          {hero.eyebrow}
+        </span>
+        <h1 id="svc-h1" class="svc-h1">
+          {hero.headline}<br>
+          {hero.headlineLine2} <span class="svc-acc">{hero.accent}</span>
+        </h1>
+        <p class="svc-lede">{hero.lede}</p>
+        <div class="svc-btn-group">
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            <Icon name="calendar" width={16} height={16} strokeWidth={2} />
+            Prendre RDV
+          </a>
+          <a href="/tarif-educateur-canin-bordeaux/" class="svc-btn-ghost">Voir les tarifs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── DESCRIPTION ───────────────────────────────────────────────────── -->
+  <section class="section" id="service" aria-labelledby="svc-desc-heading">
+    <div class="container">
+      <div class="svc-desc-grid">
+
+        <!-- Titre — 1er sur mobile / col gauche haut sur desktop -->
+        <div class="svc-desc-heading-wrap">
+          <h2 id="svc-desc-heading">{desc.headline} <span class="accent">{desc.headlineAccent}</span></h2>
+        </div>
+
+        <!-- Photo — entre titre et texte sur mobile / col droite (span 2 lignes) sur desktop -->
+        <!--
+          Remplacer .svc-photo-placeholder par une vraie image :
+          <img src="/images/xxx.webp" alt="..." class="svc-photo-img" loading="lazy" decoding="async" width="800" height="1067" />
+        -->
+        <div class="svc-visual-col">
+          <div class="svc-photo-sticky">
+            <div class="svc-photo-placeholder" role="img" aria-label={`Photo — ${desc.eyebrow}`}>
+              <span class="svc-photo-hint" aria-hidden="true">Photo · binôme en séance, à domicile</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Corps texte — après l'image sur mobile / col gauche bas sur desktop -->
+        <div class="svc-desc-body">
+          <p class="svc-desc-intro">{desc.intro}</p>
+
+          <ul class="svc-benefits" role="list">
+            {desc.benefits.map((b) => (
+              <li>
+                <Icon name="check" width={17} height={17} strokeWidth={2.5} class="svc-check-icon" />
+                {b}
+              </li>
+            ))}
+          </ul>
+
+          <hr class="svc-divider" />
+
+          <!-- Carte tarif -->
+          <div class="svc-price-card">
+            <p class="svc-price-label">Tarifs</p>
+            <div class="svc-price-row">
+              <span class="svc-price-num">{desc.price}</span>
+              <span class="svc-price-unit">{desc.priceUnit}</span>
+            </div>
+            <p class="svc-price-pack">
+              {desc.packText}
+              <span class="svc-price-savings"> — {desc.packSavings}</span>
+            </p>
+            <p class="svc-price-free">
+              <span class="svc-check-mark" aria-hidden="true">✓</span>
+              Bilan comportemental gratuit à domicile
+            </p>
+          </div>
+
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            <Icon name="calendar" width={16} height={16} strokeWidth={2} />
+            Prendre RDV
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── AVIS ──────────────────────────────────────────────────────────── -->
+  <section class="kdtA" id="avis" aria-labelledby="svc-avis-heading">
+    <div class="svc-kdta-inner">
+      <div class="kdtA__header">
+        <div class="kdtA__intro">
+          <p class="kdtA__eyebrow">Avis Google · 5,0 / 5 sur 13 avis</p>
+          <h2 id="svc-avis-heading" class="kdtA__title">
+            Ce qu'en disent <span class="accent">les humains &amp; leurs chiens</span>
+          </h2>
+        </div>
+      </div>
+      <div class="svc-reviews-grid">
+        {reviews.map((r) => (
+          <article class="kdtA__card">
+            <div class="kdtA__card-head">
+              <div class="kdtA__avatar" style={`background: ${r.gradient};`}>{initials(r.name)}</div>
+              <div class="kdtA__name-block">
+                <div class="kdtA__name">{r.name}</div>
+                <div class="kdtA__date">{r.date}</div>
+              </div>
+            </div>
+            <div class="kdtA__stars" aria-label="5 étoiles sur 5">
+              {[...Array(5)].map(() => (
+                <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+                  <path
+                    d="M12 2.5l2.95 6.6 7.05.7-5.35 4.85 1.6 7.35L12 18l-6.25 4 1.6-7.35L2 9.8l7.05-.7L12 2.5z"
+                    fill="#E8A33D" stroke="#E8A33D" stroke-width="1.2" stroke-linejoin="round"
+                  />
+                </svg>
+              ))}
+            </div>
+            <p class="kdtA__text">{r.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── CE QUI EST INCLUS ──────────────────────────────────────────────── -->
+  <section class="section section-paper" id="inclus" aria-labelledby="svc-inclus-heading">
+    <div class="container">
+      <h2 id="svc-inclus-heading">Ce qui est <span class="accent">inclus</span></h2>
+      <div class="svc-inclus-grid">
+        {inclus.map((item) => (
+          <div class="svc-inclus-card">
+            <div class="svc-inclus-icon" aria-hidden="true">
+              <Icon name={item.icon} width={22} height={22} strokeWidth={1.75} />
+            </div>
+            <p class="svc-inclus-title">{item.title}</p>
+            <p class="svc-inclus-desc">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── ZONE STRIP ─────────────────────────────────────────────────────── -->
+  <section class="svc-zone-strip" aria-label="Zone d'intervention">
+    <span class="svc-zone-label">
+      <Icon name="map-pin" width={14} height={14} strokeWidth={2} />
+      Je me déplace à&nbsp;:
+    </span>
+
+    <!-- Mobile : défilement automatique (contenu dupliqué pour boucle infinie) -->
+    <div class="svc-zone-marquee-outer" aria-hidden="true">
+      <div class="svc-zone-marquee-inner">
+        {zones.map((z) => (
+          <Fragment>
+            <span class="svc-zone-sep">·</span>
+            <span class="svc-zone-name">{z}</span>
+          </Fragment>
+        ))}
+        <span class="svc-zone-sep">·</span>
+        <span class="svc-zone-more">+ 17 communes · jusqu'à 30&nbsp;km</span>
+        {zones.map((z) => (
+          <Fragment>
+            <span class="svc-zone-sep">·</span>
+            <span class="svc-zone-name">{z}</span>
+          </Fragment>
+        ))}
+        <span class="svc-zone-sep">·</span>
+        <span class="svc-zone-more">+ 17 communes · jusqu'à 30&nbsp;km</span>
+      </div>
+    </div>
+
+    <!-- Desktop : liste statique centrée -->
+    <div class="svc-zone-static" aria-hidden="true">
+      {zones.map((z) => (
+        <Fragment>
+          <span class="svc-zone-sep">·</span>
+          <span class="svc-zone-name">{z}</span>
+        </Fragment>
+      ))}
+      <span class="svc-zone-sep">·</span>
+      <span class="svc-zone-more">+ 17 communes · jusqu'à 30&nbsp;km</span>
+    </div>
+  </section>
+
+
+  <!-- ── CTA ───────────────────────────────────────────────────────────── -->
+  <section class="section section-dark cta-section" aria-labelledby="svc-cta-heading">
+    <div class="container">
+      <div class="cta-bilan-card">
+        <p class="svc-cta-title" id="svc-cta-heading">
+          Réservez votre bilan comportemental <span class="accent">offert</span>
+        </p>
+        <p style="text-align: center; margin-bottom: var(--sp-6);">
+          Aucun engagement n'est demandé à ce stade et c'est la politique de Kind Dog
+          Training&nbsp;! Si vous êtes satisfait de ce premier rdv et de la méthode alors on
+          fixe une date pour un premier cours, sinon vous n'aurez rien perdu.
+        </p>
+        <div style="text-align: center;">
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            <Icon name="calendar" width={18} height={18} strokeWidth={1.75} />
+            Prendre RDV
+          </a>
+        </div>
+        <p style="text-align: center; margin-top: var(--sp-5); font-size: 0.8rem; color: var(--kd-fawn);">
+          *Bilan comportemental à 20&nbsp;€ si &gt;20&nbsp;km.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+/* ══ HERO ════════════════════════════════════════════════════════════════ */
+
+/*
+  Utilise le gradient comme fond de substitution jusqu'à l'ajout des photos.
+  Pour injecter les vraies photos, ajouter sur l'élément <section> :
+    style="--svc-bg-mobile: url('/images/xxx-mobile.webp'); --svc-bg-desktop: url('/images/xxx-desktop.webp');"
+*/
+.svc-hero {
+  background-image: var(--svc-bg-mobile, linear-gradient(148deg, #D4775C 0%, #C8623A 28%, #9A3D1A 62%, #3D160A 100%));
+  align-items: flex-end;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+/* Override : overlay sombre au lieu de l'overlay blanc de la homepage */
+.svc-hero::before {
+  display: block;
+  background: linear-gradient(to top,
+    rgba(42, 30, 21, 0.90) 0%,
+    rgba(42, 30, 21, 0.48) 44%,
+    rgba(42, 30, 21, 0.06) 100%);
+}
+
+.svc-hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-4);
+}
+
+.svc-location-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  background: rgba(244, 236, 220, 0.12);
+  border: 1px solid rgba(244, 236, 220, 0.22);
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(244, 236, 220, 0.9);
+}
+
+.svc-h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(38px, 5.5vw, 68px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--kd-cream);
+  margin-bottom: 0;
+  max-width: 640px;
+}
+
+.svc-acc {
+  color: var(--kd-terracotta);
+}
+
+.svc-lede {
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgba(244, 236, 220, 0.72);
+  max-width: 480px;
+  margin-bottom: 0;
+}
+
+.svc-btn-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: var(--sp-2);
+}
+
+.svc-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  padding: 13px 26px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid rgba(244, 236, 220, 0.35);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--kd-cream);
+  text-decoration: none;
+  transition: border-color var(--dur-base) var(--ease-out);
+}
+.svc-btn-ghost:hover {
+  border-color: rgba(244, 236, 220, 0.7);
+  text-decoration: none;
+  color: var(--kd-cream);
+}
+
+/* ══ DESCRIPTION ═════════════════════════════════════════════════════════ */
+
+.svc-desc-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+}
+
+.svc-desc-heading-wrap h2 {
+  margin-bottom: 0;
+}
+
+.svc-desc-intro {
+  color: var(--kd-bark);
+  margin-bottom: var(--sp-6);
+}
+
+/* Photo placeholder — gradient jusqu'à l'ajout d'une vraie image */
+.svc-photo-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, #E6A487 0%, #C8623A 52%, #A14B27 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Classe à utiliser quand la vraie photo est prête */
+.svc-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  display: block;
+}
+
+.svc-photo-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 18px;
+  font-size: 11px;
+  color: rgba(244, 236, 220, 0.4);
+  letter-spacing: 0.06em;
+}
+
+.svc-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin-bottom: var(--sp-6);
+}
+
+.svc-benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--kd-bark);
+  line-height: 1.5;
+}
+
+.svc-check-icon {
+  color: var(--kd-terracotta);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.svc-divider {
+  height: 1px;
+  background: var(--kd-cream-deep);
+  border: none;
+  margin: var(--sp-6) 0;
+}
+
+/* Carte tarif */
+.svc-price-card {
+  background: var(--kd-paper);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6) var(--sp-8);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--sp-8);
+}
+
+.svc-price-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--kd-fawn);
+  margin-bottom: var(--sp-3);
+}
+
+.svc-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  margin-bottom: 4px;
+}
+
+.svc-price-num {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(44px, 6vw, 56px);
+  color: var(--kd-terracotta);
+  line-height: 1;
+}
+
+.svc-price-unit {
+  font-size: 16px;
+  color: var(--kd-fawn);
+}
+
+.svc-price-pack {
+  font-size: 14px;
+  color: var(--kd-stone);
+  margin-bottom: var(--sp-4);
+}
+
+.svc-price-savings {
+  font-size: 13px;
+}
+
+.svc-price-free {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--kd-olive);
+  margin-bottom: 0;
+}
+
+.svc-check-mark {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ══ AVIS ════════════════════════════════════════════════════════════════ */
+
+.svc-kdta-inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+}
+
+/* Mobile : carrousel avec scroll-snap */
+.svc-reviews-grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 16px;
+  padding-bottom: 8px;
+}
+.svc-reviews-grid::-webkit-scrollbar { display: none; }
+
+.svc-reviews-grid .kdtA__card {
+  flex: 0 0 85%;
+  min-width: 280px;
+  scroll-snap-align: start;
+  min-height: auto;
+}
+
+/* ══ CE QUI EST INCLUS ═══════════════════════════════════════════════════ */
+
+.svc-inclus-grid {
+  display: grid;
+  gap: var(--sp-5);
+  margin-top: var(--sp-10);
+}
+
+.svc-inclus-card {
+  background: var(--kd-cream-warm);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-8);
+  box-shadow: var(--shadow-xs);
+  transition:
+    box-shadow var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+}
+
+.svc-inclus-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.svc-inclus-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  background: var(--kd-cream-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--kd-terracotta);
+  margin-bottom: var(--sp-5);
+}
+
+.svc-inclus-title {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--kd-ink);
+  margin-bottom: var(--sp-3);
+}
+
+.svc-inclus-desc {
+  font-size: 15px;
+  color: var(--kd-bark);
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+/* ══ ZONE STRIP ══════════════════════════════════════════════════════════ */
+
+.svc-zone-strip {
+  background: var(--kd-cream);
+  border-top: 1px solid var(--kd-cream-deep);
+  border-bottom: 1px solid var(--kd-cream-deep);
+  padding: 16px var(--sp-8);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.svc-zone-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--kd-ink);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.svc-zone-sep {
+  color: var(--kd-stone);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.svc-zone-name {
+  font-size: 13px;
+  color: var(--kd-bark);
+  white-space: nowrap;
+}
+
+.svc-zone-more {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--kd-terracotta);
+  white-space: nowrap;
+}
+
+/* Mobile : marquee */
+.svc-zone-marquee-outer {
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.svc-zone-marquee-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  animation: zone-scroll 22s linear infinite;
+}
+
+.svc-zone-strip:hover .svc-zone-marquee-inner,
+.svc-zone-strip:focus-within .svc-zone-marquee-inner {
+  animation-play-state: paused;
+}
+
+@keyframes zone-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Desktop : liste statique (cachée sur mobile) */
+.svc-zone-static { display: none; }
+
+/* ══ RESPONSIVE — desktop ════════════════════════════════════════════════ */
+
+@media (min-width: 768px) {
+
+  /* Hero */
+  .svc-hero {
+    background-image: var(--svc-bg-desktop, var(--svc-bg-mobile, linear-gradient(148deg, #D4775C 0%, #C8623A 28%, #9A3D1A 62%, #3D160A 100%)));
+  }
+
+  .svc-btn-group {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  /* Description : 2 colonnes, H2 + corps à gauche, photo à droite sur 2 lignes */
+  .svc-desc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    column-gap: var(--sp-16);
+    row-gap: var(--sp-6);
+    align-items: start;
+  }
+
+  .svc-desc-heading-wrap {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .svc-visual-col {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+
+  .svc-desc-body {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .svc-photo-sticky {
+    position: sticky;
+    top: calc(var(--header-height) + var(--sp-6));
+  }
+
+  .svc-photo-placeholder {
+    aspect-ratio: 3 / 4;
+  }
+
+  .svc-photo-img {
+    aspect-ratio: 3 / 4;
+  }
+
+  /* Avis : grille 3 colonnes sur desktop */
+  .svc-reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow-x: unset;
+    padding-bottom: 0;
+  }
+  .svc-reviews-grid .kdtA__card {
+    flex: none;
+    scroll-snap-align: unset;
+  }
+
+  /* Inclus : 2 colonnes */
+  .svc-inclus-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Zone strip : centré sur desktop, marquee masqué */
+  .svc-zone-strip {
+    padding: 18px var(--sp-8);
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+  .svc-zone-marquee-outer { display: none; }
+  .svc-zone-static {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
+@media (min-width: 960px) {
+  /* Inclus : 3 colonnes */
+  .svc-inclus-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .svc-zone-strip {
+    padding: 14px var(--sp-5);
+  }
+}
+
+/* ══ CTA TITLE (même style que h2, sans balise h2) ══════════════════════ */
+
+.svc-cta-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(var(--fs-2xl), 4.5vw, var(--fs-3xl));
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  color: inherit;
+  text-align: center;
+  margin-bottom: var(--sp-5);
+}
+</style>
