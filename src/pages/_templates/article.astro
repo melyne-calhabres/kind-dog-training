@@ -1,0 +1,397 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Comment gérer la réactivité de votre chien en promenade — Kind Dog Training',
+  metaDescription: 'Votre chien aboie ou tire en laisse face à ses congénères ? Découvrez comment gérer la réactivité avec des méthodes bienveillantes et efficaces à Bordeaux.',
+};
+
+// ── Article metadata ──────────────────────────────────────────────────────────
+const article = {
+  category:       'Comportement',
+  categoryUrl:    '/blog/',
+  breadcrumbLabel:'Gérer la réactivité',
+  titleBefore:    'Comment gérer la ',
+  titleAccent:    'réactivité',
+  titleAfter:     ' de votre chien en promenade',
+  publishDate:    '15 janvier 2026',
+  publishDateIso: '2026-01-15',
+  readTime:       '12 min',
+  author:         'Mélyne',
+  authorInitial:  'M',
+  authorRole:     'Éducatrice & comportementaliste canin · ACACED · Bordeaux',
+  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les binômes en difficulté avec des méthodes bienveillantes, adaptées à chaque situation.',
+  coverAlt:       'Chien en promenade dans un parc de Bordeaux, lumière naturelle',
+};
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type':       'Article',
+      headline:      article.titleBefore + article.titleAccent + article.titleAfter,
+      description:   page.metaDescription,
+      datePublished: article.publishDateIso,
+      dateModified:  article.publishDateIso,
+      inLanguage:    'fr-FR',
+      url:           pageUrl,
+      author: {
+        '@type': 'Person',
+        name:    article.author,
+        url:     siteUrl + '/',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url:     siteUrl + '/images/logo.png',
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id':   pageUrl,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',           item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: article.category,    item: siteUrl + article.categoryUrl },
+        { '@type': 'ListItem', position: 3, name: article.breadcrumbLabel },
+      ],
+    },
+  ],
+};
+
+// ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
+const tldr = [
+  'La réactivité n\'est pas de l\'agressivité — c\'est une réponse émotionnelle que votre chien ne contrôle pas encore',
+  'La distance est votre meilleur outil : commencez loin du déclencheur, rapprochez progressivement',
+  'Ne tirez jamais sur la laisse en réaction — vous renforcez l\'association négative',
+  'Avec de la constance, les premiers résultats apparaissent en deux à trois semaines',
+];
+
+// ── Table of contents ─────────────────────────────────────────────────────────
+const toc = [
+  { label: 'Comprendre la réactivité', href: '#comprendre', sub: false },
+  { label: 'Les erreurs courantes',     href: '#erreurs',    sub: false },
+  { label: 'Punir la réaction',         href: '#punir',      sub: true  },
+  { label: 'La méthode qui fonctionne', href: '#methode',    sub: false },
+];
+
+// ── Related articles ──────────────────────────────────────────────────────────
+const related = [
+  {
+    title:    'Mon chien tire en laisse : que faire ?',
+    category: 'Comportement',
+    readTime: '6 min',
+    gradient: 'linear-gradient(135deg, var(--kd-terracotta-soft) 0%, var(--kd-terracotta) 70%)',
+    url:      '/blog/',
+  },
+  {
+    title:    'Le rappel : par où commencer ?',
+    category: 'Éducation',
+    readTime: '8 min',
+    gradient: 'linear-gradient(160deg, #D4B39A 0%, #A14B27 70%)',
+    url:      '/blog/',
+  },
+  {
+    title:    'Socialiser un chiot en 5 étapes',
+    category: 'Chiot',
+    readTime: '5 min',
+    gradient: 'linear-gradient(120deg, #E2B89A 0%, #B85A35 70%)',
+    url:      '/blog/',
+  },
+];
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ──────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href={article.categoryUrl}>{article.category}</a></li>
+        <li aria-current="page">{article.breadcrumbLabel}</li>
+      </ol>
+    </div>
+  </nav>
+
+
+  <!-- ── ARTICLE ───────────────────────────────────────────────────── -->
+  <article aria-labelledby="art-h1">
+
+    <!-- En-tête de l'article -->
+    <header class="art-header">
+      <div class="container">
+        <h1 class="art-title" id="art-h1">
+          {article.titleBefore}<span class="accent">{article.titleAccent}</span>{article.titleAfter}
+        </h1>
+        <div class="art-meta">
+          <div class="art-author">
+            <div class="art-avatar" aria-hidden="true">{article.authorInitial}</div>
+            <p class="art-author-info">
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+            </p>
+          </div>
+          <div class="art-share">
+            <button id="art-copy-link" class="art-share-btn" type="button" aria-label="Copier le lien de l'article">
+              <Icon name="link" width={16} height={16} strokeWidth={2} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Image hero -->
+    <!--
+      Remplacer le placeholder par une vraie image :
+      style="--art-hero-bg-mobile: url('/images/xxx-mobile.webp'); --art-hero-bg-desktop: url('/images/xxx.webp');"
+      ou utiliser directement :
+      <img src="/images/article-hero.webp" alt={article.coverAlt}
+           width="1116" height="398" loading="eager" decoding="async"
+           class="art-hero-img" />
+    -->
+    <div class="art-hero-wrap">
+      <div class="container">
+        <figure class="art-hero">
+          <div class="art-hero-placeholder" role="img" aria-label={article.coverAlt}>
+            <span class="art-img-hint" aria-hidden="true">Photo · {article.coverAlt}</span>
+          </div>
+        </figure>
+      </div>
+    </div>
+
+    <!-- L'essentiel -->
+    <div class="container">
+      <div class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+        <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+        <p class="art-tldr-title">Ce qu'il faut retenir</p>
+        <ul class="art-tldr-list" role="list">
+          {tldr.map((item) => (
+            <li>
+              <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="art-tldr-footer">
+          <Icon name="clock" width={14} height={14} strokeWidth={2} />
+          Lecture complète&nbsp;: {article.readTime} · Pour aller plus loin, lisez l'article entier
+        </p>
+      </div>
+    </div>
+
+    <!-- Sommaire accordéon — mobile uniquement -->
+    <div class="container art-toc-mobile">
+      <details class="art-toc-accordion">
+        <summary class="art-toc-accordion-header">
+          Sommaire
+          <Icon name="chevron-down" width={16} height={16} strokeWidth={2} class="art-toc-chevron" />
+        </summary>
+        <nav class="art-toc-accordion-body" aria-label="Sommaire de l'article">
+          {toc.map((item) => (
+            <a
+              href={item.href}
+              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+            >
+              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+
+    <!-- Corps à deux colonnes : contenu + sidebar sticky -->
+    <div class="container art-layout">
+
+      <!-- Colonne principale -->
+      <div class="art-content">
+
+        <h2 id="comprendre">Comprendre la réactivité</h2>
+        <p>Votre chien aboie, tire ou se fige lorsqu'il croise un congénère en balade&nbsp;? Ce comportement, que l'on appelle la réactivité, est l'une des problématiques les plus fréquentes que je rencontre à Bordeaux et dans sa métropole.</p>
+        <p>La réactivité n'est pas de l'agressivité. C'est une réponse émotionnelle — souvent de la peur, parfois de la frustration — que votre chien exprime de la seule manière qu'il connaît. Il ne cherche pas à dominer. Il est en difficulté, et il a besoin de votre aide.</p>
+
+        <!--
+          Image dans le corps :
+          <figure>
+            <img src="/images/chien-attentif.webp" alt="Chien attentif en extérieur"
+                 width="740" height="200" loading="lazy" decoding="async"
+                 class="art-content-img" />
+          </figure>
+        -->
+        <div class="art-content-img-placeholder" aria-hidden="true">
+          <span class="art-img-hint">Photo · chien attentif en extérieur</span>
+        </div>
+
+        <p>Comprendre cette distinction est la première étape. Un chien réactif n'est pas un chien méchant — c'est un chien qui n'a pas encore appris à gérer ses émotions face à certains stimuli.</p>
+
+        <!-- CTA inline — visible sur mobile uniquement (la sidebar remplace ce bloc sur desktop) -->
+        <div class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Bilan gratuit à domicile</p>
+          <p class="art-inline-cta-desc">Sans engagement</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV</a>
+        </div>
+
+        <h2 id="erreurs">Les erreurs les plus courantes</h2>
+        <p>Avant de parler de solutions, parlons de ce qui ne fonctionne pas. Je le dis sans détour parce que je vois ces erreurs tous les jours, et elles sont presque toujours la raison pour laquelle la situation stagne.</p>
+
+        <h3 id="punir">Punir la réaction</h3>
+        <p>Tirer sur la laisse, crier, utiliser un collier étrangleur… Ces réflexes sont compréhensibles mais contre-productifs. Chaque punition renforce l'association négative.</p>
+
+        <ul class="art-list" role="list">
+          <li>Tirer sur la laisse en réaction au stimulus</li>
+          <li>Forcer le contact avec d'autres chiens «&nbsp;pour qu'il s'habitue&nbsp;»</li>
+          <li>Ignorer les signaux d'apaisement de votre chien</li>
+        </ul>
+
+        <p>Le résultat est toujours le même : la réaction s'intensifie avec le temps, et le chien perd confiance en vous comme guide.</p>
+
+        <div class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Ce que je ne ferai jamais</p>
+            <p class="art-callout__text">Je ne vous conseillerai jamais d'utiliser un collier étrangleur ou électrique pour «&nbsp;corriger&nbsp;» la réactivité. Ces outils aggravent le problème à moyen terme et détruisent la confiance entre vous et votre chien.</p>
+          </div>
+        </div>
+
+        <blockquote class="art-quote">
+          <div class="art-quote-mark" aria-hidden="true">"</div>
+          <p class="art-quote-text">La réactivité, ce n'est pas un défaut de caractère — c'est un chien qui vous dit quelque chose.</p>
+        </blockquote>
+
+        <h2 id="methode">La méthode qui fonctionne</h2>
+        <p>Le travail repose sur un principe simple : changer l'émotion de votre chien face au déclencheur. On appelle cela le contre-conditionnement, et c'est la base de toute rééducation comportementale bienveillante.</p>
+        <p>Concrètement, on commence loin — à une distance où votre chien remarque le stimulus mais reste calme. On récompense ce calme. Puis on réduit la distance progressivement, séance après séance, à son rythme.</p>
+
+        <div class="art-content-img-placeholder" aria-hidden="true">
+          <span class="art-img-hint">Schéma · méthode de contre-conditionnement</span>
+        </div>
+
+        <p>Ce travail demande de la patience et de la régularité. Mais les résultats sont souvent plus rapides que ce que les propriétaires imaginent&nbsp;: en deux à trois semaines de pratique quotidienne, les premiers changements sont visibles.</p>
+
+        <div class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Suivi WhatsApp 7j/7</p>
+            <p class="art-callout__text">Une question entre deux cours&nbsp;? Je réponds sous 48h. Ce suivi entre les séances est souvent la clé des progrès les plus rapides.</p>
+          </div>
+        </div>
+
+      </div><!-- /.art-content -->
+
+      <!-- Sidebar sticky — desktop uniquement -->
+      <aside class="art-sidebar" aria-labelledby="art-toc-heading">
+        <nav class="art-toc" aria-labelledby="art-toc-heading">
+          <p class="art-toc-title" id="art-toc-heading">Sommaire</p>
+          {toc.map((item) => (
+            <a
+              href={item.href}
+              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+            >
+              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <div class="art-sidebar-cta">
+          <p class="art-sidebar-cta-title">Bilan gratuit</p>
+          <p class="art-sidebar-cta-desc">À votre domicile, sans engagement</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV</a>
+        </div>
+      </aside>
+
+    </div><!-- /.art-layout -->
+
+    <!-- Biographie auteure -->
+    <footer class="art-bio-wrap">
+      <div class="container">
+        <div class="art-bio">
+          <div class="art-bio-avatar" aria-hidden="true">{article.authorInitial}</div>
+          <div>
+            <p class="art-bio-name">À propos de {article.author}</p>
+            <p class="art-bio-role">{article.authorRole}</p>
+            <p class="art-bio-desc">{article.authorDesc}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </article><!-- /article -->
+
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────────────── -->
+  <section class="section-dark art-cta-section" aria-labelledby="art-cta-h">
+    <div class="container art-cta-inner">
+      <h2 class="art-cta-title" id="art-cta-h">Besoin d'aide avec votre chien&nbsp;?</h2>
+      <p>Premier rendez-vous gratuit à votre domicile</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Prendre RDV
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── ARTICLES CONNEXES ──────────────────────────────────────────── -->
+  <section class="art-related" aria-labelledby="art-related-h">
+    <div class="container">
+      <h2 class="art-related-divider" id="art-related-h">À lire aussi</h2>
+      <div class="art-related-grid">
+        {related.map((card) => (
+          <a href={card.url} class="art-related-card">
+            <div
+              class="art-related-card-img"
+              style={`background: ${card.gradient};`}
+              role="presentation"
+            ></div>
+            <div class="art-related-card-body">
+              <p class="art-related-card-title">{card.title}</p>
+              <p class="art-related-card-meta">{card.category} · {card.readTime}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const btn = document.getElementById('art-copy-link');
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+        } catch {
+          const el = Object.assign(document.createElement('input'), { value: window.location.href });
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          el.remove();
+        }
+        btn.setAttribute('data-copied', '');
+        setTimeout(() => btn.removeAttribute('data-copied'), 2000);
+      });
+    }
+  </script>
+
+</Layout>
