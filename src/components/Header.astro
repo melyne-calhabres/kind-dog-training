@@ -33,17 +33,28 @@ function isActive(href: string): boolean {
     </button>
     <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
       <ul class="nav-list">
-        {navItems.map(({ label, href }) => (
-          <li>
-            <a
-              href={href}
-              class="nav-link"
-              aria-current={isActive(href) ? 'page' : undefined}
-            >
-              {label}
-            </a>
-          </li>
-        ))}
+        <li>
+          <a href="/" class="nav-link" aria-current={isActive('/') ? 'page' : undefined}>Accueil</a>
+        </li>
+        <li class="nav-item--dropdown">
+          <button class="nav-link nav-dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+            Services
+            <Icon name="chevron-down" width={14} height={14} strokeWidth={2.5} class="nav-dropdown-chevron" />
+          </button>
+          <ul class="nav-dropdown" role="menu">
+            <li role="none">
+              <a href="/services/cours-individuel-education-canine-bordeaux/" class="nav-dropdown-link" role="menuitem">
+                Cours individuels
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="/tarif-educateur-canin-bordeaux" class="nav-link" aria-current={isActive('/tarif-educateur-canin-bordeaux') ? 'page' : undefined}>Tarifs</a>
+        </li>
+        <li>
+          <a href="/qui-suis-je/" class="nav-link" aria-current={isActive('/qui-suis-je/') ? 'page' : undefined}>Qui suis-je ?</a>
+        </li>
       </ul>
       <a href="/prendre-rdv/" class="btn btn-primary nav-cta-mobile">
         <Icon name="calendar" width={18} height={18} strokeWidth={1.75} />
@@ -77,4 +88,23 @@ function isActive(href: string): boolean {
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
   }
+
+  // Dropdown toggles (mobile)
+  document.querySelectorAll('.nav-dropdown-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const item = trigger.closest('.nav-item--dropdown');
+      const expanded = trigger.getAttribute('aria-expanded') === 'true';
+      trigger.setAttribute('aria-expanded', String(!expanded));
+      item?.classList.toggle('is-open');
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!(e.target as Element).closest('.nav-item--dropdown')) {
+      document.querySelectorAll('.nav-item--dropdown.is-open').forEach(item => {
+        item.classList.remove('is-open');
+        (item.querySelector('.nav-dropdown-trigger') as HTMLElement)?.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
 </script>

@@ -1,0 +1,1096 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+
+const page = {
+  metaTitle:       'Cours d\'éducation canine individuel à Bordeaux - 1er Bilan Offert',
+  metaDescription: 'Cours d\'éducation canine individuel à Bordeaux. Bilan comportemental offert. Pour chiots et chiens adultes, toutes races. Accompagnement sur-mesure.',
+};
+
+const hero = {
+  eyebrow:        'Bordeaux + 30 km',
+  headline:       'Cours individuels d\'éducation',
+  headlineLine2:  'canine',
+  accent:         'à Bordeaux.',
+  lede:           'Un accompagnement 100 % personnalisé, adapté à votre chien et à votre quotidien. Votre chien progresse à chaque cours',
+};
+
+const benefits = [
+  {
+    icon:  'user',
+    title: 'Attention 100 % dédiée',
+    text:  'Pas de groupe, pas de distraction : chaque minute est consacrée à votre chien.',
+  },
+  {
+    icon:  'map-pin',
+    title: 'Lieu selon vos besoins',
+    text:  'On travaille dans l\'environnement dans lequel votre chien est en difficulté pour faciliter votre quotidien. Il peut également arriver de travailler dans un environnement calme pour faciliter certains exercices.',
+  },
+  {
+    icon:  'target',
+    title: 'Programme sur-mesure',
+    text:  'Les exercices sont adaptés à votre chien, à son caractère et à vos objectifs. Pas de programme générique.',
+  },
+  {
+    icon:  'clock',
+    title: 'Votre rythme',
+    text:  'On avance à la vitesse de votre chien, sans pression. Chaque séance s\'appuie sur les progrès de la précédente.',
+  },
+];
+
+const chiot = {
+  title:    'Chiot : poser les bases dès le départ',
+  intro:    'Les premières semaines sont décisives pour un chiot. Un cours individuel d\'éducation canine permet de travailler dans l\'environnement réel du chiot, là où les habitudes se construisent. Les cours ne sont pas utiles uniquement pour apprendre des ordres. On s\'assure de partir sur des bases saines, que le chiot n\'arrive pas à la maison avec quelques petits soucis (cela peut arriver par exemple que certains chiots soient un peu protecteurs envers leur gamelle selon le passif à l\'élevage). Le plus tôt vous commencez à lui faire découvrir son nouveau monde, le mieux c\'est.',
+  points: [
+    'Propreté et gestion de la solitude',
+    'Marche en laisse sans tirer',
+    'Ordres fondamentaux : assis, couché, rappel…',
+    'Socialisation et gestion des émotions',
+    'Mordillements et destructions',
+  ],
+};
+
+const adulte = {
+  title:    'Chien adulte : corriger et progresser',
+  intro:    'Qu\'il s\'agisse de reprendre les bases ou de traiter un problème spécifique, le format individuel permet d\'aller droit au but. Chacun de mes cours d\'éducation canine à Bordeaux dure une heure. On s\'assure ensemble durant ce cours que votre chien progresse. Vous avez une problématique, on travaille dessus. Avec Kind Dog Training vous avez l\'assurance que votre chien progresse à chaque cours. Mon objectif est de vous aider à améliorer votre quotidien avec votre chien, pas de vous faire suivre 10 cours individuels inutiles.',
+  points: [
+    'Réactivité en laisse et gestion des croisements',
+    'Aboiements et excitation excessive',
+    'Tirage en laisse et marche au pied',
+    'Gestion des émotions et auto-contrôle',
+    'Obéissance au quotidien',
+  ],
+};
+
+const deroulement = [
+  {
+    icon:  'home',
+    title: '1. Bilan comportemental gratuit',
+    desc:  'Tous mes cours d\'éducation canine à Bordeaux sont précédées d\'un bilan comportemental gratuit à votre domicile. J\'observe dans un premier temps votre chien dans son environnement, je comprends votre situation et on définit ensemble un plan d\'action.',
+  },
+  {
+    icon:  'clipboard-list',
+    title: '2. Cours d\'une heure maximum',
+    desc:  'Lors de chaque cours, je vous présente les objectifs, les exercices que l\'on va travailler, pourquoi on va les travailler et vous repartez avec une vision claire de quoi faire au quotidien. Les lieux peuvent grandement varier et dépendront de votre problématique (si votre chien a des problèmes en ville je ne vous demanderai pas de faire un cours d\'éducation canine en forêt). On s\'assure ensemble que votre chien progresse là où il est en difficulté.',
+  },
+  {
+    icon:  'book-open',
+    title: '3. Bilan écrit après chaque séance',
+    desc:  'Vous recevez un compte-rendu détaillé : objectifs, exercices travaillés, progrès observés et devoirs à faire avant la prochaine séance (exercices à travailler chez vous). Tout est structuré et vous offre une vision claire de l\'accompagnement et de la progression de votre chien.',
+  },
+  {
+    icon:  'message-circle',
+    title: '4. Suivi WhatsApp 7j/7',
+    desc:  'Une question entre deux séances ? Je suis disponible tout au long de l\'accompagnement par WhatsApp. Tout message sera traité dans un délai maximum de 48h (la plupart du temps beaucoup moins).',
+  },
+];
+
+const reviews = [
+  {
+    name:     'M H',
+    date:     'Il y a une semaine',
+    text:     'Quand vous pensez que rien ne fonctionnera et que vous êtes à deux doigts de renoncer, allez il faut y croire encore une dernière fois et appeler Mélyne (en vrai, faites le dès le début, vous gagnerez du temps et beaucoup beaucoup d\'énergie). Au-delà de ses qualités personnelles (Mélyne est vraiment super), elle est une professionnelle qui ne s\'est pas improvisée éducateur canin du jour au lendemain.',
+    gradient: 'linear-gradient(135deg, #C8623A, #E8A33D)',
+  },
+  {
+    name:     'Bastien Dupont',
+    date:     'Il y a 2 semaines',
+    text:     'Ma compagne et moi avons fait appel à Mélyne car nous étions en difficulté. Elle a su nous conseiller et nous orienter de la meilleur façon possible de façon très réactive et à notre écoute ! Elle aide autant nos amis à quatre pattes que leurs propriétaires.',
+    gradient: 'linear-gradient(135deg, #9B6B47, #C8623A)',
+  },
+  {
+    name:     'Coralie Bonnet',
+    date:     'Il y a 2 semaines',
+    text:     'Mélyne est d\'une écoute précieuse et s\'adapte parfaitement au chien comme à son maître. Elle nous a aidé grandement à faire évoluer Mucho qui est beaucoup plus serein dans les rencontres avec les congénères et beaucoup moins réactif ! C\'est LA meilleure éducatrice de Bordeaux.',
+    gradient: 'linear-gradient(135deg, #5A8084, #8FB4B8)',
+  },
+];
+
+const zones = [
+  'Bordeaux', 'Mérignac', 'Pessac', 'Talence', 'Bègles',
+  'Le Bouscat', 'Bruges', 'Eysines', 'Cenon', 'Floirac', 'Lormont',
+];
+
+const faqItems = [
+  {
+    question: 'Combien de cours faut-il prévoir pour voir des résultats avec mon chien ?',
+    answer:   'Cela dépend de beaucoup de facteurs et il est impossible de répondre sans avoir de contexte. Selon les problématiques et votre situation personnelle, le nombre de cours d\'éducation canine peut grandement varier. Contactez moi pour qu\'on puisse voir ça ensemble !',
+  },
+  {
+    question: 'Les cours individuels sont ils adaptés si j\'ai un chien craintif ?',
+    answer:   'Oui complètement ! Mes cours d\'éducation canine à Bordeaux sont entièrement adaptés pour tous les chiens.',
+  },
+  {
+    question: 'Est-ce que vous proposez également des cours collectifs ?',
+    answer:   'Oui je propose aussi pour vos chiens des cours collectifs à thèmes ! Je sélectionne les chiens de manière à être sûr que chaque cours se déroule bien et que les exercices soient adaptés au niveau des chiens présents.',
+  },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+
+function initials(name: string) {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Cours d\'éducation canine individuel à Bordeaux',
+  description: page.metaDescription,
+  url: `${siteUrl}/services/cours-individuel-education-canine-bordeaux/`,
+  provider: {
+    '@type': 'ProfessionalService',
+    name: 'Kind Dog Training',
+    url: siteUrl,
+    telephone: '+33642648914',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Bruges',
+      postalCode: '33520',
+      addressRegion: 'Nouvelle-Aquitaine',
+      addressCountry: 'FR',
+    },
+  },
+  areaServed: {
+    '@type': 'City',
+    name: 'Bordeaux',
+  },
+  offers: {
+    '@type': 'Offer',
+    price: '50',
+    priceCurrency: 'EUR',
+    description: 'Cours individuel à l\'unité',
+  },
+};
+---
+
+<Layout title={page.metaTitle} description={page.metaDescription} jsonLd={jsonLd}>
+
+  <!-- ── HERO ─────────────────────────────────────────────────────────── -->
+  <section class="hero svc-hero" aria-labelledby="svc-h1">
+    <div class="container">
+      <div class="svc-hero-content">
+        <span class="svc-location-pill">
+          <Icon name="map-pin" width={13} height={13} strokeWidth={2} />
+          {hero.eyebrow}
+        </span>
+        <h1 id="svc-h1" class="svc-h1">
+          {hero.headline}<br>
+          {hero.headlineLine2} <span class="svc-acc">{hero.accent}</span>
+        </h1>
+        <p class="svc-lede">{hero.lede}</p>
+        <div class="svc-btn-group">
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            <Icon name="calendar" width={16} height={16} strokeWidth={2} />
+            Prendre RDV
+          </a>
+          <a href="/tarif-educateur-canin-bordeaux/" class="svc-btn-ghost">Voir les tarifs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── CE QU'ON TRAVAILLE ────────────────────────────────────────────── -->
+  <section class="section svc-section-white" id="programme" aria-labelledby="programme-heading">
+    <div class="container">
+      <h2 id="programme-heading">Ce qu'on travaille en <span class="accent">cours individuel</span></h2>
+
+      <div class="ci-programme-grid">
+        <!-- Chiot -->
+        <div class="ci-programme-block">
+          <h3 class="ci-programme-h3">{chiot.title}</h3>
+          <p class="ci-programme-intro">{chiot.intro}</p>
+          <ul class="svc-benefits" role="list">
+            {chiot.points.map((p) => (
+              <li>
+                <Icon name="check" width={17} height={17} strokeWidth={2.5} class="svc-check-icon" />
+                {p}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Adulte -->
+        <div class="ci-programme-block">
+          <h3 class="ci-programme-h3">{adulte.title}</h3>
+          <p class="ci-programme-intro">{adulte.intro}</p>
+          <ul class="svc-benefits" role="list">
+            {adulte.points.map((p) => (
+              <li>
+                <Icon name="check" width={17} height={17} strokeWidth={2.5} class="svc-check-icon" />
+                {p}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- WAVE : white → cream -->
+  <div class="wave-separator wave-sep--from-white" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path fill="#F4ECDC" d="M0,40 C360,0 1080,80 1440,40 L1440,80 L0,80 Z"/>
+    </svg>
+  </div>
+
+  <!-- ── DÉROULEMENT D'UNE SÉANCE ──────────────────────────────────────── -->
+  <section class="section ci-section-deroulement" id="deroulement" aria-labelledby="deroulement-heading">
+    <div class="container">
+      <div class="ci-deroulement-grid">
+
+        <!-- H2 : mobile order 1 / desktop col droite ligne 1 -->
+        <h2 id="deroulement-heading" class="ci-deroulement-h2">
+          Comment se déroule <span class="accent">une séance ?</span>
+        </h2>
+
+        <!-- Image : mobile order 2 / desktop col gauche (2 lignes) -->
+        <div class="ci-deroulement-visual">
+          <img
+            src="/images/cours-individuel-staffy-bordeaux.webp"
+            alt="chien Staffy en cours d'éducation canine à Bordeaux"
+            class="ci-deroulement-img"
+            loading="lazy"
+            decoding="async"
+            width="640"
+            height="800"
+          />
+        </div>
+
+        <!-- Étapes : mobile order 3 / desktop col droite ligne 2 -->
+        <div class="ci-steps">
+          {deroulement.map((step) => (
+            <div class="ci-step">
+              <div class="ci-step-icon" aria-hidden="true">
+                <Icon name={step.icon} width={22} height={22} strokeWidth={1.75} />
+              </div>
+              <div>
+                <p class="ci-step-title">{step.title}</p>
+                <p class="ci-step-desc">{step.desc}</p>
+              </div>
+            </div>
+          ))}
+          <div class="ci-steps-cta">
+            <a href="/prendre-rdv/" class="btn btn-primary">
+              <Icon name="calendar" width={16} height={16} strokeWidth={2} />
+              Prendre RDV
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- WAVE : cream → paper -->
+  <div class="wave-separator wave-sep--from-cream" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path fill="#FBF6EC" d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z"/>
+    </svg>
+  </div>
+
+  <!-- ── TARIFS ────────────────────────────────────────────────────────── -->
+  <section class="section section-paper" id="tarifs" aria-labelledby="tarifs-heading">
+    <div class="container" style="max-width: 640px;">
+      <h2 id="tarifs-heading" style="text-align: center;">Tarifs des cours individuels <span class="accent">à Bordeaux</span></h2>
+      <div class="svc-price-card" style="margin-top: var(--sp-8);">
+        <p class="svc-price-label">À l'unité</p>
+        <div class="svc-price-row">
+          <span class="svc-price-num">50 €</span>
+          <span class="svc-price-unit">/ cours</span>
+        </div>
+        <p class="svc-price-pack">
+          Pack 5 cours · 230 €
+          <span class="svc-price-savings"> — soit 20 € d'économie</span>
+        </p>
+        <p class="svc-price-pack">
+          Pack 8 cours chiots · 360 €
+          <span class="svc-price-savings"> — soit 40 € d'économie</span>
+        </p>
+        <p class="svc-price-free">
+          <span class="svc-check-mark" aria-hidden="true">✓</span>
+          Bilan comportemental gratuit à domicile
+        </p>
+      </div>
+      <div style="text-align: center; margin-top: var(--sp-6);">
+        <a href="/tarif-educateur-canin-bordeaux/" class="ci-link-tarifs">
+          Voir tous les tarifs et packs
+          <Icon name="arrow-right" width={15} height={15} strokeWidth={2} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── AVIS ──────────────────────────────────────────────────────────── -->
+  <section class="kdtA" id="avis" aria-labelledby="svc-avis-heading">
+    <div class="svc-kdta-inner">
+      <div class="kdtA__header">
+        <div class="kdtA__intro">
+          <p class="kdtA__eyebrow">Avis Google · 5,0 / 5 sur 13 avis</p>
+          <h2 id="svc-avis-heading" class="kdtA__title">
+            Ils ont fait confiance à <span class="accent">Kind Dog Training</span>
+          </h2>
+        </div>
+      </div>
+      <div class="svc-reviews-grid">
+        {reviews.map((r) => (
+          <article class="kdtA__card">
+            <div class="kdtA__card-head">
+              <div class="kdtA__avatar" style={`background: ${r.gradient};`}>{initials(r.name)}</div>
+              <div class="kdtA__name-block">
+                <div class="kdtA__name">{r.name}</div>
+                <div class="kdtA__date">{r.date}</div>
+              </div>
+            </div>
+            <div class="kdtA__stars" aria-label="5 étoiles sur 5">
+              {[...Array(5)].map(() => (
+                <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+                  <path
+                    d="M12 2.5l2.95 6.6 7.05.7-5.35 4.85 1.6 7.35L12 18l-6.25 4 1.6-7.35L2 9.8l7.05-.7L12 2.5z"
+                    fill="#E8A33D" stroke="#E8A33D" stroke-width="1.2" stroke-linejoin="round"
+                  />
+                </svg>
+              ))}
+            </div>
+            <p class="kdtA__text">{r.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── POURQUOI UN COURS INDIVIDUEL ──────────────────────────────────── -->
+  <section class="section" id="pourquoi" aria-labelledby="pourquoi-heading">
+    <div class="container">
+      <h2 id="pourquoi-heading">Pourquoi choisir un cours <span class="accent">individuel ?</span></h2>
+      <p class="ci-intro">Un cours individuel d'éducation canine à Bordeaux avec Kind Dog Training, c'est la garantie d'un travail ciblé, efficace et adapté à votre situation. Contrairement au format collectif, chaque séance est entièrement pensée pour votre binôme (ou trinôme si vous êtes en couple).</p>
+      <p class="ci-intro">J'ai eu l'occasion de travailler avec une multitude de races dans mes accompagnements : malinois, staffy, golden, labrador, berger australien, cocker anglais, bichon, bouledogue, AmStaff, teckel... Je sais parfaitement m'adapter à n'importe quelle contrainte et je sais que certains chiens peuvent parfois avoir des besoins et problématiques particuliers.</p>
+      <div class="ci-benefits-grid">
+        {benefits.map((b) => (
+          <div class="ci-benefit-card">
+            <div class="ci-benefit-icon" aria-hidden="true">
+              <Icon name={b.icon} width={22} height={22} strokeWidth={1.75} />
+            </div>
+            <p class="ci-benefit-title">{b.title}</p>
+            <p class="ci-benefit-text">{b.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── ZONE STRIP ─────────────────────────────────────────────────────── -->
+  <section class="svc-zone-strip" aria-label="Zone d'intervention">
+    <span class="svc-zone-label">
+      <Icon name="map-pin" width={14} height={14} strokeWidth={2} />
+      Je me déplace à&nbsp;:
+    </span>
+    <div class="svc-zone-marquee-outer" aria-hidden="true">
+      <div class="svc-zone-marquee-inner">
+        {zones.map((z) => (
+          <Fragment>
+            <span class="svc-zone-sep">·</span>
+            <span class="svc-zone-name">{z}</span>
+          </Fragment>
+        ))}
+        <span class="svc-zone-sep">·</span>
+        <span class="svc-zone-more">+ 17 communes · jusqu'à 30&nbsp;km</span>
+        {zones.map((z) => (
+          <Fragment>
+            <span class="svc-zone-sep">·</span>
+            <span class="svc-zone-name">{z}</span>
+          </Fragment>
+        ))}
+        <span class="svc-zone-sep">·</span>
+        <span class="svc-zone-more">+ 17 communes · jusqu'à 30&nbsp;km</span>
+      </div>
+    </div>
+    <div class="svc-zone-static" aria-hidden="true">
+      {zones.map((z) => (
+        <Fragment>
+          <span class="svc-zone-sep">·</span>
+          <span class="svc-zone-name">{z}</span>
+        </Fragment>
+      ))}
+      <span class="svc-zone-sep">·</span>
+      <span class="svc-zone-more">+ 17 communes · jusqu'à 30&nbsp;km</span>
+    </div>
+  </section>
+
+
+  <!-- ── FAQ ─────────────────────────────────────────────────────────── -->
+  <section class="section" id="faq" aria-labelledby="faq-heading">
+    <div class="container" style="max-width: 750px;">
+      <h2 id="faq-heading" style="text-align: center;">Questions fréquentes sur mes <span class="accent">cours d'éducation canine</span></h2>
+      <div class="faq-list" style="margin-top: var(--sp-8);">
+        {faqItems.map((item) => (
+          <details class="faq-item">
+            <summary class="faq-question">
+              <h3 class="faq-h3">{item.question}</h3>
+              <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── CTA ───────────────────────────────────────────────────────────── -->
+  <section class="section section-dark cta-section" aria-labelledby="svc-cta-heading">
+    <div class="container">
+      <div class="cta-bilan-card">
+        <p class="svc-cta-title" id="svc-cta-heading">
+          Réservez votre bilan comportemental <span class="accent">offert</span>
+        </p>
+        <p style="text-align: center; margin-bottom: var(--sp-6);">
+          Chaque accompagnement débute par un bilan gratuit à votre domicile, sans engagement.
+          Si la méthode vous convient, on planifie un premier cours. Sinon, vous n'aurez rien perdu.
+        </p>
+        <div style="text-align: center;">
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            <Icon name="calendar" width={18} height={18} strokeWidth={1.75} />
+            Prendre RDV
+          </a>
+        </div>
+        <p style="text-align: center; margin-top: var(--sp-5); font-size: 0.8rem; color: var(--kd-fawn);">
+          *Bilan comportemental à 20&nbsp;€ si &gt;20&nbsp;km.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+<style>
+/* ══ HERO ════════════════════════════════════════════════════════════════ */
+
+.svc-section-white {
+  background: var(--kd-white);
+}
+
+.svc-hero {
+  background-image: url('/images/hero-cours-individuel-mobile.webp');
+  background-position: center center;
+  align-items: flex-end;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.svc-hero::before {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.svc-hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-4);
+}
+
+.svc-location-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  background: rgba(42, 30, 21, 0.07);
+  border: 1px solid rgba(42, 30, 21, 0.22);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--kd-ink);
+}
+
+.svc-h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(34px, 4.8vw, 62px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--kd-ink);
+  margin-bottom: 0;
+  max-width: 640px;
+}
+
+@media (min-width: 768px) {
+  .svc-h1 {
+    max-width: 960px;
+  }
+}
+
+.svc-acc { color: var(--kd-terracotta); }
+
+.svc-lede {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--kd-ink);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+  max-width: 480px;
+  margin-bottom: 0;
+}
+
+.svc-btn-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: var(--sp-2);
+}
+
+.svc-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  padding: 13.5px 28.5px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--kd-bark);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--kd-ink);
+  text-decoration: none;
+  transition:
+    background-color var(--dur-base) var(--ease-out),
+    color var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out);
+}
+.svc-btn-ghost:hover {
+  background-color: var(--kd-ink);
+  border-color: var(--kd-ink);
+  color: var(--kd-white);
+  text-decoration: none;
+}
+
+/* ══ INTRO ══════════════════════════════════════════════════════════════ */
+
+.ci-intro {
+  color: var(--kd-bark);
+  max-width: 680px;
+  margin-bottom: var(--sp-8);
+}
+
+/* ══ BENEFITS GRID ══════════════════════════════════════════════════════ */
+
+.ci-benefits-grid {
+  display: grid;
+  gap: var(--sp-5);
+}
+
+.ci-benefit-card {
+  background: var(--kd-cream-warm);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-8);
+  box-shadow: var(--shadow-xs);
+  transition:
+    box-shadow var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+}
+
+.ci-benefit-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.ci-benefit-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  background: var(--kd-cream-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--kd-terracotta);
+  margin-bottom: var(--sp-5);
+}
+
+.ci-benefit-title {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--kd-ink);
+  margin-bottom: var(--sp-3);
+}
+
+.ci-benefit-text {
+  font-size: 15px;
+  color: var(--kd-bark);
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+/* ══ PROGRAMME ══════════════════════════════════════════════════════════ */
+
+.ci-programme-grid {
+  display: grid;
+  gap: var(--sp-10);
+  margin-top: var(--sp-8);
+}
+
+.ci-programme-h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(22px, 3vw, 28px);
+  color: var(--kd-ink);
+  margin-bottom: var(--sp-4);
+}
+
+.ci-programme-intro {
+  color: var(--kd-bark);
+  margin-bottom: var(--sp-6);
+}
+
+/* ══ BENEFITS LIST (shared) ═════════════════════════════════════════════ */
+
+.svc-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin-bottom: var(--sp-6);
+}
+
+.svc-benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--kd-bark);
+  line-height: 1.5;
+}
+
+.svc-check-icon {
+  color: var(--kd-terracotta);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ══ STEPS ══════════════════════════════════════════════════════════════ */
+
+/* ── VAGUES déroulement ──────────────────────────────────────────────── */
+
+.ci-section-deroulement {
+  background: var(--kd-cream);
+}
+
+.wave-sep--from-white {
+  background-color: var(--kd-white);
+}
+
+.wave-sep--from-cream {
+  background-color: var(--kd-cream);
+}
+
+/* ── DÉROULEMENT : layout image + texte ──────────────────────────────── */
+
+.ci-deroulement-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+}
+
+.ci-deroulement-h2 {
+  order: 1;
+  margin-bottom: 0;
+}
+
+.ci-deroulement-visual {
+  order: 2;
+  max-height: 320px;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+}
+
+.ci-deroulement-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, #E6A487 0%, #C8623A 52%, #A14B27 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.ci-deroulement-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 18px;
+  font-size: 11px;
+  color: rgba(244, 236, 220, 0.4);
+  letter-spacing: 0.06em;
+}
+
+.ci-deroulement-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  display: block;
+}
+
+.ci-steps {
+  order: 3;
+  display: grid;
+  gap: var(--sp-6);
+  margin-top: var(--sp-8);
+  max-width: 680px;
+}
+
+.ci-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-5);
+}
+
+.ci-step-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 13px;
+  background: var(--kd-cream-warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--kd-terracotta);
+}
+
+.ci-step-title {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--kd-ink);
+  margin-bottom: var(--sp-2);
+}
+
+.ci-step-desc {
+  font-size: 15px;
+  color: var(--kd-bark);
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+/* ══ TARIFS ══════════════════════════════════════════════════════════════ */
+
+.svc-price-card {
+  background: var(--kd-white);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6) var(--sp-8);
+  box-shadow: var(--shadow-md);
+  border: 1.5px solid var(--kd-cream-deep);
+}
+
+.svc-price-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--kd-fawn);
+  margin-bottom: var(--sp-3);
+}
+
+.svc-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  margin-bottom: 4px;
+}
+
+.svc-price-num {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(44px, 6vw, 56px);
+  color: var(--kd-terracotta);
+  line-height: 1;
+}
+
+.svc-price-unit {
+  font-size: 16px;
+  color: var(--kd-fawn);
+}
+
+.svc-price-pack {
+  font-size: 14px;
+  color: var(--kd-stone);
+  margin-bottom: var(--sp-3);
+}
+
+.svc-price-savings { font-size: 13px; }
+
+.svc-price-free {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--kd-olive);
+  margin-bottom: 0;
+  margin-top: var(--sp-4);
+}
+
+.svc-check-mark {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ci-link-tarifs {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--kd-terracotta);
+  text-decoration: none;
+  transition: color var(--dur-base) var(--ease-out);
+}
+.ci-link-tarifs:hover {
+  color: var(--kd-ink);
+}
+
+/* ══ AVIS ════════════════════════════════════════════════════════════════ */
+
+.svc-kdta-inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+}
+
+.svc-reviews-grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 16px;
+  padding-bottom: 8px;
+}
+.svc-reviews-grid::-webkit-scrollbar { display: none; }
+
+.svc-reviews-grid .kdtA__card {
+  flex: 0 0 85%;
+  min-width: 280px;
+  scroll-snap-align: start;
+  min-height: auto;
+}
+
+/* ══ ZONE STRIP ══════════════════════════════════════════════════════════ */
+
+.svc-zone-strip {
+  background: var(--kd-cream);
+  border-top: 1px solid var(--kd-cream-deep);
+  border-bottom: 1px solid var(--kd-cream-deep);
+  padding: 16px var(--sp-8);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.svc-zone-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--kd-ink);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.svc-zone-sep { color: var(--kd-stone); font-size: 13px; white-space: nowrap; }
+.svc-zone-name { font-size: 13px; color: var(--kd-bark); white-space: nowrap; }
+.svc-zone-more { font-size: 13px; font-weight: 700; color: var(--kd-terracotta); white-space: nowrap; }
+
+.svc-zone-marquee-outer {
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.svc-zone-marquee-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  animation: zone-scroll 22s linear infinite;
+}
+
+.svc-zone-strip:hover .svc-zone-marquee-inner,
+.svc-zone-strip:focus-within .svc-zone-marquee-inner {
+  animation-play-state: paused;
+}
+
+@keyframes zone-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.svc-zone-static { display: none; }
+
+/* ══ FAQ H3 (reset pour correspondre au style faq-question) ════════════ */
+
+.faq-h3 {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: var(--lh-base);
+  letter-spacing: 0;
+  color: inherit;
+  margin: 0;
+}
+
+/* ══ CTA TITLE ══════════════════════════════════════════════════════════ */
+
+.svc-cta-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(var(--fs-2xl), 4.5vw, var(--fs-3xl));
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  color: inherit;
+  text-align: center;
+  margin-bottom: var(--sp-5);
+}
+
+/* ══ RESPONSIVE ═════════════════════════════════════════════════════════ */
+
+@media (min-width: 768px) {
+  .svc-hero {
+    background-image: url('/images/hero-cours-individuel-desktop.webp');
+    background-position: center center;
+    background-size: cover;
+  }
+
+  .svc-hero::before {
+    display: none;
+  }
+
+  .svc-lede {
+    color: var(--kd-bark);
+    text-shadow: none;
+  }
+
+  .svc-btn-group {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  /* Déroulement : 2 colonnes sur desktop */
+  .ci-deroulement-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    column-gap: var(--sp-16);
+    row-gap: var(--sp-6);
+    align-items: start;
+  }
+
+  .ci-deroulement-h2 {
+    order: unset;
+    grid-column: 2;
+    grid-row: 1;
+    margin-bottom: 0;
+  }
+
+  .ci-deroulement-visual {
+    order: unset;
+    grid-column: 1;
+    grid-row: 1 / 3;
+    position: sticky;
+    top: calc(var(--header-height) + var(--sp-6));
+    max-height: none;
+    overflow: visible;
+    border-radius: 0;
+  }
+
+  .ci-deroulement-placeholder {
+    aspect-ratio: 3 / 4;
+  }
+
+  .ci-deroulement-img {
+    aspect-ratio: 3 / 4;
+  }
+
+  .ci-steps {
+    order: unset;
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .ci-steps-cta {
+    display: none;
+  }
+
+  .ci-intro {
+    max-width: none;
+  }
+
+  .ci-benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ci-programme-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .svc-reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow-x: unset;
+    padding-bottom: 0;
+  }
+  .svc-reviews-grid .kdtA__card {
+    flex: none;
+    scroll-snap-align: unset;
+  }
+
+  .svc-zone-strip {
+    padding: 18px var(--sp-8);
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+  .svc-zone-marquee-outer { display: none; }
+  .svc-zone-static {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .svc-zone-strip {
+    padding: 14px var(--sp-5);
+  }
+}
+</style>
