@@ -33,7 +33,7 @@ const packs = [
     bilanOffert: true,
   },
   {
-    tag: 'Pour les chiens de 8 mois et +',
+    tag: 'Chiens de 8 mois et +',
     title: 'Pack chiens adultes',
     subtitle: 'pour les chiens qui ont séché quelques leçons',
     image: '/images/pack-adultes.webp',
@@ -57,7 +57,7 @@ const packs = [
     bilanOffert: true,
   },
   {
-    tag: 'Pour les chiots ou chiens adultes',
+    tag: 'Chiots ou chiens adultes',
     title: 'Pack chien réactif/agressif',
     subtitle: 'pour les chiens en plus grande difficulté',
     image: '/images/pack-reactif.webp',
@@ -187,6 +187,68 @@ const faqJsonLd = {
     </div>
   </section>
 
+  <!-- TABLEAU RÉCAPITULATIF -->
+  <section class="tarifs-recap" aria-labelledby="recap-heading">
+    <div class="container">
+      <h2 id="recap-heading" class="recap-title">Récapitulatif des <span class="accent">tarifs</span></h2>
+      <div class="recap-table-wrap">
+        <table class="recap-table">
+          <thead>
+            <tr>
+              <th>Prestation</th>
+              <th>Séances</th>
+              <th>Tarif</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bilan comportemental</td>
+              <td>1 séance</td>
+              <td><strong>Gratuit*</strong></td>
+            </tr>
+            <tr>
+              <td>Pack chiots & ados <span class="recap-detail">(2 à 8 mois)</span></td>
+              <td>8 cours</td>
+              <td><strong>360 €</strong></td>
+            </tr>
+            <tr>
+              <td>Pack chiens adultes <span class="recap-detail">(8 mois et +)</span></td>
+              <td>5 cours</td>
+              <td><strong>230 €</strong></td>
+            </tr>
+            <tr>
+              <td>Pack chien réactif/agressif</td>
+              <td>5 cours</td>
+              <td><strong>230 €</strong></td>
+            </tr>
+            <tr>
+              <td>Cours individuel</td>
+              <td>1 cours</td>
+              <td><strong>50 €</strong></td>
+            </tr>
+            <tr>
+              <td>Cours collectif</td>
+              <td>1 cours</td>
+              <td><strong>30 €</strong><span class="recap-detail">/chien</span></td>
+            </tr>
+            <tr>
+              <td>Stage de plusieurs jours</td>
+              <td>À définir</td>
+              <td><strong>Sur devis</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="recap-footnote">* Gratuit dans un rayon de 20 km, 20 € au-delà.</p>
+      <div class="recap-cta-wrap">
+        <a href="#details-tarifs" class="recap-cta">
+          Voir les détails plus bas
+          <Icon name="arrow-down" width={14} height={14} strokeWidth={1.75} />
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- WAVE: white → cream-warm -->
   <div class="wave-separator wave-separator--from-white" aria-hidden="true">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none">
@@ -235,7 +297,7 @@ const faqJsonLd = {
   </div>
 
   <!-- PRICING -->
-  <section class="section pricing-section" style="padding-top: var(--sp-8);">
+  <section class="section pricing-section" id="details-tarifs" style="padding-top: var(--sp-8);">
     <div class="container">
       <div class="pricing-grid">
         {packs.map((pack) => (
@@ -434,6 +496,115 @@ const faqJsonLd = {
 
     .tarifs-notice__title {
       font-size: 28px;
+    }
+  }
+
+  /* Recap table */
+  .tarifs-recap {
+    background: var(--kd-white);
+    padding-block: var(--sp-10) var(--sp-12);
+  }
+
+  .recap-title {
+    text-align: center;
+    margin-bottom: var(--sp-8);
+  }
+
+  .recap-table-wrap {
+    max-width: 800px;
+    margin-inline: auto;
+    overflow-x: auto;
+  }
+
+  .recap-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-base);
+  }
+
+  .recap-table thead {
+    background: var(--kd-ink);
+    color: var(--kd-cream);
+  }
+
+  .recap-table th {
+    padding: var(--sp-3) var(--sp-5);
+    font-weight: 600;
+    text-align: left;
+    font-size: var(--fs-sm);
+    letter-spacing: 0.02em;
+  }
+
+  .recap-table th:last-child {
+    text-align: right;
+  }
+
+  .recap-table td {
+    padding: var(--sp-3) var(--sp-5);
+    color: var(--kd-bark);
+    border-bottom: 1px solid var(--kd-stone);
+    font-size: var(--fs-sm);
+    line-height: var(--lh-relaxed);
+  }
+
+  .recap-table td:last-child {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .recap-table tbody tr:hover {
+    background: var(--kd-cream);
+  }
+
+  .recap-table strong {
+    color: var(--kd-ink);
+    font-weight: 700;
+  }
+
+  .recap-detail {
+    color: var(--kd-fawn);
+    font-size: var(--fs-xs);
+  }
+
+  .recap-footnote {
+    text-align: center;
+    font-size: 13px;
+    color: var(--kd-fawn);
+    font-style: italic;
+    margin-top: var(--sp-4);
+    max-width: 800px;
+    margin-inline: auto;
+  }
+
+  .recap-cta-wrap {
+    text-align: center;
+    margin-top: var(--sp-6);
+  }
+
+  .recap-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--kd-terracotta);
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .recap-cta:hover {
+    opacity: 0.75;
+  }
+
+  @media (max-width: 767px) {
+    .tarifs-recap {
+      padding-block: var(--sp-8) var(--sp-10);
+    }
+
+    .recap-table th,
+    .recap-table td {
+      padding: var(--sp-2) var(--sp-3);
+      font-size: var(--fs-xs);
     }
   }
 
