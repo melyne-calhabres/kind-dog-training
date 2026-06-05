@@ -97,7 +97,7 @@ const packs = [
     image: '/images/chien-shiba.webp',
     imageAlt: 'Éducation d\'un chien Shiba Inu à Bordeaux',
     imagePosition: 'center 15%',
-    blurb: "Si les packs de plusieurs cours ne sont pas adaptés à votre situation, vous avez la possibilité de prendre des cours à l'unité. Peu importe votre problème et votre situation, nous trouverons toujours une solution qui conviendra à votre chien.",
+    blurb: `Si les packs de plusieurs cours ne sont pas adaptés à votre situation, vous avez la possibilité de prendre des <a href="/services/cours-individuel-education-canine-bordeaux/" class="pricing-blurb-link">cours individuels</a> à l'unité. Peu importe votre problème et votre situation, nous trouverons toujours une solution qui conviendra à votre chien.`,
     sessions: '1 cours',
     price: '50 €',
     bilanOffert: true,
@@ -180,7 +180,7 @@ const faqJsonLd = {
     <div class="container">
       <div class="tarifs-notice__card">
         <p class="tarifs-notice__title">⚠️ Important à savoir !</p>
-        <p>Chaque accompagnement, et ce quelle que soit votre situation, débute toujours par un bilan comportemental à votre domicile entièrement <strong>GRATUIT</strong> (20&nbsp;€ si &gt;20&nbsp;km).</p>
+        <p>Chaque accompagnement, et ce quelle que soit votre situation, débute toujours par un <a href="/services/bilan-comportemental/" class="tarifs-notice__link">bilan comportemental</a> à votre domicile entièrement <strong>GRATUIT</strong> (20&nbsp;€ si &gt;20&nbsp;km).</p>
         <p>Ce bilan a pour but de faire un état des lieux de votre situation, des problèmes que vous rencontrez et de l'historique de votre chien. Nous allons donc avoir une discussion autour de ces sujets afin d'établir par la suite un plan d'action.</p>
         <p>Le but premier de Kind Dog Training est de vous aider et d'aider votre chien, pas de vous faire perdre votre temps et votre argent. Si vous êtes satisfait de ce bilan comportemental alors nous pourrons planifier un premier cours. Sinon, vous n'aurez rien perdu.</p>
       </div>
@@ -270,7 +270,7 @@ const faqJsonLd = {
                 ))}
               </div>
             ) : (
-              <p class="pricing-desc">{pack.blurb}</p>
+              <p class="pricing-desc" set:html={pack.blurb} />
             )}
             {pack.bilanOffert && (
               <p class="pricing-bilan">Bilan comportemental <strong>OFFERT</strong></p>
@@ -386,6 +386,26 @@ const faqJsonLd = {
 
   .tarifs-notice__card strong {
     color: var(--kd-cream);
+  }
+
+  .tarifs-notice__link {
+    color: var(--kd-cream);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .tarifs-notice__link:hover {
+    opacity: 0.8;
+  }
+
+  .pricing-blurb-link {
+    color: var(--kd-terracotta);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .pricing-blurb-link:hover {
+    opacity: 0.75;
   }
 
   .tarifs-notice__title {
