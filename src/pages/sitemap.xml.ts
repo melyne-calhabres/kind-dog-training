@@ -6,6 +6,7 @@ const pages = [
   '/tarif-educateur-canin-bordeaux',
   '/prendre-rdv/',
   '/services/cours-individuel-education-canine-bordeaux/',
+  '/services/bilan-comportemental/',
 ];
 
 export const GET: APIRoute = ({ site }) => {
