@@ -5,57 +5,81 @@ import Icon from '../../components/Icon.astro';
 const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
 
 const page = {
-  metaTitle:       'Bilan comportemental offert pour votre chien',
-  metaDescription: 'Le bilan comportemental est offert à Bordeaux avec Kind Dog Training ! On échange pour comprendre votre situation, observer et comprendre votre chien pour définir un plan d\'action adapté.',
+  metaTitle:       'Cours collectifs d\'éducation canine à Bordeaux - Groupes de 6 chiens max',
+  metaDescription: 'Cours collectifs d\'éducation canine à Bordeaux. Groupes de 6 chiens maximum, soigneusement constitués, pour travailler l\'obéissance et la socialisation dans un cadre convivial.',
 };
 
 const hero = {
-  eyebrow:       'Bordeaux + 30 km',
-  headline:      'Bilan comportemental',
-  accent:        'pour votre chien.',
-  lede:          'Un bilan complet pour comprendre votre situation, observer et comprendre votre chien pour définir un plan d\'action adapté.',
+  eyebrow:        'Bordeaux + 30 km',
+  headline:       'Cours collectifs d\'éducation',
+  headlineLine2:  'canine',
+  accent:         'à Bordeaux.',
+  lede:           'Profitez d\'un cadre convivial avec de la bonne humeur et du jeu pour faire progresser votre chien en présence d\'autres congénères.',
 };
+
+const benefits = [
+  {
+    icon:  'user',
+    title: 'Groupes de 6 chiens maximum',
+    text:  'Je limite volontairement la taille des groupes pour pouvoir assurer un cours et des interactions de la meilleure qualité possible.',
+  },
+  {
+    icon:  'dog',
+    title: 'Une sélection pensée pour chacun',
+    text:  'Je compose les groupes selon le tempérament, les objectifs et le niveau de chaque chien pour être certaine que tout le monde progresse dans de bonnes conditions.',
+  },
+  {
+    icon:  'target',
+    title: 'Travail en présence de distractions',
+    text:  'Le format collectif permet de renforcer le lien et la progression avec votre chien dans un environnement stimulant. Il est souvent question de renonciation et gestion de la frustration. Les cours collectifs sont particulièrement adaptés pour les chiens qui ont besoin de travailler ces aspects.',
+  },
+  {
+    icon:  'paw-print',
+    title: 'Un jeu à chaque fin de cours',
+    text:  'Chaque cours collectif se termine par un petit jeu selon le thème du cours. Il m\'est par exemple arrivé d\'organiser un parcours à effectuer dans le meilleur temps possible après un cours ayant pour thème l\'agility ou encore un 1-2-3 soleil après un cours ayant pour thème la gestion des émotions.',
+  },
+];
 
 const deroulement = [
   {
     icon:  'home',
-    title: '1. Observation à domicile',
-    desc:  'Je me déplace chez vous pour observer votre chien dans son environnement naturel. C\'est là que les comportements sont les plus révélateurs et que je peux avoir une vision complète de la situation.',
+    title: '1. Bilan comportemental gratuit',
+    desc:  'Sauf si je connais déjà votre chien, avant de rejoindre un cours collectif, je me déplace chez vous pour établir un <a href="/services/bilan-comportemental/">bilan comportemental</a> gratuit à votre domicile. J\'observe son comportement dans son environnement et je m\'assure que le format collectif est adapté à sa situation.',
+  },
+  {
+    icon:  'user',
+    title: '2. Constitution du groupe et choix du thème',
+    desc:  'Je sélectionne et compose chaque groupe selon le niveau et le tempérament des chiens afin que la séance se déroule dans les meilleures conditions pour tout le monde. Je pars du principe que, même si on est là pour faire progresser nos chiens, on peut faire des exercices tout en s\'amusant. C\'est pourquoi je choisis un thème pour chaque cours. Exemples&nbsp;: sécurité routière, gestion des émotions, agility, etc.',
+  },
+  {
+    icon:  'trophy',
+    title: '3. Exercices + jeu !',
+    desc:  'Une fois que la séance est terminée, j\'organise un jeu avec tous les chiens présents selon le thème du cours. J\'ai par exemple organisé un 1-2-3-soleil lors d\'un cours sur le thème de la gestion des émotions. Cela peut être un exercice particulièrement intéressant et stimulant pour votre chien et cela vous permet de partager un excellent moment avec lui (et c\'est rigolo pour moi aussi).',
   },
   {
     icon:  'message-circle',
-    title: '2. Échange',
-    desc:  'On prend le temps d\'échanger sur l\'histoire de votre chien, vos difficultés et vos objectifs. Cette étape est essentielle pour moi pour comprendre le contexte global et ne pas passer à côté d\'éléments importants.',
-  },
-  {
-    icon:  'map-pin',
-    title: '3. Balade',
-    desc:  'On part faire une petite balade afin que je puisse voir vos comportements (vous et votre chien) en extérieur.',
-  },
-  {
-    icon:  'book-open',
-    title: '4. Synthèse écrite et plan sur mesure',
-    desc:  'Après chaque bilan comportemental, vous recevrez une synthèse écrite contenant tous les éléments évoqués durant le rdv. Ce document vous présente également le plan d\'actions et/ou les premiers exercices à travailler. Nous pourrons ensuite planifier les premiers cours individuels.',
+    title: '4. Bilan écrit & suivi WhatsApp',
+    desc:  'Comme pour les <a href="/services/cours-individuel-education-canine-bordeaux/">cours individuels</a>, vous aurez un récapitulatif écrit après chaque cours collectif pour faire le suivi de la progression de votre chien et voir les exercices qui méritent d\'être approfondis.',
   },
 ];
 
 const reviews = [
   {
-    name:     'Victoria Pointet',
-    date:     'Il y a un mois',
-    text:     'J\'ai commencé à travailler avec Mélyne quand Brooklyn avait 4 mois, et honnêtement… quelle chance on a eue de la rencontrer ! Elle nous a accompagnés sur toutes les bases à instaurer, ainsi que la gestion des émotions, le rappel, la marche en laisse… toujours avec douceur et bonne humeur. Les résultats ont été rapides et durables.',
+    name:     'twinzeko',
+    date:     'Il y a 2 mois',
+    text:     'Mélyne nous suit depuis bientôt un an et c\'est un réel bonheur. Une écoute attentive et de très bons conseils. On voit une vraie différence dans le comportement de notre petite Appa qui a frôlé la réactivité mais qu\'on a réussi à corriger ! Une éducatrice qui met le chien au centre de la discussion et fait passer le bien-être animal en priorité.',
     gradient: 'linear-gradient(135deg, #C8623A, #E8A33D)',
   },
   {
-    name:     'Cleora',
-    date:     'Il y a 2 mois',
-    text:     'J\'ai contacté Mélyne car je voulais mieux comprendre mon chien Vaillant, récemment adopté en refuge. Le contact a tout de suite été très naturel et Vaillant a eu un vrai coup de cœur pour notre coach ! Mélyne est très bienveillante et à l\'écoute. Petit bonus, chaque séance fait l\'objet d\'un compte-rendu écrit, ce qui est très appréciable !',
+    name:     'Jacques',
+    date:     'Il y a 3 mois',
+    text:     'J\'ai fait appel à Mélyne pour régler quelques problèmes avec mon staffy de 7 ans, notamment pour un problème de communication avec ses congénères. Les cours ont été très concluants, les exercices sont simples et efficaces. Bilan gratuit, éducation positive et rempli d\'amour. On voit que c\'est pour Mélyne une vraie passion avant tout.',
     gradient: 'linear-gradient(135deg, #9B6B47, #C8623A)',
   },
   {
-    name:     'Cathy Le Corre',
-    date:     'Il y a 2 mois',
-    text:     'Une Educ au top, plein de bons conseils, consultée pour un toutou réactif ayant une mauvaise gestion des émotions (frustration, difficulté de renoncement, tirage en laisse, aboiements…) et des progrès dès la première séance ! Un accompagnement étape par étape avec un bilan à chaque séance, rien à dire, parfait !',
+    name:     'Aub\'Animaux',
+    date:     'Il y a 3 semaines',
+    text:     'Mélyne est une passionnée du chien et de son travail d\'éducatrice. Elle est le genre de professionnelle à persévérer : elle ne s\'arrête pas à un protocole ou à une méthode qui ne correspond pas à un chien. Elle a tout un tas d\'outils dans sa besace, elle sort des sentiers battus et se creuse la tête pour trouver ce qui correspond au chien. Aucun jugement de sa part, uniquement des faits, des conseils, des explications. Merci KDT, à bientôt 🐾',
     gradient: 'linear-gradient(135deg, #5A8084, #8FB4B8)',
   },
 ];
@@ -67,16 +91,16 @@ const zones = [
 
 const faqItems = [
   {
-    question: 'Combien de temps dure le bilan comportemental ?',
-    answer:   'Le bilan comportemental dure généralement entre 1h30 et 2h. Ce temps est nécessaire pour bien observer votre chien en situation réelle, échanger sur votre situation et vous présenter des recommandations adaptées.',
+    question: 'Comment sont constitués les groupes ?',
+    answer:   'Je compose chaque groupe avec soin, en fonction du niveau, de l\'âge et du tempérament des chiens, afin que la séance profite à tout le monde. Les groupes sont limités à 6 chiens maximum.',
   },
   {
-    question: 'Le bilan est-il obligatoire aussi pour les cours collectifs ?',
-    answer:   'Oui ! Même si vous ne souhaitez participer qu\'aux cours collectifs, je dois tout de même voir votre chien et comprendre votre situation avant. Je fais en sorte de bien sélectionner les chiens pour chaque cours collectif afin que tout se passe bien pour tout le monde. Je ne peux pas faire venir un chien que je n\'ai jamais vu en cours collectif.',
+    question: 'Mon chien est craintif ou réactif, peut-il participer à un cours collectif ?',
+    answer:   'Cela dépend de sa situation. C\'est justement l\'objet du bilan comportemental gratuit qui précède tout accompagnement : j\'évalue si le format collectif est adapté à votre chien, ou s\'il est préférable de commencer par des cours individuels avant d\'envisager le collectif.',
   },
   {
-    question: 'Sous combien de temps le bilan est-il planifié ?',
-    answer:   'Tout dépend des disponibilités de chacun mais généralement on peut organiser un bilan entre 2 et 5 jours après votre premier contact :)',
+    question: 'Est-ce que vous proposez également des cours individuels ?',
+    answer:   'Oui, je propose aussi des cours individuels 100 % personnalisés si votre chien a besoin d\'un accompagnement plus ciblé avant ou en complément du format collectif.',
   },
 ];
 
@@ -102,9 +126,9 @@ function initials(name: string) {
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: 'Bilan comportemental à Bordeaux',
+  name: 'Cours d\'éducation canine collectif à Bordeaux',
   description: page.metaDescription,
-  url: `${siteUrl}/services/bilan-comportemental/`,
+  url: `${siteUrl}/services/cours-collectifs/`,
   provider: {
     '@type': 'ProfessionalService',
     name: 'Kind Dog Training',
@@ -124,9 +148,9 @@ const jsonLd = {
   },
   offers: {
     '@type': 'Offer',
-    price: '0',
+    price: '30',
     priceCurrency: 'EUR',
-    description: 'Bilan comportemental gratuit à domicile',
+    description: 'Séance collective à l\'unité, par chien',
   },
 };
 ---
@@ -136,15 +160,15 @@ const jsonLd = {
   <!-- ── HERO ─────────────────────────────────────────────────────────── -->
   <section class="hero svc-hero" aria-labelledby="svc-h1">
     <picture>
-      <source media="(min-width: 768px)" srcset="/images/hero-bilan-comportemental-desktop.webp" />
+      <source media="(min-width: 768px)" srcset="/images/hero-cours-collectifs-desktop.webp" />
       <img
-        src="/images/hero-bilan-comportemental-mobile.webp"
+        src="/images/hero-cours-collectifs-mobile.webp"
         alt=""
         class="svc-hero-img"
         fetchpriority="high"
         decoding="async"
-        width="800"
-        height="1067"
+        width="750"
+        height="421"
       />
     </picture>
     <div class="container">
@@ -155,7 +179,7 @@ const jsonLd = {
         </span>
         <h1 id="svc-h1" class="svc-h1">
           {hero.headline}<br>
-          <span class="svc-acc">{hero.accent}</span>
+          {hero.headlineLine2} <span class="svc-acc">{hero.accent}</span>
         </h1>
         <p class="svc-lede">{hero.lede}</p>
         <div class="svc-btn-group">
@@ -170,39 +194,22 @@ const jsonLd = {
   </section>
 
 
-  <!-- ── À QUOI SERT UN BILAN ? ────────────────────────────────────────── -->
-  <section class="section svc-section-white" id="a-quoi-sert" aria-labelledby="utilite-heading">
+  <!-- ── POURQUOI UN COURS COLLECTIF ───────────────────────────────────── -->
+  <section class="section svc-section-white" id="pourquoi" aria-labelledby="pourquoi-heading">
     <div class="container">
-      <div class="utilite-grid">
-
-        <!-- Colonne gauche : titre + tags -->
-        <div class="utilite-left">
-          <h2 id="utilite-heading">À quoi sert un <span class="accent">bilan comportemental ?</span></h2>
-          <div class="utilite-tags" aria-hidden="true">
-            <span class="utilite-tag">
-              <Icon name="user" width={14} height={14} strokeWidth={2} />
-              Rencontre
-            </span>
-            <span class="utilite-tag">
-              <Icon name="target" width={14} height={14} strokeWidth={2} />
-              Observation
-            </span>
-            <span class="utilite-tag">
-              <Icon name="map-pin" width={14} height={14} strokeWidth={2} />
-              Balade
-            </span>
+      <h2 id="pourquoi-heading">Pourquoi choisir un cours <span class="accent">collectif ?</span></h2>
+      <p class="ci-intro">Un cours collectif d'éducation canine à Bordeaux avec Kind Dog Training, c'est l'occasion de travailler avec votre chien dans un environnement stimulant tout en lui offrant des rencontres positives et encadrées avec d'autres chiens et d'autres maîtres.</p>
+      <p class="ci-intro">Ce format vient en complément des cours individuels : il permet de mettre à l'épreuve les acquis travaillés en tête-à-tête et de continuer à faire progresser votre chien. Je sélectionne avec soin les chiens de chaque groupe pour m'assurer que la séance se déroule bien et profite à tout le monde.</p>
+      <div class="ci-benefits-grid">
+        {benefits.map((b) => (
+          <div class="ci-benefit-card">
+            <div class="ci-benefit-icon" aria-hidden="true">
+              <Icon name={b.icon} width={22} height={22} strokeWidth={1.75} />
+            </div>
+            <p class="ci-benefit-title">{b.title}</p>
+            <p class="ci-benefit-text">{b.text}</p>
           </div>
-          <div class="utilite-callout">
-            <p>Le bilan comportemental est le point de départ indispensable de tout accompagnement. Il sert à vous rencontrer et rencontrer votre chien, échanger ensemble sur vos problématiques et observer votre chien dans son environnement habituel.</p>
-          </div>
-        </div>
-
-        <!-- Colonne droite : texte détaillé -->
-        <div class="utilite-right">
-          <p>Durant un bilan, on ne travaille pas vraiment directement sur vos besoins. Il s'agit davantage d'une discussion et d'observations de ma part. Avant de commencer à réfléchir à un plan d'action adapté, j'ai besoin de voir votre chien et de comprendre son passif. Que ce soit pour un <a href="/services/cours-collectifs/">cours collectif</a> ou un <a href="/services/cours-individuel-education-canine-bordeaux/">cours individuel</a>, l'étape du bilan est obligatoire.</p>
-          <p>La plupart du temps vous avez des problématiques en extérieur et c'est pourquoi une petite balade est incluse dans le bilan comportemental. Cela me permet d'observer les comportements de votre chien (et les vôtres également) en conditions réelles. Si on doit travailler sur des problèmes de harcèlement avec les congénères, agressivité ou prédation par exemple, le plus cohérent est d'observer ça en condition réelle pour comprendre le <strong>pourquoi</strong>.</p>
-        </div>
-
+        ))}
       </div>
     </div>
   </section>
@@ -215,27 +222,30 @@ const jsonLd = {
     </svg>
   </div>
 
-  <!-- ── DÉROULEMENT D'UN BILAN ──────────────────────────────────────── -->
+  <!-- ── DÉROULEMENT D'UNE SÉANCE ──────────────────────────────────────── -->
   <section class="section ci-section-deroulement" id="deroulement" aria-labelledby="deroulement-heading">
     <div class="container">
       <div class="ci-deroulement-grid">
 
+        <!-- H2 : mobile order 1 / desktop col droite ligne 1 -->
         <h2 id="deroulement-heading" class="ci-deroulement-h2">
-          Comment se déroule <span class="accent">le bilan ?</span>
+          Comment se déroule <span class="accent">une séance ?</span>
         </h2>
 
+        <!-- Image : mobile order 2 / desktop col gauche (2 lignes) -->
         <div class="ci-deroulement-visual">
           <img
-            src="/images/bilan-comportemental-bordeaux.webp"
-            alt="chien en bilan comportemental à Bordeaux"
+            src="/images/cours-collectifs-deroulement.webp"
+            alt="cours collectif d'éducation canine à Bordeaux avec Kind Dog Training"
             class="ci-deroulement-img"
             loading="lazy"
             decoding="async"
-            width="640"
-            height="800"
+            width="750"
+            height="1000"
           />
         </div>
 
+        <!-- Étapes : mobile order 3 / desktop col droite ligne 2 -->
         <div class="ci-steps">
           {deroulement.map((step) => (
             <div class="ci-step">
@@ -270,27 +280,22 @@ const jsonLd = {
 
   <!-- ── TARIFS ────────────────────────────────────────────────────────── -->
   <section class="section section-paper" id="tarifs" aria-labelledby="tarifs-heading">
-    <div class="container" style="max-width: 680px;">
-      <h2 id="tarifs-heading" style="text-align: center;">Tarif du bilan comportemental <span class="accent">pour votre chien</span></h2>
+    <div class="container" style="max-width: 640px;">
+      <h2 id="tarifs-heading" style="text-align: center;">Tarifs des cours collectifs <span class="accent">à Bordeaux</span></h2>
       <div class="svc-price-card" style="margin-top: var(--sp-8);">
-        <p class="svc-price-label">Premier bilan</p>
+        <p class="svc-price-label">Par chien et par séance</p>
         <div class="svc-price-row">
-          <span class="svc-price-num">Gratuit</span>
+          <span class="svc-price-num">30 €</span>
+          <span class="svc-price-unit">/ chien / séance</span>
         </div>
+        <p class="svc-price-pack">
+          Groupes de 6 chiens maximum
+        </p>
         <p class="svc-price-free">
           <span class="svc-check-mark" aria-hidden="true">✓</span>
-          À domicile, sans engagement
+          Bilan comportemental gratuit à domicile
         </p>
       </div>
-      <p class="svc-price-note">* Bilan comportemental à 20&nbsp;€ si &gt;&nbsp;20&nbsp;km.</p>
-
-      <!-- Pourquoi c'est gratuit -->
-      <div class="bilan-gratuit-block">
-        <h3 class="bilan-gratuit-h3">Pourquoi le bilan est gratuit avec Kind Dog Training ?</h3>
-        <p>Je considère le bilan comportemental comme un échange et il me sert principalement à récolter des informations. Il s'agit évidemment d'un rdv indispensable pour tout accompagnement. Cependant, étant donné que nous ne travaillons pas vraiment sur vos problématiques, je préfère ne pas vous le facturer.</p>
-        <p>Il est important pour moi d'établir une relation de confiance à la fois avec vous et avec votre chien. Vous êtes libre de prendre le recul nécessaire après le rdv sans avoir la pression de l'argent déjà dépensé. Si vous n'êtes pas convaincu pour X ou Y raison, vous n'aurez rien perdu.</p>
-      </div>
-
       <div style="text-align: center; margin-top: var(--sp-6);">
         <a href="/tarif-educateur-canin-bordeaux/" class="ci-link-tarifs">
           Voir tous les tarifs et packs
@@ -382,7 +387,7 @@ const jsonLd = {
   <!-- ── FAQ ─────────────────────────────────────────────────────────── -->
   <section class="section" id="faq" aria-labelledby="faq-heading">
     <div class="container" style="max-width: 750px;">
-      <h2 id="faq-heading" style="text-align: center;">Questions fréquentes sur le <span class="accent">bilan comportemental</span></h2>
+      <h2 id="faq-heading" style="text-align: center;">Questions fréquentes sur mes <span class="accent">cours collectifs</span></h2>
       <div class="faq-list" style="margin-top: var(--sp-8);">
         {faqItems.map((item) => (
           <details class="faq-item">
@@ -393,7 +398,7 @@ const jsonLd = {
               </svg>
             </summary>
             <div class="faq-answer">
-              <p>{item.answer}</p>
+              <p set:html={item.answer} />
             </div>
           </details>
         ))}
@@ -411,7 +416,7 @@ const jsonLd = {
         </p>
         <p style="text-align: center; margin-bottom: var(--sp-6);">
           Chaque accompagnement débute par un bilan gratuit à votre domicile, sans engagement.
-          Si la méthode vous convient, on planifie un premier cours. Sinon, vous n'aurez rien perdu.
+          On évalue ensemble si le format collectif est adapté à votre chien et on planifie la suite.
         </p>
         <div style="text-align: center;">
           <a href="/prendre-rdv/" class="btn btn-primary">
@@ -453,14 +458,22 @@ const jsonLd = {
   z-index: 0;
 }
 
+/* Overlay et contenu doivent être au-dessus de l'image */
 .svc-hero::before {
   z-index: 1;
+}
+
+.svc-hero-content {
+  z-index: 2;
+}
+
+.svc-hero::before {
   background: rgba(255, 255, 255, 0.45);
 }
 
 .svc-hero-content {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -492,7 +505,9 @@ const jsonLd = {
 }
 
 @media (min-width: 768px) {
-  .svc-h1 { max-width: 960px; }
+  .svc-h1 {
+    max-width: 960px;
+  }
 }
 
 .svc-acc { color: var(--kd-terracotta); }
@@ -538,87 +553,104 @@ const jsonLd = {
   text-decoration: none;
 }
 
-/* ══ À QUOI SERT ════════════════════════════════════════════════════════ */
+/* ══ INTRO ══════════════════════════════════════════════════════════════ */
 
-.utilite-grid {
-  display: grid;
-  gap: var(--sp-10);
-  align-items: start;
-}
-
-.utilite-left h2 {
-  margin-bottom: var(--sp-6);
-}
-
-/* Tags */
-.utilite-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+.ci-intro {
+  color: var(--kd-bark);
+  max-width: 680px;
   margin-bottom: var(--sp-8);
 }
 
-.utilite-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
-  border-radius: var(--radius-pill);
-  background: var(--kd-cream-warm);
-  border: 1px solid var(--kd-cream-deep);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--kd-ink);
-}
+/* ══ BENEFITS GRID ══════════════════════════════════════════════════════ */
 
-.utilite-tag svg {
-  color: var(--kd-terracotta);
-  flex-shrink: 0;
-}
-
-/* Callout */
-.utilite-callout {
-  padding: 24px 28px;
-  background: var(--kd-cream-warm);
-  border-radius: var(--radius-lg);
-  border-left: 3px solid var(--kd-terracotta);
-}
-
-.utilite-callout p {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--kd-ink);
-  line-height: 1.7;
-  margin: 0;
-}
-
-/* Colonne droite */
-.utilite-right {
-  display: flex;
-  flex-direction: column;
+.ci-benefits-grid {
+  display: grid;
   gap: var(--sp-5);
 }
 
-.utilite-right p {
-  font-size: 16px;
-  color: var(--kd-bark);
-  line-height: 1.75;
-  margin: 0;
+.ci-benefit-card {
+  background: var(--kd-cream-warm);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-8);
+  box-shadow: var(--shadow-xs);
+  transition:
+    box-shadow var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
 }
 
-.utilite-right strong {
-  color: var(--kd-ink);
+.ci-benefit-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.ci-benefit-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 13px;
+  background: var(--kd-cream-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--kd-terracotta);
+  margin-bottom: var(--sp-5);
+}
+
+.ci-benefit-title {
+  font-family: var(--font-sans);
   font-weight: 700;
+  font-size: 18px;
+  color: var(--kd-ink);
+  margin-bottom: var(--sp-3);
 }
 
-/* ══ DÉROULEMENT ════════════════════════════════════════════════════════ */
+.ci-benefit-text {
+  font-size: 15px;
+  color: var(--kd-bark);
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+/* ══ BENEFITS LIST (shared) ═════════════════════════════════════════════ */
+
+.svc-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin-bottom: var(--sp-6);
+}
+
+.svc-benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--kd-bark);
+  line-height: 1.5;
+}
+
+.svc-check-icon {
+  color: var(--kd-terracotta);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ══ STEPS ══════════════════════════════════════════════════════════════ */
+
+/* ── VAGUES déroulement ──────────────────────────────────────────────── */
 
 .ci-section-deroulement {
   background: var(--kd-cream);
 }
 
-.wave-sep--from-white { background-color: var(--kd-white); }
-.wave-sep--from-cream { background-color: var(--kd-cream); }
+.wave-sep--from-white {
+  background-color: var(--kd-white);
+}
+
+.wave-sep--from-cream {
+  background-color: var(--kd-cream);
+}
+
+/* ── DÉROULEMENT : layout image + texte ──────────────────────────────── */
 
 .ci-deroulement-grid {
   display: flex;
@@ -633,16 +665,17 @@ const jsonLd = {
 
 .ci-deroulement-visual {
   order: 2;
-  height: 300px;
+  height: 320px;
+  max-height: 320px;
   overflow: hidden;
   border-radius: var(--radius-xl);
 }
 
 .ci-deroulement-img {
   width: 100%;
-  height: 300px;
+  height: 100%;
   object-fit: cover;
-  object-position: center 55%;
+  object-position: center 70%;
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   display: block;
@@ -723,6 +756,19 @@ const jsonLd = {
   line-height: 1;
 }
 
+.svc-price-unit {
+  font-size: 16px;
+  color: var(--kd-fawn);
+}
+
+.svc-price-pack {
+  font-size: 14px;
+  color: var(--kd-stone);
+  margin-bottom: var(--sp-3);
+}
+
+.svc-price-savings { font-size: 13px; }
+
 .svc-price-free {
   display: flex;
   align-items: center;
@@ -740,41 +786,6 @@ const jsonLd = {
   line-height: 1;
 }
 
-.svc-price-note {
-  font-size: 12px;
-  color: var(--kd-fawn);
-  margin-top: var(--sp-3);
-  margin-bottom: 0;
-}
-
-/* Bloc "Pourquoi c'est gratuit ?" */
-.bilan-gratuit-block {
-  margin-top: var(--sp-10);
-  padding: var(--sp-8);
-  background: var(--kd-cream-warm);
-  border-radius: var(--radius-lg);
-  border-left: 3px solid var(--kd-terracotta);
-}
-
-.bilan-gratuit-h3 {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: clamp(18px, 2.5vw, 22px);
-  color: var(--kd-ink);
-  margin-bottom: var(--sp-5);
-}
-
-.bilan-gratuit-block p {
-  font-size: 15px;
-  color: var(--kd-bark);
-  line-height: 1.75;
-  margin-bottom: var(--sp-4);
-}
-
-.bilan-gratuit-block p:last-child {
-  margin-bottom: 0;
-}
-
 .ci-link-tarifs {
   display: inline-flex;
   align-items: center;
@@ -785,7 +796,9 @@ const jsonLd = {
   text-decoration: none;
   transition: color var(--dur-base) var(--ease-out);
 }
-.ci-link-tarifs:hover { color: var(--kd-ink); }
+.ci-link-tarifs:hover {
+  color: var(--kd-ink);
+}
 
 /* ══ AVIS ════════════════════════════════════════════════════════════════ */
 
@@ -836,7 +849,7 @@ const jsonLd = {
   flex-shrink: 0;
 }
 
-.svc-zone-sep  { color: var(--kd-stone);      font-size: 13px; white-space: nowrap; }
+.svc-zone-sep { color: var(--kd-stone); font-size: 13px; white-space: nowrap; }
 .svc-zone-name { font-size: 13px; color: var(--kd-bark); white-space: nowrap; }
 .svc-zone-more { font-size: 13px; font-weight: 700; color: var(--kd-terracotta); white-space: nowrap; }
 
@@ -866,7 +879,7 @@ const jsonLd = {
 
 .svc-zone-static { display: none; }
 
-/* ══ FAQ ════════════════════════════════════════════════════════════════ */
+/* ══ FAQ H3 (reset pour correspondre au style faq-question) ════════════ */
 
 .faq-h3 {
   font-family: var(--font-sans);
@@ -894,17 +907,13 @@ const jsonLd = {
 /* ══ RESPONSIVE ═════════════════════════════════════════════════════════ */
 
 @media (min-width: 768px) {
-  .utilite-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--sp-16);
+  .svc-hero {
+    /* background géré par <img fetchpriority=high> */
   }
 
-  .utilite-left {
-    position: sticky;
-    top: calc(var(--header-height) + var(--sp-6));
+  .svc-hero::before {
+    display: none;
   }
-
-  .svc-hero::before { display: none; }
 
   .svc-lede {
     color: var(--kd-bark);
@@ -916,9 +925,11 @@ const jsonLd = {
     align-items: center;
   }
 
+  /* Déroulement : 2 colonnes sur desktop */
   .ci-deroulement-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
     column-gap: var(--sp-16);
     row-gap: var(--sp-6);
     align-items: start;
@@ -935,26 +946,36 @@ const jsonLd = {
     order: unset;
     grid-column: 1;
     grid-row: 1 / 3;
-    height: auto;
-    overflow: visible;
-    border-radius: 0;
     position: sticky;
     top: calc(var(--header-height) + var(--sp-6));
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    border-radius: 0;
   }
 
   .ci-deroulement-img {
-    height: auto;
     aspect-ratio: 3 / 4;
+    object-position: center;
   }
 
   .ci-steps {
     order: unset;
     grid-column: 2;
     grid-row: 2;
-    margin-top: 0;
   }
 
-  .ci-steps-cta { display: none; }
+  .ci-steps-cta {
+    display: none;
+  }
+
+  .ci-intro {
+    max-width: none;
+  }
+
+  .ci-benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
   .svc-reviews-grid {
     display: grid;
@@ -984,6 +1005,8 @@ const jsonLd = {
 }
 
 @media (max-width: 480px) {
-  .svc-zone-strip { padding: 14px var(--sp-5); }
+  .svc-zone-strip {
+    padding: 14px var(--sp-5);
+  }
 }
 </style>

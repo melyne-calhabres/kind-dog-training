@@ -7,6 +7,7 @@ const pages = [
   '/prendre-rdv/',
   '/services/cours-individuel-education-canine-bordeaux/',
   '/services/bilan-comportemental/',
+  '/services/cours-collectifs/',
 ];
 
 export const GET: APIRoute = ({ site }) => {
