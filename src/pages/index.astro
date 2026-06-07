@@ -89,6 +89,45 @@ const faqJsonLd = {
   })),
 };
 
+const services = [
+  {
+    href: '/services/bilan-comportemental/',
+    icon: 'clipboard-list',
+    title: 'Bilan comportemental',
+    desc: 'Premier rendez-vous à domicile pour comprendre votre chien et définir un plan d\'action sur-mesure.',
+    price: 'Gratuit · Sans engagement',
+    cta: 'En savoir plus sur le bilan',
+    featured: true,
+  },
+  {
+    href: '/services/cours-individuel-education-canine-bordeaux/',
+    icon: 'target',
+    title: 'Cours individuels',
+    desc: 'Des séances personnalisées, pensées pour votre chien. On avance à votre rythme sur les points qui comptent.',
+    price: '50 €',
+    cta: 'En savoir plus sur les cours individuels',
+    featured: false,
+  },
+  {
+    href: '/services/cours-collectifs/',
+    icon: 'users',
+    title: 'Cours collectifs',
+    desc: 'En petit groupe pour progresser en contexte social. Idéal pour travailler la réactivité aux congénères.',
+    price: '30 € / chien',
+    cta: 'En savoir plus sur les cours collectifs',
+    featured: false,
+  },
+  {
+    href: '/services/stage-intensif/',
+    icon: 'calendar',
+    title: 'Stage intensif',
+    desc: 'Un programme concentré sur plusieurs jours pour les situations qui demandent un travail plus approfondi.',
+    price: 'Sur devis',
+    cta: 'En savoir plus sur le stage intensif',
+    featured: false,
+  },
+];
+
 const steps = [
   {
     icon: 'home',
@@ -451,9 +490,37 @@ const steps = [
 
   <div class="wave-separator wave-separator--from-dark" aria-hidden="true">
     <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,40 C360,70 720,10 1080,50 C1260,65 1380,35 1440,40 L1440,80 L0,80 Z" fill="#FFFFFF"/>
+      <path d="M0,40 C360,70 720,10 1080,50 C1260,65 1380,35 1440,40 L1440,80 L0,80 Z" fill="#FBF6EC"/>
     </svg>
   </div>
+
+  <!-- SERVICES OVERVIEW -->
+  <section class="section svo" id="services" aria-labelledby="svo-heading">
+    <div class="container">
+      <div class="svo__head">
+        <h2 id="svo-heading">Mes services d'éducation canine <span class="accent">à Bordeaux</span></h2>
+        <p class="svo__lede">Chaque accompagnement débute par un bilan comportemental gratuit. Ensemble, on définit ensuite la formule la plus adaptée à votre chien.</p>
+      </div>
+      <div class="svo__grid">
+        {services.map((svc) => (
+          <a href={svc.href} class={`svo__card${svc.featured ? ' svo__card--featured' : ''}`}>
+            <span class="svo__card-icon">
+              <Icon name={svc.icon} width={22} height={22} strokeWidth={1.75} />
+            </span>
+            <div class="svo__card-body">
+              <h3 class="svo__card-title">{svc.title}</h3>
+              <p class="svo__card-desc">{svc.desc}</p>
+            </div>
+            <p class="svo__card-price">{svc.price}</p>
+            <span class="svo__card-cta">
+              {svc.cta}
+              <Icon name="arrow-right" width={14} height={14} strokeWidth={2} />
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <!-- DOG TYPES -->
   <section class="section dog-types-section" id="types-de-chiens" aria-labelledby="dog-types-heading">
@@ -462,8 +529,8 @@ const steps = [
         <div class="dog-types-text">
           <h2 class="dog-types-title" id="dog-types-heading">Un accompagnement pour quels <span class="accent">types de chiens ?</span></h2>
           <div class="dog-types-sep"></div>
-          <p>Chez Kind Dog Training, votre éducateur canin de référence à Bordeaux, nous sommes là pour vous soutenir, <strong>quelle que soit la race de la boule qui partage votre quotidien !</strong></p>
-          <p>Que vous ayez un berger attentif, un molosse affectueux, un terrier plein d'énergie, un chien de chasse curieux ou un chien primitif, nous avons la solution adaptée à chaque comportement, chaque besoin et chaque personnalité. Parce que <strong>chaque chien est unique, chaque accompagnement l'est aussi</strong>. Ensemble, nous allons transformer les défis en moments de complicité et de joie !</p>
+          <p>Que vous ayez un berger attentif, un molosse affectueux, un terrier plein d'énergie, un chien de chasse curieux ou un chien primitif, je suis là pour vous accompagner quelle que soit la race de la boule qui partage votre quotidien.</p>
+          <p>Chaque chien a sa propre personnalité, ses besoins, son histoire. C'est pourquoi je construis chaque accompagnement sur-mesure, en m'adaptant à votre chien et à votre quotidien. Mon objectif : transformer les défis du quotidien en moments de complicité et de confiance entre vous.</p>
         </div>
         <div class="dog-photos-column">
           <div class="dog-photos-wrapper" id="dog-carousel">
@@ -657,3 +724,126 @@ const steps = [
 
   <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
 </Layout>
+
+<style>
+  /* ── Services overview ── */
+  .svo {
+    background-color: var(--kd-paper);
+  }
+
+  .svo__head {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto var(--sp-12);
+  }
+
+  .svo__lede {
+    font-size: var(--fs-md);
+    color: var(--color-fg-muted);
+    line-height: var(--lh-relaxed);
+    margin-top: var(--sp-4);
+  }
+
+  .svo__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-5);
+    margin-bottom: var(--sp-10);
+  }
+
+  .svo__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    padding: var(--sp-8);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.18s ease-out, transform 0.18s ease-out;
+  }
+
+  .svo__card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+  }
+
+  .svo__card--featured {
+    border-top: 3px solid var(--kd-terracotta);
+  }
+
+  .svo__card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background-color: var(--kd-cream-warm);
+    color: var(--kd-terracotta);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .svo__card--featured .svo__card-icon {
+    background-color: var(--kd-terracotta);
+    color: var(--kd-paper);
+  }
+
+  .svo__card-body {
+    flex: 1;
+  }
+
+  .svo__card-title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    line-height: var(--lh-snug);
+    color: var(--color-fg);
+    margin-bottom: var(--sp-3);
+  }
+
+  .svo__card-desc {
+    font-size: var(--fs-base);
+    line-height: var(--lh-relaxed);
+    color: var(--color-fg-muted);
+  }
+
+  .svo__card-price {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--kd-terracotta);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .svo__card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--kd-terracotta);
+    transition: gap 0.18s ease-out;
+  }
+
+  .svo__card:hover .svo__card-cta {
+    gap: var(--sp-3);
+  }
+
+  .svo__more {
+    text-align: center;
+  }
+
+  @media (max-width: 960px) {
+    .svo__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .svo__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
