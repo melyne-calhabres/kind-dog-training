@@ -8,6 +8,7 @@ const pages = [
   '/services/cours-individuel-education-canine-bordeaux/',
   '/services/bilan-comportemental/',
   '/services/cours-collectifs/',
+  '/services/stage-intensif/',
 ];
 
 export const GET: APIRoute = ({ site }) => {

@@ -1,0 +1,276 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+
+const otherServices = [
+  {
+    slug: '/services/cours-individuel-education-canine-bordeaux/',
+    icon: 'target',
+    title: 'Cours individuels',
+    desc: 'Des séances personnalisées, pensées pour votre chien et votre situation. On avance à votre rythme sur les points qui comptent vraiment pour vous.',
+    detail: '50 €',
+    cta: 'Voir les cours individuels',
+  },
+  {
+    slug: '/services/cours-collectifs/',
+    icon: 'users',
+    title: 'Cours collectifs',
+    desc: 'Des sessions en petit groupe pour progresser dans un contexte social. Idéal pour travailler le comportement en présence d\'autres chiens et pour s\'amuser.',
+    detail: '30 € / chien',
+    cta: 'Voir les cours collectifs',
+  },
+  {
+    slug: '/services/stage-intensif/',
+    icon: 'trophy',
+    title: 'Stage intensif',
+    desc: 'Pour les situations qui demandent un travail concentré sur plusieurs jours. Un programme construit sur mesure selon votre problématique.',
+    detail: 'Sur devis',
+    cta: 'Voir le stage intensif',
+  },
+];
+---
+
+<Layout
+  title="Nos services d'éducation canine – Kind Dog Training"
+  description="Bilan comportemental, cours individuels, cours collectifs et stage intensif à Bordeaux. Kind Dog Training vous accompagne selon les besoins spécifiques de votre chien."
+>
+  <section class="svcs-page">
+    <div class="container">
+
+      <div class="svcs-page__header">
+        <h1 class="svcs-page__title">Mes services</h1>
+        <p class="svcs-page__intro">Chaque accompagnement commence par un bilan comportemental gratuit à votre domicile. C'est le point de départ qui permet de comprendre votre chien et de construire ensemble le suivi le plus adapté à votre situation.</p>
+      </div>
+
+      <div class="svcs-page__featured">
+        <a href="/services/bilan-comportemental/" class="svcs-featured-link">
+          <div class="card card-featured svcs-featured-card">
+            <div class="svcs-featured-card__icon">
+              <Icon name="clipboard-list" width="32" height="32" strokeWidth="1.75" />
+            </div>
+            <div class="svcs-featured-card__body">
+              <h2 class="svcs-featured-card__title">Bilan comportemental</h2>
+              <p class="svcs-featured-card__desc">Avant tout accompagnement, je me déplace à votre domicile pour observer votre chien dans son environnement, comprendre votre situation et vous proposer un plan d'action sur mesure. C'est le point de départ obligatoire et incontournable pour tout le monde.</p>
+              <p class="svcs-featured-card__detail">Gratuit &middot; À domicile &middot; Sans engagement</p>
+              <span class="btn btn-primary svcs-featured-card__cta">Découvrir le bilan</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="svcs-page__grid">
+        {otherServices.map((svc) => (
+          <a href={svc.slug} class="svcs-card-link">
+            <div class="card svcs-card">
+              <div class="svcs-card__icon">
+                <Icon name={svc.icon} width="24" height="24" strokeWidth="1.75" />
+              </div>
+              <h2 class="svcs-card__title">{svc.title}</h2>
+              <p class="svcs-card__desc">{svc.desc}</p>
+              <p class="svcs-card__detail">{svc.detail}</p>
+              <span class="svcs-card__cta">
+                Découvrir
+                <Icon name="arrow-right" width="15" height="15" strokeWidth="2" />
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .svcs-page {
+    padding-block: var(--sp-20) var(--sp-24);
+    background-color: var(--color-bg);
+  }
+
+  .container {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--sp-6);
+  }
+
+  /* ── Page header ── */
+  .svcs-page__header {
+    max-width: 640px;
+    margin-bottom: var(--sp-12);
+  }
+
+  .svcs-page__title {
+    font-family: var(--font-serif);
+    font-size: clamp(var(--fs-2xl), 5vw, var(--fs-3xl));
+    font-weight: 600;
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-fg);
+    margin-bottom: var(--sp-5);
+  }
+
+  .svcs-page__intro {
+    font-size: var(--fs-md);
+    line-height: var(--lh-relaxed);
+    color: var(--color-fg-muted);
+  }
+
+  /* ── Featured bilan card ── */
+  .svcs-page__featured {
+    margin-bottom: var(--sp-6);
+  }
+
+  .svcs-featured-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .svcs-featured-card {
+    display: flex;
+    gap: var(--sp-8);
+    align-items: flex-start;
+    padding: var(--sp-10);
+    border-left: 4px solid var(--kd-terracotta);
+  }
+
+  .svcs-featured-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .svcs-featured-card__icon {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-md);
+    background-color: var(--kd-terracotta);
+    color: var(--kd-paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .svcs-featured-card__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .svcs-featured-card__title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-xl);
+    font-weight: 600;
+    line-height: var(--lh-snug);
+    color: var(--color-fg);
+    margin-bottom: var(--sp-4);
+  }
+
+  .svcs-featured-card__desc {
+    font-size: var(--fs-base);
+    line-height: var(--lh-relaxed);
+    color: var(--color-fg-muted);
+    margin-bottom: var(--sp-4);
+  }
+
+  .svcs-featured-card__detail {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--kd-terracotta);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    margin-bottom: var(--sp-6);
+  }
+
+  .svcs-featured-card__cta {
+    align-self: flex-start;
+  }
+
+  /* ── 3-column grid ── */
+  .svcs-page__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-5);
+  }
+
+  .svcs-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+
+  .svcs-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    padding: var(--sp-8);
+  }
+
+  .svcs-card__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    background-color: var(--kd-cream-warm);
+    color: var(--kd-terracotta);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .svcs-card__title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    line-height: var(--lh-snug);
+    color: var(--color-fg);
+  }
+
+  .svcs-card__desc {
+    font-size: var(--fs-base);
+    line-height: var(--lh-relaxed);
+    color: var(--color-fg-muted);
+    flex: 1;
+  }
+
+  .svcs-card__detail {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--kd-fawn);
+  }
+
+  .svcs-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--kd-terracotta);
+    margin-top: var(--sp-2);
+    transition: gap var(--dur-fast) var(--ease-out);
+  }
+
+  .svcs-card-link:hover .svcs-card__cta {
+    gap: var(--sp-3);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .svcs-page__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .svcs-featured-card {
+      flex-direction: column;
+      gap: var(--sp-6);
+      padding: var(--sp-8) var(--sp-6);
+    }
+
+    .svcs-page__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
