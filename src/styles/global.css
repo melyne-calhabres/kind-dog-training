@@ -717,10 +717,11 @@ p {
 }
 
 .form-card {
-  background: var(--color-surface);
+  background: var(--kd-cream);
+  border: 1px solid var(--kd-stone);
   border-radius: var(--radius-xl);
   padding: var(--sp-8);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 24px 48px -12px rgba(74, 47, 28, 0.18), 0 6px 16px rgba(74, 47, 28, 0.10);
 }
 
 .form-message {
