@@ -21,8 +21,8 @@ const article = {
   readTime:       '12 min',
   author:         'Mélyne',
   authorInitial:  'M',
-  authorRole:     'Éducatrice & comportementaliste canin · ACACED · Bordeaux',
-  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les binômes en difficulté avec des méthodes bienveillantes, adaptées à chaque situation.',
+  authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
+  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
   coverAlt:       'Chien en promenade dans un parc de Bordeaux, lumière naturelle',
 };
 
@@ -70,6 +70,11 @@ const jsonLd = {
     },
   ],
 };
+
+// ── FAQ (optionnel — laisser vide si pas de FAQ) ──────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  // { question: 'Question ?', answer: 'Réponse.' },
+];
 
 // ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
 const tldr = [
@@ -302,16 +307,25 @@ const related = [
       <!-- Sidebar sticky — desktop uniquement -->
       <aside class="art-sidebar" aria-labelledby="art-toc-heading">
         <nav class="art-toc" aria-labelledby="art-toc-heading">
-          <p class="art-toc-title" id="art-toc-heading">Sommaire</p>
-          {toc.map((item) => (
-            <a
-              href={item.href}
-              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
-            >
-              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
-              {item.label}
-            </a>
-          ))}
+          <details class="art-toc-details">
+            <summary class="art-toc-title" id="art-toc-heading">
+              Sommaire
+              <svg class="art-toc-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="art-toc-links">
+              {toc.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+                >
+                  <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
         </nav>
 
         <div class="art-sidebar-cta">
@@ -338,6 +352,40 @@ const related = [
     </footer>
 
   </article><!-- /article -->
+
+
+  <!-- ── FAQ (si faqItems non vide) ───────────────────────────────────── -->
+  {faqItems.length > 0 && (
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 750px;">
+        <h2 id="faq-heading" style="text-align: center;">Questions <span class="accent">fréquentes</span></h2>
+        <div class="faq-list" style="margin-top: var(--sp-8);">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>{item.question}</span>
+                <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqItems.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: { '@type': 'Answer', text: item.answer },
+      })),
+    })} />
+  )}
 
 
   <!-- ── CTA FINAL ──────────────────────────────────────────────────── -->

@@ -2683,6 +2683,10 @@ p {
 .art-callout--dark .art-callout__text  { font-size: 14px; line-height: 1.55; color: var(--kd-stone); margin-bottom: 0; }
 .art-callout--soft .art-callout__text  { font-size: 13px; line-height: 1.55; color: var(--kd-bark); margin-bottom: 0; }
 
+/* Callout sans titre : texte légèrement plus grand */
+.art-callout--dark:not(:has(.art-callout__title)) .art-callout__text { font-size: 15px; }
+.art-callout--soft:not(:has(.art-callout__title)) .art-callout__text { font-size: 15px; }
+
 /* Desktop sidebar */
 .art-sidebar {
   display: none;
@@ -2698,11 +2702,29 @@ p {
 }
 
 .art-toc-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-weight: 700;
   font-size: 15px;
   color: var(--kd-ink);
-  margin-bottom: var(--sp-3);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
 }
+.art-toc-title::-webkit-details-marker { display: none; }
+
+.art-toc-chevron {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--kd-fawn);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.art-toc-details[open] .art-toc-chevron { transform: rotate(180deg); }
+
+.art-toc-links { margin-top: var(--sp-3); }
 
 .art-toc-item {
   display: flex;
