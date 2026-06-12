@@ -1,0 +1,403 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Icon from '../../../components/Icon.astro';
+
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+const page = {
+  metaTitle:       'Comportement canin — Conseils & guides pratiques | Kind Dog Training',
+  metaDescription: 'Comprendre et améliorer le comportement de votre chien : réactivité, agressivité, anxiété. Guides rédigés par une éducatrice comportementaliste à Bordeaux.',
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',       item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Comportement',  item: pageUrl },
+      ],
+    },
+    {
+      '@type':       'CollectionPage',
+      name:          'Comportement canin',
+      description:   page.metaDescription,
+      url:           pageUrl,
+      inLanguage:    'fr-FR',
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+      },
+    },
+  ],
+};
+
+type Card = {
+  title: string;
+  meta: string;
+  url: string | null;
+  image: string | null;
+  imageAlt?: string;
+  gradient: string;
+  soon: boolean;
+};
+
+const sections: { id: string; label: string; seeAllUrl: string | null; cards: Card[] }[] = [
+  {
+    id:         'problemes',
+    label:      'Problèmes de comportement',
+    seeAllUrl:  null,
+    cards: [
+      {
+        title:    'Mon chien est réactif aux autres chiens en balade : comprendre ce qui se passe et agir',
+        meta:     'Réactivité · 13 min',
+        url:      '/education-canine/comportement/problemes/reactivite/chiens/',
+        image:    '/images/article-reactivite-chiens.webp',
+        imageAlt: 'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
+        gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
+        soon:     false,
+      },
+      {
+        title:    'Mon chien tire en laisse : que faire ?',
+        meta:     'Bientôt disponible',
+        url:      null,
+        image:    null,
+        gradient: 'linear-gradient(135deg, #D9DCC4 0%, #6E7A4A 70%)',
+        soon:     true,
+      },
+      {
+        title:    'Aboiements excessifs : causes et solutions',
+        meta:     'Bientôt disponible',
+        url:      null,
+        image:    null,
+        gradient: 'linear-gradient(135deg, #C8D8E2 0%, #A8B8C2 70%)',
+        soon:     true,
+      },
+    ],
+  },
+];
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ─────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li aria-current="page">Comportement</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ── EN-TÊTE ──────────────────────────────────────────────────── -->
+  <header class="ec-hero">
+    <div class="container ec-hero-inner">
+      <p class="ec-hero-eyebrow">Éducation canine</p>
+      <h1 class="ec-hero-title">Comprendre le <span class="accent">comportement</span> de votre chien</h1>
+      <p class="ec-hero-desc">Guides pratiques rédigés par une éducatrice comportementaliste pour vous aider à mieux comprendre votre chien et agir efficacement.</p>
+    </div>
+  </header>
+
+  <!-- ── SECTIONS PAR SOUS-CATÉGORIE ──────────────────────────────── -->
+  <div class="ec-sections">
+    <div class="container">
+
+      {sections.map((section) => (
+        <section class="ec-section" id={section.id} aria-labelledby={`ec-h2-${section.id}`}>
+          <div class="ec-section-head">
+            <h2 class="ec-section-title" id={`ec-h2-${section.id}`}>{section.label}</h2>
+            {section.seeAllUrl && (
+              <a href={section.seeAllUrl} class="ec-see-all">
+                Voir tout
+                <Icon name="arrow-right" width={14} height={14} strokeWidth={2} />
+              </a>
+            )}
+          </div>
+
+          <div class="ec-cards">
+            {section.cards.map((card) => (
+              card.url ? (
+                <a href={card.url} class="ec-card">
+                  <div class="ec-card-img" style={card.image ? undefined : `background: ${card.gradient};`} role="presentation">
+                    {card.image && (
+                      <img src={card.image} alt={card.imageAlt ?? ''} class="ec-card-img-photo" loading="lazy" decoding="async" />
+                    )}
+                  </div>
+                  <div class="ec-card-body">
+                    <p class="ec-card-title">{card.title}</p>
+                    <p class="ec-card-meta">
+                      <Icon name="clock" width={12} height={12} strokeWidth={2} />
+                      {card.meta}
+                    </p>
+                  </div>
+                </a>
+              ) : (
+                <div class="ec-card ec-card--soon">
+                  <div class="ec-card-img" style={`background: ${card.gradient};`} role="presentation">
+                    <span class="ec-card-soon-badge">Bientôt</span>
+                  </div>
+                  <div class="ec-card-body">
+                    <p class="ec-card-title">{card.title}</p>
+                    <p class="ec-card-meta ec-card-meta--soon">{card.meta}</p>
+                  </div>
+                </div>
+              )
+            ))}
+          </div>
+
+          {section.seeAllUrl && (
+            <div class="ec-see-all-mobile">
+              <a href={section.seeAllUrl} class="ec-see-all">
+                Voir tout
+                <Icon name="arrow-right" width={14} height={14} strokeWidth={2} />
+              </a>
+            </div>
+          )}
+        </section>
+      ))}
+
+    </div>
+  </div>
+
+  <!-- ── CTA ──────────────────────────────────────────────────────── -->
+  <section class="section-dark ec-cta-section" aria-labelledby="ec-cta-h">
+    <div class="container ec-cta-inner">
+      <h2 class="ec-cta-title" id="ec-cta-h">Un problème de comportement spécifique&nbsp;?</h2>
+      <p>Premier rendez-vous gratuit à votre domicile · Sans engagement</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Prendre RDV
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  /* ── Hero ── */
+  .ec-hero {
+    background: var(--kd-paper);
+    padding-block: var(--sp-12) var(--sp-10);
+  }
+
+  .ec-hero-inner {
+    max-width: 680px;
+  }
+
+  .ec-hero-eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--kd-terracotta);
+    margin-bottom: var(--sp-3);
+  }
+
+  .ec-hero-title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-2xl);
+    font-weight: 500;
+    line-height: var(--lh-snug);
+    color: var(--kd-ink);
+    margin-bottom: var(--sp-4);
+  }
+
+  .ec-hero-desc {
+    font-size: var(--fs-md);
+    color: var(--kd-bark);
+    line-height: var(--lh-relaxed);
+    max-width: 600px;
+  }
+
+  /* ── Sections ── */
+  .ec-sections {
+    padding-block: var(--sp-12) var(--sp-20);
+  }
+
+  .ec-section {
+    margin-bottom: var(--sp-16);
+  }
+
+  .ec-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .ec-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    margin-bottom: var(--sp-6);
+    padding-bottom: var(--sp-4);
+    border-bottom: 1px solid var(--kd-cream-deep);
+  }
+
+  .ec-section-title {
+    font-family: var(--font-sans);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--kd-ink);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .ec-see-all {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-1);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--kd-terracotta);
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: gap var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+
+  .ec-see-all:hover {
+    color: var(--kd-terracotta-deep);
+    gap: var(--sp-2);
+    text-decoration: none;
+  }
+
+  .ec-see-all-mobile {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--sp-5);
+  }
+
+  /* ── Cards ── */
+  .ec-cards {
+    display: grid;
+    gap: var(--sp-4);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 600px) {
+    .ec-cards { grid-template-columns: repeat(2, 1fr); }
+    .ec-hero-title { font-size: var(--fs-3xl); }
+  }
+
+  @media (min-width: 900px) {
+    .ec-cards { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .ec-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--kd-paper);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+
+  a.ec-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .ec-card--soon {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  .ec-card-img {
+    height: 130px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: var(--sp-3);
+    overflow: hidden;
+  }
+
+  .ec-card-img-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .ec-card-soon-badge {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(4px);
+    color: var(--kd-white);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    padding: var(--sp-1) var(--sp-3);
+    border-radius: var(--radius-pill);
+  }
+
+  .ec-card-body {
+    padding: var(--sp-4) var(--sp-5) var(--sp-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    flex: 1;
+  }
+
+  .ec-card-title {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--kd-ink);
+    line-height: 1.35;
+  }
+
+  .ec-card-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-1);
+    font-size: var(--fs-xs);
+    color: var(--kd-fawn);
+    margin-top: auto;
+  }
+
+  .ec-card-meta--soon {
+    color: var(--kd-stone);
+    font-style: italic;
+  }
+
+  /* ── CTA ── */
+  .ec-cta-section {
+    padding-block: var(--sp-16);
+    text-align: center;
+  }
+
+  .ec-cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-5);
+  }
+
+  .ec-cta-title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    color: var(--kd-cream);
+    line-height: var(--lh-snug);
+  }
+
+  .ec-cta-inner > p {
+    color: var(--kd-stone);
+    font-size: var(--fs-md);
+  }
+</style>

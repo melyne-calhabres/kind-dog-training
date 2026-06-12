@@ -20,9 +20,10 @@ const article = {
   publishDateIso: '2026-01-15',
   readTime:       '12 min',
   author:         'Mélyne',
-  authorInitial:  'M',
+  authorPhoto:    '/images/melyne-auteur.webp',
   authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
   authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
+  coverSrc:       '/images/REMPLACER.webp',
   coverAlt:       'Chien en promenade dans un parc de Bordeaux, lumière naturelle',
 };
 
@@ -148,7 +149,9 @@ const related = [
         </h1>
         <div class="art-meta">
           <div class="art-author">
-            <div class="art-avatar" aria-hidden="true">{article.authorInitial}</div>
+            <div class="art-avatar" aria-hidden="true">
+              <img src={article.authorPhoto} alt={article.author} width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
+            </div>
             <p class="art-author-info">
               <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
             </p>
@@ -163,20 +166,18 @@ const related = [
     </header>
 
     <!-- Image hero -->
-    <!--
-      Remplacer le placeholder par une vraie image :
-      style="--art-hero-bg-mobile: url('/images/xxx-mobile.webp'); --art-hero-bg-desktop: url('/images/xxx.webp');"
-      ou utiliser directement :
-      <img src="/images/article-hero.webp" alt={article.coverAlt}
-           width="1116" height="398" loading="eager" decoding="async"
-           class="art-hero-img" />
-    -->
     <div class="art-hero-wrap">
       <div class="container">
         <figure class="art-hero">
-          <div class="art-hero-placeholder" role="img" aria-label={article.coverAlt}>
-            <span class="art-img-hint" aria-hidden="true">Photo · {article.coverAlt}</span>
-          </div>
+          <img
+            src={article.coverSrc}
+            alt={article.coverAlt}
+            width="1116"
+            height="398"
+            loading="eager"
+            decoding="async"
+            class="art-hero-img"
+          />
         </figure>
       </div>
     </div>
@@ -388,7 +389,9 @@ const related = [
     <footer class="art-bio-wrap">
       <div class="container">
         <div class="art-bio">
-          <div class="art-bio-avatar" aria-hidden="true">{article.authorInitial}</div>
+          <div class="art-bio-avatar" aria-hidden="true">
+            <img src={article.authorPhoto} alt={article.author} width="64" height="64" loading="lazy" decoding="async" style="display:block;" />
+          </div>
           <div>
             <p class="art-bio-name">À propos de {article.author}</p>
             <p class="art-bio-role">{article.authorRole}</p>
@@ -469,6 +472,36 @@ const related = [
       </div>
     </div>
   </section>
+
+  <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
+  <div id="art-progress-bar" aria-hidden="true"></div>
+
+  <style>
+    #art-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: var(--kd-terracotta);
+      z-index: 1000;
+      transition: width 0.1s linear;
+    }
+  </style>
+
+  <script is:inline>
+    // ── Barre de progression au scroll ──────────────────────────────
+    (function () {
+      var bar = document.getElementById('art-progress-bar');
+      if (!bar) return;
+      function update() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        bar.style.width = docHeight > 0 ? (scrollTop / docHeight * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+    })();
+  </script>
 
   <script is:inline>
     // ── Like / Dislike feedback ──────────────────────────────────────

@@ -595,6 +595,35 @@ p {
   text-decoration: none;
 }
 
+.nav-dropdown-group {
+  padding: var(--sp-1) 0;
+}
+
+.nav-dropdown-group + .nav-dropdown-group {
+  border-top: 1px solid var(--kd-cream-deep);
+  margin-top: var(--sp-1);
+  padding-top: var(--sp-2);
+}
+
+.nav-dropdown-group-label {
+  display: block;
+  padding: var(--sp-2) var(--sp-4) var(--sp-1);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--kd-stone);
+  cursor: default;
+  user-select: none;
+}
+
+.nav-dropdown-sublist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 .nav-cta-desktop {
   display: none;
 }
@@ -2305,14 +2334,18 @@ p {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--kd-terracotta);
-  color: var(--kd-paper);
-  display: grid;
-  place-items: center;
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: 18px;
+  overflow: hidden;
+  position: relative;
   flex-shrink: 0;
+}
+
+.art-avatar img,
+.art-bio-avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .art-author-info {
@@ -2381,7 +2414,8 @@ p {
   border-radius: var(--radius-xl);
   display: block;
   object-fit: cover;
-  aspect-ratio: 16 / 6;
+  object-position: center 70%;
+  aspect-ratio: 16 / 14;
 }
 
 .art-hero-placeholder {
@@ -2782,11 +2816,13 @@ p {
 
 /* Inline CTA — mobile only, replaces sidebar CTA */
 .art-inline-cta {
-  background: rgba(200, 98, 58, 0.06);
-  border: 1.5px solid rgba(200, 98, 58, 0.2);
+  background: rgba(200, 98, 58, 0.13);
+  border: 2px solid rgba(200, 98, 58, 0.55);
   border-radius: var(--radius-md);
-  padding: var(--sp-5);
+  padding: var(--sp-6);
   text-align: center;
+  margin-block: var(--sp-8);
+  box-shadow: 0 2px 12px rgba(200, 98, 58, 0.12);
 }
 
 .art-inline-cta-title {
@@ -2991,13 +3027,8 @@ p {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: var(--kd-terracotta);
-  color: var(--kd-paper);
-  display: grid;
-  place-items: center;
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: 22px;
+  overflow: hidden;
+  position: relative;
   flex-shrink: 0;
 }
 
@@ -3137,6 +3168,6 @@ p {
   .art-inline-cta { display: none; }
 
   /* Wider hero on desktop */
-  .art-hero-placeholder { aspect-ratio: 21 / 6; }
-  .art-hero-img { aspect-ratio: 21 / 6; }
+  .art-hero-placeholder { aspect-ratio: 21 / 10.35; }
+  .art-hero-img { aspect-ratio: 21 / 10.35; object-position: center 60%; }
 }
