@@ -1,0 +1,588 @@
+---
+// Bannière de consentement cookies — Consent Mode v2
+// Version du schéma de consentement : bump pour re-demander à tous les visiteurs
+const CONSENT_VERSION = 1;
+---
+
+<div
+  id="kdt-consent-root"
+  class="kdt-consent-root"
+  hidden
+  aria-hidden="true"
+>
+  <div class="kdt-consent-overlay"></div>
+
+  <div
+    class="kdt-consent-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="kdt-consent-title"
+    aria-describedby="kdt-consent-desc"
+    tabindex="-1"
+  >
+    <!-- Vue principale -->
+    <section class="kdt-consent-view" data-view="main">
+      <h2 id="kdt-consent-title" class="kdt-consent-title">
+        Vos cookies, votre choix
+      </h2>
+      <p id="kdt-consent-desc" class="kdt-consent-desc">
+        Pour faire vivre ce site, on utilise quelques cookies. Les cookies
+        nécessaires sont indispensables au bon fonctionnement de la page.
+        Les cookies de mesure d'audience (Google Analytics) nous aident à
+        comprendre comment vous utilisez le site afin d'améliorer votre
+        expérience. Vous gardez la main à tout moment.
+      </p>
+
+      <div class="kdt-consent-actions">
+        <button type="button" class="kdt-btn kdt-btn-primary" data-action="accept-all">
+          Tout accepter
+        </button>
+        <button type="button" class="kdt-btn kdt-btn-outline" data-action="customize">
+          Personnaliser
+        </button>
+      </div>
+
+      <button type="button" class="kdt-consent-reject" data-action="reject-all">
+        Tout refuser
+      </button>
+    </section>
+
+    <!-- Vue préférences -->
+    <section class="kdt-consent-view" data-view="prefs" hidden>
+      <h2 class="kdt-consent-title">Vos préférences cookies</h2>
+      <p class="kdt-consent-desc">
+        Activez uniquement ce avec quoi vous êtes à l'aise.
+      </p>
+
+      <ul class="kdt-consent-cats">
+        <li class="kdt-consent-cat">
+          <div class="kdt-consent-cat-head">
+            <span class="kdt-consent-cat-name">Cookies nécessaires</span>
+            <span class="kdt-consent-toggle kdt-consent-toggle--locked" aria-hidden="true">
+              <span class="kdt-consent-toggle-knob"></span>
+            </span>
+            <span class="kdt-consent-cat-state">Toujours actifs</span>
+          </div>
+          <p class="kdt-consent-cat-desc">
+            Indispensables au fonctionnement du site (préférences techniques,
+            mémorisation de votre choix de cookies). Ils ne peuvent pas être
+            désactivés.
+          </p>
+        </li>
+
+        <li class="kdt-consent-cat">
+          <div class="kdt-consent-cat-head">
+            <label class="kdt-consent-cat-name" for="kdt-toggle-analytics">
+              Mesure d'audience
+            </label>
+            <button
+              type="button"
+              id="kdt-toggle-analytics"
+              class="kdt-consent-toggle"
+              role="switch"
+              aria-checked="false"
+              data-toggle="analytics"
+            >
+              <span class="kdt-consent-toggle-knob"></span>
+              <span class="kdt-sr-only">Activer la mesure d'audience</span>
+            </button>
+          </div>
+          <p class="kdt-consent-cat-desc">
+            Google Analytics : statistiques anonymisées de fréquentation pour
+            comprendre l'usage du site et l'améliorer.
+          </p>
+        </li>
+      </ul>
+
+      <div class="kdt-consent-actions kdt-consent-actions--prefs">
+        <button type="button" class="kdt-btn kdt-btn-outline" data-action="save">
+          Enregistrer mes choix
+        </button>
+        <button type="button" class="kdt-btn kdt-btn-primary" data-action="accept-all">
+          Tout accepter
+        </button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<style>
+  .kdt-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  .kdt-consent-root[hidden] {
+    display: none;
+  }
+
+  .kdt-consent-root {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sp-4, 16px);
+  }
+
+  .kdt-consent-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(42, 30, 21, 0.62);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  .kdt-consent-modal {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    background: var(--color-surface-raised, #ffffff);
+    color: var(--color-fg, #2A1E15);
+    border-radius: var(--radius-lg, 18px);
+    box-shadow: var(--shadow-lg, 0 20px 40px -16px rgba(0,0,0,0.22));
+    padding: clamp(20px, 4vw, 32px);
+    font-family: var(--font-sans, 'Nunito', system-ui, sans-serif);
+  }
+
+  .kdt-consent-modal:focus {
+    outline: none;
+  }
+
+  .kdt-consent-title {
+    font-family: var(--font-serif, Georgia, serif);
+    font-size: clamp(20px, 3.5vw, 26px);
+    line-height: 1.2;
+    margin: 0 0 12px;
+    color: var(--color-fg, #2A1E15);
+  }
+
+  .kdt-consent-desc {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--color-fg-muted, #4F3A2A);
+    margin: 0 0 20px;
+  }
+
+  .kdt-consent-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .kdt-consent-actions--prefs {
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+
+  .kdt-btn {
+    appearance: none;
+    border: 1.5px solid transparent;
+    border-radius: var(--radius-pill, 999px);
+    padding: 11px 20px;
+    font: inherit;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease, transform .05s ease;
+    flex: 1 1 auto;
+    min-height: 44px;
+  }
+
+  .kdt-btn:focus-visible {
+    outline: 3px solid var(--color-primary, #C8623A);
+    outline-offset: 2px;
+  }
+
+  .kdt-btn:active {
+    transform: translateY(1px);
+  }
+
+  .kdt-btn-primary {
+    background: var(--color-primary, #C8623A);
+    color: var(--color-on-primary, #FBF6EC);
+    border-color: var(--color-primary, #C8623A);
+  }
+  .kdt-btn-primary:hover {
+    background: var(--color-primary-hover, #A14B27);
+    border-color: var(--color-primary-hover, #A14B27);
+  }
+
+  .kdt-btn-outline {
+    background: transparent;
+    color: var(--color-primary, #C8623A);
+    border-color: var(--color-primary, #C8623A);
+  }
+  .kdt-btn-outline:hover {
+    background: rgba(200, 98, 58, 0.08);
+  }
+
+  .kdt-consent-reject {
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 6px 4px;
+    margin: 4px 0 0;
+    font: inherit;
+    font-size: 13px;
+    color: var(--color-fg-subtle, #7A6552);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    display: inline-block;
+  }
+  .kdt-consent-reject:hover {
+    color: var(--color-fg-muted, #4F3A2A);
+  }
+  .kdt-consent-reject:focus-visible {
+    outline: 2px solid var(--color-primary, #C8623A);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .kdt-consent-cats {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .kdt-consent-cat {
+    border: 1px solid var(--color-border, #E5D6B8);
+    border-radius: var(--radius-md, 12px);
+    padding: 14px 16px;
+    background: var(--color-surface, #FBF6EC);
+  }
+
+  .kdt-consent-cat-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .kdt-consent-cat-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--color-fg, #2A1E15);
+    flex: 1;
+  }
+
+  .kdt-consent-cat-state {
+    font-size: 12px;
+    color: var(--color-fg-subtle, #7A6552);
+    font-weight: 600;
+  }
+
+  .kdt-consent-cat-desc {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--color-fg-muted, #4F3A2A);
+  }
+
+  /* Toggle switch */
+  .kdt-consent-toggle {
+    appearance: none;
+    border: none;
+    position: relative;
+    width: 44px;
+    height: 24px;
+    border-radius: 999px;
+    background: var(--kd-stone, #B8A892);
+    cursor: pointer;
+    padding: 0;
+    transition: background-color .15s ease;
+    flex-shrink: 0;
+  }
+  .kdt-consent-toggle:focus-visible {
+    outline: 3px solid var(--color-primary, #C8623A);
+    outline-offset: 2px;
+  }
+  .kdt-consent-toggle-knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform .18s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .kdt-consent-toggle[aria-checked="true"] {
+    background: var(--color-primary, #C8623A);
+  }
+  .kdt-consent-toggle[aria-checked="true"] .kdt-consent-toggle-knob {
+    transform: translateX(20px);
+  }
+  .kdt-consent-toggle--locked {
+    background: var(--color-success, #6E7A4A);
+    cursor: not-allowed;
+    opacity: 0.85;
+  }
+  .kdt-consent-toggle--locked .kdt-consent-toggle-knob {
+    transform: translateX(20px);
+  }
+
+  @media (max-width: 480px) {
+    .kdt-btn {
+      flex: 1 1 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kdt-consent-toggle-knob,
+    .kdt-btn {
+      transition: none;
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ CONSENT_VERSION }}>
+  (function () {
+    var COOKIE_NAME = 'kdt_consent';
+    var COOKIE_MAX_AGE = 60 * 60 * 24 * 400; // ~13 mois (max navigateur ~400j)
+    var PARENT_DOMAIN = '.kinddogtraining.fr';
+
+    function isSecure() {
+      return location.protocol === 'https:';
+    }
+
+    function readConsent() {
+      var m = document.cookie.match(/(?:^|;\s*)kdt_consent=([^;]+)/);
+      if (!m) return null;
+      try {
+        var c = JSON.parse(decodeURIComponent(m[1]));
+        if (!c || c.version !== CONSENT_VERSION) return null;
+        return c;
+      } catch (e) { return null; }
+    }
+
+    function writeConsent(choices) {
+      var payload = {
+        analytics: !!choices.analytics,
+        timestamp: new Date().toISOString(),
+        version: CONSENT_VERSION
+      };
+      var value = encodeURIComponent(JSON.stringify(payload));
+      var parts = [
+        COOKIE_NAME + '=' + value,
+        'Max-Age=' + COOKIE_MAX_AGE,
+        'Path=/',
+        'SameSite=Lax'
+      ];
+      if (isSecure()) parts.push('Secure');
+      document.cookie = parts.join('; ');
+      return payload;
+    }
+
+    function deleteAnalyticsCookies() {
+      var hostname = location.hostname;
+      // domaines candidats : courant + parent (kinddogtraining.fr) + .parent
+      var domains = ['', hostname, '.' + hostname];
+      // si on est sur un sous-domaine, ajouter aussi le domaine racine
+      var parts = hostname.split('.');
+      if (parts.length > 2) {
+        var root = parts.slice(-2).join('.');
+        domains.push(root, '.' + root);
+      }
+      domains.push(PARENT_DOMAIN, PARENT_DOMAIN.replace(/^\./, ''));
+
+      var all = document.cookie ? document.cookie.split(';') : [];
+      for (var i = 0; i < all.length; i++) {
+        var name = all[i].split('=')[0].trim();
+        if (!name) continue;
+        if (name === '_ga' || /^_ga_/.test(name) || name === '_gid' || /^_gat/.test(name)) {
+          for (var j = 0; j < domains.length; j++) {
+            var d = domains[j];
+            var base = name + '=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/';
+            document.cookie = d ? base + '; Domain=' + d : base;
+          }
+        }
+      }
+    }
+
+    function gtagUpdate(analyticsGranted) {
+      if (typeof window.gtag === 'function') {
+        var g = analyticsGranted ? 'granted' : 'denied';
+        window.gtag('consent', 'update', {
+          analytics_storage: g,
+          functionality_storage: g,
+          personalization_storage: g
+        });
+      }
+    }
+
+    // --- DOM refs ---
+    var root = document.getElementById('kdt-consent-root');
+    if (!root) return;
+    var modal = root.querySelector('.kdt-consent-modal');
+    var viewMain = root.querySelector('[data-view="main"]');
+    var viewPrefs = root.querySelector('[data-view="prefs"]');
+    var toggleAnalytics = root.querySelector('[data-toggle="analytics"]');
+
+    var lastFocus = null;
+
+    function setView(name) {
+      if (name === 'prefs') {
+        viewMain.hidden = true;
+        viewPrefs.hidden = false;
+      } else {
+        viewMain.hidden = false;
+        viewPrefs.hidden = true;
+      }
+    }
+
+    function syncToggleFromStored() {
+      var c = readConsent();
+      var analytics = c ? !!c.analytics : false;
+      toggleAnalytics.setAttribute('aria-checked', analytics ? 'true' : 'false');
+    }
+
+    function openModal(opts) {
+      opts = opts || {};
+      lastFocus = document.activeElement;
+      syncToggleFromStored();
+      setView(opts.view === 'prefs' ? 'prefs' : 'main');
+      root.hidden = false;
+      root.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
+      // focus
+      setTimeout(function () {
+        var firstBtn = (opts.view === 'prefs' ? viewPrefs : viewMain).querySelector('.kdt-btn, .kdt-consent-toggle');
+        if (firstBtn) firstBtn.focus();
+        else modal.focus();
+      }, 0);
+    }
+
+    function closeModal() {
+      root.hidden = true;
+      root.setAttribute('aria-hidden', 'true');
+      document.documentElement.style.overflow = '';
+      if (lastFocus && typeof lastFocus.focus === 'function') {
+        try { lastFocus.focus(); } catch (e) {}
+      }
+    }
+
+    function applyChoices(choices) {
+      var prev = readConsent();
+      var saved = writeConsent(choices);
+      gtagUpdate(saved.analytics);
+      // si on retire le consentement analytics, nettoyer les cookies GA
+      if (prev && prev.analytics && !saved.analytics) {
+        deleteAnalyticsCookies();
+      } else if (!saved.analytics) {
+        // par sécurité, nettoyer si refus actif
+        deleteAnalyticsCookies();
+      }
+    }
+
+    // --- Listeners actions ---
+    root.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      var action = btn.getAttribute('data-action');
+      if (action === 'accept-all') {
+        applyChoices({ analytics: true });
+        closeModal();
+      } else if (action === 'reject-all') {
+        applyChoices({ analytics: false });
+        closeModal();
+      } else if (action === 'customize') {
+        setView('prefs');
+        var first = viewPrefs.querySelector('.kdt-consent-toggle:not(.kdt-consent-toggle--locked)');
+        if (first) first.focus();
+      } else if (action === 'save') {
+        var analytics = toggleAnalytics.getAttribute('aria-checked') === 'true';
+        applyChoices({ analytics: analytics });
+        closeModal();
+      }
+    });
+
+    // Toggle (switch) click + clavier
+    if (toggleAnalytics) {
+      toggleAnalytics.addEventListener('click', function () {
+        var cur = toggleAnalytics.getAttribute('aria-checked') === 'true';
+        toggleAnalytics.setAttribute('aria-checked', cur ? 'false' : 'true');
+      });
+      toggleAnalytics.addEventListener('keydown', function (e) {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          toggleAnalytics.click();
+        }
+      });
+    }
+
+    // Focus trap + bloquer Echap (modal non-fermable au clavier)
+    modal.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      var focusables = Array.prototype.filter.call(
+        modal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])'),
+        function (el) {
+          return !el.hidden && el.offsetParent !== null && !el.disabled;
+        }
+      );
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+
+    // Pas de fermeture sur clic overlay (volontaire)
+
+    // --- API globale ---
+    window.KdtConsent = {
+      open: function () { openModal({ view: 'main' }); },
+      openPrefs: function () { openModal({ view: 'prefs' }); },
+      get: function () { return readConsent(); },
+      set: function (choices) {
+        applyChoices(choices || { analytics: false });
+      }
+    };
+
+    // Lien footer "Gérer mes cookies"
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-kdt-consent-open]');
+      if (t) {
+        e.preventDefault();
+        window.KdtConsent.open();
+      }
+    });
+
+    // --- Bootstrap : appliquer le choix stocké, ou ouvrir la modale ---
+    var stored = readConsent();
+    if (stored) {
+      gtagUpdate(stored.analytics);
+      if (!stored.analytics) deleteAnalyticsCookies();
+    } else {
+      // Pas de cookie ou version périmée → ouvrir la modale après 3s
+      setTimeout(function () {
+        if (!readConsent()) openModal({ view: 'main' });
+      }, 3000);
+    }
+  })();
+</script>
