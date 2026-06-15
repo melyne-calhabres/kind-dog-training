@@ -10,6 +10,8 @@ const pages = [
   '/services/bilan-comportemental/',
   '/services/cours-collectifs/',
   '/services/stage-intensif/',
+  '/education-canine/comportement/',
+  '/education-canine/comportement/problemes/reactivite/chiens/',
 ];
 
 export const GET: APIRoute = ({ site }) => {
