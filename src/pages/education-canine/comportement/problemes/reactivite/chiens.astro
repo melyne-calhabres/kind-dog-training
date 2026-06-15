@@ -41,10 +41,18 @@ const jsonLd = {
       dateModified:  article.publishDateIso,
       inLanguage:    'fr-FR',
       url:           pageUrl,
+      image: {
+        '@type':  'ImageObject',
+        url:      siteUrl + '/images/article-reactivite-chiens.webp',
+        width:    1116,
+        height:   398,
+      },
       author: {
-        '@type': 'Person',
-        name:    article.author,
-        url:     siteUrl + '/',
+        '@type':    'Person',
+        name:       article.author,
+        url:        siteUrl + '/qui-suis-je/',
+        jobTitle:   'Éducatrice & comportementaliste canin',
+        description: article.authorDesc,
       },
       publisher: {
         '@type': 'Organization',
