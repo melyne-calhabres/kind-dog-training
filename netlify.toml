@@ -3,6 +3,26 @@
   publish = "dist"
 
 [[redirects]]
+  from = "/accueil"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/accueil/"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/educateur-canin-bordeaux"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/educateur-canin-bordeaux/"
+  to = "/"
+  status = 301
+
+[[redirects]]
   from = "/tarifs"
   to = "/tarif-educateur-canin-bordeaux"
   status = 301
