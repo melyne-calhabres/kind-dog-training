@@ -26,6 +26,22 @@ const article = {
   coverAlt:       'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
 };
 
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Mon chien peut-il redevenir calme en promenade ?',
+    answer:   'Oui, dans la très grande majorité des cas. La réactivité n\'est pas un trait de caractère définitif. C\'est une réponse à un état émotionnel que le chien n\'arrive pas à gérer seul dans un contexte précis. Avec un travail adapté, beaucoup de chiens réactifs retrouvent des balades confortables : certains croisent des congénères sans réagir, d\'autres apprennent à gérer sans se déclencher même s\'ils restent vigilants. Le seuil de tolérance s\'élargit. C\'est parfois long. C\'est toujours possible.',
+  },
+  {
+    question: 'Faut-il éviter les autres chiens en attendant ?',
+    answer:   'L\'évitement total n\'est pas une stratégie. Il protège votre chien d\'une mauvaise expérience immédiate mais il n\'apprend rien et entretient un état dans lequel le chien n\'a jamais à traiter le stimulus. Si votre chien a des comportements relativement violents envers les autres chiens, mettez-lui une muselière. Cela peut être impressionnant, ça peut faire de la peine car on se dit que son chien n\'a jamais mordu, mais c\'est la meilleure solution pour mettre tout le monde en sécurité en attendant de voir un professionnel.',
+  },
+  {
+    question: 'La muselière peut-elle aider un chien réactif ?',
+    answer:   'Oui, et pas seulement comme outil de sécurité. Une muselière bien introduite permet au chien de haleter, boire et manger normalement. Elle peut changer la dynamique d\'une balade en sécurisant les tiers, ce qui permet de travailler dans des contextes plus stimulants. Elle change aussi l\'état du propriétaire : un conducteur qui ne craint plus d\'accident crispe moins sa laisse, marche différemment et ce calme se transmet. Elle s\'utilise comme un outil de travail, pas comme une solution permanente.',
+  },
+];
+
 // ── JSON-LD structured data ───────────────────────────────────────────────────
 const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
 const pageUrl  = Astro.url.href;
@@ -37,8 +53,8 @@ const jsonLd = {
       '@type':       'Article',
       headline:      article.titleBefore + article.titleAccent + article.titleAfter,
       description:   page.metaDescription,
-      datePublished: article.publishDateIso,
-      dateModified:  article.publishDateIso,
+      datePublished: '2026-06-12T09:00:00+02:00',
+      dateModified:  '2026-06-12T09:00:00+02:00',
       inLanguage:    'fr-FR',
       url:           pageUrl,
       image: {
@@ -76,24 +92,18 @@ const jsonLd = {
         { '@type': 'ListItem', position: 3, name: article.breadcrumbLabel },
       ],
     },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
   ],
 };
-
-// ── FAQ ───────────────────────────────────────────────────────────────────────
-const faqItems: { question: string; answer: string }[] = [
-  {
-    question: 'Mon chien peut-il redevenir calme en promenade ?',
-    answer:   'Oui, dans la très grande majorité des cas. La réactivité n\'est pas un trait de caractère définitif. C\'est une réponse à un état émotionnel que le chien n\'arrive pas à gérer seul dans un contexte précis. Avec un travail adapté, beaucoup de chiens réactifs retrouvent des balades confortables : certains croisent des congénères sans réagir, d\'autres apprennent à gérer sans se déclencher même s\'ils restent vigilants. Le seuil de tolérance s\'élargit. C\'est parfois long. C\'est toujours possible.',
-  },
-  {
-    question: 'Faut-il éviter les autres chiens en attendant ?',
-    answer:   'L\'évitement total n\'est pas une stratégie. Il protège votre chien d\'une mauvaise expérience immédiate mais il n\'apprend rien et entretient un état dans lequel le chien n\'a jamais à traiter le stimulus. Si votre chien a des comportements relativement violents envers les autres chiens, mettez-lui une muselière. Cela peut être impressionnant, ça peut faire de la peine car on se dit que son chien n\'a jamais mordu, mais c\'est la meilleure solution pour mettre tout le monde en sécurité en attendant de voir un professionnel.',
-  },
-  {
-    question: 'La muselière peut-elle aider un chien réactif ?',
-    answer:   'Oui, et pas seulement comme outil de sécurité. Une muselière bien introduite permet au chien de haleter, boire et manger normalement. Elle peut changer la dynamique d\'une balade en sécurisant les tiers, ce qui permet de travailler dans des contextes plus stimulants. Elle change aussi l\'état du propriétaire : un conducteur qui ne craint plus d\'accident crispe moins sa laisse, marche différemment et ce calme se transmet. Elle s\'utilise comme un outil de travail, pas comme une solution permanente.',
-  },
-];
 
 // ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
 const tldr = [
@@ -184,6 +194,7 @@ const toc = [
             width="1116"
             height="398"
             loading="eager"
+            fetchpriority="high"
             decoding="async"
             class="art-hero-img"
           />
@@ -193,7 +204,7 @@ const toc = [
 
     <!-- L'essentiel -->
     <div class="container">
-      <div class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+      <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
         <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
         <p class="art-tldr-title">Ce qu'il faut retenir</p>
         <ul class="art-tldr-list" role="list">
@@ -208,7 +219,7 @@ const toc = [
           <Icon name="clock" width={14} height={14} strokeWidth={2} />
           Lecture complète&nbsp;: {article.readTime} · Pour aller plus loin, lisez l'article entier
         </p>
-      </div>
+      </aside>
     </div>
 
     <!-- Sommaire accordéon — mobile uniquement -->
@@ -246,14 +257,14 @@ const toc = [
 
         <p>C'est là que beaucoup de choses se jouent, bien avant que quoi que ce soit de visible se passe. L'erreur technique la plus courante que j'observe sur le terrain, c'est l'à-coup de laisse administré avant toute communication verbale. On tire, on raccourcit, on crispe, et le chien associe immédiatement la présence du congénère à une tension physique. Après quelques semaines de ce schéma, la vue d'un autre chien devient prédictive d'une sensation désagréable. Votre chien anticipe avant même que vous n'ayez fait quoi que ce soit.</p>
 
-        <div class="art-callout art-callout--soft" role="note">
+        <aside class="art-callout art-callout--soft" role="note">
           <div class="art-callout__icon" aria-hidden="true">
             <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
           </div>
           <div>
             <p class="art-callout__text">J'ai accompagné un chien dont les propriétaires avaient développé une routine de contraction totalement inconsciente dès qu'un congénère apparaissait à cent mètres. Lui, il la lisait à la perfection. Sa montée en pression commençait bien avant le croisement.</p>
           </div>
-        </div>
+        </aside>
 
         <p>La séquence correcte, c'est le mot d'abord, puis l'action si nécessaire. Énoncer une indication claire au chien, lui laisser un temps de traitement cognitif, intervenir physiquement seulement s'il ne s'exécute pas. Dans l'ordre inverse, on produit du conditionnement, pas de la compréhension.</p>
 
@@ -275,14 +286,14 @@ const toc = [
 
         <p>J'ai accompagné une jeune chienne qui illustre bien ça. Elle aboyait, avançait vers les autres chiens, puis reculait et mettait la queue entre les jambes. Si on se contentait de regarder les aboiements, on pourrait conclure à une chienne agressive. En réalité, elle avait peur, elle restait curieuse des autres chiens, et elle ne savait tout simplement pas quoi faire de tout ça. Ce n'est pas la même chose qu'une chienne qui veut blesser. Le travail n'est pas le même non plus.</p>
 
-        <div class="art-callout art-callout--soft" role="note">
+        <aside class="art-callout art-callout--soft" role="note">
           <div class="art-callout__icon" aria-hidden="true">
             <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
           </div>
           <div>
             <p class="art-callout__text">La distinction entre dangerosité et état émotionnel est fondamentale. Ce n'est pas parce qu'un chien fait peur à tout le monde qu'il est réellement dangereux. Et un spectacle impressionnant ne dit rien sur l'intention réelle de l'animal.</p>
           </div>
-        </div>
+        </aside>
 
         <h3 id="peur-ou-frustration">Peur ou frustration-excitation&nbsp;: deux moteurs différents</h3>
 
@@ -293,11 +304,11 @@ const toc = [
         <p>La frustration-excitation, c'est l'autre moteur, et les deux sont quasiment indissociables. Votre chien veut aller voir l'autre chien, il est retenu, et plus il veut, plus son excitation monte. Les deux s'alimentent en boucle&nbsp;: la frustration de ne pas pouvoir y aller nourrit l'excitation et l'excitation rend la frustration encore plus explosive. Un chien avec la queue très haute, qui tracte, qui vocalise sans s'arrêter&nbsp;: il n'est pas en danger, il est en surcharge. Ce que vous voyez ressemble à de la réactivité agressive, mais ce que votre chien ressent c'est de l'impuissance face à quelque chose qu'il désire très fort et un état émotionnel qu'il n'arrive plus à réguler. Le travail, dans ce cas, commence bien avant la rencontre avec le congénère.</p>
 
         <!-- CTA inline — mobile uniquement -->
-        <div class="art-inline-cta" aria-label="Prendre rendez-vous">
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
           <p class="art-inline-cta-title">Peur ou frustration&nbsp;? Difficile à dire seul</p>
           <p class="art-inline-cta-desc">Un bilan à domicile pour identifier ce qui motive vraiment la réaction de votre chien et adapter le travail en conséquence</p>
           <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
-        </div>
+        </aside>
 
         <h2 id="ce-qui-se-joue-au-bout-de-la-laisse">Ce qui se joue au bout de la laisse</h2>
 
@@ -313,14 +324,14 @@ const toc = [
 
         <p>Quand un propriétaire raccourcit sa laisse à l'approche d'un autre chien, il supprime cet espace. Deux chiens mis tête contre tête, bloqués par leurs laisses raccourcies, sans possibilité de réaliser les rituels habituels&nbsp;: c'est une configuration qui ressemble beaucoup à une posture de confrontation dans le vocabulaire canin. La tension monte mécaniquement, pas parce que les chiens ont envie de se battre, mais parce qu'on les a placés dans une situation qui y ressemble. Ce n'est pas la laisse qui crée le problème, c'est le réflexe de la raccourcir au mauvais moment.</p>
 
-        <div class="art-callout art-callout--soft" role="note">
+        <aside class="art-callout art-callout--soft" role="note">
           <div class="art-callout__icon" aria-hidden="true">
             <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
           </div>
           <div>
             <p class="art-callout__text">Je vois souvent des propriétaires raccourcir instinctivement la laisse quand un autre chien approche. L'intention, c'est de « contrôler ». Le résultat, c'est qu'on retire à son chien les seuls outils qu'il a pour dire « je vais bien, pas de problème ». La laisse bien utilisée, avec du mou et un conducteur calme, ne pose aucun problème.</p>
           </div>
-        </div>
+        </aside>
 
         <h2 id="les-vraies-raisons">Les vraies raisons pour lesquelles votre chien est devenu réactif</h2>
 
@@ -346,21 +357,21 @@ const toc = [
 
         <p>Les besoins fondamentaux incluent aussi le contact social avec les congénères. Un chien qui ne croise jamais d'autres chiens de façon détendue, qui n'a pas d'occasions régulières de socialiser sans tension, finit par développer une relation au congénère qui ressemble à celle qu'on a avec quelque chose de rare et de très précieux. Ce qui est rare devient obsessionnel.</p>
 
-        <div class="art-callout art-callout--soft" role="note">
+        <aside class="art-callout art-callout--soft" role="note">
           <div class="art-callout__icon" aria-hidden="true">
             <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
           </div>
           <div>
             <p class="art-callout__text">Pour qu'un chien accepte sereinement les contraintes du quotidien (la laisse, les croisements, les renoncements), il a besoin que ses besoins soient largement satisfaits par ailleurs. L'équilibre ne tient pas si on ne lui offre que des sorties courtes en laisse. Il tient si les balades en liberté, les interactions sociales et la dépense physique sont au rendez-vous.</p>
           </div>
-        </div>
+        </aside>
 
         <!-- CTA inline — mobile uniquement -->
-        <div class="art-inline-cta" aria-label="Prendre rendez-vous">
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
           <p class="art-inline-cta-title">Votre chien a une histoire, on peut travailler dessus</p>
           <p class="art-inline-cta-desc">Bilan comportemental à domicile pour repartir de ce qui s'est passé et construire un plan concret, adapté à votre chien</p>
           <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV</a>
-        </div>
+        </aside>
 
         <h2 id="rendre-les-balades-vivables">Rendre les balades vivables avec un chien réactif&nbsp;: par où commencer</h2>
 
@@ -372,7 +383,7 @@ const toc = [
 
         <p>La posture compte aussi. Épaules droites, respiration calme, mouvements fluides. Un conducteur qui respire, qui ne crispe pas, qui avance, donne à son chien un point d'ancrage stable.</p>
 
-        <div class="art-callout art-callout--dark" role="note">
+        <aside class="art-callout art-callout--dark" role="note">
           <div class="art-callout__icon" aria-hidden="true">
             <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
           </div>
@@ -380,7 +391,7 @@ const toc = [
             <p class="art-callout__title">Ce que j'observe régulièrement</p>
             <p class="art-callout__text">Quand les propriétaires travaillent leur propre posture avant de travailler leur chien, les résultats arrivent plus vite. Pas parce que le chien « ressent l'énergie » au sens mystique du terme, mais parce qu'un conducteur détendu ne crispe pas la laisse, ne change pas de rythme et ne lance pas de signal d'alerte à chaque croisement.</p>
           </div>
-        </div>
+        </aside>
 
         <h3 id="laisse-et-longe">Laisse et longe&nbsp;: deux outils, deux objectifs</h3>
 
@@ -399,11 +410,11 @@ const toc = [
         <p>Et parce que je connais bien cette situation pour avoir vécu quelque chose d'approchant avec mon propre chien, je sais aussi ce que ça coûte de se retrouver seul face à un comportement qu'on ne comprend pas, avec des conseils contradictoires partout et peu de réponses concrètes. Ce n'est pas une raison de ne rien faire.</p>
 
         <!-- CTA inline — mobile uniquement -->
-        <div class="art-inline-cta" aria-label="Prendre rendez-vous">
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
           <p class="art-inline-cta-title">Prêt à rendre les balades vivables&nbsp;?</p>
           <p class="art-inline-cta-desc">Premier bilan gratuit à domicile · Je me déplace à Bordeaux et sa métropole · Sans engagement</p>
           <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
-        </div>
+        </aside>
 
       </div><!-- /.art-content -->
 
@@ -529,15 +540,6 @@ const toc = [
         </div>
       </div>
     </section>
-    <script type="application/ld+json" set:html={JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: faqItems.map((item) => ({
-        '@type': 'Question',
-        name: item.question,
-        acceptedAnswer: { '@type': 'Answer', text: item.answer },
-      })),
-    })} />
   )}
 
 
