@@ -1,0 +1,637 @@
+---
+import Layout from '../../../../../layouts/Layout.astro';
+import Icon from '../../../../../components/Icon.astro';
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Mon Chien a été Attaqué par un Autre Chien : Que Faire Après ?',
+  metaDescription: 'Mon chien a été attaqué par un autre chien : que faire après pour éviter qu\'il ne devienne réactif ? Repérer les signes, gérer votre stress et resocialiser.',
+};
+
+// ── Article metadata ──────────────────────────────────────────────────────────
+const article = {
+  category:       'Comportement',
+  categoryUrl:    '/education-canine/comportement/',
+  breadcrumbLabel:'Mon chien a été attaqué : que faire',
+  titleBefore:    'Mon chien a été ',
+  titleAccent:    'attaqué par un autre chien',
+  titleAfter:     ' : que faire après pour éviter qu\'il devienne réactif',
+  publishDate:    '17 juin 2026',
+  publishDateIso: '2026-06-17',
+  readTime:       '10 min',
+  author:         'Mélyne',
+  authorInitial:  'M',
+  authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
+  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
+  coverAlt:       'Deux chiens se font face en extérieur, un propriétaire tient son chien en laisse à distance',
+};
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Est-ce que mon chien va garder une trace de cette attaque ?',
+    answer:   'Une trace, oui. Mais une trace ne veut pas dire un handicap durable. L\'objectif d\'une bonne rééducation après une attaque n\'est pas de transformer votre chien en chien fan de ses congénères : c\'est qu\'il devienne indifférent. Indifférent, ça signifie qu\'il peut croiser un chien sans réagir, sans monter en pression, sans avoir besoin d\'en faire quelque chose. Beaucoup de chiens marqués par une attaque retrouvent une vie sociale très correcte, parfois même des amis canins. Tout dépend de la rapidité de la prise en charge, de l\'âge au moment de l\'attaque, et du travail de fond mis en place ensuite.',
+  },
+  {
+    question: 'Mon chien semble normal à la maison, dois-je quand même m\'inquiéter ?',
+    answer:   'Le comportement à la maison ne dit rien du comportement en balade. La maison est un environnement vide de stimulus social : votre chien y est calme parce qu\'il n\'a personne à gérer. Les changements liés à l\'attaque se voient en extérieur, lors des croisements, ou pendant les balades à fort passage. Observez votre chien dehors. Filmez-le si besoin. Si vous repérez de la fixation longue, des temps d\'arrêt, des aboiements à distance ou un évitement marqué, ne vous fiez pas au "il va bien à la maison". Travaillez maintenant, pas plus tard.',
+  },
+  {
+    question: 'À partir de quel moment faut-il recroiser des chiens ?',
+    answer:   'Mon conseil serait de recroiser d\'autres chiens très rapidement après l\'attaque afin qu\'elle ne devienne qu\'une seule mauvaise expérience parmi des dizaines le même jour. Je ne vous dis pas de courir sur tous les chiens que vous croisez juste pour suivre ce conseil mais plutôt de maintenir le même rythme de balade que d\'habitude, si possible dans un environnement où vous croisez du monde.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type':       'Article',
+      headline:      article.titleBefore + article.titleAccent + article.titleAfter,
+      description:   page.metaDescription,
+      datePublished: '2026-06-17T09:00:00+02:00',
+      dateModified:  '2026-06-17T09:00:00+02:00',
+      inLanguage:    'fr-FR',
+      url:           pageUrl,
+      image: {
+        '@type':  'ImageObject',
+        url:      siteUrl + '/images/article-attaque-chien-que-faire-apres.webp',
+        width:    1116,
+        height:   398,
+      },
+      author: {
+        '@type':    'Person',
+        name:       article.author,
+        url:        siteUrl + '/qui-suis-je/',
+        jobTitle:   'Éducatrice & comportementaliste canin',
+        description: article.authorDesc,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url:     siteUrl + '/images/logo.png',
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id':   pageUrl,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',                    item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: article.category,             item: siteUrl + article.categoryUrl },
+        { '@type': 'ListItem', position: 3, name: article.breadcrumbLabel },
+      ],
+    },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
+  ],
+};
+
+// ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
+const tldr = [
+  'Les premiers signes d\'un chien marqué par une attaque apparaissent parfois dès les heures qui suivent, parfois plusieurs jours après. Le chien peut sembler normal à la maison et changer en balade',
+  'Les comportements à surveiller : fixation longue d\'un congénère, aboiements à distance, port de queue haut, mais aussi recul, queue entre les jambes, ou refus d\'avancer',
+  'La resocialisation après une attaque passe par des rencontres avec des chiens stables et bien codés, pas par l\'évitement',
+  'Votre propre état émotionnel pèse énormément sur celui de votre chien : votre crispation et votre anticipation installent la réactivité de votre côté autant que du sien',
+  'Les premières semaines sont la fenêtre la plus importante : c\'est là que le mauvais souvenir se range ou se cristallise',
+  'L\'âge du chien au moment de l\'attaque change radicalement la marche à suivre',
+];
+
+// ── Table of contents ─────────────────────────────────────────────────────────
+const toc = [
+  { label: 'Reconnaître les signes',               href: '#reconnaitre-les-signes',           sub: false },
+  { label: 'Dans les heures et les jours suivants', href: '#heures-et-jours-suivants',         sub: true  },
+  { label: 'Bien à la maison, change en balade',   href: '#maison-vs-balade',                 sub: true  },
+  { label: 'Signaux de tension qui s\'installent', href: '#signaux-de-tension',               sub: true  },
+  { label: 'La resocialisation après une attaque', href: '#resocialisation',                  sub: false },
+  { label: 'Choisir les bons chiens',              href: '#choisir-les-bons-chiens',          sub: true  },
+  { label: 'Le rôle d\'un chien référent',         href: '#chien-referent',                   sub: true  },
+  { label: 'Multiplier plutôt qu\'éviter',         href: '#multiplier-les-rencontres',        sub: true  },
+  { label: 'Votre état émotionnel pèse',           href: '#votre-etat-emotionnel',            sub: false },
+  { label: 'L\'attaque vous a marqué aussi',       href: '#attaque-vous-a-marque',            sub: true  },
+  { label: 'La crispation inconsciente',           href: '#crispation-inconsciente',          sub: true  },
+  { label: 'Continuer à sortir malgré la peur',    href: '#continuer-a-sortir',               sub: true  },
+  { label: 'Les premières semaines sont décisives', href: '#premieres-semaines',              sub: false },
+  { label: 'La fenêtre du souvenir',               href: '#fenetre-du-souvenir',              sub: true  },
+  { label: 'L\'âge du chien change tout',          href: '#age-du-chien',                     sub: true  },
+  { label: 'L\'histoire de Ramsey',                href: '#histoire-de-ramsey',               sub: true  },
+];
+
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ──────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href={article.categoryUrl}>{article.category}</a></li>
+        <li aria-current="page">{article.breadcrumbLabel}</li>
+      </ol>
+    </div>
+  </nav>
+
+
+  <!-- ── ARTICLE ───────────────────────────────────────────────────── -->
+  <article aria-labelledby="art-h1">
+
+    <!-- En-tête de l'article -->
+    <header class="art-header">
+      <div class="container">
+        <h1 class="art-title" id="art-h1">
+          {article.titleBefore}<span class="accent">{article.titleAccent}</span>{article.titleAfter}
+        </h1>
+        <div class="art-meta">
+          <div class="art-author">
+            <div class="art-avatar" aria-hidden="true">
+              <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
+            </div>
+            <p class="art-author-info">
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+            </p>
+          </div>
+          <div class="art-share">
+            <button id="art-copy-link" class="art-share-btn" type="button" aria-label="Copier le lien de l'article">
+              <Icon name="link" width={16} height={16} strokeWidth={2} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Image hero -->
+    <div class="art-hero-wrap">
+      <div class="container">
+        <figure class="art-hero">
+          <img
+            src="/images/article-attaque-chien-que-faire-apres.webp"
+            alt={article.coverAlt}
+            width="1116"
+            height="398"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="art-hero-img"
+          />
+        </figure>
+      </div>
+    </div>
+
+    <!-- L'essentiel -->
+    <div class="container">
+      <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+        <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+        <p class="art-tldr-title">Ce qu'il faut retenir</p>
+        <ul class="art-tldr-list" role="list">
+          {tldr.map((item) => (
+            <li>
+              <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="art-tldr-footer">
+          <Icon name="clock" width={14} height={14} strokeWidth={2} />
+          Lecture complète&nbsp;: {article.readTime} · Pour aller plus loin, lisez l'article entier
+        </p>
+      </aside>
+    </div>
+
+    <!-- Sommaire accordéon — mobile uniquement -->
+    <div class="container art-toc-mobile">
+      <details class="art-toc-accordion">
+        <summary class="art-toc-accordion-header">
+          Sommaire
+          <Icon name="chevron-down" width={16} height={16} strokeWidth={2} class="art-toc-chevron" />
+        </summary>
+        <nav class="art-toc-accordion-body" aria-label="Sommaire de l'article">
+          {toc.map((item) => (
+            <a
+              href={item.href}
+              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+            >
+              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+
+    <!-- Corps à deux colonnes : contenu + sidebar sticky -->
+    <div class="container art-layout">
+
+      <!-- Colonne principale -->
+      <div class="art-content">
+
+        <p>Quand mon chien a été attaqué par un autre chien, que faire après est une question souvent posée trop tard. La plupart des propriétaires viennent me voir plusieurs mois après l'incident, quand <a href="/education-canine/comportement/problemes/reactivite/chiens">la réactivité envers les autres chiens</a> est déjà installée. Pour éviter que la trace de cette attaque ne devienne un trouble durable, vous avez besoin de repères concrets dès les premiers jours.</p>
+
+        <h2 id="reconnaitre-les-signes">Reconnaître les signes d'un chien traumatisé par ce qu'il a vécu</h2>
+
+        <h3 id="heures-et-jours-suivants">Les comportements qui apparaissent dans les heures et les jours suivants</h3>
+
+        <p>Dans les heures qui suivent l'attaque, certains chiens montrent immédiatement un stress visible&nbsp;: tremblements, refus de manger, recherche d'un coin où se replier, posture basse. D'autres ne montrent rien dans les premiers jours, et c'est souvent là que les propriétaires se rassurent à tort.</p>
+
+        <p>J'ai accompagné un cocker récemment attaqué. Sa réactivité envers les autres chiens était fluctuante&nbsp;: certaines balades se passaient sans déclenchement, d'autres non. Quand il réagissait, les signaux étaient nets&nbsp;: port de queue haut, fixation intense, abaissement du centre de gravité, aboiements et grognements. Après une montée émotionnelle, il ne redescendait pas. Cette fluctuation est très classique d'un chien attaqué par un autre chien&nbsp;: que faire après dépend justement de la lecture fine de ces signaux.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le repère qui change tout</p>
+            <p class="art-callout__text">Si vous voyez votre chien marquer un temps d'arrêt et fixer un congénère plus longtemps qu'avant, c'est déjà un signal. Pas besoin d'attendre les aboiements pour intervenir.</p>
+          </div>
+        </aside>
+
+        <h3 id="maison-vs-balade">Le chien qui semble aller bien à la maison mais change en balade</h3>
+
+        <p>La maison est un contexte sans stimulus social. Pas de chien à croiser, pas d'incertitude. C'est précisément pour ça qu'elle ne révèle rien. La marque de l'attaque se voit dehors, là où les rencontres ont lieu.</p>
+
+        <p>J'ai accompagné un staffie de trois ans, devenu réactif vers son an d'âge suite à une altercation avec un autre chien. Ce qui m'a frappée dans son cas, c'est que sa réactivité n'apparaissait qu'avec sa propriétaire. Avec la nounou, aucun incident. La personne présente au moment de l'attaque joue un rôle dans ce que le chien rejoue ensuite. Si votre chien est calme à la maison mais se tend en balade, ce n'est pas une bonne nouvelle&nbsp;: c'est juste que vous ne le voyez pas tout le temps.</p>
+
+        <h3 id="signaux-de-tension">Les signaux de tension qui s'installent doucement</h3>
+
+        <p>Les signaux fins sont les plus utiles à repérer. Les pupilles qui se dilatent. Le rythme respiratoire qui s'accélère puis s'arrête une fraction de seconde. Le battement de queue rapide à l'extrémité, pas le grand balayage souple&nbsp;: ce micro-battement précède souvent une charge.</p>
+
+        <p>J'ai suivi une jeune chienne après une mauvaise expérience avec un autre chien. Elle aboyait, avançait puis reculait, mettait la queue entre les jambes ou la balayait légèrement. Le point positif&nbsp;: elle restait curieuse des autres chiens. La réactivité par peur n'efface pas systématiquement l'envie d'interaction, et c'est cette curiosité résiduelle qui rend le travail possible.</p>
+
+        <!-- CTA inline — mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous repérez ces signaux chez votre chien&nbsp;?</p>
+          <p class="art-inline-cta-desc">Bilan à domicile pour lire finement son comportement et agir avant que la réactivité ne s'installe, c'est gratuit et sans engagement</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV</a>
+        </aside>
+
+        <h2 id="resocialisation">Le travail de resocialisation après une attaque</h2>
+
+        <h3 id="choisir-les-bons-chiens">Choisir les bons chiens pour les premières rencontres</h3>
+
+        <p>Un chien qui a été attaqué par un autre chien&nbsp;: que faire après pour ses rencontres&nbsp;? Vous ne pouvez pas vous permettre une deuxième mauvaise expérience. Les premiers chiens à présenter doivent être stables, calmes, bien codés socialement. Pas excités, pas anxieux. Un chien excité aggrave la situation&nbsp;: votre chien absorbe l'état émotionnel de celui qu'il croise.</p>
+
+        <p>Cependant, vous ne pouvez pas non plus vous permettre de trop attendre. Cela peut paraître contre-intuitif, mais une solution intéressante serait de remettre votre chien en contact avec d'autres chiens tout de suite après l'attaque pour qu'elle devienne anecdotique. Plus vous le mettez en contact avec d'autres chiens, plus vous augmentez vos chances de croiser des chiens stables.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Une rencontre ratée dans cette phase peut vous faire reculer de plusieurs semaines. Mieux vaut plus de rencontres plutôt que quelques unes «&nbsp;choisies&nbsp;» qui vont finalement vous tendre vous plus que votre chien.</p>
+          </div>
+        </aside>
+
+        <h3 id="chien-referent">Le rôle d'un chien référent stable</h3>
+
+        <p>Un chien référent, c'est un chien dont l'équilibre sert de modèle. Il diffuse une forme de calme par sa simple présence et permet au chien marqué de se caler sur lui plutôt que sur sa propre inquiétude. C'est par mimétisme que les codes se rétablissent, beaucoup plus que par les ordres humains.</p>
+
+        <p>Avec le cocker dont je parlais plus haut, j'ai utilisé mon propre staffie comme chien référent. Au début, il y avait de la réactivité par frustration&nbsp;: aboiements, pleurs. En répétant les croisements, le chien attaqué a fini par s'apaiser. À la fin de la séance, les deux chiens étaient côte à côte, dans le calme.</p>
+
+        <h3 id="multiplier-les-rencontres">Pourquoi multiplier les rencontres plutôt que les éviter</h3>
+
+        <p>L'instinct des propriétaires après une attaque, c'est l'évitement. Pas de parc, pas de balade aux heures où il y a du monde, traversées de rue pour ne croiser personne. Cette stratégie est compréhensible mais elle aggrave tout. Un chien qui ne croise plus de congénères perd ses codes, et chaque rencontre rare devient un événement, donc une bombe à retardement.</p>
+
+        <p>Avec le staffie marqué par son altercation, le travail a inclus une à deux heures de jeu par semaine avec ses «&nbsp;super potes&nbsp;», des chiens connus et stables. L'objectif&nbsp;: que les autres chiens redeviennent banals à ses yeux. Plus la rencontre est ordinaire, moins elle déclenche.</p>
+
+        <h2 id="votre-etat-emotionnel">Votre propre état émotionnel pèse sur celui de votre chien</h2>
+
+        <h3 id="attaque-vous-a-marque">L'attaque vous a marqué aussi</h3>
+
+        <p>Quand votre chien a été attaqué, vous avez vu la scène. Vous avez peut-être eu peur pour lui, ou pour vous. Cette image revient à chaque fois que vous croisez un chien. Vous êtes peut-être plus tendu en balade, et c'est tout à fait compréhensible. Le problème, c'est que votre chien le sent.</p>
+
+        <h3 id="crispation-inconsciente">La crispation que vous mettez en place sans vous en rendre compte</h3>
+
+        <p>Avant même que vous en ayez conscience, votre corps se prépare. La laisse se tend. Vous changez de trottoir. Votre respiration s'accélère. Le chien lit tout ça en quelques secondes, et il en tire une seule conclusion&nbsp;: il y a une raison de s'inquiéter. L'animal détecte aussi les odeurs liées à l'anxiété humaine, ce qu'on appelle les chimiossignaux. Faire semblant d'être calme ne sert à rien&nbsp;: il faut vraiment l'être.</p>
+
+        <p>J'ai accompagné une propriétaire dont le bouvier bernois déclenchait sur les Golden mâles. Au fil des séances, son travail à elle a été aussi important que celui de son chien&nbsp;: apprendre à respirer, garder les épaules basses, ne pas anticiper le croisement.</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le test qui ne trompe pas</p>
+            <p class="art-callout__text">Si votre chien réagit avec vous mais pas avec une autre personne, c'est que vous portez quelque chose qu'il sent.</p>
+          </div>
+        </aside>
+
+        <h3 id="continuer-a-sortir">Continuer à sortir malgré la peur</h3>
+
+        <p>L'évitement vous protège à court terme et vous condamne à long terme. Plus vous évitez, plus vous renforcez l'idée que les rencontres sont dangereuses, à vos yeux comme aux siens. Continuez à sortir. Maintenez le mouvement. Quand un chien apparaît au loin, ne vous figez pas, ne ralentissez pas, ne changez pas de trottoir si vous n'avez pas à le faire. Votre corps doit dire à votre chien que la situation est normale.</p>
+
+        <!-- CTA inline — mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous portez la tension du jour de l'attaque&nbsp;?</p>
+          <p class="art-inline-cta-desc">Un bilan à domicile pour reprendre les balades sereinement, à votre rythme et au sien</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+        </aside>
+
+        <h2 id="premieres-semaines">Pourquoi les premières semaines sont décisives</h2>
+
+        <h3 id="fenetre-du-souvenir">La fenêtre où le mauvais souvenir s'installe ou se classe</h3>
+
+        <p>Le cerveau du chien classe ses expériences. Dans les premières semaines après l'incident, il décide en quelque sorte si cette attaque est un événement isolé ou une donnée structurante. Plus vous laissez de temps passer sans retravailler la rencontre congénère, plus le mauvais souvenir s'incruste. C'est pour ça que mon premier conseil dès lors qu'un chien a été attaqué par un autre chien&nbsp;: que faire après tout de suite, c'est ne pas attendre.</p>
+
+        <h3 id="age-du-chien">L'âge du chien au moment de l'attaque change tout</h3>
+
+        <p>Un chien de moins de cinq mois est dans sa fenêtre critique de socialisation. Une attaque à cet âge peut basculer sa lecture des congénères pour le reste de sa vie. À l'inverse, un adulte stable avec un bon historique social a plus de ressources pour absorber l'incident. L'adolescence reste une période fragile&nbsp;: la montée hormonale rend la réactivité plus probable, et de petites expériences passées peuvent ressortir à ce moment-là.</p>
+
+        <h3 id="histoire-de-ramsey">L'histoire de Ramsey, point de départ de Kind Dog Training</h3>
+
+        <p>Mon staffie Ramsey a vécu une attaque qui a déclenché de la réactivité envers ses congénères. Les éducateurs consultés m'ont servi soit du fatalisme («&nbsp;c'est un staffie, c'est comme ça&nbsp;»), soit des méthodes qui ne donnaient rien. C'est ce qui m'a poussée à me former moi-même. Kind Dog Training est née de cette histoire, et c'est précisément parce que j'ai vécu cette situation que je sais qu'on peut en sortir.</p>
+
+        <!-- CTA inline — mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Les premières semaines comptent&nbsp;: ne pas attendre</p>
+          <p class="art-inline-cta-desc">Premier bilan gratuit à domicile · Je me déplace à Bordeaux et sa métropole · Sans engagement</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
+        </aside>
+
+      </div><!-- /.art-content -->
+
+      <!-- Sidebar sticky — desktop uniquement -->
+      <aside class="art-sidebar" aria-labelledby="art-toc-heading">
+        <nav class="art-toc" aria-labelledby="art-toc-heading">
+          <details class="art-toc-details">
+            <summary class="art-toc-title" id="art-toc-heading">
+              Sommaire
+              <svg class="art-toc-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="art-toc-links">
+              {toc.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+                >
+                  <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        </nav>
+
+        <div class="art-sidebar-cta">
+          <p class="art-sidebar-cta-title">Votre chien a été attaqué&nbsp;?</p>
+          <p class="art-sidebar-cta-desc">Bilan comportemental à domicile pour éviter que la réactivité ne s'installe</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            Prendre RDV
+            <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
+          </a>
+        </div>
+      </aside>
+
+    </div><!-- /.art-layout -->
+
+    <!-- Like / Dislike -->
+    <section class="art-feedback-wrap" aria-label="Votre avis sur cet article">
+      <div class="container">
+        <div class="art-feedback" id="art-feedback">
+          <p class="art-feedback-question">Cet article vous a été utile&nbsp;?</p>
+          <div class="art-feedback-buttons">
+            <button type="button" class="art-feedback-btn art-feedback-btn--like" id="art-like-btn" aria-label="J'aime cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>
+              </svg>
+              Oui
+            </button>
+            <button type="button" class="art-feedback-btn art-feedback-btn--dislike" id="art-dislike-btn" aria-label="Je n'aime pas cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>
+              </svg>
+              Non
+            </button>
+          </div>
+
+          <div class="art-feedback-form" id="art-feedback-form" hidden>
+            <label for="art-feedback-text" class="art-feedback-label">Qu'est-ce qui pourrait être amélioré&nbsp;?</label>
+            <textarea
+              id="art-feedback-text"
+              class="art-feedback-textarea"
+              rows="3"
+              maxlength="500"
+              placeholder="Votre retour nous aide à améliorer nos contenus…"
+            ></textarea>
+            <div class="art-feedback-form-footer">
+              <span class="art-feedback-hint" id="art-feedback-hint">10 caractères minimum</span>
+              <button type="button" class="btn btn-primary art-feedback-submit" id="art-feedback-submit" disabled>Envoyer</button>
+            </div>
+          </div>
+
+          <div class="art-feedback-thanks" id="art-feedback-thanks" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span>Merci ! Je prends en compte tous vos retours pour améliorer la qualité des articles et vous aider le plus possible :)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Biographie auteure -->
+    <footer class="art-bio-wrap">
+      <div class="container">
+        <div class="art-bio">
+          <div class="art-bio-avatar" aria-hidden="true">
+            <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="64" height="64" loading="lazy" decoding="async" style="display:block;" />
+          </div>
+          <div>
+            <p class="art-bio-name">À propos de {article.author}</p>
+            <p class="art-bio-role">{article.authorRole}</p>
+            <p class="art-bio-desc">{article.authorDesc}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </article><!-- /article -->
+
+
+  <!-- ── FAQ ───────────────────────────────────────────────────────── -->
+  {faqItems.length > 0 && (
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 750px;">
+        <h2 id="faq-heading" style="text-align: center;">Questions <span class="accent">fréquentes</span></h2>
+        <div class="faq-list" style="margin-top: var(--sp-8);">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>{item.question}</span>
+                <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────────────── -->
+  <section class="section-dark art-cta-section" aria-labelledby="art-cta-h">
+    <div class="container art-cta-inner">
+      <h2 class="art-cta-title" id="art-cta-h">Votre chien a été attaqué&nbsp;? N'attendez pas que la réactivité s'installe</h2>
+      <p>Bilan comportemental gratuit à domicile · Bordeaux et métropole</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Réserver mon bilan gratuit
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
+  <div id="art-progress-bar" aria-hidden="true"></div>
+
+  <style>
+    #art-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: var(--kd-terracotta);
+      z-index: 1000;
+      transition: width 0.1s linear;
+    }
+  </style>
+
+  <script is:inline>
+    (function () {
+      var bar = document.getElementById('art-progress-bar');
+      if (!bar) return;
+      function update() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        bar.style.width = docHeight > 0 ? (scrollTop / docHeight * 100) + '%' : '0%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+    })();
+  </script>
+
+  <script is:inline>
+    (function () {
+      var MIN_CHARS = 10;
+      var feedbackWrap = document.getElementById('art-feedback');
+      var likeBtn = document.getElementById('art-like-btn');
+      var dislikeBtn = document.getElementById('art-dislike-btn');
+      var feedbackForm = document.getElementById('art-feedback-form');
+      var feedbackText = document.getElementById('art-feedback-text');
+      var feedbackHint = document.getElementById('art-feedback-hint');
+      var feedbackSubmit = document.getElementById('art-feedback-submit');
+      var feedbackThanks = document.getElementById('art-feedback-thanks');
+
+      if (!feedbackWrap || !likeBtn || !dislikeBtn) return;
+
+      function sendGA4Event(eventName, params) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: eventName }, params));
+      }
+
+      function getArticleTitle() {
+        var h1 = document.querySelector('h1');
+        return h1 ? h1.textContent.trim() : document.title;
+      }
+
+      function showThanks() {
+        feedbackWrap.querySelectorAll('.art-feedback-buttons, .art-feedback-form, .art-feedback-question').forEach(
+          function (el) { el.hidden = true; }
+        );
+        feedbackThanks.hidden = false;
+      }
+
+      likeBtn.addEventListener('click', function () {
+        sendGA4Event('article_like', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+        });
+        showThanks();
+      });
+
+      dislikeBtn.addEventListener('click', function () {
+        likeBtn.hidden = true;
+        dislikeBtn.classList.add('art-feedback-btn--selected');
+        dislikeBtn.disabled = true;
+        feedbackForm.hidden = false;
+        feedbackText.focus();
+      });
+
+      feedbackText.addEventListener('input', function () {
+        var len = feedbackText.value.trim().length;
+        var valid = len >= MIN_CHARS;
+        feedbackSubmit.disabled = !valid;
+        if (len === 0) {
+          feedbackHint.textContent = MIN_CHARS + ' caractères minimum';
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else if (!valid) {
+          feedbackHint.textContent = 'Encore ' + (MIN_CHARS - len) + ' caractère' + (MIN_CHARS - len > 1 ? 's' : '');
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else {
+          feedbackHint.textContent = 'Prêt à envoyer';
+          feedbackHint.classList.add('art-feedback-hint--ok');
+        }
+      });
+
+      feedbackSubmit.addEventListener('click', function () {
+        var text = feedbackText.value.trim();
+        if (text.length < MIN_CHARS) return;
+        sendGA4Event('article_dislike', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+          user_feedback: text,
+        });
+        showThanks();
+      });
+    })();
+  </script>
+
+  <script>
+    const btn = document.getElementById('art-copy-link');
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+        } catch {
+          const el = Object.assign(document.createElement('input'), { value: window.location.href });
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          el.remove();
+        }
+        btn.setAttribute('data-copied', '');
+        setTimeout(() => btn.removeAttribute('data-copied'), 2000);
+      });
+    }
+  </script>
+
+</Layout>

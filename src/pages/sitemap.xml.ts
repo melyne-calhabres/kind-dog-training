@@ -12,6 +12,7 @@ const pages = [
   '/services/stage-intensif/',
   '/education-canine/comportement/',
   '/education-canine/comportement/problemes/reactivite/chiens/',
+  '/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/',
 ];
 
 export const GET: APIRoute = ({ site }) => {

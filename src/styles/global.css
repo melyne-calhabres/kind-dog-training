@@ -2713,13 +2713,9 @@ p {
 }
 
 .art-callout--dark .art-callout__title { font-size: 15px; color: var(--kd-paper); }
-.art-callout--soft .art-callout__title { font-size: 14px; color: var(--kd-ink); }
-.art-callout--dark .art-callout__text  { font-size: 14px; line-height: 1.55; color: var(--kd-stone); margin-bottom: 0; }
-.art-callout--soft .art-callout__text  { font-size: 13px; line-height: 1.55; color: var(--kd-bark); margin-bottom: 0; }
-
-/* Callout sans titre : texte légèrement plus grand */
-.art-callout--dark:not(:has(.art-callout__title)) .art-callout__text { font-size: 15px; }
-.art-callout--soft:not(:has(.art-callout__title)) .art-callout__text { font-size: 15px; }
+.art-callout--soft .art-callout__title { font-size: 15px; color: var(--kd-ink); }
+.art-callout--dark .art-callout__text  { font-size: 15px; line-height: 1.55; color: var(--kd-stone); margin-bottom: 0; }
+.art-callout--soft .art-callout__text  { font-size: 15px; line-height: 1.55; color: var(--kd-bark); margin-bottom: 0; }
 
 /* Desktop sidebar */
 .art-sidebar {
