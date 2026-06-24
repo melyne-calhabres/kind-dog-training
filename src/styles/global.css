@@ -714,6 +714,11 @@ p {
   color: var(--kd-bark);
 }
 
+.form-required {
+  color: var(--kd-terracotta);
+  margin-left: 2px;
+}
+
 .form-input,
 .form-textarea {
   width: 100%;
@@ -2580,11 +2585,32 @@ p {
 .art-content h2 {
   font-size: var(--fs-xl);
   letter-spacing: var(--tracking-tight);
-  padding-top: var(--sp-5);
+  padding-top: var(--sp-10);
+  padding-bottom: var(--sp-3);
+  position: relative;
+}
+.art-content h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 48px;
+  height: 3px;
+  background: var(--kd-terracotta);
+  border-radius: 2px;
 }
 .art-content h2:first-child { padding-top: 0; }
 
-.art-content h3 { font-size: var(--fs-lg); }
+.art-content h3 {
+  font-size: var(--fs-lg);
+  padding-top: var(--sp-5);
+}
+.art-content h3::before {
+  content: '•';
+  color: var(--kd-terracotta);
+  margin-right: var(--sp-2);
+  font-weight: 700;
+}
 
 .art-content p { color: var(--kd-bark); }
 

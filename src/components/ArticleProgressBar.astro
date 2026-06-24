@@ -1,0 +1,41 @@
+---
+// Barre de progression de lecture d'article : rail beige + barre dégradée terracotta.
+---
+
+<div id="art-progress-rail" aria-hidden="true"></div>
+<div id="art-progress-bar" aria-hidden="true"></div>
+
+<style>
+  #art-progress-rail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--kd-cream-deep);
+    z-index: 1000;
+  }
+  #art-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--kd-terracotta-deep) 0%, var(--kd-terracotta) 50%, var(--kd-terracotta-soft) 100%);
+    z-index: 1001;
+    transition: width 0.1s linear;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var bar = document.getElementById('art-progress-bar');
+    if (!bar) return;
+    function update() {
+      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      bar.style.width = docHeight > 0 ? (scrollTop / docHeight * 100) + '%' : '0%';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+  })();
+</script>

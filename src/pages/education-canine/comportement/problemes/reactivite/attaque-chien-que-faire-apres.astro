@@ -1,6 +1,7 @@
 ---
 import Layout from '../../../../../layouts/Layout.astro';
 import Icon from '../../../../../components/Icon.astro';
+import ArticleProgressBar from '../../../../../components/ArticleProgressBar.astro';
 
 // ── Page SEO ──────────────────────────────────────────────────────────────────
 const page = {
@@ -511,33 +512,7 @@ const toc = [
 
 
   <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
-  <div id="art-progress-bar" aria-hidden="true"></div>
-
-  <style>
-    #art-progress-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: var(--kd-terracotta);
-      z-index: 1000;
-      transition: width 0.1s linear;
-    }
-  </style>
-
-  <script is:inline>
-    (function () {
-      var bar = document.getElementById('art-progress-bar');
-      if (!bar) return;
-      function update() {
-        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        bar.style.width = docHeight > 0 ? (scrollTop / docHeight * 100) + '%' : '0%';
-      }
-      window.addEventListener('scroll', update, { passive: true });
-    })();
-  </script>
+  <ArticleProgressBar />
 
   <script is:inline>
     (function () {
