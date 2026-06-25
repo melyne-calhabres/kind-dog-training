@@ -45,8 +45,8 @@
   --color-error:    var(--kd-vine);
 
   /* Type */
-  --font-serif: 'Newsreader', 'Iowan Old Style', Georgia, serif;
-  --font-sans:  'Nunito', 'SF Pro Rounded', system-ui, sans-serif;
+  --font-serif: var(--font-newsreader);
+  --font-sans:  var(--font-nunito);
 
   --fs-xs:   12px;
   --fs-sm:   14px;
