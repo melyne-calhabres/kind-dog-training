@@ -1,0 +1,595 @@
+---
+import Layout from '../../../../../layouts/Layout.astro';
+import Icon from '../../../../../components/Icon.astro';
+import ArticleProgressBar from '../../../../../components/ArticleProgressBar.astro';
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Mon Chien a du Mal à Gérer ses Émotions en Balade, Que Faire ?',
+  metaDescription: 'Votre chien a du mal à gérer ses émotions en balade ? Voici 4 leviers pour qu\'il apprenne à redescendre, à renoncer et à se poser près de vous.',
+};
+
+// ── Article metadata ──────────────────────────────────────────────────────────
+const article = {
+  category:       'Comportement',
+  categoryUrl:    '/education-canine/comportement/',
+  breadcrumbLabel:'Gérer ses émotions en balade : solutions',
+  titleBefore:    'Mon chien a du mal à ',
+  titleAccent:    'gérer ses émotions en balade',
+  titleAfter:     ' : que faire concrètement',
+  publishDate:    '29 juin 2026',
+  publishDateIso: '2026-06-29',
+  readTime:       '8 min',
+  author:         'Mélyne',
+  authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
+  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
+  coverAlt:       'Chien en balade qui apprend à se canaliser et à rester attentif à son maître en extérieur',
+};
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Par quel exercice commencer si mon chien déborde déjà beaucoup ?',
+    answer:   'C\'est une question difficile et trop large sans avoir vu votre chien. Commencez par combler ses besoins, physiques ET mentaux. Augmentez la dépense mentale et olfactive, ajoutez de vrais moments de jeu cadré. En parallèle, travaillez le calme à la maison ou dans un endroit peu stimulant : le couché, l\'observation sans réaction, le prend-lâche. Ces bases-là se posent au calme, pas au milieu d\'un parc bondé dès le départ. Vous transférerez en balade avec plus de stimulations seulement quand elles seront acquises dans un contexte facile. Vouloir tout régler directement dehors, c\'est l\'échec assuré.',
+  },
+  {
+    question: 'En combien de temps voit-on des résultats en sortie ?',
+    answer:   'Il n\'y a pas de durée fixe : ça dépend du chien, de son passé, de son tempérament et surtout de votre régularité. Certains montrent des progrès nets en quelques jours, d\'autres ont besoin de plus de temps, en particulier les jeunes chiens en pleine phase hormonale où la montée émotionnelle reste très rapide. Ce qui compte, c\'est la constance plutôt que l\'intensité : des séances courtes et fréquentes valent mieux que de longues sessions espacées. Vous verrez souvent les premiers signes à la maison avant la balade, un chien qui se pose plus vite, qui se réfère davantage à vous.',
+  },
+  {
+    question: 'Faut-il éviter les autres chiens pendant le travail ?',
+    answer:   'Éviter, non. Empêcher l\'accès systématique, oui. Si vous laissez votre chien aller voir chaque congénère, vous lui apprenez qu\'il obtient tout, tout de suite, et il devient capricieux et ingérable. En laisse, instaurez le « zéro contact » : il peut voir les autres chiens, mais sans aller au contact. Ce n\'est pas de la fuite, vous ne changez pas de trottoir, vous lui apprenez l\'indifférence. En parallèle, gardez des interactions libres et cadrées dans de bons contextes, parce que des rencontres régulières banalisent les congénères. C\'est l\'équilibre entre les deux qui stabilise un chien dehors.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type':       'Article',
+      headline:      article.titleBefore + article.titleAccent + article.titleAfter,
+      description:   page.metaDescription,
+      datePublished: '2026-06-29T09:00:00+02:00',
+      dateModified:  '2026-06-29T09:00:00+02:00',
+      inLanguage:    'fr-FR',
+      url:           pageUrl,
+      image: {
+        '@type':  'ImageObject',
+        url:      siteUrl + '/images/article-gestion-emotions-balade-solutions.webp',
+        width:    1000,
+        height:   750,
+      },
+      author: {
+        '@type':    'Person',
+        name:       article.author,
+        url:        siteUrl + '/qui-suis-je/',
+        jobTitle:   'Éducatrice & comportementaliste canin',
+        description: article.authorDesc,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url:     siteUrl + '/images/logo.png',
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id':   pageUrl,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',                    item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: article.category,             item: siteUrl + article.categoryUrl },
+        { '@type': 'ListItem', position: 3, name: article.breadcrumbLabel },
+      ],
+    },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
+  ],
+};
+
+// ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
+const tldr = [
+  'Aucun exercice ne tiendra dehors tant que les besoins de votre chien ne sont pas comblés : la dépense mentale, la mastication et le jeu cadré passent avant la technique.',
+  'La gestion émotionnelle s\'apprend par le jeu : le prend-lâche entraîne votre chien à monter très haut en excitation, puis à redescendre très bas sur demande.',
+  'Le renoncement est la compétence qui change tout en balade. Un chien qui sait renoncer à une balle ou à un congénère est un chien capable de croiser sans exploser.',
+  'Le calme s\'installe avant de demander quoi que ce soit, pas pendant. Apprenez-lui à observer le monde sans y réagir, le couché comme point d\'ancrage.',
+];
+
+// ── Table of contents ─────────────────────────────────────────────────────────
+const toc = [
+  { label: 'Combler ses besoins d\'abord',             href: '#combler-besoins',        sub: false },
+  { label: 'La dépense mentale fatigue le plus',       href: '#depense-mentale',        sub: true  },
+  { label: 'Mastication et jeu cadré',                 href: '#mastication-jeu',        sub: true  },
+  { label: 'Des interactions régulières',              href: '#interactions-regulieres',sub: true  },
+  { label: 'Monter puis redescendre en excitation',   href: '#monter-redescendre',     sub: false },
+  { label: 'Le jeu du prend-lâche',                    href: '#prend-lache',            sub: true  },
+  { label: 'Un début, une fin, un mot pour arrêter',   href: '#cadre-du-jeu',           sub: true  },
+  { label: 'Le renoncement, ce qui change tout',       href: '#renoncement',            sub: false },
+  { label: '« Pas bouger » face à la balle',           href: '#pas-bouger',             sub: true  },
+  { label: 'Le rappel en pleine course',               href: '#rappel-course',          sub: true  },
+  { label: 'L\'exercice du « pas toucher »',           href: '#pas-toucher',            sub: true  },
+  { label: 'Installer le calme avant la demande',      href: '#installer-calme',        sub: false },
+  { label: 'Observer le monde sans y réagir',          href: '#observer-sans-reagir',   sub: true  },
+  { label: 'Le couché comme point d\'ancrage',         href: '#couche-ancrage',         sub: true  },
+];
+
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ──────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href={article.categoryUrl}>{article.category}</a></li>
+        <li aria-current="page">{article.breadcrumbLabel}</li>
+      </ol>
+    </div>
+  </nav>
+
+
+  <!-- ── ARTICLE ───────────────────────────────────────────────────── -->
+  <article aria-labelledby="art-h1">
+
+    <!-- En-tête de l'article -->
+    <header class="art-header">
+      <div class="container">
+        <h1 class="art-title" id="art-h1">
+          {article.titleBefore}<span class="accent">{article.titleAccent}</span>{article.titleAfter}
+        </h1>
+        <div class="art-meta">
+          <div class="art-author">
+            <div class="art-avatar" aria-hidden="true">
+              <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
+            </div>
+            <p class="art-author-info">
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+            </p>
+          </div>
+          <div class="art-share">
+            <button id="art-copy-link" class="art-share-btn" type="button" aria-label="Copier le lien de l'article">
+              <Icon name="link" width={16} height={16} strokeWidth={2} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Image hero -->
+    <div class="art-hero-wrap">
+      <div class="container">
+        <figure class="art-hero">
+          <img
+            src="/images/article-gestion-emotions-balade-solutions.webp"
+            alt={article.coverAlt}
+            width="1116"
+            height="398"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="art-hero-img"
+          />
+        </figure>
+      </div>
+    </div>
+
+    <!-- L'essentiel -->
+    <div class="container">
+      <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+        <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+        <p class="art-tldr-title">Ce qu'il faut retenir</p>
+        <ul class="art-tldr-list" role="list">
+          {tldr.map((item) => (
+            <li>
+              <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="art-tldr-footer">
+          <Icon name="clock" width={14} height={14} strokeWidth={2} />
+          Lecture complète&nbsp;: {article.readTime} · Pour aller plus loin, lisez l'article entier
+        </p>
+      </aside>
+    </div>
+
+    <!-- Sommaire accordéon — mobile uniquement -->
+    <div class="container art-toc-mobile">
+      <details class="art-toc-accordion">
+        <summary class="art-toc-accordion-header">
+          Sommaire
+          <Icon name="chevron-down" width={16} height={16} strokeWidth={2} class="art-toc-chevron" />
+        </summary>
+        <nav class="art-toc-accordion-body" aria-label="Sommaire de l'article">
+          {toc.map((item) => (
+            <a
+              href={item.href}
+              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+            >
+              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+
+    <!-- Corps à deux colonnes : contenu + sidebar sticky -->
+    <div class="container art-layout">
+
+      <!-- Colonne principale -->
+      <div class="art-content">
+
+        <p>Vous l'avez sûrement déjà vécu&nbsp;: à peine sorti, votre chien tire, couine, fixe le premier congénère à cinquante mètres et n'entend plus un mot de ce que vous lui dites. Si votre chien a du mal à gérer ses émotions en balade, ça se travaille avec quelques compétences à construire dans le bon ordre. Cet article est la suite pratique de <a href="/education-canine/comportement/comprendre/gestion-emotions/balade/">celui qui explique pourquoi votre chien déborde dehors</a>. Ici, on passe au comment faire.</p>
+
+        <h2 id="combler-besoins">Commencez par combler ses besoins, c'est la base du retour au calme</h2>
+
+        <p>Avant le moindre exercice, une question&nbsp;: votre chien est-il vraiment dépensé&nbsp;? Un chien dont les besoins ne sont pas satisfaits vit sous pression permanente, et aucune technique ne tiendra dehors tant que cette pression reste haute. C'est le socle du retour au calme, et c'est presque toujours par là que je commence.</p>
+
+        <h3 id="depense-mentale">La dépense mentale fatigue bien plus que la course</h3>
+
+        <p>On croit souvent qu'un chien fatigué est un chien qui a couru. C'est faux. Faire réfléchir un chien le fatigue au moins dix fois plus que de le faire courir. Une balade où il renifle, piste, analyse le sol et lit les odeurs des chiens passés avant lui le vide bien plus qu'un footing au pied. Méfiez-vous du trajet identique en laisse courte&nbsp;: il réduit la stimulation mentale de 80 à 90&nbsp;% par rapport à une sortie où votre chien explore librement. Pour un chien qui peine à se canaliser en balade, commencez par lui offrir des sorties qui sollicitent sa tête, pas seulement ses pattes.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">J'ai suivi un jeune chien dont les dépenses physiques étaient correctes, mais qui n'avait quasiment aucune dépense mentale. Il rentrait de promenade toujours sous tension, incapable de se poser. Il ne lui manquait pas de la course, il lui manquait de la réflexion.</p>
+          </div>
+        </aside>
+
+        <h3 id="mastication-jeu">Mastication et jeu cadré, les deux grands oubliés</h3>
+
+        <p>Deux besoins passent presque toujours à la trappe&nbsp;: mâcher et jouer. La mastication est un comportement inné, c'est par là que le chien évacue sa pression interne. Un chien qui n'a rien à mastiquer garde cette tension en lui, puis la déverse au premier stimulus de la balade. Le jeu, lui, est carrément déficitaire chez la plupart de nos compagnons. Et laisser traîner trois jouets dans le salon, ce n'est pas jouer&nbsp;: un vrai jeu a un début, une fin, et c'est vous qui les décidez. On y revient juste après.</p>
+
+        <h3 id="interactions-regulieres">Des interactions régulières pour banaliser les rencontres</h3>
+
+        <p>Beaucoup de chiens ne croisent jamais de congénère autrement que de loin, en laisse. Le problème, c'est que ce qui est rare devient obsessionnel. Un chien qui ne rencontre presque jamais d'autres chiens traite chaque croisement comme un événement énorme. Plus un chien interagit régulièrement, moins chaque rencontre a de valeur, et plus il devient capable de passer son chemin. Offrir des interactions régulières banalise les congénères et, à terme, calme vos balades.</p>
+
+        <p>Appliquer ce conseil pourra peut-être vous demander un peu d'effort de recherche mais rencontrez d'autres chiens avec des profils différents&nbsp;: des chiens stables quoi qu'il arrive (bien codés), des chiens plutôt calmes, des chiens plutôt joueurs, toutes races, etc. Veillez cependant à ce que les rencontres ne livrent pas les chiens à eux-mêmes. Une bonne rencontre est une rencontre en mouvement, pendant laquelle les chiens peuvent passer d'une phase à l'autre et communiquer sereinement. Si votre chien est très excité, évitez en premier lieu les rencontres statiques ou celles où vous laissez les chiens faire ce qui leur chante pendant que vous discutez avec l'autre propriétaire sans bouger. Votre chien n'apprend rien comme ça.</p>
+
+        <h2 id="monter-redescendre">Apprenez-lui à monter puis à redescendre en excitation</h2>
+
+        <p>Gérer ses émotions en balade, ce n'est pas empêcher votre chien de s'exciter. C'est lui apprendre à redescendre une fois monté. Le contrôle émotionnel se construit comme un muscle, par la répétition. Et le meilleur terrain d'entraînement, c'est le jeu.</p>
+
+        <h3 id="prend-lache">Le jeu du prend-lâche pour travailler les deux extrêmes</h3>
+
+        <p>Le prend-lâche est l'exercice roi. Vous sortez son jouet, vous dites «&nbsp;prends&nbsp;», vous tirez, vous l'excitez, vous le faites monter haut. Puis vous présentez une friandise sous son nez et, dès qu'il ouvre la bouche, vous dites «&nbsp;lâche&nbsp;» et vous récompensez. Vous venez de lui faire faire l'aller-retour complet&nbsp;: monter très haut, puis redescendre très bas, sur demande. C'est exactement la compétence qui lui manque dehors.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">J'ai travaillé ça avec un staffie d'un an qui sautait et mordillait dès qu'on l'approchait, avec un sevrage qui lui avait fait défaut. En quelques séances, il a commencé à se poser et à mâchouiller calmement, ce qu'il n'avait jamais fait jusque-là.</p>
+          </div>
+        </aside>
+
+        <h3 id="cadre-du-jeu">Un début, une fin, et un mot pour tout arrêter</h3>
+
+        <p>Le jeu doit avoir un cadre net. Choisissez un mot de fin, «&nbsp;fini&nbsp;» ou «&nbsp;stop&nbsp;», et utilisez-le toujours pour clore la partie. Si votre chien mordille trop fort, «&nbsp;non&nbsp;» clair, vous vous levez, vous tournez le dos, vous l'ignorez. Le jeu reprend une fois qu'il est redescendu. Il comprend vite que c'est lui qui fait durer le plaisir, en se contrôlant. Ce cadre-là, anodin en apparence, lui apprend que monter en excitation a toujours une sortie&nbsp;: le calme.</p>
+
+        <!-- CTA inline — visible sur mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Votre chien monte vite et ne redescend plus&nbsp;?</p>
+          <p class="art-inline-cta-desc">On met en place ensemble les bons exercices de jeu et de retour au calme, adaptés à votre chien. Bilan à domicile gratuit, sans engagement.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
+        </aside>
+
+        <h2 id="renoncement">Le renoncement, la compétence qui change tout dehors</h2>
+
+        <p>S'il fallait retenir une seule compétence pour un chien qui déborde, ce serait le renoncement. Un chien qui sait renoncer ne vit plus chaque stimulation comme une demande à laquelle il faut répondre tout de suite. Ce n'est pas une privation, c'est ce qui le rend stable et capable de croiser un congénère sans exploser.</p>
+
+        <h3 id="pas-bouger">«&nbsp;Pas bouger&nbsp;» face à la balle</h3>
+
+        <p>Mettez votre chien en assis, posez une balle devant lui, puis autorisez-le à aller la chercher seulement s'il n'a pas bougé. S'il fonce, «&nbsp;non&nbsp;», et on reprend depuis le début. L'exercice est difficile pour un chien très excité, alors décomposez.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Avec une jeune chienne extrêmement portée sur la balle, on a démarré à un mètre à peine, balle posée puis mise en mouvement très progressivement. On validait chaque étape avant d'augmenter la difficulté. Être trop gourmand, c'est le faire échouer.</p>
+          </div>
+        </aside>
+
+        <h3 id="rappel-course">Le rappel en pleine course</h3>
+
+        <p>L'étape d'après est plus exigeante&nbsp;: le rappel en pleine stimulation. Chien en assis, vous lancez la balle, et vous le rappelez au milieu de sa course. L'objectif est qu'il renonce à une stimulation forte pour revenir vers vous. Un chien avec qui j'ai travaillé cet exercice l'a compris très vite&nbsp;: un peu lent à l'exécution, mais d'une compréhension nette. C'est ce renoncement-là, transféré dehors, qui vous permet de récupérer votre chien avant qu'il ne file voir un congénère.</p>
+
+        <h3 id="pas-toucher">L'exercice du «&nbsp;pas toucher&nbsp;» pour l'autocontrôle</h3>
+
+        <p>Chien couché, posez une friandise sur sa patte en disant «&nbsp;pas toucher&nbsp;» une fraction de seconde avant le contact, pour court-circuiter son envie de l'attraper. Gardez une main au-dessus pour couvrir la friandise s'il craque. Variez ensuite&nbsp;: une friandise, puis deux, puis sur les deux pattes, et alternez les libérations pour qu'il reste attentif. C'est un exercice sans matériel, faisable partout, même le soir chez vous. Un chien maître de lui face à une friandise gère bien mieux les frustrations dehors.</p>
+
+        <h2 id="installer-calme">Installez le calme avant de demander quoi que ce soit</h2>
+
+        <p>On veut souvent que le chien écoute alors qu'il est déjà à cent à l'heure. Le calme s'installe avant la demande, pas pendant. Et il s'apprend comme le reste.</p>
+
+        <h3 id="observer-sans-reagir">Lui apprendre à observer le monde sans y réagir</h3>
+
+        <p>Choisissez un endroit stimulant, demandez-lui de s'asseoir ou de se coucher, et récompensez chaque moment où il observe sans monter en pression. S'il se relève, vous le réinvitez calmement à se reposer. Le but est qu'il regarde des humains, des enfants, des chiens qui jouent, sans avoir besoin d'aller au contact. Vous lui apprenez que le monde peut défiler sans qu'il ait à intervenir.</p>
+
+        <h3 id="couche-ancrage">Le couché comme point d'ancrage</h3>
+
+        <p>Le couché est votre meilleur allié pour le retour au calme. L'astuce, c'est de récompenser les moments de relâchement, pas seulement la position tenue. Quand mon propre chien était jeune, ces moments où il soufflait enfin valaient toutes les positions parfaites du monde.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Avec un jeune chien qui montait très vite en pression dehors, le travail en longe de 5&nbsp;mètres a tout changé. Le cadre de la longe, plus le couché, lui ont permis de redescendre lorsqu'on lui laissait le temps. Les positions statiques l'aidaient clairement à mieux gérer ses émotions.</p>
+          </div>
+        </aside>
+
+        <!-- CTA inline — visible sur mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Envie d'un chien plus posé en balade&nbsp;?</p>
+          <p class="art-inline-cta-desc">On construit ensemble un plan concret pour combler ses besoins, l'aider à renoncer et à retrouver le calme dehors. Premier bilan gratuit à domicile, à Bordeaux et sa métropole.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+        </aside>
+
+      </div><!-- /.art-content -->
+
+      <!-- Sidebar sticky — desktop uniquement -->
+      <aside class="art-sidebar" aria-labelledby="art-toc-heading">
+        <nav class="art-toc" aria-labelledby="art-toc-heading">
+          <details class="art-toc-details">
+            <summary class="art-toc-title" id="art-toc-heading">
+              Sommaire
+              <svg class="art-toc-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="art-toc-links">
+              {toc.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+                >
+                  <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        </nav>
+
+        <div class="art-sidebar-cta">
+          <p class="art-sidebar-cta-title">Votre chien déborde encore en balade&nbsp;?</p>
+          <p class="art-sidebar-cta-desc">Bilan comportemental à domicile pour poser les bons exercices et l'aider à gérer ses émotions dehors</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            Prendre RDV
+            <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
+          </a>
+        </div>
+      </aside>
+
+    </div><!-- /.art-layout -->
+
+    <!-- Like / Dislike -->
+    <section class="art-feedback-wrap" aria-label="Votre avis sur cet article">
+      <div class="container">
+        <div class="art-feedback" id="art-feedback">
+          <p class="art-feedback-question">Cet article vous a été utile&nbsp;?</p>
+          <div class="art-feedback-buttons">
+            <button type="button" class="art-feedback-btn art-feedback-btn--like" id="art-like-btn" aria-label="J'aime cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>
+              </svg>
+              Oui
+            </button>
+            <button type="button" class="art-feedback-btn art-feedback-btn--dislike" id="art-dislike-btn" aria-label="Je n'aime pas cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>
+              </svg>
+              Non
+            </button>
+          </div>
+
+          <div class="art-feedback-form" id="art-feedback-form" hidden>
+            <label for="art-feedback-text" class="art-feedback-label">Qu'est-ce qui pourrait être amélioré&nbsp;?</label>
+            <textarea
+              id="art-feedback-text"
+              class="art-feedback-textarea"
+              rows="3"
+              maxlength="500"
+              placeholder="Votre retour nous aide à améliorer nos contenus…"
+            ></textarea>
+            <div class="art-feedback-form-footer">
+              <span class="art-feedback-hint" id="art-feedback-hint">10 caractères minimum</span>
+              <button type="button" class="btn btn-primary art-feedback-submit" id="art-feedback-submit" disabled>Envoyer</button>
+            </div>
+          </div>
+
+          <div class="art-feedback-thanks" id="art-feedback-thanks" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span>Merci ! Je prends en compte tous vos retours pour améliorer la qualité des articles et vous aider le plus possible :)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Biographie auteure -->
+    <footer class="art-bio-wrap">
+      <div class="container">
+        <div class="art-bio">
+          <div class="art-bio-avatar" aria-hidden="true">
+            <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="64" height="64" loading="lazy" decoding="async" style="display:block;" />
+          </div>
+          <div>
+            <p class="art-bio-name">À propos de {article.author}</p>
+            <p class="art-bio-role">{article.authorRole}</p>
+            <p class="art-bio-desc">{article.authorDesc}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </article><!-- /article -->
+
+
+  <!-- ── FAQ ───────────────────────────────────────────────────────── -->
+  {faqItems.length > 0 && (
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 750px;">
+        <h2 id="faq-heading" style="text-align: center;">Questions <span class="accent">fréquentes</span></h2>
+        <div class="faq-list" style="margin-top: var(--sp-8);">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>{item.question}</span>
+                <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────────────── -->
+  <section class="section-dark art-cta-section" aria-labelledby="art-cta-h">
+    <div class="container art-cta-inner">
+      <h2 class="art-cta-title" id="art-cta-h">Votre chien a encore du mal à gérer ses émotions en balade&nbsp;?</h2>
+      <p>Bilan comportemental gratuit à domicile · Bordeaux et métropole</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Réserver mon bilan gratuit
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
+  <ArticleProgressBar />
+
+  <script is:inline>
+    (function () {
+      var MIN_CHARS = 10;
+      var feedbackWrap = document.getElementById('art-feedback');
+      var likeBtn = document.getElementById('art-like-btn');
+      var dislikeBtn = document.getElementById('art-dislike-btn');
+      var feedbackForm = document.getElementById('art-feedback-form');
+      var feedbackText = document.getElementById('art-feedback-text');
+      var feedbackHint = document.getElementById('art-feedback-hint');
+      var feedbackSubmit = document.getElementById('art-feedback-submit');
+      var feedbackThanks = document.getElementById('art-feedback-thanks');
+
+      if (!feedbackWrap || !likeBtn || !dislikeBtn) return;
+
+      function sendGA4Event(eventName, params) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: eventName }, params));
+      }
+
+      function getArticleTitle() {
+        var h1 = document.querySelector('h1');
+        return h1 ? h1.textContent.trim() : document.title;
+      }
+
+      function showThanks() {
+        feedbackWrap.querySelectorAll('.art-feedback-buttons, .art-feedback-form, .art-feedback-question').forEach(
+          function (el) { el.hidden = true; }
+        );
+        feedbackThanks.hidden = false;
+      }
+
+      likeBtn.addEventListener('click', function () {
+        sendGA4Event('article_like', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+        });
+        showThanks();
+      });
+
+      dislikeBtn.addEventListener('click', function () {
+        likeBtn.hidden = true;
+        dislikeBtn.classList.add('art-feedback-btn--selected');
+        dislikeBtn.disabled = true;
+        feedbackForm.hidden = false;
+        feedbackText.focus();
+      });
+
+      feedbackText.addEventListener('input', function () {
+        var len = feedbackText.value.trim().length;
+        var valid = len >= MIN_CHARS;
+        feedbackSubmit.disabled = !valid;
+        if (len === 0) {
+          feedbackHint.textContent = MIN_CHARS + ' caractères minimum';
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else if (!valid) {
+          feedbackHint.textContent = 'Encore ' + (MIN_CHARS - len) + ' caractère' + (MIN_CHARS - len > 1 ? 's' : '');
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else {
+          feedbackHint.textContent = 'Prêt à envoyer';
+          feedbackHint.classList.add('art-feedback-hint--ok');
+        }
+      });
+
+      feedbackSubmit.addEventListener('click', function () {
+        var text = feedbackText.value.trim();
+        if (text.length < MIN_CHARS) return;
+        sendGA4Event('article_dislike', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+          user_feedback: text,
+        });
+        showThanks();
+      });
+    })();
+  </script>
+
+  <script>
+    const btn = document.getElementById('art-copy-link');
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+        } catch {
+          const el = Object.assign(document.createElement('input'), { value: window.location.href });
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          el.remove();
+        }
+        btn.setAttribute('data-copied', '');
+        setTimeout(() => btn.removeAttribute('data-copied'), 2000);
+      });
+    }
+  </script>
+
+</Layout>

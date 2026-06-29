@@ -13,7 +13,8 @@ const pages = [
   '/education-canine/comportement/',
   '/education-canine/comportement/problemes/reactivite/chiens/',
   '/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/',
-  '/education-canine/comportement/comprendre/gestion-emotions-balade/',
+  '/education-canine/comportement/comprendre/gestion-emotions/balade/',
+  '/education-canine/comportement/problemes/gestion-emotions/balade/',
 ];
 
 export const GET: APIRoute = ({ site }) => {
