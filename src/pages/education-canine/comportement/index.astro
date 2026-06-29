@@ -41,6 +41,7 @@ type Card = {
   url: string | null;
   image: string | null;
   imageAlt?: string;
+  imagePosition?: string;
   gradient: string;
   soon: boolean;
 };
@@ -66,6 +67,16 @@ const sections: { id: string; label: string; seeAllUrl: string | null; cards: Ca
         url:      '/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/',
         image:    '/images/article-attaque-chien-que-faire-apres.webp',
         imageAlt: 'Deux chiens se font face en extérieur, un propriétaire tient son chien en laisse à distance',
+        gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
+        soon:     false,
+      },
+      {
+        title:    'Mon chien a du mal à gérer ses émotions en balade : comprendre et reprendre la main',
+        meta:     'Comportement · 13 min',
+        url:      '/education-canine/comportement/comprendre/gestion-emotions-balade/',
+        image:    '/images/article-gestion-emotions-balade.webp',
+        imageAlt: 'Chien en balade en extérieur, en pleine montée émotionnelle face à un stimulus',
+        imagePosition: '50% 60%',
         gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
         soon:     false,
       },
@@ -137,7 +148,7 @@ const sections: { id: string; label: string; seeAllUrl: string | null; cards: Ca
                 <a href={card.url} class="ec-card">
                   <div class="ec-card-img" style={card.image ? undefined : `background: ${card.gradient};`} role="presentation">
                     {card.image && (
-                      <img src={card.image} alt={card.imageAlt ?? ''} class="ec-card-img-photo" loading="lazy" decoding="async" />
+                      <img src={card.image} alt={card.imageAlt ?? ''} class="ec-card-img-photo" loading="lazy" decoding="async" style={card.imagePosition ? `object-position: ${card.imagePosition};` : undefined} />
                     )}
                   </div>
                   <div class="ec-card-body">

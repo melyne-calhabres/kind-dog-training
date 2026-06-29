@@ -1,0 +1,639 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Icon from '../../../../components/Icon.astro';
+import ArticleProgressBar from '../../../../components/ArticleProgressBar.astro';
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Mon Chien a du Mal à Gérer ses Émotions en Balade : Les Causes',
+  metaDescription: 'Votre chien a du mal à gérer ses émotions en balade ? Comprenez la vraie cause, identifiez les signaux avant l\'explosion et reprenez la main sereinement.',
+};
+
+// ── Article metadata ──────────────────────────────────────────────────────────
+const article = {
+  category:       'Comportement',
+  categoryUrl:    '/education-canine/comportement/',
+  breadcrumbLabel:'Gérer ses émotions en balade',
+  titleBefore:    'Mon chien a du mal à ',
+  titleAccent:    'gérer ses émotions en balade',
+  titleAfter:     ' : comprendre et reprendre la main',
+  publishDate:    '29 juin 2026',
+  publishDateIso: '2026-06-29',
+  readTime:       '13 min',
+  author:         'Mélyne',
+  authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
+  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
+  coverAlt:       'Chien en balade en extérieur, en pleine montée émotionnelle face à un stimulus',
+};
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Combien de temps faut-il pour qu\'un chien apprenne à se canaliser en sortie ?',
+    answer:   'Il n\'y a pas de durée fixe, ça dépend du chien, de son passé et surtout de la régularité du travail. Certains chiens montrent des progrès nets en quelques semaines, d\'autres ont besoin de plus de temps, notamment s\'ils sont jeunes ou en pleine phase hormonale. Ce qui compte, c\'est la constance plutôt que l\'intensité. Des séances courtes et régulières valent mieux que de longues sessions espacées. Un repère utile : un trouble installé depuis plus de six mois demande généralement plus de patience, car le comportement est devenu une habitude ancrée. Mais avec un travail adapté, un chien progresse presque toujours dans le bon sens.',
+  },
+  {
+    question: 'Mon chien dépense-t-il vraiment assez si je le sors 30 minutes par jour ?',
+    answer:   'Pas forcément, parce que tout dépend de la qualité de ces 30 minutes. Une demi-heure en laisse courte, toujours sur le même trajet, ne couvre presque que le besoin physique, et de façon limitée. Une balade en laisse réduit la stimulation mentale de 80 à 90 % par rapport à une sortie où le chien explore librement. À l\'inverse, 30 minutes où votre chien renifle, cherche, observe et réfléchit le fatiguent réellement. Ajoutez de la mastication et un vrai moment de jeu cadré à la maison, et vous comblez bien plus de besoins qu\'avec une longue marche mécanique. Visez la richesse de la sortie, pas seulement sa durée.',
+  },
+  {
+    question: 'Faut-il continuer à promener un chien qui déborde à chaque fois ?',
+    answer:   'Oui. Arrêter les balades parce qu\'elles sont difficiles, c\'est la pire solution. L\'évitement ne règle rien : il renforce l\'incapacité du chien à gérer le monde extérieur, et le prive du seul vrai vecteur de dépense et de socialisation qu\'il a. Un chien qu\'on enferme pour le « protéger » des stimulations devient encore moins capable de les affronter. Ce qu\'il faut changer, ce n\'est pas la quantité de sorties, c\'est leur contenu et votre façon de les mener. Adaptez le lieu, l\'horaire, la distance avec les déclencheurs, travaillez la gestion émotionnelle progressivement, et si besoin faites-vous accompagner. Mais ne supprimez pas la balade.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type':       'Article',
+      headline:      article.titleBefore + article.titleAccent + article.titleAfter,
+      description:   page.metaDescription,
+      datePublished: '2026-06-26T09:00:00+02:00',
+      dateModified:  '2026-06-29T09:00:00+02:00',
+      inLanguage:    'fr-FR',
+      url:           pageUrl,
+      image: {
+        '@type':  'ImageObject',
+        url:      siteUrl + '/images/article-gestion-emotions-balade.webp',
+        width:    1116,
+        height:   398,
+      },
+      author: {
+        '@type':    'Person',
+        name:       article.author,
+        url:        siteUrl + '/qui-suis-je/',
+        jobTitle:   'Éducatrice & comportementaliste canin',
+        description: article.authorDesc,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url:     siteUrl + '/images/logo.png',
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id':   pageUrl,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',                    item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: article.category,             item: siteUrl + article.categoryUrl },
+        { '@type': 'ListItem', position: 3, name: article.breadcrumbLabel },
+      ],
+    },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
+  ],
+};
+
+// ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
+const tldr = [
+  'Quand un chien a du mal à gérer ses émotions en balade, le problème vient rarement de la balade elle-même. Il vient le plus souvent de besoins mal comblés au quotidien.',
+  'La dépense physique des chiens domestiques est estimée à environ 60 % en dessous de ce qu\'elle devrait être. Un chien sous-stimulé déborde plus vite dehors.',
+  'Au-delà d\'un certain seuil d\'excitation, votre chien n\'est plus joignable. Lui parler à ce moment-là ne sert à rien.',
+  'Il explose dehors et pas à la maison parce que l\'extérieur lui demande de traiter une masse de stimulations en continu, sur un système déjà sous pression.',
+  'Deux réflexes très courants nourrissent la surexcitation : lui parler sans arrêt pour le calmer, et le laisser foncer sur tout ce qu\'il croise.',
+  'Les signaux de débordement arrivent bien avant l\'explosion. Les repérer tôt, c\'est pouvoir agir tant que le chien vous entend encore.',
+];
+
+// ── Table of contents ─────────────────────────────────────────────────────────
+const toc = [
+  { label: 'La vraie cause à chercher d\'abord',          href: '#la-vraie-cause',              sub: false },
+  { label: 'Des balades trop courtes',                    href: '#balades-trop-courtes',        sub: true  },
+  { label: 'Peu d\'interactions libres',                  href: '#peu-interactions',            sub: true  },
+  { label: 'Pas de vraies phases de jeu',                 href: '#pas-de-jeu',                  sub: true  },
+  { label: 'Dépense mentale et mastication',              href: '#depense-mentale-mastication', sub: true  },
+  { label: 'Ce qui se passe quand votre chien déborde',   href: '#ce-qui-se-passe',             sub: false },
+  { label: 'Le seuil émotionnel qui saute',               href: '#seuil-emotionnel',            sub: true  },
+  { label: 'Pourquoi il explose dehors et pas à la maison', href: '#pourquoi-dehors',           sub: false },
+  { label: 'Un environnement saturé de stimulations',     href: '#environnement-sature',        sub: true  },
+  { label: 'L\'effet cocotte-minute',                     href: '#effet-cocotte-minute',        sub: true  },
+  { label: 'Ce que vous faites qui nourrit la surexcitation', href: '#ce-que-vous-faites',      sub: false },
+  { label: 'Parler à votre chien pour le calmer',         href: '#parler-pour-calmer',          sub: true  },
+  { label: 'Autoriser tous les contacts',                 href: '#autoriser-tous-contacts',     sub: true  },
+  { label: 'Repérer les signes de débordement',           href: '#reperer-signes',              sub: false },
+  { label: 'Les signaux précoces',                        href: '#signaux-precoces',            sub: true  },
+  { label: 'Quand votre chien n\'est plus joignable',     href: '#plus-joignable',              sub: true  },
+  { label: 'Quand vous faire accompagner',                href: '#accompagnement',              sub: false },
+];
+
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ──────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href={article.categoryUrl}>{article.category}</a></li>
+        <li aria-current="page">{article.breadcrumbLabel}</li>
+      </ol>
+    </div>
+  </nav>
+
+
+  <!-- ── ARTICLE ───────────────────────────────────────────────────── -->
+  <article aria-labelledby="art-h1">
+
+    <!-- En-tête de l'article -->
+    <header class="art-header">
+      <div class="container">
+        <h1 class="art-title" id="art-h1">
+          {article.titleBefore}<span class="accent">{article.titleAccent}</span>{article.titleAfter}
+        </h1>
+        <div class="art-meta">
+          <div class="art-author">
+            <div class="art-avatar" aria-hidden="true">
+              <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
+            </div>
+            <p class="art-author-info">
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+            </p>
+          </div>
+          <div class="art-share">
+            <button id="art-copy-link" class="art-share-btn" type="button" aria-label="Copier le lien de l'article">
+              <Icon name="link" width={16} height={16} strokeWidth={2} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Image hero -->
+    <div class="art-hero-wrap">
+      <div class="container">
+        <figure class="art-hero">
+          <img
+            src="/images/article-gestion-emotions-balade.webp"
+            alt={article.coverAlt}
+            width="1116"
+            height="398"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="art-hero-img"
+          />
+        </figure>
+      </div>
+    </div>
+
+    <!-- L'essentiel -->
+    <div class="container">
+      <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+        <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+        <p class="art-tldr-title">Ce qu'il faut retenir</p>
+        <ul class="art-tldr-list" role="list">
+          {tldr.map((item) => (
+            <li>
+              <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="art-tldr-footer">
+          <Icon name="clock" width={14} height={14} strokeWidth={2} />
+          Lecture complète&nbsp;: {article.readTime} · Pour aller plus loin, lisez l'article entier
+        </p>
+      </aside>
+    </div>
+
+    <!-- Sommaire accordéon — mobile uniquement -->
+    <div class="container art-toc-mobile">
+      <details class="art-toc-accordion">
+        <summary class="art-toc-accordion-header">
+          Sommaire
+          <Icon name="chevron-down" width={16} height={16} strokeWidth={2} class="art-toc-chevron" />
+        </summary>
+        <nav class="art-toc-accordion-body" aria-label="Sommaire de l'article">
+          {toc.map((item) => (
+            <a
+              href={item.href}
+              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+            >
+              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+
+    <!-- Corps à deux colonnes : contenu + sidebar sticky -->
+    <div class="container art-layout">
+
+      <!-- Colonne principale -->
+      <div class="art-content">
+
+        <h2 id="la-vraie-cause">La vraie cause à chercher d'abord&nbsp;: des besoins pas comblés</h2>
+
+        <p>Avant de parler de techniques, de laisse ou d'exercices, il faut regarder ailleurs. Un chien qui a du mal à gérer ses émotions en balade est très souvent un chien dont les besoins de base ne sont pas satisfaits le reste de la journée. La sortie n'est pas la cause du problème. Elle est l'endroit où le problème devient visible.</p>
+
+        <h3 id="balades-trop-courtes">Des balades trop courtes ou toujours au même endroit</h3>
+
+        <p>Un chien, à l'état sauvage, parcourrait entre 30 et 50&nbsp;km. Le chien domestique, lui, se dépense environ 60&nbsp;% en dessous de ce dont il aurait besoin. Quand les sorties se résument à un tour de pâté de maisons en laisse, toujours le même, vous lui offrez le strict minimum.</p>
+
+        <p>Et ce minimum est surtout physique. La vraie fatigue, celle qui apaise, est mentale. Une balade en liberté où le chien renifle, analyse le sol, lit les odeurs des autres chiens passés avant lui, ça le vide bien plus qu'un footing au pied. L'odorat est sa première force. Un jardin, ou un trajet identique chaque jour, c'est un milieu pauvre, presque aseptisé, qui ne lui demande aucun travail.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Je le vois régulièrement chez les jeunes chiens que j'accompagne&nbsp;: les dépenses physiques sont trop pauvres, et la dépense mentale carrément absente. Forcément, toute cette énergie ressort au premier truc excitant croisé en balade.</p>
+          </div>
+        </aside>
+
+        <h3 id="peu-interactions">Peu ou pas d'interactions libres avec d'autres chiens</h3>
+
+        <p>Beaucoup de chiens vivent avec zéro vraie interaction. Ils voient d'autres chiens de loin, en laisse, sans jamais pouvoir les rencontrer normalement. Le souci, c'est ce que ça crée&nbsp;: quand quelque chose est rare, ça devient obsessionnel. Un chien qui ne croise jamais de congénère librement finit par traiter chaque rencontre comme un événement énorme, impossible à gérer calmement.</p>
+
+        <p>C'est exactement l'inverse qu'il faut viser. Plus un chien interagit régulièrement, moins chaque rencontre a de valeur, et plus il sait renoncer. C'est là que vous vous retrouvez avec un chien qui hurle et tracte de tout son poids dès qu'il aperçoit un copain potentiel à cinquante mètres.</p>
+
+        <p>Ce genre de situations peut faire accumuler beaucoup de frustration chez votre chien et peut potentiellement le rendre <a href="/education-canine/comportement/problemes/reactivite/chiens/">réactif envers les autres chiens</a> si vous ne faites rien.</p>
+
+        <h3 id="pas-de-jeu">Pas de vraies phases de jeu avec vous</h3>
+
+        <p>Le chien est un joueur dans sa nature profonde, et il y a un déficit de jeu énorme chez nos compagnons. Jouer pour de vrai, avec vous, ce n'est pas laisser traîner trois jouets dans le salon. C'est même souvent le contraire.</p>
+
+        <p>J'ai accompagné un chien qui avait en permanence ses jouets à disposition. Résultat&nbsp;: il ne savait jamais quand le jeu commençait ni quand il s'arrêtait, et il passait sa journée à réclamer, à chouiner, à insister. L'absence de cadre autour du jeu entretenait sa frustration en continu. Un jeu a un début, une fin, et c'est vous qui les décidez. Sans ça, le chien n'apprend jamais à monter en excitation puis à redescendre, ce qui est précisément la compétence qui lui manque en balade.</p>
+
+        <h3 id="depense-mentale-mastication">La dépense mentale et la mastication oubliées au quotidien</h3>
+
+        <p>Mâcher est un comportement inné et obligatoire chez le chien&nbsp;: c'est comme ça qu'il évacue sa pression interne. Un chien qui n'a rien à mastiquer garde cette tension en lui. Et faire réfléchir un chien le fatigue au moins dix fois plus que de le faire courir.</p>
+
+        <p>Ces deux besoins-là sont presque toujours les premiers sacrifiés. On pense «&nbsp;promenade = il a couru = il est fatigué&nbsp;», et on s'étonne qu'il rentre encore sous tension. Parfois, un chien revient de balade toujours aussi excité, simplement parce qu'il lui manque une activité qui le pose vraiment.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Un test simple</p>
+            <p class="art-callout__text">Si votre chien rentre de promenade et reste agité, incapable de se poser, c'est rarement qu'il a manqué de course. C'est qu'il a manqué de réflexion, de mastication ou d'un vrai moment de jeu cadré.</p>
+          </div>
+        </aside>
+
+        <h2 id="ce-qui-se-passe">Ce qui se passe vraiment quand votre chien déborde en sortie</h2>
+
+        <h3 id="seuil-emotionnel">Le seuil émotionnel qui saute et pourquoi il n'entend plus rien</h3>
+
+        <p>Votre chien a un seuil. En dessous, il vous entend, il réfléchit, il peut choisir un comportement. Au-dessus, il bascule. Et une fois passé ce seuil, ce n'est plus de la mauvaise volonté&nbsp;: il n'est tout simplement plus disponible.</p>
+
+        <p>C'est un point que les propriétaires ont du mal à accepter, parce qu'on a l'impression que notre chien nous ignore exprès. Un jeune chien que je suivais montait très vite en pression dès qu'il croisait un autre chien. Une fois dans sa bulle émotionnelle, lui parler, le raisonner, répéter son nom&nbsp;: inutile. Il n'entendait plus rien. La seule chose qui fonctionnait, c'était d'attendre qu'il redescende, en respectant les bons temps de pause, avant de pouvoir reprendre contact.</p>
+
+        <p>Comprendre ça change votre façon d'agir. Tant que le chien est sous le seuil, vous pouvez travailler. Au-dessus, vous ne faites que vous épuiser à parler dans le vide pendant que lui s'enfonce un peu plus dans sa surexcitation.</p>
+
+        <!-- CTA inline — visible sur mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Votre chien dépasse son seuil dès la sortie&nbsp;?</p>
+          <p class="art-inline-cta-desc">Un bilan à domicile, c'est l'occasion d'observer ensemble ce qui le fait basculer et de poser les bons repères avant la balade. C'est gratuit, sans engagement.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+        </aside>
+
+        <h2 id="pourquoi-dehors">Pourquoi votre chien explose dehors et pas à la maison</h2>
+
+        <h3 id="environnement-sature">Un environnement saturé de stimulations qu'il doit traiter en continu</h3>
+
+        <p>À la maison, tout est connu, prévisible, calme. Dehors, c'est l'inverse. Chaque sortie est une avalanche d'informations&nbsp;: des odeurs partout, des bruits, des humains, des vélos, des chiens, un sol qui change. Le chien doit analyser tout ça en temps réel, à très haute intensité. Pour un chien qui gère mal ses émotions, cette charge est déjà énorme avant même qu'il se passe quoi que ce soit.</p>
+
+        <p>Certains chiens y sont particulièrement sensibles. J'ai suivi une chienne pourtant très stable à la maison qui devenait beaucoup plus réactive dans les lieux qu'elle ne connaissait pas, proche de l'hypervigilance. Rien d'anormal dans son caractère&nbsp;: simplement un environnement nouveau qui lui demandait un effort de traitement énorme.</p>
+
+        <h3 id="effet-cocotte-minute">L'effet cocotte-minute quand la pression s'accumule jour après jour</h3>
+
+        <p>Voilà le mécanisme central. Un chien dont les besoins ne sont pas comblés vit en état de cocotte-minute permanente. La pression monte un peu chaque jour&nbsp;: pas assez de dépense, pas assez d'interactions, pas assez de mastication. Tant qu'il est à la maison, le couvercle tient. Dehors, au premier stimulus un peu fort, ça déborde.</p>
+
+        <p>Ce n'est donc pas la balade qui rend votre chien ingérable. La balade est juste le moment où toute la pression accumulée trouve une sortie. Un chien dont les besoins sont largement satisfaits par ailleurs encaisse une contrariété sans exploser. Un chien en privation, non&nbsp;: il n'a plus aucune marge.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Un chien biologiquement en manque est incapable de traiter une frustration. La fatigue saine, celle d'un chien vraiment dépensé, c'est le socle sur lequel tout le reste se construit. Sans elle, aucun exercice ne tiendra dehors.</p>
+          </div>
+        </aside>
+
+        <h2 id="ce-que-vous-faites">Ce que vous faites en balade qui nourrit la surexcitation</h2>
+
+        <h3 id="parler-pour-calmer">Parler à votre chien pour le calmer</h3>
+
+        <p>C'est le réflexe le plus naturel du monde, et l'un des plus contre-productifs. Le chien monte, alors on lui parle&nbsp;: «&nbsp;non, non, c'est bon, doucement, regarde-moi, stop, stop, stop&nbsp;». On enchaîne les mots en croyant l'apaiser.</p>
+
+        <p>Sauf qu'au-dessus de son seuil, il ne vous entend pas. Et en dessous, ce flot de paroles l'agite plutôt qu'il ne le calme. J'ai souvent constaté qu'une communication trop importante de la part du propriétaire, surtout quand elle est teintée de stress, pousse le chien à prendre des initiatives au lieu de se référer à vous. Votre état émotionnel est le premier régulateur du sien. Si votre voix grimpe et se tend, la sienne suit.</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le bon réflexe à la place</p>
+            <p class="art-callout__text">Quand votre chien est très excité, taisez-vous. Restez en mouvement, gardez une posture calme, attendez qu'il redescende. Vous reprendrez le travail quand il sera de nouveau capable de vous écouter, pas avant.</p>
+          </div>
+        </aside>
+
+        <h3 id="autoriser-tous-contacts">Autoriser tous les contacts avec ce qu'il croise</h3>
+
+        <p>L'autre piège, c'est de laisser votre chien foncer voir chaque congénère, chaque humain, chaque chose qui l'attire. On se dit qu'on lui fait plaisir, qu'on le «&nbsp;sociabilise&nbsp;». En réalité, on lui apprend qu'il a le droit d'obtenir tout ce qu'il veut, immédiatement.</p>
+
+        <p>Un chien qui n'a jamais appris à renoncer est déstabilisé en permanence. Chaque stimulation devient une demande à laquelle il faut répondre. Et en laisse, laisser deux chiens se rencontrer tête contre tête, bloqués, sans espace pour communiquer normalement, c'est souvent le meilleur moyen de créer un conflit. Apprendre à votre chien à croiser sans aller au contact, à observer puis à passer son chemin, c'est lui rendre service. Le renoncement n'est pas une privation&nbsp;: c'est ce qui le rend stable.</p>
+
+        <!-- CTA inline — visible sur mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Envie de changer vos réflexes en balade&nbsp;?</p>
+          <p class="art-inline-cta-desc">On regarde ensemble ce qui se joue au bout de la laisse et on construit une façon de marcher qui n'alimente plus la surexcitation. Bilan gratuit à votre domicile.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV</a>
+        </aside>
+
+        <h2 id="reperer-signes">Repérer les signes de débordement avant le point de non-retour</h2>
+
+        <h3 id="signaux-precoces">Les signaux précoces que la plupart des propriétaires ratent</h3>
+
+        <p>Le débordement ne sort pas de nulle part. Il y a toujours des signaux avant, et ils sont lisibles si on sait où regarder. Sur un chien que j'accompagnais pour de fortes montées en excitation, le tableau était net&nbsp;: port de queue très haut et très droit avec de légers battements, oreilles bien dressées, pupilles dilatées. Tout ça apparaissait avant le premier aboiement.</p>
+
+        <p>Ces signes vous donnent une fenêtre. C'est le moment où votre chien commence à fixer, à se figer légèrement, à accélérer, où sa respiration change. Si vous agissez là, vous travaillez encore avec un chien qui vous entend. Si vous attendez l'explosion, vous avez raté la fenêtre.</p>
+
+        <h3 id="plus-joignable">Le moment où votre chien n'est plus joignable</h3>
+
+        <p>Après les signaux précoces vient le point de bascule. Le chien entre dans sa bulle, et tout ce qui vient de vous glisse sur lui. C'est le fameux seuil franchi.</p>
+
+        <p>Apprendre à reconnaître ce moment précis vous évite beaucoup de frustration inutile. Tirer, crier, supplier&nbsp;: à ce stade, plus rien ne passe. La seule option, c'est de mettre de la distance avec le déclencheur et d'attendre que la pression redescende. Avec le temps et du travail, ce seuil recule&nbsp;: un chien que je suivais déclenchait au premier croisement, mais lors d'un second passage avec le même chien, il était déjà beaucoup plus calme. La preuve qu'il pouvait redescendre, une fois la surprise digérée.</p>
+
+        <h2 id="accompagnement">Quand vous faire accompagner devient le bon choix</h2>
+
+        <p>On peut travailler la gestion émotionnelle en balade soi-même, surtout si on s'y prend tôt. Mais il y a des moments où se faire accompagner change tout.</p>
+
+        <p>Si la situation s'aggrave malgré vos efforts, si les sorties sont devenues une source d'angoisse au point que vous les écourtez ou que vous les évitez, ou si le débordement dure depuis plusieurs mois, c'est le bon moment. Un schéma émotionnel qui s'installe au-delà de six mois a tendance à se figer en habitude profonde, plus longue à défaire. Plus tôt on intervient, plus c'est simple.</p>
+
+        <p>Je connais bien cette situation, parce que je l'ai vécue avec mon propre chien, Ramsey. Se retrouver seul face à un comportement qu'on ne comprend pas, avec des conseils contradictoires de partout, c'est épuisant. Ça n'a rien d'une fatalité, et ce n'est jamais trop tard. Dans quelques semaines de travail mené dans le bon sens, cette balade qui vous nouait le ventre dès la porte franchie peut redevenir un moment que vous attendez, tous les deux.</p>
+
+        <!-- CTA inline — visible sur mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Prête à reprendre la main sur les balades&nbsp;?</p>
+          <p class="art-inline-cta-desc">Premier bilan gratuit à votre domicile, je me déplace à Bordeaux et sa métropole. Sans engagement, on pose un plan de travail adapté à votre chien.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
+        </aside>
+
+      </div><!-- /.art-content -->
+
+      <!-- Sidebar sticky — desktop uniquement -->
+      <aside class="art-sidebar" aria-labelledby="art-toc-heading">
+        <nav class="art-toc" aria-labelledby="art-toc-heading">
+          <details class="art-toc-details">
+            <summary class="art-toc-title" id="art-toc-heading">
+              Sommaire
+              <svg class="art-toc-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="art-toc-links">
+              {toc.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+                >
+                  <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        </nav>
+
+        <div class="art-sidebar-cta">
+          <p class="art-sidebar-cta-title">Votre chien déborde en balade&nbsp;?</p>
+          <p class="art-sidebar-cta-desc">Bilan comportemental à domicile pour comprendre ce qui se joue et construire un plan adapté à votre chien</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            Prendre RDV
+            <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
+          </a>
+        </div>
+      </aside>
+
+    </div><!-- /.art-layout -->
+
+    <!-- Like / Dislike -->
+    <section class="art-feedback-wrap" aria-label="Votre avis sur cet article">
+      <div class="container">
+        <div class="art-feedback" id="art-feedback">
+          <p class="art-feedback-question">Cet article vous a été utile&nbsp;?</p>
+          <div class="art-feedback-buttons">
+            <button type="button" class="art-feedback-btn art-feedback-btn--like" id="art-like-btn" aria-label="J'aime cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>
+              </svg>
+              Oui
+            </button>
+            <button type="button" class="art-feedback-btn art-feedback-btn--dislike" id="art-dislike-btn" aria-label="Je n'aime pas cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>
+              </svg>
+              Non
+            </button>
+          </div>
+
+          <div class="art-feedback-form" id="art-feedback-form" hidden>
+            <label for="art-feedback-text" class="art-feedback-label">Qu'est-ce qui pourrait être amélioré&nbsp;?</label>
+            <textarea
+              id="art-feedback-text"
+              class="art-feedback-textarea"
+              rows="3"
+              maxlength="500"
+              placeholder="Votre retour nous aide à améliorer nos contenus…"
+            ></textarea>
+            <div class="art-feedback-form-footer">
+              <span class="art-feedback-hint" id="art-feedback-hint">10 caractères minimum</span>
+              <button type="button" class="btn btn-primary art-feedback-submit" id="art-feedback-submit" disabled>Envoyer</button>
+            </div>
+          </div>
+
+          <div class="art-feedback-thanks" id="art-feedback-thanks" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span>Merci ! Je prends en compte tous vos retours pour améliorer la qualité des articles et vous aider le plus possible :)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Biographie auteure -->
+    <footer class="art-bio-wrap">
+      <div class="container">
+        <div class="art-bio">
+          <div class="art-bio-avatar" aria-hidden="true">
+            <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="64" height="64" loading="lazy" decoding="async" style="display:block;" />
+          </div>
+          <div>
+            <p class="art-bio-name">À propos de {article.author}</p>
+            <p class="art-bio-role">{article.authorRole}</p>
+            <p class="art-bio-desc">{article.authorDesc}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </article><!-- /article -->
+
+
+  <!-- ── FAQ ───────────────────────────────────────────────────────── -->
+  {faqItems.length > 0 && (
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 750px;">
+        <h2 id="faq-heading" style="text-align: center;">Questions <span class="accent">fréquentes</span></h2>
+        <div class="faq-list" style="margin-top: var(--sp-8);">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>{item.question}</span>
+                <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────────────── -->
+  <section class="section-dark art-cta-section" aria-labelledby="art-cta-h">
+    <div class="container art-cta-inner">
+      <h2 class="art-cta-title" id="art-cta-h">Votre chien a encore du mal à gérer ses émotions en balade&nbsp;?</h2>
+      <p>Bilan comportemental gratuit à domicile · Bordeaux et métropole</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Réserver mon bilan gratuit
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
+  <ArticleProgressBar />
+
+  <script is:inline>
+    (function () {
+      var MIN_CHARS = 10;
+      var feedbackWrap = document.getElementById('art-feedback');
+      var likeBtn = document.getElementById('art-like-btn');
+      var dislikeBtn = document.getElementById('art-dislike-btn');
+      var feedbackForm = document.getElementById('art-feedback-form');
+      var feedbackText = document.getElementById('art-feedback-text');
+      var feedbackHint = document.getElementById('art-feedback-hint');
+      var feedbackSubmit = document.getElementById('art-feedback-submit');
+      var feedbackThanks = document.getElementById('art-feedback-thanks');
+
+      if (!feedbackWrap || !likeBtn || !dislikeBtn) return;
+
+      function sendGA4Event(eventName, params) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: eventName }, params));
+      }
+
+      function getArticleTitle() {
+        var h1 = document.querySelector('h1');
+        return h1 ? h1.textContent.trim() : document.title;
+      }
+
+      function showThanks() {
+        feedbackWrap.querySelectorAll('.art-feedback-buttons, .art-feedback-form, .art-feedback-question').forEach(
+          function (el) { el.hidden = true; }
+        );
+        feedbackThanks.hidden = false;
+      }
+
+      likeBtn.addEventListener('click', function () {
+        sendGA4Event('article_like', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+        });
+        showThanks();
+      });
+
+      dislikeBtn.addEventListener('click', function () {
+        likeBtn.hidden = true;
+        dislikeBtn.classList.add('art-feedback-btn--selected');
+        dislikeBtn.disabled = true;
+        feedbackForm.hidden = false;
+        feedbackText.focus();
+      });
+
+      feedbackText.addEventListener('input', function () {
+        var len = feedbackText.value.trim().length;
+        var valid = len >= MIN_CHARS;
+        feedbackSubmit.disabled = !valid;
+        if (len === 0) {
+          feedbackHint.textContent = MIN_CHARS + ' caractères minimum';
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else if (!valid) {
+          feedbackHint.textContent = 'Encore ' + (MIN_CHARS - len) + ' caractère' + (MIN_CHARS - len > 1 ? 's' : '');
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else {
+          feedbackHint.textContent = 'Prêt à envoyer';
+          feedbackHint.classList.add('art-feedback-hint--ok');
+        }
+      });
+
+      feedbackSubmit.addEventListener('click', function () {
+        var text = feedbackText.value.trim();
+        if (text.length < MIN_CHARS) return;
+        sendGA4Event('article_dislike', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+          user_feedback: text,
+        });
+        showThanks();
+      });
+    })();
+  </script>
+
+  <script>
+    const btn = document.getElementById('art-copy-link');
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+        } catch {
+          const el = Object.assign(document.createElement('input'), { value: window.location.href });
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          el.remove();
+        }
+        btn.setAttribute('data-copied', '');
+        setTimeout(() => btn.removeAttribute('data-copied'), 2000);
+      });
+    }
+  </script>
+
+</Layout>
