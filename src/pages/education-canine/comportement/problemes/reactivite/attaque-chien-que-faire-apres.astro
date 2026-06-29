@@ -24,7 +24,7 @@ const article = {
   authorInitial:  'M',
   authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
   authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
-  coverAlt:       'Deux chiens se font face en extérieur, un propriétaire tient son chien en laisse à distance',
+  coverAlt:       'Deux chiens en pleine altercation dans un pré, gueule ouverte et posture de confrontation',
 };
 
 // ── FAQ ───────────────────────────────────────────────────────────────────────
@@ -61,8 +61,8 @@ const jsonLd = {
       image: {
         '@type':  'ImageObject',
         url:      siteUrl + '/images/article-attaque-chien-que-faire-apres.webp',
-        width:    1116,
-        height:   398,
+        width:    1200,
+        height:   800,
       },
       author: {
         '@type':    'Person',
@@ -136,6 +136,31 @@ const toc = [
   { label: 'L\'histoire de Ramsey',                href: '#histoire-de-ramsey',               sub: true  },
 ];
 
+// ── Articles connexes ─────────────────────────────────────────────────────────
+const related = [
+  {
+    title:    'Mon chien est réactif aux autres chiens en balade',
+    readTime: '13 min',
+    img:      '/images/article-reactivite-chiens.webp',
+    imgAlt:   'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
+    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
+  },
+  {
+    title:    'Gérer ses émotions en balade : les causes',
+    readTime: '13 min',
+    img:      '/images/article-gestion-emotions-balade.webp',
+    imgAlt:   'Chien en balade en extérieur, en pleine montée émotionnelle face à un stimulus',
+    url:      '/education-canine/comportement/comprendre/gestion-emotions/balade/',
+  },
+  {
+    title:    'Gérer ses émotions en balade : que faire',
+    readTime: '8 min',
+    img:      '/images/article-gestion-emotions-balade-solutions.webp',
+    imgAlt:   'Chien en balade qui apprend à se canaliser et à rester attentif à son maître en extérieur',
+    url:      '/education-canine/comportement/problemes/gestion-emotions/balade/',
+  },
+];
+
 ---
 
 <Layout
@@ -191,8 +216,8 @@ const toc = [
           <img
             src="/images/article-attaque-chien-que-faire-apres.webp"
             alt={article.coverAlt}
-            width="1116"
-            height="398"
+            width="1200"
+            height="800"
             loading="eager"
             fetchpriority="high"
             decoding="async"
@@ -510,6 +535,32 @@ const toc = [
     </div>
   </section>
 
+
+  <!-- ── ARTICLES QUI PEUVENT VOUS INTÉRESSER ───────────────────────── -->
+  <section class="art-related" aria-labelledby="art-related-h">
+    <div class="container">
+      <h2 class="art-related-divider" id="art-related-h">Articles qui peuvent vous intéresser</h2>
+      <div class="art-related-grid">
+        {related.map((card) => (
+          <a href={card.url} class="art-related-card">
+            <img
+              src={card.img}
+              alt={card.imgAlt}
+              class="art-related-card-img"
+              width="360"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="art-related-card-body">
+              <p class="art-related-card-title">{card.title}</p>
+              <p class="art-related-card-meta">{card.readTime} de lecture</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
   <ArticleProgressBar />

@@ -136,6 +136,31 @@ const toc = [
   { label: 'Quand vous faire accompagner',                href: '#accompagnement',              sub: false },
 ];
 
+// ── Articles connexes ─────────────────────────────────────────────────────────
+const related = [
+  {
+    title:    'Gérer ses émotions en balade : que faire',
+    readTime: '8 min',
+    img:      '/images/article-gestion-emotions-balade-solutions.webp',
+    imgAlt:   'Chien en balade qui apprend à se canaliser et à rester attentif à son maître en extérieur',
+    url:      '/education-canine/comportement/problemes/gestion-emotions/balade/',
+  },
+  {
+    title:    'Mon chien est réactif aux autres chiens en balade',
+    readTime: '13 min',
+    img:      '/images/article-reactivite-chiens.webp',
+    imgAlt:   'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
+    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
+  },
+  {
+    title:    'Mon chien a été attaqué : que faire après',
+    readTime: '10 min',
+    img:      '/images/article-attaque-chien-que-faire-apres.webp',
+    imgAlt:   'Deux chiens se font face en extérieur, un propriétaire tient son chien en laisse à distance',
+    url:      '/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/',
+  },
+];
+
 ---
 
 <Layout
@@ -385,7 +410,7 @@ const toc = [
 
         <h2 id="accompagnement">Quand vous faire accompagner devient le bon choix</h2>
 
-        <p>On peut travailler la gestion émotionnelle en balade soi-même, surtout si on s'y prend tôt. Mais il y a des moments où se faire accompagner change tout.</p>
+        <p>On peut <a href="/education-canine/comportement/problemes/gestion-emotions/balade/">travailler la gestion émotionnelle en balade</a> soi-même, surtout si on s'y prend tôt. Mais il y a des moments où se faire accompagner change tout.</p>
 
         <p>Si la situation s'aggrave malgré vos efforts, si les sorties sont devenues une source d'angoisse au point que vous les écourtez ou que vous les évitez, ou si le débordement dure depuis plusieurs mois, c'est le bon moment. Un schéma émotionnel qui s'installe au-delà de six mois a tendance à se figer en habitude profonde, plus longue à défaire. Plus tôt on intervient, plus c'est simple.</p>
 
@@ -537,6 +562,32 @@ const toc = [
     </div>
   </section>
 
+
+  <!-- ── ARTICLES QUI PEUVENT VOUS INTÉRESSER ───────────────────────── -->
+  <section class="art-related" aria-labelledby="art-related-h">
+    <div class="container">
+      <h2 class="art-related-divider" id="art-related-h">Articles qui peuvent vous intéresser</h2>
+      <div class="art-related-grid">
+        {related.map((card) => (
+          <a href={card.url} class="art-related-card">
+            <img
+              src={card.img}
+              alt={card.imgAlt}
+              class="art-related-card-img"
+              width="360"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="art-related-card-body">
+              <p class="art-related-card-title">{card.title}</p>
+              <p class="art-related-card-meta">{card.readTime} de lecture</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
   <ArticleProgressBar />

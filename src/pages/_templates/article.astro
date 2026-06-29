@@ -98,23 +98,23 @@ const toc = [
 const related = [
   {
     title:    'Mon chien tire en laisse : que faire ?',
-    category: 'Comportement',
     readTime: '6 min',
-    gradient: 'linear-gradient(135deg, var(--kd-terracotta-soft) 0%, var(--kd-terracotta) 70%)',
+    img:      '/images/REMPLACER.webp',
+    imgAlt:   'Description de la photo de l\'article lié',
     url:      '/blog/',
   },
   {
     title:    'Le rappel : par où commencer ?',
-    category: 'Éducation',
     readTime: '8 min',
-    gradient: 'linear-gradient(160deg, #D4B39A 0%, #A14B27 70%)',
+    img:      '/images/REMPLACER.webp',
+    imgAlt:   'Description de la photo de l\'article lié',
     url:      '/blog/',
   },
   {
     title:    'Socialiser un chiot en 5 étapes',
-    category: 'Chiot',
     readTime: '5 min',
-    gradient: 'linear-gradient(120deg, #E2B89A 0%, #B85A35 70%)',
+    img:      '/images/REMPLACER.webp',
+    imgAlt:   'Description de la photo de l\'article lié',
     url:      '/blog/',
   },
 ];
@@ -459,14 +459,18 @@ const related = [
       <div class="art-related-grid">
         {related.map((card) => (
           <a href={card.url} class="art-related-card">
-            <div
+            <img
+              src={card.img}
+              alt={card.imgAlt}
               class="art-related-card-img"
-              style={`background: ${card.gradient};`}
-              role="presentation"
-            ></div>
+              width="360"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
             <div class="art-related-card-body">
               <p class="art-related-card-title">{card.title}</p>
-              <p class="art-related-card-meta">{card.category} · {card.readTime}</p>
+              <p class="art-related-card-meta">{card.readTime} de lecture</p>
             </div>
           </a>
         ))}

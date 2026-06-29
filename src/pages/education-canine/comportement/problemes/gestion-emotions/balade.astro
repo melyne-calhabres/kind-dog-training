@@ -131,6 +131,31 @@ const toc = [
   { label: 'Le couché comme point d\'ancrage',         href: '#couche-ancrage',         sub: true  },
 ];
 
+// ── Articles connexes ─────────────────────────────────────────────────────────
+const related = [
+  {
+    title:    'Gérer ses émotions en balade : les causes',
+    readTime: '13 min',
+    img:      '/images/article-gestion-emotions-balade.webp',
+    imgAlt:   'Chien en balade en extérieur, en pleine montée émotionnelle face à un stimulus',
+    url:      '/education-canine/comportement/comprendre/gestion-emotions/balade/',
+  },
+  {
+    title:    'Mon chien est réactif aux autres chiens en balade',
+    readTime: '13 min',
+    img:      '/images/article-reactivite-chiens.webp',
+    imgAlt:   'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
+    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
+  },
+  {
+    title:    'Mon chien a été attaqué : que faire après',
+    readTime: '10 min',
+    img:      '/images/article-attaque-chien-que-faire-apres.webp',
+    imgAlt:   'Deux chiens se font face en extérieur, un propriétaire tient son chien en laisse à distance',
+    url:      '/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/',
+  },
+];
+
 ---
 
 <Layout
@@ -493,6 +518,32 @@ const toc = [
     </div>
   </section>
 
+
+  <!-- ── ARTICLES QUI PEUVENT VOUS INTÉRESSER ───────────────────────── -->
+  <section class="art-related" aria-labelledby="art-related-h">
+    <div class="container">
+      <h2 class="art-related-divider" id="art-related-h">Articles qui peuvent vous intéresser</h2>
+      <div class="art-related-grid">
+        {related.map((card) => (
+          <a href={card.url} class="art-related-card">
+            <img
+              src={card.img}
+              alt={card.imgAlt}
+              class="art-related-card-img"
+              width="360"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="art-related-card-body">
+              <p class="art-related-card-title">{card.title}</p>
+              <p class="art-related-card-meta">{card.readTime} de lecture</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
   <ArticleProgressBar />
