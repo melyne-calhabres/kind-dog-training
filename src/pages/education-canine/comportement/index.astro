@@ -49,7 +49,7 @@ type Card = {
 const sections: { id: string; label: string; seeAllUrl: string | null; cards: Card[] }[] = [
   {
     id:         'problemes',
-    label:      'Problèmes de comportement',
+    label:      'Travailler et régler les problèmes de comportement',
     seeAllUrl:  null,
     cards: [
       {
@@ -71,12 +71,11 @@ const sections: { id: string; label: string; seeAllUrl: string | null; cards: Ca
         soon:     false,
       },
       {
-        title:    'Mon chien a du mal à gérer ses émotions en balade : comprendre et reprendre la main',
-        meta:     'Comportement · 13 min',
-        url:      '/education-canine/comportement/comprendre/gestion-emotions/balade/',
-        image:    '/images/article-gestion-emotions-balade.webp',
-        imageAlt: 'Chien en balade en extérieur, en pleine montée émotionnelle face à un stimulus',
-        imagePosition: '50% 60%',
+        title:    'Mon chien a du mal à gérer ses émotions en balade : que faire ?',
+        meta:     'Comportement · 8 min',
+        url:      '/education-canine/comportement/problemes/gestion-emotions/balade/',
+        image:    '/images/article-gestion-emotions-balade-solutions.webp',
+        imageAlt: 'Chien en balade qui apprend à se canaliser et à rester attentif à son maître en extérieur',
         gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
         soon:     false,
       },
@@ -95,6 +94,23 @@ const sections: { id: string; label: string; seeAllUrl: string | null; cards: Ca
         image:    null,
         gradient: 'linear-gradient(135deg, #C8D8E2 0%, #A8B8C2 70%)',
         soon:     true,
+      },
+    ],
+  },
+  {
+    id:         'comprendre',
+    label:      'Comprendre votre chien',
+    seeAllUrl:  null,
+    cards: [
+      {
+        title:    'Mon chien a du mal à gérer ses émotions en balade : comprendre et reprendre la main',
+        meta:     'Comportement · 13 min',
+        url:      '/education-canine/comportement/comprendre/gestion-emotions/balade/',
+        image:    '/images/article-gestion-emotions-balade.webp',
+        imageAlt: 'Chien en balade en extérieur, en pleine montée émotionnelle face à un stimulus',
+        imagePosition: '50% 60%',
+        gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
+        soon:     false,
       },
     ],
   },
