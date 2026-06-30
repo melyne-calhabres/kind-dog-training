@@ -1,0 +1,117 @@
+/* ===== FORM ===== */
+.form-group {
+  margin-bottom: var(--sp-4);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--sp-2);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--kd-bark);
+}
+
+.form-required {
+  color: var(--kd-terracotta);
+  margin-left: 2px;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid var(--kd-cream-deep);
+  border-radius: 14px;
+  background: var(--color-surface);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--kd-ink);
+  line-height: 1.55;
+  outline: none;
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--kd-stone);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--kd-terracotta);
+  box-shadow: var(--ring);
+}
+
+.form-textarea {
+  min-height: 130px;
+  resize: none;
+}
+
+.form-card {
+  background: var(--kd-cream);
+  border: 1px solid var(--kd-stone);
+  border-radius: var(--radius-xl);
+  padding: var(--sp-8);
+  box-shadow: 0 24px 48px -12px rgba(74, 47, 28, 0.18), 0 6px 16px rgba(74, 47, 28, 0.10);
+}
+
+.form-message {
+  display: block;
+  padding: var(--sp-4);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  margin-top: var(--sp-4);
+}
+
+.form-message-success {
+  background-color: var(--kd-olive-soft);
+  color: var(--kd-olive);
+}
+
+.form-message-error {
+  background-color: #f3d5d5;
+  color: var(--kd-vine);
+}
+
+.form-consent {
+  font-size: var(--fs-xs);
+  color: var(--kd-fawn);
+  line-height: 1.5;
+}
+
+.form-row {
+  display: grid;
+  gap: 14px;
+}
+
+/* ===== CONTACT ROW ===== */
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 0;
+}
+
+.contact-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--kd-cream);
+  color: var(--kd-terracotta);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.contact-label {
+  font-size: 15px;
+  color: var(--kd-ink);
+  font-weight: 500;
+}
+
+/* ===== FORMS — DESKTOP OVERRIDES ===== */
+@media (min-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -1,0 +1,59 @@
+/* ===== GUIDE CARDS (listing) ===== */
+.guides-grid {
+  display: grid;
+  gap: var(--sp-5);
+}
+
+.guide-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.guide-card-link:hover {
+  text-decoration: none;
+}
+
+.guide-card-link:hover .card {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.guide-card-meta {
+  font-size: var(--fs-xs);
+  color: var(--kd-fawn);
+  margin-bottom: var(--sp-2);
+}
+
+.guide-card-title {
+  margin-bottom: var(--sp-2);
+}
+
+.guide-card-desc {
+  color: var(--kd-bark);
+  font-size: 15px;
+  margin-bottom: var(--sp-2);
+}
+
+.guide-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--kd-cream);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--kd-fawn);
+}
+
+/* ===== GUIDES — DESKTOP OVERRIDES ===== */
+@media (min-width: 768px) {
+  .guides-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

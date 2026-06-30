@@ -1,0 +1,163 @@
+/* ===== SERVICE / PRICING CARDS ===== */
+.pricing-grid {
+  display: grid;
+  gap: var(--sp-5);
+}
+
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  position: relative;
+}
+
+.pricing-card .pricing-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--kd-fawn);
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
+.pricing-card h3 {
+  margin-bottom: var(--sp-1);
+}
+
+.pricing-subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-sm);
+  color: var(--kd-fawn);
+  line-height: 1.4;
+  margin-bottom: 0;
+}
+
+.pricing-desc {
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--kd-bark);
+  flex: 1;
+}
+
+.pricing-footer {
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--kd-cream-deep);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.pricing-sessions {
+  font-size: var(--fs-xs);
+  color: var(--kd-fawn);
+}
+
+.pricing-price {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 26px;
+  color: var(--kd-ink);
+}
+
+.pricing-badge {
+  position: absolute;
+  top: -10px;
+  right: 18px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--kd-terracotta);
+  color: var(--kd-paper);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-caps);
+}
+
+.pricing-cta {
+  background: transparent;
+  border: none;
+  color: var(--kd-terracotta);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  align-self: flex-start;
+  text-decoration: none;
+}
+
+.pricing-cta:hover {
+  color: var(--kd-terracotta-deep);
+}
+
+/* ===== FAQ ===== */
+.faq-list {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.faq-item {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-xs);
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--sp-4) var(--sp-5);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: left;
+  font-size: 16px;
+  gap: var(--sp-4);
+  color: var(--kd-ink);
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  transition: transform var(--dur-base) var(--ease-out);
+  color: var(--kd-fawn);
+}
+
+.faq-item[open] .faq-icon {
+  transform: rotate(180deg);
+  color: var(--kd-terracotta);
+}
+
+.faq-item[open] {
+  border-left: 3px solid var(--kd-terracotta);
+}
+
+.faq-item[open] .faq-question {
+  color: var(--kd-terracotta);
+}
+
+.faq-answer {
+  padding: 0 var(--sp-5) var(--sp-5);
+  color: var(--kd-bark);
+  line-height: var(--lh-relaxed);
+}
+
+/* ===== SERVICES — DESKTOP OVERRIDES ===== */
+@media (min-width: 768px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .pricing-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
