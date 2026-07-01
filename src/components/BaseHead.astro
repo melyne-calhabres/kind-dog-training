@@ -29,9 +29,8 @@ const canonical = resolvedCanonical;
 const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 ---
 
-<!-- Google tag (gtag.js) — Consent Mode v2 -->
+<!-- Consent Mode v2 — initialisation avant GTM -->
 <script>
-  // Initialiser dataLayer + gtag AVANT le chargement de gtag.js
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   window.gtag = gtag;
@@ -48,7 +47,7 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`
     wait_for_update: 500
   });
 
-  // Si un choix est déjà stocké, l'appliquer avant gtag('config')
+  // Si un choix est déjà stocké, l'appliquer avant le chargement de GTM
   try {
     var m = document.cookie.match(/(?:^|;\s*)kdt_consent=([^;]+)/);
     if (m) {
@@ -63,11 +62,15 @@ const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`
       }
     }
   } catch (e) {}
-
-  gtag('js', new Date());
-  gtag('config', 'G-Q5R11EJXQV');
 </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q5R11EJXQV"></script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KLVBXJK4');</script>
+<!-- End Google Tag Manager -->
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />

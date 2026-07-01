@@ -112,6 +112,8 @@
         status.textContent = 'Merci ! Je vous recontacte dans les 48 heures pour fixer le bilan comportemental à votre domicile.';
         status.className = 'form-message form-message-success';
         form.reset();
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push({ event: 'form_sent', form_name: 'contact' });
       } else {
         throw new Error('Erreur réseau');
       }
