@@ -1,0 +1,740 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Icon from '../../../../components/Icon.astro';
+import ArticleProgressBar from '../../../../components/ArticleProgressBar.astro';
+import '../../../../styles/services.css';
+import '../../../../styles/article.css';
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Adolescence du Chien : la Fausse Coupable de Tous vos Soucis',
+  metaDescription: 'Adolescence du chien : on accuse souvent l\'âge à tort. Comprenez (vraiment) pourquoi votre jeune chien n\'écoute plus et comment reprendre les bases sans attendre.',
+};
+
+// ── Article metadata ──────────────────────────────────────────────────────────
+const article = {
+  category:       'Comportement',
+  categoryUrl:    '/education-canine/comportement/',
+  breadcrumbLabel:'Adolescence du chien',
+  titleBefore:    '',
+  titleAccent:    'Adolescence du chien',
+  titleAfter:     ' : la phase qu\'on accuse trop vite de tout',
+  publishDate:    '1 juillet 2026',
+  publishDateIso: '2026-07-01',
+  readTime:       '15 min',
+  author:         'Mélyne',
+  authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
+  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
+  coverAlt:       'Jeune chien adolescent en extérieur, attentif, à la sortie de sa phase chiot',
+};
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'À quel âge l\'adolescence du chien se termine-t-elle vraiment ?',
+    answer:   'Ça dépend beaucoup du gabarit et de la race. En gros, l\'adolescence démarre vers six à huit mois et s\'étire jusqu\'à un an et demi à deux ans pour les grands chiens, parfois moins pour les petites races. Mais la vraie réponse c\'est qu\'il ne faut pas attendre la fin de cette période comme une délivrance. Les comportements ne se règlent pas en soufflant les deux bougies. Ce qui aura été travaillé pendant l\'adolescence restera, ce qu\'on aura laissé filer aussi. La date de fin compte beaucoup moins que ce que vous faites pendant.',
+  },
+  {
+    question: 'Faut-il revoir les règles à la maison à cette période ?',
+    answer:   'Pas tant les revoir que les tenir vraiment. Si votre chien commence à s\'autoriser des libertés, c\'est rarement parce que les règles sont mauvaises, c\'est qu\'elles ne sont plus appliquées avec constance, ou pas par tout le monde de la même façon. Le point le plus important reste la cohérence entre les membres du foyer : mêmes interdits, mêmes autorisations. Un chien qui reçoit des messages contradictoires devient imprévisible. C\'est souvent là, plus que dans une règle précise, que se cache le vrai chantier à cet âge.',
+  },
+  {
+    question: 'La castration peut-elle aider à passer le cap plus facilement ?',
+    answer:   'Il faut être clair : la castration n\'a pas pour effet direct de calmer un chien. Elle stoppe la reproduction, fait baisser la testostérone et monter les œstrogènes, rien de plus côté comportement. Dans certains cas précis de réactivité liée aux hormones entre mâles, faite au bon moment, elle peut apporter un coup de pouce. Mais c\'est rarement une solution à un problème d\'éducation et je la déconseille régulièrement quand on me la présente comme la réponse miracle à un chien mal cadré. Si besoin, un implant chimique permet de tester l\'effet avant toute décision définitive. Le travail de fond, lui, reste indispensable.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type':       'Article',
+      headline:      article.titleBefore + article.titleAccent + article.titleAfter,
+      description:   page.metaDescription,
+      datePublished: '2026-07-01T09:00:00+02:00',
+      dateModified:  '2026-07-01T09:00:00+02:00',
+      inLanguage:    'fr-FR',
+      url:           pageUrl,
+      image: {
+        '@type':  'ImageObject',
+        url:      siteUrl + '/images/article-adolescence-chien.webp',
+        width:    925,
+        height:   456,
+      },
+      author: {
+        '@type':    'Person',
+        name:       article.author,
+        url:        siteUrl + '/qui-suis-je/',
+        jobTitle:   'Éducatrice & comportementaliste canin',
+        description: article.authorDesc,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url:     siteUrl + '/images/logo.png',
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id':   pageUrl,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',                    item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: article.category,             item: siteUrl + article.categoryUrl },
+        { '@type': 'ListItem', position: 3, name: article.breadcrumbLabel },
+      ],
+    },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
+  ],
+};
+
+// ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
+const tldr = [
+  'Dans la grande majorité des cas, ce n\'est pas l\'adolescence qui pose problème, mais des failles éducatives qui deviennent visibles à ce moment-là.',
+  'Le jeune chien ne « teste » pas ses maîtres : il gagne en assurance et s\'autorise des libertés là où vous vous reposez sur vos acquis.',
+  'Un cadre flou depuis le début, une socialisation incomplète ou une incohérence à la maison finissent toujours par se voir à cet âge.',
+  'Les acquis s\'effritent quand on cesse de les entretenir et le fait de parler davantage en balade vide vos ordres de leur sens.',
+  'Les hormones jouent à la marge. Un chien stable avant l\'adolescence le reste pendant.',
+  'Laisser couler en attendant que « ça passe » ne fait qu\'installer durablement les nouvelles (mauvaises) habitudes.',
+  'La fugue et l\'anxiété de séparation qui apparaissent à cette période ont presque toujours une autre cause que l\'âge.',
+];
+
+// ── Table of contents ─────────────────────────────────────────────────────────
+const toc = [
+  { label: 'Pourquoi l\'adolescence a si souvent bon dos',              href: '#pourquoi-bon-dos',                sub: false },
+  { label: 'Le réflexe « c\'est l\'âge, ça va passer »',                 href: '#reflexe-age',                     sub: true  },
+  { label: 'Ce que cette explication permet d\'éviter de regarder',     href: '#eviter-de-regarder',              sub: true  },
+  { label: 'Les vraies causes derrière « il n\'écoute plus »',          href: '#vraies-causes',                   sub: false },
+  { label: 'Une incohérence familiale qui finit par se voir',           href: '#incoherence-familiale',           sub: true  },
+  { label: 'Un cadre flou depuis le début',                             href: '#cadre-flou',                      sub: true  },
+  { label: 'Une socialisation incomplète',                              href: '#socialisation-incomplete',        sub: true  },
+  { label: 'Des besoins qui ont grandi avec lui',                       href: '#besoins-qui-ont-grandi',          sub: true  },
+  { label: 'Quand le jeune chien prend de l\'assurance',                href: '#prise-assurance',                 sub: false },
+  { label: 'Une prise de confiance naturelle à cet âge',                href: '#prise-confiance',                 sub: true  },
+  { label: 'Les acquis qui s\'effritent',                               href: '#acquis-effritent',                sub: true  },
+  { label: 'Vos ordres qui ne veulent plus rien dire',                  href: '#trop-parler',                     sub: true  },
+  { label: 'Reprendre les bases au lieu d\'attendre',                   href: '#reprendre-les-bases',             sub: false },
+  { label: 'Pourquoi laisser couler enracine les habitudes',            href: '#laisser-couler',                  sub: true  },
+  { label: 'Le piège du « il a changé à l\'adolescence »',              href: '#piege-il-a-change',               sub: true  },
+  { label: 'Saturer les besoins avant d\'exiger',                       href: '#saturer-besoins',                 sub: true  },
+  { label: 'Travailler le renoncement et l\'auto-contrôle',             href: '#renoncement-auto-controle',       sub: true  },
+  { label: 'Restaurer le suivi naturel',                                href: '#suivi-naturel',                   sub: true  },
+  { label: 'Ce que les hormones changent réellement',                   href: '#hormones',                        sub: false },
+  { label: 'Le vrai poids des changements physiologiques',              href: '#poids-physiologique',             sub: true  },
+  { label: 'Pourquoi un chien stable le reste',                         href: '#chien-stable-le-reste',           sub: true  },
+  { label: 'Les troubles qu\'on met à tort sur le dos de cette période',href: '#troubles-a-tort',                 sub: false },
+  { label: 'La fugue, presque toujours un défaut de lien',              href: '#fugue',                           sub: true  },
+  { label: 'L\'anxiété de séparation et la stérilisation',              href: '#anxiete-sterilisation',           sub: true  },
+];
+
+// ── Articles connexes ─────────────────────────────────────────────────────────
+const related = [
+  {
+    title:    'Mon chien a du mal à gérer ses émotions en balade',
+    readTime: '13 min',
+    img:      '/images/article-gestion-emotions-balade.webp',
+    imgAlt:   'Chien en balade en extérieur, en pleine montée émotionnelle face à un stimulus',
+    url:      '/education-canine/comportement/comprendre/gestion-emotions/balade/',
+  },
+  {
+    title:    'Mon chien est réactif aux autres chiens en balade',
+    readTime: '13 min',
+    img:      '/images/article-reactivite-chiens.webp',
+    imgAlt:   'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
+    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
+  },
+  {
+    title:    'Gérer les émotions du chien en balade : que faire',
+    readTime: '8 min',
+    img:      '/images/article-gestion-emotions-balade-solutions.webp',
+    imgAlt:   'Chien en balade qui apprend à se canaliser et à rester attentif à son maître en extérieur',
+    url:      '/education-canine/comportement/problemes/gestion-emotions/balade/',
+  },
+];
+
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ──────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href={article.categoryUrl}>{article.category}</a></li>
+        <li aria-current="page">{article.breadcrumbLabel}</li>
+      </ol>
+    </div>
+  </nav>
+
+
+  <!-- ── ARTICLE ───────────────────────────────────────────────────── -->
+  <article aria-labelledby="art-h1">
+
+    <!-- En-tête de l'article -->
+    <header class="art-header">
+      <div class="container">
+        <h1 class="art-title" id="art-h1">
+          {article.titleBefore}<span class="accent">{article.titleAccent}</span>{article.titleAfter}
+        </h1>
+        <div class="art-meta">
+          <div class="art-author">
+            <div class="art-avatar" aria-hidden="true">
+              <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
+            </div>
+            <p class="art-author-info">
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+            </p>
+          </div>
+          <div class="art-share">
+            <button id="art-copy-link" class="art-share-btn" type="button" aria-label="Copier le lien de l'article">
+              <Icon name="link" width={16} height={16} strokeWidth={2} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Image hero -->
+    <div class="art-hero-wrap">
+      <div class="container">
+        <figure class="art-hero">
+          <picture>
+            <source media="(max-width: 767px)" srcset="/images/article-adolescence-chien-mobile.webp" width="400" height="351" />
+            <img
+              src="/images/article-adolescence-chien.webp"
+              alt={article.coverAlt}
+              width="925"
+              height="456"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              class="art-hero-img"
+            />
+          </picture>
+        </figure>
+      </div>
+    </div>
+
+    <!-- L'essentiel -->
+    <div class="container">
+      <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+        <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+        <p class="art-tldr-title">Ce qu'il faut retenir</p>
+        <ul class="art-tldr-list" role="list">
+          {tldr.map((item) => (
+            <li>
+              <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="art-tldr-footer">
+          <Icon name="clock" width={14} height={14} strokeWidth={2} />
+          Lecture complète&nbsp;: {article.readTime} · Pour aller plus loin, lisez l'article entier
+        </p>
+      </aside>
+    </div>
+
+    <!-- Sommaire accordéon — mobile uniquement -->
+    <div class="container art-toc-mobile">
+      <details class="art-toc-accordion">
+        <summary class="art-toc-accordion-header">
+          Sommaire
+          <Icon name="chevron-down" width={16} height={16} strokeWidth={2} class="art-toc-chevron" />
+        </summary>
+        <nav class="art-toc-accordion-body" aria-label="Sommaire de l'article">
+          {toc.map((item) => (
+            <a
+              href={item.href}
+              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+            >
+              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+
+    <!-- Corps à deux colonnes : contenu + sidebar sticky -->
+    <div class="container art-layout">
+
+      <!-- Colonne principale -->
+      <div class="art-content">
+
+        <h2 id="pourquoi-bon-dos">Pourquoi l'adolescence a si souvent bon dos</h2>
+
+        <h3 id="reflexe-age">Le réflexe «&nbsp;c'est l'âge, ça va passer&nbsp;»</h3>
+
+        <p>Vous avez sûrement déjà entendu cette phrase, peut-être même de la bouche d'un professionnel&nbsp;: «&nbsp;C'est l'adolescence, soyez patient, ça va passer.&nbsp;» C'est rassurant, ça déculpabilise, et ça a un défaut majeur&nbsp;: ça n'aide personne. Votre chien de huit, dix ou douze mois s'est mis à ignorer le rappel, à tirer comme un fou, à sauter sur tout le monde, et on vous explique qu'il faut attendre.</p>
+
+        <p>J'accompagne régulièrement des propriétaires qui arrivent avec exactement ce discours en tête. Et dans la quasi-totalité des cas, ce que je vois sur le terrain n'a rien d'une crise hormonale mystérieuse. Ce sont des trous dans les bases, qui existaient déjà avant, et qui sautent aux yeux maintenant que le chien a la taille, l'énergie et l'assurance pour les exploiter.</p>
+
+        <h3 id="eviter-de-regarder">Ce que cette explication permet d'éviter de regarder</h3>
+
+        <p>Le problème avec «&nbsp;c'est l'âge&nbsp;», c'est que ça referme la discussion. Tant qu'on tient l'adolescence pour responsable, on n'a pas à se demander si le cadre était clair, si les besoins du chien suivaient sa croissance, si tout le monde à la maison appliquait les mêmes règles. On attend et on se déresponsabilise.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le piège de l'attente passive</p>
+            <p class="art-callout__text">Pendant que vous patientez, le chien, lui, apprend. Chaque jour où il tire sans conséquence, où il n'écoute pas sans que rien ne change, il enregistre que ça fonctionne. L'adolescence ne s'aggrave pas toute seule&nbsp;: ce sont les habitudes prises pendant cette période qui s'installent.</p>
+          </div>
+        </aside>
+
+        <h2 id="vraies-causes">Les vraies causes derrière «&nbsp;mon chien adolescent n'écoute plus&nbsp;»</h2>
+
+        <h3 id="incoherence-familiale">Une incohérence familiale qui finit par se voir</h3>
+
+        <p>Le chien est un opportuniste remarquable. Il analyse chaque membre du foyer, repère qui laisse passer quoi et ajuste son comportement en conséquence. Tant qu'il est petit et peu encombrant, ces petits arrangements passent inaperçus. À l'adolescence, avec le gabarit et l'assurance qui vont avec, ils deviennent flagrants.</p>
+
+        <p>Quand l'un autorise le canapé et l'autre l'interdit, quand l'un reprend un ordre resté sans réponse par-dessus l'autre, le chien ne sait plus sur quel pied danser. Il finit par perdre ses repères et devient imprévisible parce qu'il navigue entre des règles qui se contredisent. Ce n'est pas lui qui a changé à l'adolescence&nbsp;: c'est le brouillard qu'il subit depuis le début qui devient ingérable. S'il estime que les règles ne sont plus fiables, il prendra lui-même les décisions.</p>
+
+        <h3 id="cadre-flou">Un cadre flou depuis le début, simplement davantage visible aujourd'hui</h3>
+
+        <p>J'ai accompagné un staffie de dix mois, très gentil, sans aucune problématique lourde. Il sautait sur les invités, attrapait les manches, aboyait pour réclamer de l'attention. Rien de dramatique et pourtant ses propriétaires se sentaient débordés. En creusant, le constat était simple&nbsp;: le cadre éducatif n'avait jamais été assez structuré. Le chien ne savait pas ce qu'on attendait de lui, alors il proposait ce qu'il connaissait, c'est-à-dire monter en excitation pour obtenir une réaction.</p>
+
+        <p>Ce genre de situation n'a rien à voir avec la puberté. Le chien a juste grandi et un comportement qui faisait sourire à trois mois devient pénible à dix.</p>
+
+        <h3 id="socialisation-incomplete">Une socialisation incomplète qui se paie maintenant</h3>
+
+        <p>La fenêtre d'imprégnation se referme vers quatre mois et demi. Tout ce que le chiot n'a pas rencontré pendant cette période peut devenir, plus tard, une source de méfiance ou de réaction. Le souci, c'est que ça ne se voit pas tout de suite. Un chiot mal socialisé reste mignon et gérable un moment. Puis arrive l'adolescence et une <a href="/education-canine/comportement/comprendre/gestion-emotions/balade/">mauvaise gestion des émotions</a> de voit tout de suite.</p>
+
+        <p>Attention, l'excès dans l'autre sens existe aussi. J'ai suivi un jeune chien arrivé en pleine adolescence dont la réactivité venait d'une hyper-socialisation mal cadrée étant petit&nbsp;: il avait passé tellement de temps en contact prolongé avec d'autres chiens qu'il était devenu incapable de renoncer à eux. Dès qu'il en voyait un, il se figeait, fixait, tirait. Là encore, l'âge n'était que le révélateur d'un travail mal posé en amont.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">La socialisation, c'est une question de quantité bien dosée</p>
+            <p class="art-callout__text">Un chiot a besoin de croiser énormément de congénères pour qu'une mauvaise rencontre ne reste qu'une anecdote. Mais croiser ne veut pas dire fusionner avec chacun. Beaucoup de contacts, peu d'obsession&nbsp;: c'est l'équilibre à viser.</p>
+          </div>
+        </aside>
+
+        <h3 id="besoins-qui-ont-grandi">Des besoins qui ont grandi avec lui sans qu'on s'en aperçoive</h3>
+
+        <p>Un chiot se contente de peu. En grandissant, ses besoins de dépense physique, de mastication, de jeu, d'interaction et surtout de réflexion explosent. Beaucoup de propriétaires gardent le même rythme de sorties qu'au début, alors que le jeune chien, lui, aurait besoin de bien plus. Un chien qui ne se dépense pas assez, surtout mentalement, déborde d'une énergie qu'il évacue comme il peut&nbsp;: destructions, agitation, écoute en chute libre.</p>
+
+        <p>C'est là que vous vous retrouvez avec un chien qui rentre de balade encore surexcité, parce que la balade en question n'a rien fatigué du tout. Faire réfléchir un chien le fatigue dix fois plus que de le faire courir. Et un chien réellement fatigué dans sa tête est un chien beaucoup plus disponible pour vous écouter.</p>
+
+        <!-- CTA inline — visible sur mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous ne savez pas où sont les vraies failles&nbsp;?</p>
+          <p class="art-inline-cta-desc">Un bilan à domicile, c'est l'occasion d'identifier ensemble ce qui a laissé prise à ces comportements, section par section, et de poser un plan clair. Gratuit, sans engagement.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+        </aside>
+
+        <h2 id="prise-assurance">Quand le jeune chien prend de l'assurance et s'octroie des libertés</h2>
+
+        <h3 id="prise-confiance">Une prise de confiance naturelle à cet âge</h3>
+
+        <p>Il y a bien quelque chose de réel à l'adolescence&nbsp;: le chien gagne en confiance. Il connaît son environnement, il a pris du volume, il ose davantage. Mais attention au mot «&nbsp;test&nbsp;». On entend partout que le chien adolescent «&nbsp;teste vos limites&nbsp;» ou «&nbsp;cherche le rapport de force&nbsp;». Ce n'est pas comme ça que ça se joue dans sa tête.</p>
+
+        <p>Le chien ne complote pas contre vous. Il constate tout simplement qu'il peut s'autoriser des choses là où vous ne tenez plus fermement les règles. Là où l'acquis est solide, il continue de suivre. Là où c'est devenu flou, il prend ses aises. C'est mécanique, pas malveillant. Mais attention car «&nbsp;là où vous ne tenez plus fermement les règles&nbsp;» ne signifie pas devenir soudainement plus dur lors de l'adolescence de votre chien. Cela signifie simplement maintenir un cadre et continuer de progresser sur ses acquis de chiot.</p>
+
+        <h3 id="acquis-effritent">Les acquis qui s'effritent quand on ne les entretient plus</h3>
+
+        <p>Voici une erreur que je vois en permanence&nbsp;: on apprend un comportement au chiot, il le «&nbsp;maîtrise&nbsp;» (ou au moins le connaît), alors on arrête de le récompenser et de l'entretenir. Sauf qu'un comportement qu'on ne valorise plus finit par s'éteindre. Le chien y trouve de moins en moins d'intérêt et un beau jour il ne le propose plus.</p>
+
+        <p>Le rappel impeccable du chiot de quatre mois n'est pas gravé dans le marbre. Si vous avez cessé de le rendre intéressant, il s'érode et c'est précisément à l'adolescence, quand l'environnement devient mille fois plus attirant que vous, qu'on s'en aperçoit.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Un bon réflexe&nbsp;: continuez de récompenser même ce que votre chien sait déjà faire. Ça coûte quelques centimes de friandises par jour et ça préserve une obéissance que vous auriez sinon à reconstruire. Continuez surtout de lui proposer de nouveaux exercices pour le faire réfléchir et progresser.</p>
+          </div>
+        </aside>
+
+        <h3 id="trop-parler">À force de trop parler, vos ordres ne veulent plus rien dire</h3>
+
+        <p>En balade, beaucoup de propriétaires parlent sans arrêt à leur chien. «&nbsp;Allez, viens, non, attends, regarde, ici, doucement, viens je t'ai dit.&nbsp;» Avec les meilleures intentions du monde, vous noyez vos ordres dans un flot continu et le chien finit par filtrer votre voix comme un bruit de fond. Vos mots ne veulent plus rien dire.</p>
+
+        <p>J'ai travaillé avec un jeune chien qui se perdait littéralement dans les sollicitations verbales de ses maîtres en extérieur&nbsp;: trop d'informations, plus aucune concentration. On a allégé la parole, gardé les mots pour les moments qui comptent et son écoute est remontée d'un coup. Moins vous parlez en travaillant, plus chaque mot reprend de la valeur.</p>
+
+        <h2 id="reprendre-les-bases">Reprendre les bases au lieu d'attendre que ça passe</h2>
+
+        <h3 id="laisser-couler">Pourquoi laisser couler enracine de nouvelles habitudes</h3>
+
+        <p>Chaque jour compte dans le mauvais sens comme dans le bon. Un chien qui tire et qui arrive quand même où il veut apprend que tirer marche. Un chien qui aboie et qui obtient une réaction apprend que l'aboiement paie. Plus vous laissez filer, plus le comportement se valide tout seul et se grave.</p>
+
+        <p>C'est pour ça que «&nbsp;attendre que l'adolescence passe&nbsp;» est le pire conseil possible. Pendant ce temps, le chien ne fait pas une pause&nbsp;: il consolide tout ce que vous voudriez voir disparaître.</p>
+
+        <h3 id="piege-il-a-change">Le piège du «&nbsp;il a changé à l'adolescence&nbsp;» qui déresponsabilise</h3>
+
+        <p>Six mois plus tard, le même propriétaire dira «&nbsp;il a complètement changé à l'adolescence, je n'y peux rien&nbsp;». Et c'est faux. Le chien n'a pas changé tout seul. Les habitudes qu'on l'a laissé prendre l'ont amené là, souvent sans qu'on s'en rende compte.</p>
+
+        <p>Je le dis sans culpabiliser personne, parce que tout le monde fait des erreurs. Mais le constater change tout&nbsp;: si c'est vous qui l'avez, involontairement, amené là alors c'est aussi vous qui pouvez l'en sortir. La solution est entre vos mains, pas dans une attente ou de faux conseils où l'on espère que le temps fasse le travail.</p>
+
+        <h3 id="saturer-besoins">Saturer les besoins avant d'exiger quoi que ce soit</h3>
+
+        <p>On ne peut rien demander de propre à un chien qui déborde d'énergie. Aucun apprentissage ne tient sur un chien qui n'a pas dépensé son trop-plein, physique et mental. Avant de retravailler l'obéissance, comblez les besoins&nbsp;: une vraie balade où il renifle, explore, réfléchit, joue, interagit.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">L'ordre des priorités compte</p>
+            <p class="art-callout__text">Un chien physiquement et mentalement satisfait se pose et redevient disponible. Un chien frustré, vous pouvez lui répéter «&nbsp;assis&nbsp;» cent fois, vous parlez dans le vide. On comble d'abord, on demande ensuite.</p>
+          </div>
+        </aside>
+
+        <h3 id="renoncement-auto-controle">Travailler le renoncement et l'auto-contrôle au quotidien</h3>
+
+        <p>Le cœur du travail à cet âge, c'est la capacité du chien à se contrôler et à renoncer. Un chien qui n'a jamais appris à renoncer est en permanence déstabilisé&nbsp;: il veut tout, tout de suite. C'est là que vous vous retrouvez avec un chien adolescent qui aboie avec insistance pour obtenir quelque chose, qui tire pour aller voir un copain, qui n'arrive pas à patienter.</p>
+
+        <p>L'auto-contrôle se travaille comme un muscle, par de petits exercices répétés. Faire patienter devant la gamelle, demander un regard avant d'autoriser l'accès à ce qu'il veut, apprendre à se poser face à une balle lancée sans se précipiter. Avec les jeunes chiens que j'accompagne, ce sont ces exercices en apparence anodins qui débloquent le plus de choses, parce qu'ils apprennent au chien à réfléchir avant d'agir.</p>
+
+        <h3 id="suivi-naturel">Restaurer le suivi naturel plutôt que crier plus fort</h3>
+
+        <p>Quand le rappel se dégrade, le réflexe est de crier plus fort, de répéter, de s'énerver. Ça ne fonctionne pas. Ce qu'il faut retrouver, c'est le suivi naturel&nbsp;: cette tendance instinctive du chien à rester connecté à vous, à vous suivre par envie et non sur ordre. La longe est précieuse pour ça. Elle offre de la liberté au chien tout en vous permettant de retravailler la connexion sans jamais le mettre en échec total.</p>
+
+        <p>Un chien qui vit de belles choses avec vous en balade n'a aucun intérêt à vous planter. C'est en redevenant l'élément le plus intéressant de la sortie, plutôt que le rabat-joie qui crie au loin, qu'on récupère un chien adolescent.</p>
+
+        <!-- CTA inline — visible sur mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Envie de reprendre les bases sans attendre&nbsp;?</p>
+          <p class="art-inline-cta-desc">On regarde ensemble comment relancer les acquis, poser un cadre cohérent et redevenir l'élément intéressant de la balade. Bilan gratuit à votre domicile.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV</a>
+        </aside>
+
+        <h2 id="hormones">Ce que les hormones changent réellement (et ce qui ne dépend pas d'elles)</h2>
+
+        <h3 id="poids-physiologique">Le vrai poids des changements physiologiques</h3>
+
+        <p>Les hormones existent, je ne vais pas prétendre le contraire. Chez certains chiens, notamment les mâles entiers, on observe une envie de se montrer, un peu de provocation entre congénères du même sexe. Mais ces changements influencent le comportement à la marge. Ils ne créent pas, à eux seuls, le chien ingérable que les propriétaires décrivent&nbsp;!</p>
+
+        <p>Un chien qui ne tire pas, qui écoute et qui gère ses émotions ne devient pas subitement incontrôlable parce que ses hormones montent. Au pire, vous verrez quelques comportements de parade qu'il suffit de ne pas laisser s'installer.</p>
+
+        <h3 id="chien-stable-le-reste">Pourquoi un chien stable le reste à cet âge</h3>
+
+        <p>C'est l'observation qui résume tout&nbsp;: un chien chez qui les bases sont solides traverse l'adolescence sans drame. Les hormones ne fabriquent pas de problème là où le cadre tient. Elles amplifient légèrement ce qui existe déjà.</p>
+
+        <p>Si votre chien part en vrille à cet âge, ce n'est donc pas la fatalité hormonale qu'il faut regarder en premier, mais ce qui n'a pas été posé avant. La bonne nouvelle, c'est que ça, contrairement aux hormones, ça se travaille.</p>
+
+        <h2 id="troubles-a-tort">Les troubles qu'on met à tort sur le dos de cette période</h2>
+
+        <h3 id="fugue">La fugue, presque toujours un défaut de lien social</h3>
+
+        <p>Un jeune chien qui commence à fuguer, on met ça sur le compte de l'adolescence et de l'appel des hormones. Dans les faits, la fugue est presque toujours le signe d'un lien social insuffisant ou de besoins non comblés. Le chien qui s'ennuie, qui manque de liberté, ou qui n'a jamais construit un vrai suivi avec ses maîtres cherche ailleurs ce qu'il ne trouve pas à la maison.</p>
+
+        <p>Le chien qui sort par un portail resté ouvert n'a rien d'un fugueur&nbsp;; il profite simplement d'une occasion. La vraie prévention ne tient pas à la hauteur de la clôture, mais à la solidité du lien. Un chien qui vit de belles aventures avec vous n'a pas de raison d'aller voir ailleurs.</p>
+
+        <h3 id="anxiete-sterilisation">L'anxiété de séparation qui apparaît et la stérilisation qu'on accuse à tort</h3>
+
+        <p>J'ai suivi une jeune chienne de onze mois chez qui les destructions et l'angoisse de la solitude sont apparues d'un coup. Le réflexe facile&nbsp;: «&nbsp;c'est l'adolescence&nbsp;» ou «&nbsp;c'est la stérilisation&nbsp;». La réalité était plus précise. Ces troubles ont suivi une succession de changements&nbsp;: une stérilisation avec baisse d'activité, puis une présence constante des propriétaires pendant les périodes de fêtes, et enfin une reprise brutale du travail. En cause, ni l'âge ni l'opération en soi, mais cet enchaînement, qui avait fragilisé son rapport à la solitude.</p>
+
+        <p>On accuse souvent la stérilisation de «&nbsp;changer le caractère&nbsp;». Le plus souvent, ce qui a vraiment changé, c'est le quotidien autour de l'opération. Et ça, ça se retravaille, étape par étape.</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Méfiez-vous des explications qui ferment la porte</p>
+            <p class="art-callout__text">«&nbsp;C'est l'âge&nbsp;», «&nbsp;c'est l'opération&nbsp;», «&nbsp;c'est la race&nbsp;»&nbsp;: ces phrases ont un point commun, elles vous disent qu'il n'y a rien à faire. Or il y a presque toujours quelque chose à faire. Encore faut-il chercher la vraie cause au lieu de s'arrêter à l'étiquette.</p>
+          </div>
+        </aside>
+
+        <!-- CTA inline — visible sur mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Fugue, angoisse, changement de comportement&nbsp;?</p>
+          <p class="art-inline-cta-desc">Derrière l'étiquette «&nbsp;adolescence&nbsp;», il y a presque toujours une vraie cause à traiter. Premier bilan gratuit à votre domicile, on identifie ce qui se joue vraiment.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
+        </aside>
+
+      </div><!-- /.art-content -->
+
+      <!-- Sidebar sticky — desktop uniquement -->
+      <aside class="art-sidebar" aria-labelledby="art-toc-heading">
+        <nav class="art-toc" aria-labelledby="art-toc-heading">
+          <details class="art-toc-details">
+            <summary class="art-toc-title" id="art-toc-heading">
+              Sommaire
+              <svg class="art-toc-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="art-toc-links">
+              {toc.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+                >
+                  <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        </nav>
+
+        <div class="art-sidebar-cta">
+          <p class="art-sidebar-cta-title">Votre chien adolescent n'écoute plus&nbsp;?</p>
+          <p class="art-sidebar-cta-desc">Bilan comportemental à domicile pour identifier les vraies causes et reprendre les bases sans attendre</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            Prendre RDV
+            <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
+          </a>
+        </div>
+      </aside>
+
+    </div><!-- /.art-layout -->
+
+    <!-- Like / Dislike -->
+    <section class="art-feedback-wrap" aria-label="Votre avis sur cet article">
+      <div class="container">
+        <div class="art-feedback" id="art-feedback">
+          <p class="art-feedback-question">Cet article vous a été utile&nbsp;?</p>
+          <div class="art-feedback-buttons">
+            <button type="button" class="art-feedback-btn art-feedback-btn--like" id="art-like-btn" aria-label="J'aime cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>
+              </svg>
+              Oui
+            </button>
+            <button type="button" class="art-feedback-btn art-feedback-btn--dislike" id="art-dislike-btn" aria-label="Je n'aime pas cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>
+              </svg>
+              Non
+            </button>
+          </div>
+
+          <div class="art-feedback-form" id="art-feedback-form" hidden>
+            <label for="art-feedback-text" class="art-feedback-label">Qu'est-ce qui pourrait être amélioré&nbsp;?</label>
+            <textarea
+              id="art-feedback-text"
+              class="art-feedback-textarea"
+              rows="3"
+              maxlength="500"
+              placeholder="Votre retour nous aide à améliorer nos contenus…"
+            ></textarea>
+            <div class="art-feedback-form-footer">
+              <span class="art-feedback-hint" id="art-feedback-hint">10 caractères minimum</span>
+              <button type="button" class="btn btn-primary art-feedback-submit" id="art-feedback-submit" disabled>Envoyer</button>
+            </div>
+          </div>
+
+          <div class="art-feedback-thanks" id="art-feedback-thanks" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span>Merci ! Je prends en compte tous vos retours pour améliorer la qualité des articles et vous aider le plus possible :)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Biographie auteure -->
+    <footer class="art-bio-wrap">
+      <div class="container">
+        <div class="art-bio">
+          <div class="art-bio-avatar" aria-hidden="true">
+            <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="64" height="64" loading="lazy" decoding="async" style="display:block;" />
+          </div>
+          <div>
+            <p class="art-bio-name">À propos de {article.author}</p>
+            <p class="art-bio-role">{article.authorRole}</p>
+            <p class="art-bio-desc">{article.authorDesc}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </article><!-- /article -->
+
+
+  <!-- ── FAQ ───────────────────────────────────────────────────────── -->
+  {faqItems.length > 0 && (
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 750px;">
+        <h2 id="faq-heading" style="text-align: center;">Questions fréquentes sur <span class="accent">l'adolescence du chien</span></h2>
+        <div class="faq-list" style="margin-top: var(--sp-8);">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>{item.question}</span>
+                <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────────────── -->
+  <section class="section-dark art-cta-section" aria-labelledby="art-cta-h">
+    <div class="container art-cta-inner">
+      <h2 class="art-cta-title" id="art-cta-h">Envie de reprendre les bases avec votre chien adolescent&nbsp;?</h2>
+      <p>Bilan comportemental gratuit à domicile · Bordeaux et métropole</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Réserver mon bilan gratuit
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── ARTICLES QUI PEUVENT VOUS INTÉRESSER ───────────────────────── -->
+  <section class="art-related" aria-labelledby="art-related-h">
+    <div class="container">
+      <p class="art-related-divider" id="art-related-h">Articles qui peuvent vous intéresser</p>
+      <div class="art-related-grid">
+        {related.map((card) => (
+          <a href={card.url} class="art-related-card">
+            <img
+              src={card.img}
+              alt={card.imgAlt}
+              class="art-related-card-img"
+              width="360"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="art-related-card-body">
+              <p class="art-related-card-title">{card.title}</p>
+              <p class="art-related-card-meta">{card.readTime} de lecture</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
+  <ArticleProgressBar />
+
+  <script is:inline>
+    (function () {
+      var MIN_CHARS = 10;
+      var feedbackWrap = document.getElementById('art-feedback');
+      var likeBtn = document.getElementById('art-like-btn');
+      var dislikeBtn = document.getElementById('art-dislike-btn');
+      var feedbackForm = document.getElementById('art-feedback-form');
+      var feedbackText = document.getElementById('art-feedback-text');
+      var feedbackHint = document.getElementById('art-feedback-hint');
+      var feedbackSubmit = document.getElementById('art-feedback-submit');
+      var feedbackThanks = document.getElementById('art-feedback-thanks');
+
+      if (!feedbackWrap || !likeBtn || !dislikeBtn) return;
+
+      function sendGA4Event(eventName, params) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: eventName }, params));
+      }
+
+      function getArticleTitle() {
+        var h1 = document.querySelector('h1');
+        return h1 ? h1.textContent.trim() : document.title;
+      }
+
+      function showThanks() {
+        feedbackWrap.querySelectorAll('.art-feedback-buttons, .art-feedback-form, .art-feedback-question').forEach(
+          function (el) { el.hidden = true; }
+        );
+        feedbackThanks.hidden = false;
+      }
+
+      likeBtn.addEventListener('click', function () {
+        sendGA4Event('article_like', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+        });
+        showThanks();
+      });
+
+      dislikeBtn.addEventListener('click', function () {
+        likeBtn.hidden = true;
+        dislikeBtn.classList.add('art-feedback-btn--selected');
+        dislikeBtn.disabled = true;
+        feedbackForm.hidden = false;
+        feedbackText.focus();
+      });
+
+      feedbackText.addEventListener('input', function () {
+        var len = feedbackText.value.trim().length;
+        var valid = len >= MIN_CHARS;
+        feedbackSubmit.disabled = !valid;
+        if (len === 0) {
+          feedbackHint.textContent = MIN_CHARS + ' caractères minimum';
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else if (!valid) {
+          feedbackHint.textContent = 'Encore ' + (MIN_CHARS - len) + ' caractère' + (MIN_CHARS - len > 1 ? 's' : '');
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else {
+          feedbackHint.textContent = 'Prêt à envoyer';
+          feedbackHint.classList.add('art-feedback-hint--ok');
+        }
+      });
+
+      feedbackSubmit.addEventListener('click', function () {
+        var text = feedbackText.value.trim();
+        if (text.length < MIN_CHARS) return;
+        sendGA4Event('article_dislike', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+          user_feedback: text,
+        });
+        showThanks();
+      });
+    })();
+  </script>
+
+  <script>
+    const btn = document.getElementById('art-copy-link');
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+        } catch {
+          const el = Object.assign(document.createElement('input'), { value: window.location.href });
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          el.remove();
+        }
+        btn.setAttribute('data-copied', '');
+        setTimeout(() => btn.removeAttribute('data-copied'), 2000);
+      });
+    }
+  </script>
+
+</Layout>
