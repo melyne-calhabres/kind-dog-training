@@ -81,8 +81,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="canonical" href={canonical} />
 
 <!-- Polices auto-hébergées (Astro Fonts API) — latin, woff2, font-display: swap -->
-<Font cssVariable="--font-newsreader" />
-<Font cssVariable="--font-nunito" />
+<!-- Preload ciblé des graisses above-the-fold uniquement (titres Newsreader 500, corps Nunito 400) -->
+<Font cssVariable="--font-newsreader" preload={[{ weight: 500, style: 'normal', subset: 'latin' }]} />
+<Font cssVariable="--font-nunito" preload={[{ weight: 400, style: 'normal', subset: 'latin' }]} />
 
 <!-- Preload above-the-fold images -->
 {preloadImages?.map(img => (
