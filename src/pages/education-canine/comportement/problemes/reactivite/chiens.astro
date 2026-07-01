@@ -216,16 +216,19 @@ const related = [
     <div class="art-hero-wrap">
       <div class="container">
         <figure class="art-hero">
-          <img
-            src="/images/article-reactivite-chiens.webp"
-            alt={article.coverAlt}
-            width="1116"
-            height="398"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            class="art-hero-img"
-          />
+          <picture>
+            <source media="(max-width: 767px)" srcset="/images/article-reactivite-chiens-mobile.webp" width="400" height="351" />
+            <img
+              src="/images/article-reactivite-chiens.webp"
+              alt={article.coverAlt}
+              width="925"
+              height="456"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              class="art-hero-img"
+            />
+          </picture>
         </figure>
       </div>
     </div>
