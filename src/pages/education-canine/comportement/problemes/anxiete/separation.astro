@@ -1,0 +1,729 @@
+---
+import Layout from '../../../../../layouts/Layout.astro';
+import Icon from '../../../../../components/Icon.astro';
+import ArticleProgressBar from '../../../../../components/ArticleProgressBar.astro';
+import '../../../../../styles/services.css';
+import '../../../../../styles/article.css';
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Anxiété de Séparation du Chien : Que Faire Concrètement ?',
+  metaDescription: 'Votre chien fait de l\'Anxiété de Séparation ? Identifiez le vrai problème, découvrez comment casser les rituels de départ et travailler les absences minute par minute pour l\'apaiser.',
+};
+
+// ── Article metadata ──────────────────────────────────────────────────────────
+const article = {
+  category:       'Comportement',
+  categoryUrl:    '/education-canine/comportement/',
+  breadcrumbLabel:'Anxiété de séparation',
+  titleBefore:    '',
+  titleAccent:    'Anxiété de séparation',
+  titleAfter:     ' chez le chien : que faire concrètement ?',
+  publishDate:    '4 juillet 2026',
+  publishDateIso: '2026-07-04',
+  readTime:       '16 min',
+  author:         'Mélyne',
+  authorInitial:  'M',
+  authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
+  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
+  coverAlt:       'Chien couché seul près de la porte d\'entrée, en attente du retour de ses propriétaires',
+};
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Combien de temps faut-il pour qu\'un chien apprenne à rester seul ?',
+    answer:   'Il n\'y a pas de durée universelle, parce que tout dépend du point de départ et de la régularité du travail. Un chien avec de bonnes bases de détachement progresse en quelques semaines. Un chien profondément dépendant, ou parti d\'un mauvais démarrage de vie, demandera peut-être plus de temps. Ce qui compte le plus, c\'est la constance : le protocole (casser les rituels, refuser certaines sollicitations, travailler les absences minute par minute) doit être appliqué tous les jours pour créer de vrais automatismes émotionnels. Un travail régulier sur des tranches courtes bat toujours une grosse session par semaine. La contrainte de vos horaires peut ralentir le rythme, mais elle n\'empêche pas la progression.',
+  },
+  {
+    question: 'Mon chien détruit tout quand je pars : est-ce forcément de l\'anxiété ?',
+    answer:   'Non, et c\'est une confusion fréquente. La destruction peut venir de l\'anxiété de séparation mais aussi de l\'ennui, d\'un besoin de mâcher non satisfait, ou d\'un manque de dépense. L\'indice le plus utile : ce que votre chien détruit. S\'il cible ce qui porte votre odeur, l\'anxiété est probable. S\'il s\'attaque à tout et n\'importe quoi, un manque d\'occupation et de dépense entre souvent en jeu. Un chien jeune, en pleine énergie, laissé seul sans avoir été sorti ni stimulé, va chercher à s\'occuper comme il peut. Avant de conclure à l\'anxiété, posez-vous la question des besoins comblés : balade, mastication, travail mental.',
+  },
+  {
+    question: 'Peut-on encore agir sur un chien adulte ou âgé ?',
+    answer:   'Oui. L\'idée qu\'un chien adulte serait « fait » et qu\'on ne pourrait plus rien changer est fausse. Le travail peut demander un peu plus de patience, parce qu\'il faut défaire des habitudes installées depuis longtemps, mais le cerveau du chien reste capable d\'apprendre à tout âge. J\'accompagne régulièrement des chiens qui ont développé de l\'anxiété de séparation tard, souvent après un changement de vie : déménagement, stérilisation, retour au travail après une longue période de présence. La cause est rarement une fatalité liée à l\'âge, c\'est presque toujours un contexte qui a basculé. Et un contexte, ça se retravaille.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type':       'Article',
+      headline:      article.titleBefore + article.titleAccent + article.titleAfter,
+      description:   page.metaDescription,
+      datePublished: '2026-07-04T09:00:00+02:00',
+      dateModified:  '2026-07-04T09:00:00+02:00',
+      inLanguage:    'fr-FR',
+      url:           pageUrl,
+      image: {
+        '@type':  'ImageObject',
+        url:      siteUrl + '/images/article-anxiete-separation-chien.webp',
+        width:    925,
+        height:   456,
+      },
+      author: {
+        '@type':    'Person',
+        name:       article.author,
+        url:        siteUrl + '/qui-suis-je/',
+        jobTitle:   'Éducatrice & comportementaliste canin',
+        description: article.authorDesc,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url:     siteUrl + '/images/logo.png',
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id':   pageUrl,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',                    item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: article.category,             item: siteUrl + article.categoryUrl },
+        { '@type': 'ListItem', position: 3, name: article.breadcrumbLabel },
+      ],
+    },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
+  ],
+};
+
+// ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
+const tldr = [
+  'L\'anxiété de séparation du chien n\'est pas toujours ce qu\'on croit : elle se confond souvent avec l\'hyperattachement, l\'ennui ou un chien qui surveille simplement vos allées et venues. Le moteur n\'est pas le même et le travail non plus',
+  'Un chien qui détruit, qui fait ses besoins ou qui vocalise en votre absence vous envoie une information. La détresse commence souvent bien avant que vous ne franchissiez la porte',
+  'Les clés, les chaussures et le manteau annoncent votre départ. Les manipuler à froid, sans partir, casse cette anticipation qui fait monter votre chien en pression',
+  'Réapprendre l\'autonomie passe par le quotidien : refuser certaines sollicitations, empêcher le suivi de pièce en pièce, faire du panier un point de calme',
+  'Les absences se travaillent minute par minute, à partir du seuil précis où votre chien commence à craquer',
+  'La cage aggrave souvent la détresse au lieu de la calmer. Revenir parce qu\'il aboie ancre le problème un peu plus',
+  'Un chien adulte ou âgé peut progresser. Ce n\'est jamais joué d\'avance',
+];
+
+// ── Table of contents ─────────────────────────────────────────────────────────
+const toc = [
+  { label: 'Vraie anxiété, hyperattachement ou manque de cadre ?', href: '#vraie-anxiete-hyperattachement-manque-cadre', sub: false },
+  { label: 'Dépendance du foyer vs mauvais démarrage',            href: '#dependance-foyer-mauvais-demarrage',            sub: true  },
+  { label: 'Quand ce n\'est pas de l\'anxiété',                   href: '#ennui-ou-controle',                             sub: true  },
+  { label: 'Casser les rituels de départ',                        href: '#casser-rituels-depart',                         sub: false },
+  { label: 'Pourquoi les clés font monter en angoisse',           href: '#cles-chaussures-manteau',                       sub: true  },
+  { label: 'Manipuler ces objets sans partir',                    href: '#manipuler-sans-partir',                         sub: true  },
+  { label: 'Réapprendre l\'autonomie au quotidien',               href: '#reapprendre-autonomie',                         sub: false },
+  { label: 'Refuser certaines sollicitations',                    href: '#refuser-sollicitations',                        sub: true  },
+  { label: 'L\'empêcher de vous suivre de pièce en pièce',        href: '#empecher-suivre-piece',                         sub: true  },
+  { label: 'Le panier comme point de calme',                      href: '#panier-point-calme',                            sub: true  },
+  { label: 'Travailler les absences progressivement',             href: '#travailler-absences-progressivement',           sub: false },
+  { label: 'Trouver le seuil de votre chien',                     href: '#trouver-le-seuil',                              sub: true  },
+  { label: 'Dépense, flair et jouet de solitude',                 href: '#depense-flair-jouet-solitude',                  sub: true  },
+  { label: 'Allonger minute par minute',                          href: '#allonger-minute-par-minute',                    sub: true  },
+  { label: 'Les erreurs qui aggravent l\'anxiété',                href: '#erreurs-aggravent-anxiete',                     sub: false },
+  { label: 'La cage amplifie la détresse',                        href: '#cage-amplifie-detresse',                        sub: true  },
+  { label: 'Revenir parce qu\'il aboie',                          href: '#revenir-parce-quil-aboie',                      sub: true  },
+  { label: 'Les signes qui ne trompent pas',                      href: '#signes-anxiete-separation',                     sub: false },
+  { label: 'Ce que vous retrouvez en rentrant',                   href: '#ce-que-vous-retrouvez',                         sub: true  },
+  { label: 'Ce que les voisins entendent',                        href: '#ce-que-les-voisins-entendent',                  sub: true  },
+  { label: 'Le chien qui vous colle avant le départ',             href: '#chien-qui-vous-colle',                          sub: true  },
+];
+
+// ── Articles connexes ─────────────────────────────────────────────────────────
+const related = [
+  {
+    title:    'Mon chien est réactif aux autres chiens en balade',
+    readTime: '13 min',
+    img:      '/images/article-reactivite-chiens.webp',
+    imgAlt:   'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
+    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
+  },
+  {
+    title:    'Adolescence du chien : les fausses croyances',
+    readTime: '15 min',
+    img:      '/images/article-adolescence-chien.webp',
+    imgAlt:   'Jeune chien adolescent en extérieur, attentif, à la sortie de sa phase chiot',
+    url:      '/education-canine/comportement/comprendre/adolescence-chien/',
+  },
+  {
+    title:    'Gérer ses émotions en balade : que faire',
+    readTime: '8 min',
+    img:      '/images/article-gestion-emotions-balade-solutions.webp',
+    imgAlt:   'Chien en balade qui apprend à se canaliser et à rester attentif à son maître en extérieur',
+    url:      '/education-canine/comportement/problemes/gestion-emotions/balade/',
+  },
+];
+
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ──────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href={article.categoryUrl}>{article.category}</a></li>
+        <li aria-current="page">{article.breadcrumbLabel}</li>
+      </ol>
+    </div>
+  </nav>
+
+
+  <!-- ── ARTICLE ───────────────────────────────────────────────────── -->
+  <article aria-labelledby="art-h1">
+
+    <!-- En-tête de l'article -->
+    <header class="art-header">
+      <div class="container">
+        <h1 class="art-title" id="art-h1">
+          {article.titleBefore}<span class="accent">{article.titleAccent}</span>{article.titleAfter}
+        </h1>
+        <div class="art-meta">
+          <div class="art-author">
+            <div class="art-avatar" aria-hidden="true">
+              <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
+            </div>
+            <p class="art-author-info">
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+            </p>
+          </div>
+          <div class="art-share">
+            <button id="art-copy-link" class="art-share-btn" type="button" aria-label="Copier le lien de l'article">
+              <Icon name="link" width={16} height={16} strokeWidth={2} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Image hero -->
+    <div class="art-hero-wrap">
+      <div class="container">
+        <figure class="art-hero">
+          <picture>
+            <source media="(max-width: 767px)" srcset="/images/article-anxiete-separation-chien-mobile.webp" width="400" height="351" />
+            <img
+              src="/images/article-anxiete-separation-chien.webp"
+              alt={article.coverAlt}
+              width="925"
+              height="456"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              class="art-hero-img"
+            />
+          </picture>
+        </figure>
+      </div>
+    </div>
+
+    <!-- L'essentiel -->
+    <div class="container">
+      <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+        <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+        <p class="art-tldr-title">Ce qu'il faut retenir</p>
+        <ul class="art-tldr-list" role="list">
+          {tldr.map((item) => (
+            <li>
+              <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="art-tldr-footer">
+          <Icon name="clock" width={14} height={14} strokeWidth={2} />
+          Lecture complète&nbsp;: {article.readTime} · Pour aller plus loin, lisez l'article entier
+        </p>
+      </aside>
+    </div>
+
+    <!-- Sommaire accordéon — mobile uniquement -->
+    <div class="container art-toc-mobile">
+      <details class="art-toc-accordion">
+        <summary class="art-toc-accordion-header">
+          Sommaire
+          <Icon name="chevron-down" width={16} height={16} strokeWidth={2} class="art-toc-chevron" />
+        </summary>
+        <nav class="art-toc-accordion-body" aria-label="Sommaire de l'article">
+          {toc.map((item) => (
+            <a
+              href={item.href}
+              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+            >
+              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+
+    <!-- Corps à deux colonnes : contenu + sidebar sticky -->
+    <div class="container art-layout">
+
+      <!-- Colonne principale -->
+      <div class="art-content">
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">AVERTISSEMENT</p>
+            <p class="art-callout__text">Cet article a pour but de vous donner une idée des solutions qui pourraient être mises en place si votre chien fait de l'anxiété de séparation. J'attire cependant votre attention sur le fait que ce genre de problème peut parfois être relativement difficile à analyser. Comme le décrit la première partie de l'article, il y a un risque en tant que particulier de se tromper dans l'analyse. Si c'est le cas, implémenter les conseils listés ici ne réglera pas votre problème et pourra même potentiellement l'aggraver si basé sur un mauvais diagnostic. Vous pouvez vous aider de cet article par exemple pour mieux orienter votre décision pour choisir un professionnel qualifié proche de chez vous.</p>
+          </div>
+        </aside>
+
+        <h2 id="vraie-anxiete-hyperattachement-manque-cadre">Vraie anxiété de séparation, hyperattachement ou simple manque de cadre&nbsp;?</h2>
+
+        <p>Avant de travailler quoi que ce soit, il faut savoir ce qu'on travaille. Beaucoup de propriétaires arrivent en me disant «&nbsp;mon chien a de l'anxiété de séparation&nbsp;». Dans les faits, une fois sur deux, il se passe autre chose. Poser le mauvais diagnostic sur une anxiété de séparation, c'est perdre des semaines à traiter un problème qui n'existe pas.</p>
+
+        <h3 id="dependance-foyer-mauvais-demarrage">Le chien dépendant du foyer vs le chien parti d'un mauvais démarrage de vie</h3>
+
+        <p>L'anxiété de séparation, au sens strict, c'est un chien tellement attaché à ses propriétaires qu'il devient anxieux dès qu'il se retrouve seul. Mais l'origine de cet attachement change tout. Chez certains chiens, la dépendance s'est construite à la maison, jour après jour, à force de présence permanente et d'un chien qui décide de toutes les interactions. Chez d'autres, la fragilité vient de bien plus loin.</p>
+
+        <p>J'ai suivi une chienne dont l'anxiété de séparation ne collait pas au tableau habituel. Elle ne suivait pas ses propriétaires partout, ne dormait pas avec eux, ne montait pas sur le canapé. Les bases du détachement étaient là. Pourtant, dès qu'elle restait seule, elle aboyait. En creusant, tout pointait vers un mauvais démarrage de vie&nbsp;: sevrage trop précoce, conditions d'élevage, comportement maternel. Son anxiété n'avait pas été fabriquée dans le foyer mais venait d'avant. Le travail reste le même sur le fond mais on part avec un chien déjà bien dans ses pattes, ce qui change le pronostic.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le processus de détachement naturel</p>
+            <p class="art-callout__text">Dans une meute, la mère pousse ses chiots à se détacher d'elle vers 4 à 6&nbsp;mois en refusant certaines interactions. Aujourd'hui on récupère les chiots bien avant que ce mécanisme se soit fait. Une partie des anxiétés de séparation vient de là&nbsp;: un détachement qui n'a jamais eu lieu.</p>
+          </div>
+        </aside>
+
+        <h3 id="ennui-ou-controle">Quand ce n'est pas de l'anxiété mais de l'ennui ou du contrôle</h3>
+
+        <p>C'est là que beaucoup de gens se trompent. Un chien qui suit son propriétaire dans toutes les pièces n'est pas forcément anxieux. Parfois il surveille, tout simplement. Il garde un visuel sur vos mouvements parce qu'il a pris une place de gestionnaire dans le foyer, pas parce qu'il souffre de votre absence. On appelle ça le flicage et ça se traite très différemment d'une vraie anxiété.</p>
+
+        <p>L'hyperattachement, encore autre chose. Les symptômes se ressemblent (nervosité, destructions, chien collé à vous) mais le moteur diffère. L'hyperattaché ne supporte pas la rupture du lien. Le chien en anxiété de séparation, lui, souffre d'un défaut d'apprentissage de la solitude. Et puis il y a le chien peureux, qui reste collé non par amour mais parce que vous êtes son seul rempart face à un extérieur qu'il juge terrifiant. Quatre chiens, quatre problématiques, un seul comportement en surface.</p>
+
+        <p>Un dernier cas revient souvent&nbsp;: le chien qui détruit par ennui. Un Shiba de 11&nbsp;mois que j'ai accompagné mangeait la table, les murs, la tapisserie. Le détail qui parle&nbsp;: ces objets ne portaient pas l'odeur de ses propriétaires. Ce n'est donc pas un chien qui cherche à se rassurer avec ce qui sent son humain mais un chien dont l'anxiété du départ décuple un besoin de mâcher qu'il n'a nulle part où canaliser. La destruction était réelle, l'anxiété aussi, mais la porte d'entrée du travail passait autant par la dépense que par la séparation.</p>
+
+        <h2 id="casser-rituels-depart">Casser les rituels de départ pour faire retomber la pression</h2>
+
+        <p>Une fois le diagnostic d'anxiété de séparation posé, le premier levier est presque toujours le même et c'est souvent celui auquel les propriétaires pensent le moins.</p>
+
+        <h3 id="cles-chaussures-manteau">Pourquoi les clés, les chaussures et le manteau font monter votre chien en angoisse</h3>
+
+        <p>Votre chien vous observe bien plus finement que vous ne l'imaginez. À force de vous voir répéter la même séquence avant chaque départ (prendre les clés, enfiler les chaussures, attraper le manteau, ranger ce qu'il pourrait détruire), il a appris à lire les signes. Le problème, c'est que l'anxiété de séparation se nourrit de l'anticipation. Dès que le rituel commence, votre chien sait ce qui va suivre. Et il se met à angoisser avant même que vous ayez posé la main sur la poignée.</p>
+
+        <p>Ces quelques minutes d'anticipation sont un moment clé. Le chien monte en pression pendant que vous vous préparez, si bien qu'au moment où vous fermez la porte il est déjà à un niveau émotionnel élevé. Vous n'êtes pas encore parti qu'il est déjà en détresse.</p>
+
+        <h3 id="manipuler-sans-partir">Manipuler ces objets sans partir, jusqu'à ce qu'ils ne veuillent plus rien dire</h3>
+
+        <p>L'idée est simple&nbsp;: rendre ces signaux imprévisibles. Vous prenez vos clés et vous retournez vous asseoir sur le canapé. Vous mettez vos chaussures et vous partez dans la cuisine. Vous attrapez votre sac ou votre manteau et vous les reposez. Encore, et encore, plusieurs fois par jour, sans jamais quitter le logement.</p>
+
+        <p>Au bout d'un moment, ces gestes ne veulent plus rien dire. Votre chien ne peut plus prédire votre départ donc il ne peut plus anticiper, donc il ne monte plus en pression. C'est un travail ennuyeux, répétitif, et redoutablement efficace. Avec le Shiba dont je parlais, comme avec un jeune malinois hypervigilant que j'ai suivi et qui se réveillait au moindre mouvement de sa propriétaire, c'est par là qu'on a commencé. Pas par les absences. Par les clés qu'on prend pour aller s'asseoir.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Testez-vous&nbsp;: combien de gestes différents faites-vous systématiquement avant de partir&nbsp;? Notez-les. Ce sont exactement ceux qu'il faut désacraliser en les répétant à froid.</p>
+          </div>
+        </aside>
+
+        <!-- CTA inline — mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Difficile d'identifier tous les rituels que vous répétez&nbsp;?</p>
+          <p class="art-inline-cta-desc">Bilan à domicile pour lister ensemble les signaux qui font monter votre chien en pression et savoir par où commencer</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+        </aside>
+
+        <h2 id="reapprendre-autonomie">Réapprendre l'autonomie&nbsp;: le travail de détachement au quotidien</h2>
+
+        <p>Casser les rituels fait retomber la pression du départ. Mais si votre chien reste dépendant de vous le reste de la journée, on ne fait que déplacer le problème. L'autonomie se construit dans le quotidien, pas seulement au moment de la porte.</p>
+
+        <h3 id="refuser-sollicitations">Refuser certaines sollicitations de votre chien sans casser le lien</h3>
+
+        <p>Voilà l'étape la plus difficile pour les propriétaires, parce qu'elle va à l'encontre de ce qu'on a envie de faire. Sur cinq demandes de câlins ou de jeu que votre chien initie, vous allez en refuser deux (si on part bien sûr du principe que vous approuvez toutes ses demandes). Le but n'est pas de couper les interactions&nbsp;: vous pouvez toujours en proposer trois vous-même. Ce qui change, c'est que votre chien cesse d'être à l'origine de tout. Il n'a plus le contrôle sur toutes les interactions.</p>
+
+        <p>Ce processus recrée artificiellement ce que la mère aurait fait pendant le sevrage. Il dure environ deux mois avant un retour progressif à la normale. Beaucoup de gens le vivent mal au début, avec l'impression de rejeter leur chien. Je comprends totalement ce ressenti mais il est infondé&nbsp;: vous ne l'aimez pas moins, vous lui apprenez à ne pas avoir besoin de vous en permanence.</p>
+
+        <h3 id="empecher-suivre-piece">L'empêcher de vous suivre de pièce en pièce</h3>
+
+        <p>Un chien qui accepte la séparation dehors doit d'abord accepter la séparation dedans. S'il vous suit à la salle de bain, dans la cuisine, à chacun de vos déplacements, il n'apprend jamais à rester seul, même quand vous êtes à trois mètres.</p>
+
+        <p>Concrètement, quand vous changez de pièce et qu'il se lève pour vous coller, vous le repoussez calmement (avec la jambe, avec un «&nbsp;non&nbsp;» clair) et vous le renvoyez s'occuper là où il était. Sans conflit, sans énervement. Juste une limite posée avec constance. Avec le malinois, on a beaucoup travaillé ça&nbsp;: au fil des séances, il a commencé à comprendre qu'il pouvait rester détendu pendant que sa propriétaire bougeait dans la maison. Ce déclic-là est central.</p>
+
+        <h3 id="panier-point-calme">Le panier comme point d'ancrage du calme</h3>
+
+        <p>Le panier n'est pas une prison ni un lieu de sanction. C'est un point de repère&nbsp;: l'endroit où le chien sait qu'il peut se poser et que rien ne lui sera demandé. On l'installe dans le quotidien, y compris pendant vos repas, pour ancrer l'idée que rester à sa place est un état normal et agréable.</p>
+
+        <p>Attention à un piège&nbsp;: envoyer un chien au panier ne suffit pas à l'apaiser. L'immobilité physique ne garantit pas le calme mental. Un chien peut être couché et bouillir intérieurement. Le panier fonctionne quand il devient un choix confortable, pas une contrainte. On récompense calmement le chien qui reste posé, on ne le force pas à faire semblant d'être serein.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le flair, votre meilleur allié</p>
+            <p class="art-callout__text">Plus un chien renifle, plus son rythme cardiaque baisse, plus il s'apaise. Une recherche olfactive avant un départ (des friandises cachées, une piste avec une odeur forte comme le café) vaut mieux qu'une longue marche qui ne fait que créer un chien infatigable. Réfléchir fatigue un chien dix fois plus que courir.</p>
+          </div>
+        </aside>
+
+        <h2 id="travailler-absences-progressivement">Travailler les absences progressivement, sans brusquer</h2>
+
+        <p>Le décor est planté&nbsp;: rituels désacralisés, autonomie en construction, panier en place. Maintenant on peut s'attaquer aux absences elles-mêmes. Et là, la précision compte.</p>
+
+        <h3 id="trouver-le-seuil">Trouver le seuil&nbsp;: au bout de combien de temps votre chien craque&nbsp;?</h3>
+
+        <p>On ne travaille pas au hasard. La première chose à faire, c'est d'identifier au bout de combien de temps votre chien commence à aboyer, à pleurer ou à s'agiter. Trente secondes&nbsp;? Deux minutes&nbsp;? Cinq&nbsp;? Ce seuil, c'est votre point de départ. Tout le travail consiste à rester en dessous, dans la zone où votre chien réussit, puis à repousser la limite petit à petit.</p>
+
+        <p>Si vous partez d'emblée pour une durée qui le fait craquer, vous ne travaillez pas la solitude, vous répétez l'échec. Chaque absence qui se termine dans la détresse renforce l'idée que rester seul est insupportable.</p>
+
+        <h3 id="depense-flair-jouet-solitude">Dépense, flair et jouet de solitude avant chaque départ</h3>
+
+        <p>Un chien dont les besoins sont comblés se repose. Un chien plein d'énergie tourne en rond et s'angoisse. Avant chaque absence, dans la mesure du possible&nbsp;: une balade pour vider les besoins physiologiques, un peu de travail mental, de quoi arriver au moment du départ déjà apaisé et disponible pour dormir.</p>
+
+        <p>Ajoutez à ça un jouet de solitude, donné uniquement quand vous partez et retiré dès votre retour. Un Kong congelé garni de fromage blanc et de beurre de cacahuète fonctionne très bien&nbsp;: le léchage apaise et surtout votre chien commence à associer votre départ à quelque chose d'exceptionnel qu'il n'a qu'à ce moment-là. Avec un chien devenu anxieux après un déménagement, ce Kong congelé a été une pièce importante du puzzle. L'objet ne règle pas tout, mais il transforme la première minute de solitude.</p>
+
+        <h3 id="allonger-minute-par-minute">Allonger les absences minute par minute</h3>
+
+        <p>Une fois le seuil connu et le chien préparé, on augmente par toutes petites tranches. Deux ou trois minutes, puis un peu plus, en revenant toujours pendant que le chien est encore calme. On peut travailler la porte comme un point neutre&nbsp;: sortir, fermer, compter jusqu'à quatre, réapparaître. La disparition doit être brève et le retour banal, pour que votre chien intègre que vous partez et que vous revenez, sans que ce soit un événement.</p>
+
+        <p>L'appui d'une tierce personne aide beaucoup pour les cas plus lourds. Avec le malinois, on faisait des absences en extérieur où sa propriétaire allait se cacher pendant que je le gardais. Il montrait un peu d'inquiétude, mais il gérait. C'est exactement ça qu'on cherche&nbsp;: lui prouver, encore et encore, que la vie continue et qu'il peut être serein sans son référent à portée de vue.</p>
+
+        <!-- CTA inline — mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous ne savez pas où placer le seuil de votre chien&nbsp;?</p>
+          <p class="art-inline-cta-desc">Bilan comportemental à domicile pour identifier le point de départ exact des absences et construire un protocole adapté à votre chien</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
+        </aside>
+
+        <h2 id="erreurs-aggravent-anxiete">Les erreurs qui aggravent l'anxiété au lieu de la calmer</h2>
+
+        <p>Certaines réactions, pourtant pleines de bonnes intentions, entretiennent l'anxiété de séparation au lieu de l'apaiser. Les connaître évite de saboter tout le travail.</p>
+
+        <h3 id="cage-amplifie-detresse">La cage&nbsp;: pourquoi elle amplifie souvent la détresse chez le chien</h3>
+
+        <p>La cage est présentée un peu partout comme la solution miracle contre l'anxiété. Dans l'immense majorité des cas, c'est un contresens. Si la détresse de votre chien est liée à votre départ, réduire son espace à un mètre carré ne le rassure pas, ça augmente sa panique. On voit des chiens tordre les barreaux, se blesser en cherchant à sortir. L'enfermement ne traite pas l'émotion, il l'empêche seulement de s'exprimer.</p>
+
+        <p>La cage a un usage légitime dans une minorité de situations très précises, souvent de sécurité ou de soin, et il faut distinguer la cage de transport en voiture de la cage d'intérieur au quotidien. Mais comme réponse à l'anxiété de séparation, elle masque la détresse sans jamais rien apprendre au chien.</p>
+
+        <h3 id="revenir-parce-quil-aboie">Revenir parce qu'il aboie, ou dramatiser les départs et les retours</h3>
+
+        <p>Revenir parce que votre chien aboie est l'une des erreurs les plus lourdes de conséquences. Vous lui apprenez, sans le vouloir, que la voix est un outil qui vous fait réapparaître. Le comportement vocal s'ancre parce qu'il fonctionne. La prochaine fois, il aboiera plus vite et plus fort.</p>
+
+        <p>L'autre piège se joue dans la mise en scène. Un départ dramatisé (longues effusions, «&nbsp;ne t'inquiète pas mon bébé, je reviens&nbsp;») ou un retour explosif chargent le moment d'une intensité émotionnelle dont votre chien se passerait bien. Le départ doit être un non-événement. Vous partez, vous revenez, vous vivez normalement. Partir en catimini comme un voleur n'est pas mieux&nbsp;: ça entretient l'idée que l'absence est quelque chose d'anormal. L'objectif est la banalité, pas la discrétion.</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Un mot sur les médicaments</p>
+            <p class="art-callout__text">Certains chiens arrivent déjà sous traitement. On ne juge pas et on n'arrête jamais un traitement du jour au lendemain&nbsp;: ça se fait avec le vétérinaire. Le principe reste de mettre en place le travail comportemental d'abord. Un chien que j'accompagne sous Prozac ne pouvait pas travailler certaines choses tout de suite, mais on a démarré l'anxiété de séparation à la maison sans attendre.</p>
+          </div>
+        </aside>
+
+        <h2 id="signes-anxiete-separation">Votre chien ne supporte pas vos absences&nbsp;: les signes qui ne trompent pas</h2>
+
+        <p>Parfois le doute persiste&nbsp;: est-ce vraiment de l'anxiété de séparation&nbsp;? Trois familles de signes, à trois moments différents, permettent d'y voir clair.</p>
+
+        <h3 id="ce-que-vous-retrouvez">Ce que vous retrouvez en rentrant&nbsp;: destructions, pipi, objets mâchouillés</h3>
+
+        <p>Le premier faisceau d'indices vous attend au retour. Des destructions, des besoins faits à l'intérieur alors que le chien est propre le reste du temps, des objets mâchouillés. Un détail oriente le diagnostic&nbsp;: quand le chien s'attaque à ce qui porte votre odeur (vêtements, chaussures, canapé), la piste de l'anxiété liée à votre absence est sérieuse. Quand il détruit sans logique apparente, comme le Shiba et sa tapisserie, l'anxiété peut se mélanger à un besoin de mâcher non comblé.</p>
+
+        <p>Un point important&nbsp;: la malpropreté qui n'apparaît que lorsque le chien est seul est un signal de solitude à retravailler, pas un caprice ni une vengeance. Votre chien ne se venge pas de votre départ. Il exprime un état.</p>
+
+        <h3 id="ce-que-les-voisins-entendent">Ce que les voisins entendent&nbsp;: pleurs, aboiements, hurlements</h3>
+
+        <p>Vous n'êtes pas là pour l'entendre, mais les voisins, si. Pleurs, aboiements répétés, et surtout les hurlements, ce fameux «&nbsp;faire le loup&nbsp;». Le hurlement a un sens précis&nbsp;: c'est un chien qui cherche à rassembler sa meute, à vous rappeler. Il vous appelle. Ces vocalises sont souvent ce qui pousse les propriétaires à consulter, parce qu'un conflit de voisinage s'ajoute à la détresse du chien.</p>
+
+        <h3 id="chien-qui-vous-colle">Ce qui se passe avant même que vous partiez&nbsp;: le chien qui vous colle</h3>
+
+        <p>Le signe le plus révélateur est aussi le plus discret, parce qu'il se produit quand vous êtes encore là. Un chien qui vous suit dans toutes les pièces, qui se réveille au moindre de vos mouvements, qui se met à s'agiter dès que vous commencez à vous préparer, qui surveille la fenêtre ou la baie vitrée. La détresse ne commence pas quand la porte se ferme. Elle commence bien avant, dans l'anticipation. C'est aussi pour ça qu'on travaille autant en amont du départ.</p>
+
+        <p>Voir son chien retrouver la capacité de rester tranquille pendant qu'on enfile ses chaussures, ça n'a l'air de rien. Pour un propriétaire qui a vécu des mois de boule au ventre à chaque sortie, c'est le premier vrai signe que les choses changent.</p>
+
+      </div><!-- /.art-content -->
+
+      <!-- Sidebar sticky — desktop uniquement -->
+      <aside class="art-sidebar" aria-labelledby="art-toc-heading">
+        <nav class="art-toc" aria-labelledby="art-toc-heading">
+          <details class="art-toc-details">
+            <summary class="art-toc-title" id="art-toc-heading">
+              Sommaire
+              <svg class="art-toc-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="art-toc-links">
+              {toc.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+                >
+                  <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        </nav>
+
+        <div class="art-sidebar-cta">
+          <p class="art-sidebar-cta-title">Votre chien ne supporte pas vos absences&nbsp;?</p>
+          <p class="art-sidebar-cta-desc">Bilan comportemental à domicile pour comprendre ce qui se joue et construire un plan adapté</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            Prendre RDV
+            <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
+          </a>
+        </div>
+      </aside>
+
+    </div><!-- /.art-layout -->
+
+    <!-- Like / Dislike -->
+    <section class="art-feedback-wrap" aria-label="Votre avis sur cet article">
+      <div class="container">
+        <div class="art-feedback" id="art-feedback">
+          <p class="art-feedback-question">Cet article vous a été utile&nbsp;?</p>
+          <div class="art-feedback-buttons">
+            <button type="button" class="art-feedback-btn art-feedback-btn--like" id="art-like-btn" aria-label="J'aime cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>
+              </svg>
+              Oui
+            </button>
+            <button type="button" class="art-feedback-btn art-feedback-btn--dislike" id="art-dislike-btn" aria-label="Je n'aime pas cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>
+              </svg>
+              Non
+            </button>
+          </div>
+
+          <div class="art-feedback-form" id="art-feedback-form" hidden>
+            <label for="art-feedback-text" class="art-feedback-label">Qu'est-ce qui pourrait être amélioré&nbsp;?</label>
+            <textarea
+              id="art-feedback-text"
+              class="art-feedback-textarea"
+              rows="3"
+              maxlength="500"
+              placeholder="Votre retour nous aide à améliorer nos contenus…"
+            ></textarea>
+            <div class="art-feedback-form-footer">
+              <span class="art-feedback-hint" id="art-feedback-hint">10 caractères minimum</span>
+              <button type="button" class="btn btn-primary art-feedback-submit" id="art-feedback-submit" disabled>Envoyer</button>
+            </div>
+          </div>
+
+          <div class="art-feedback-thanks" id="art-feedback-thanks" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span>Merci ! Je prends en compte tous vos retours pour améliorer la qualité des articles et vous aider le plus possible :)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Biographie auteure -->
+    <footer class="art-bio-wrap">
+      <div class="container">
+        <div class="art-bio">
+          <div class="art-bio-avatar" aria-hidden="true">
+            <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="64" height="64" loading="lazy" decoding="async" style="display:block;" />
+          </div>
+          <div>
+            <p class="art-bio-name">À propos de {article.author}</p>
+            <p class="art-bio-role">{article.authorRole}</p>
+            <p class="art-bio-desc">{article.authorDesc}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </article><!-- /article -->
+
+
+  <!-- ── FAQ ───────────────────────────────────────────────────────── -->
+  {faqItems.length > 0 && (
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 750px;">
+        <h2 id="faq-heading" style="text-align: center;">Questions fréquentes sur l'<span class="accent">anxiété de séparation du chien</span></h2>
+        <div class="faq-list" style="margin-top: var(--sp-8);">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>{item.question}</span>
+                <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────────────── -->
+  <section class="section-dark art-cta-section" aria-labelledby="art-cta-h">
+    <div class="container art-cta-inner">
+      <h2 class="art-cta-title" id="art-cta-h">Votre chien souffre quand vous partez&nbsp;?</h2>
+      <p>Bilan comportemental gratuit à domicile · Bordeaux et métropole</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Réserver mon bilan gratuit
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── ARTICLES QUI PEUVENT VOUS INTÉRESSER ───────────────────────── -->
+  <section class="art-related" aria-labelledby="art-related-h">
+    <div class="container">
+      <p class="art-related-divider" id="art-related-h">Articles qui peuvent vous intéresser</p>
+      <div class="art-related-grid">
+        {related.map((card) => (
+          <a href={card.url} class="art-related-card">
+            <img
+              src={card.img}
+              alt={card.imgAlt}
+              class="art-related-card-img"
+              width="360"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="art-related-card-body">
+              <p class="art-related-card-title">{card.title}</p>
+              <p class="art-related-card-meta">{card.readTime} de lecture</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
+  <ArticleProgressBar />
+
+  <script is:inline>
+    (function () {
+      var MIN_CHARS = 10;
+      var feedbackWrap = document.getElementById('art-feedback');
+      var likeBtn = document.getElementById('art-like-btn');
+      var dislikeBtn = document.getElementById('art-dislike-btn');
+      var feedbackForm = document.getElementById('art-feedback-form');
+      var feedbackText = document.getElementById('art-feedback-text');
+      var feedbackHint = document.getElementById('art-feedback-hint');
+      var feedbackSubmit = document.getElementById('art-feedback-submit');
+      var feedbackThanks = document.getElementById('art-feedback-thanks');
+
+      if (!feedbackWrap || !likeBtn || !dislikeBtn) return;
+
+      function sendGA4Event(eventName, params) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: eventName }, params));
+      }
+
+      function getArticleTitle() {
+        var h1 = document.querySelector('h1');
+        return h1 ? h1.textContent.trim() : document.title;
+      }
+
+      function showThanks() {
+        feedbackWrap.querySelectorAll('.art-feedback-buttons, .art-feedback-form, .art-feedback-question').forEach(
+          function (el) { el.hidden = true; }
+        );
+        feedbackThanks.hidden = false;
+      }
+
+      likeBtn.addEventListener('click', function () {
+        sendGA4Event('article_like', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+        });
+        showThanks();
+      });
+
+      dislikeBtn.addEventListener('click', function () {
+        likeBtn.hidden = true;
+        dislikeBtn.classList.add('art-feedback-btn--selected');
+        dislikeBtn.disabled = true;
+        feedbackForm.hidden = false;
+        feedbackText.focus();
+      });
+
+      feedbackText.addEventListener('input', function () {
+        var len = feedbackText.value.trim().length;
+        var valid = len >= MIN_CHARS;
+        feedbackSubmit.disabled = !valid;
+        if (len === 0) {
+          feedbackHint.textContent = MIN_CHARS + ' caractères minimum';
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else if (!valid) {
+          feedbackHint.textContent = 'Encore ' + (MIN_CHARS - len) + ' caractère' + (MIN_CHARS - len > 1 ? 's' : '');
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else {
+          feedbackHint.textContent = 'Prêt à envoyer';
+          feedbackHint.classList.add('art-feedback-hint--ok');
+        }
+      });
+
+      feedbackSubmit.addEventListener('click', function () {
+        var text = feedbackText.value.trim();
+        if (text.length < MIN_CHARS) return;
+        sendGA4Event('article_dislike', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+          user_feedback: text,
+        });
+        showThanks();
+      });
+    })();
+  </script>
+
+  <script>
+    const btn = document.getElementById('art-copy-link');
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+        } catch {
+          const el = Object.assign(document.createElement('input'), { value: window.location.href });
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          el.remove();
+        }
+        btn.setAttribute('data-copied', '');
+        setTimeout(() => btn.removeAttribute('data-copied'), 2000);
+      });
+    }
+  </script>
+
+</Layout>

@@ -872,6 +872,27 @@ p {
     display: block;
   }
 
+  .nav-dropdown--columns {
+    display: none;
+    min-width: 520px;
+  }
+
+  .nav-item--dropdown:hover > .nav-dropdown--columns,
+  .nav-item--dropdown:focus-within > .nav-dropdown--columns,
+  .nav-item--dropdown.is-open > .nav-dropdown--columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-2);
+  }
+
+  .nav-dropdown--columns .nav-dropdown-group + .nav-dropdown-group {
+    border-top: none;
+    border-left: 1px solid var(--kd-cream-deep);
+    margin-top: 0;
+    padding-top: var(--sp-1);
+    padding-left: var(--sp-2);
+  }
+
   .nav-item--dropdown:hover > .nav-dropdown-trigger .nav-dropdown-chevron,
   .nav-item--dropdown:focus-within > .nav-dropdown-trigger .nav-dropdown-chevron,
   .nav-item--dropdown.is-open > .nav-dropdown-trigger .nav-dropdown-chevron {
