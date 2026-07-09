@@ -1,0 +1,520 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Icon from '../../../../components/Icon.astro';
+import '../../../../styles/homepage.css';
+import '../../../../styles/services.css';
+import '../../../../styles/article.css';
+
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Comment Comprendre son Chien : Décrypter ses Signaux au Quotidien',
+  metaDescription: 'Comment comprendre son chien ? Pas uniquement dans les postures : observez ses signaux, ses émotions et ses besoins pour enfin lire ce qu\'il veut vous dire.',
+};
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',       item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Comportement',  item: siteUrl + '/education-canine/comportement/' },
+        { '@type': 'ListItem', position: 3, name: 'Comprendre',    item: pageUrl },
+      ],
+    },
+    {
+      '@type':       'CollectionPage',
+      name:          'Comprendre son chien',
+      description:   page.metaDescription,
+      url:           pageUrl,
+      inLanguage:    'fr-FR',
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+      },
+    },
+  ],
+};
+
+// ── Articles de la catégorie ──────────────────────────────────────────────────
+type Card = {
+  title: string;
+  meta: string;
+  url: string;
+  image: string;
+  imageAlt: string;
+  imagePosition?: string;
+};
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Comment savoir si mon chien est stressé ?',
+    answer:   'Le stress se lit dans l\'ensemble du corps, pas dans un seul signe. Observez son rythme respiratoire, une accélération suivie de courtes apnées est un bon indicateur. Regardez ses pupilles, une dilatation soudaine trahit une montée de tension. Ajoutez les bâillements répétés hors contexte de fatigue, le léchage de truffe, le fait de décrocher pour renifler le sol. Aucun de ces signaux ne suffit seul, mais plusieurs ensemble, dans une situation précise, vous disent que votre chien n\'est pas à l\'aise. Le contexte fait toujours la différence : le même bâillement peut signaler de la fatigue ou de la saturation selon le moment.',
+  },
+  {
+    question: 'Faut-il corriger un chien qui grogne ?',
+    answer:   'Non, et c\'est même contre-productif. Le grognement est un avertissement, une politesse que le chien vous adresse avant d\'aller plus loin. Si vous le punissez, il apprend que prévenir ne sert à rien et il finit par mordre sans préavis. Vous supprimez le signal, pas l\'émotion qui le provoque. Le bon réflexe consiste à écouter ce grognement, à comprendre ce qui le déclenche, et à retirer le chien de la situation inconfortable. Il faut simplement distinguer le grognement de jeu, fréquent et sans gravité, du grognement défensif qui, lui, mérite qu\'on s\'y attarde pour en traiter la cause.',
+  },
+  {
+    question: 'Est-ce qu\'un chien qui remue la queue est forcément content ?',
+    answer:   'Non. Le battement de queue est un mécanisme d\'évacuation de la pression, pas un thermomètre de la joie. Un mouvement ample et souple accompagne souvent une émotion positive, mais un battement rapide et sec, localisé au bout de la queue, signale au contraire une concentration extrême ou une tension qui peut précéder une charge. Comme pour tout le reste, c\'est l\'ensemble qui compte : la posture du corps, le contexte, le regard. Une queue qui remue sur un corps raide et un regard fixe n\'a rien à voir avec une queue qui bat sur un chien détendu qui vient vous voir.',
+  },
+];
+
+const articles: Card[] = [
+  {
+    title:    'Mon chien a du mal à gérer ses émotions en balade : comprendre et reprendre la main',
+    meta:     'Gestion émotions · 13 min',
+    url:      '/education-canine/comportement/comprendre/gestion-emotions/balade/',
+    image:    '/images/article-gestion-emotions-balade.webp',
+    imageAlt: 'Chien en balade en extérieur, en pleine montée émotionnelle face à un stimulus',
+    imagePosition: '50% 60%',
+  },
+  {
+    title:    'Adolescence du chien : les fausses croyances',
+    meta:     'Adolescence · 15 min',
+    url:      '/education-canine/comportement/comprendre/adolescence-chien/',
+    image:    '/images/article-adolescence-chien.webp',
+    imageAlt: 'Jeune chien adolescent en extérieur, attentif, à la sortie de sa phase chiot',
+    imagePosition: '50% 50%',
+  },
+];
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ─────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/education-canine/comportement/">Comportement</a></li>
+        <li aria-current="page">Comprendre</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ── EN-TÊTE ──────────────────────────────────────────────────── -->
+  <header class="ec-hero">
+    <div class="container ec-hero-inner">
+      <p class="ec-hero-eyebrow">Comportement</p>
+      <h1 class="ec-hero-title">Comment <span class="accent">comprendre son chien</span>&nbsp;: lire son comportement et ses signaux au quotidien</h1>
+      <p class="ec-hero-desc">Vous passez vos journées avec votre chien et pourtant certaines de ses réactions vous laissent complètement démuni. Apprendre à comprendre son chien, ce n'est pas mémoriser une liste de postures&nbsp;: c'est réapprendre à observer, à remettre chaque comportement dans son contexte et à écouter ce qu'il essaie de vous dire. Les articles ci-dessous détaillent chaque situation. Cette page, elle, vous donne la grille de lecture globale qui les relie toutes.</p>
+    </div>
+  </header>
+
+  <!-- ── ARTICLES DE LA CATÉGORIE ─────────────────────────────────── -->
+  <div class="ec-sections">
+    <div class="container">
+
+      <section class="ec-section" aria-labelledby="cat-articles-h2">
+        <div class="ec-section-head">
+          <h2 class="ec-section-title" id="cat-articles-h2">Les articles de la catégorie</h2>
+        </div>
+
+        <div class="ec-cards">
+          {articles.map((card) => (
+            <a href={card.url} class="ec-card">
+              <div class="ec-card-img" role="presentation">
+                <img src={card.image} alt={card.imageAlt} class="ec-card-img-photo" loading="lazy" decoding="async" style={card.imagePosition ? `object-position: ${card.imagePosition};` : undefined} />
+              </div>
+              <div class="ec-card-body">
+                <p class="ec-card-title">{card.title}</p>
+                <p class="ec-card-meta">
+                  <Icon name="clock" width={12} height={12} strokeWidth={2} />
+                  {card.meta}
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ── CONTENU SEO ──────────────────────────────────────────────── -->
+  <section class="cat-seo">
+    <div class="container">
+      <div class="art-content">
+
+        <h2 id="par-ou-commencer">Par où commencer pour comprendre son chien</h2>
+
+        <h3 id="observer-avant-interpreter">Observer avant d'interpréter</h3>
+        <p>La première erreur, celle que je vois en séance presque à chaque bilan, c'est de lire son chien à travers un seul détail. «&nbsp;Il remue la queue, donc il est content.&nbsp;» «&nbsp;Il a les oreilles en arrière, donc il a peur.&nbsp;» Le propriétaire arrive avec une conclusion toute faite avant même d'avoir regardé l'ensemble de la scène.</p>
+        <p>Or le battement de queue n'est pas un indicateur de joie. C'est un mécanisme d'évacuation de la pression. Un battement ample et souple signale souvent une décharge positive, mais un battement frénétique concentré au bout de la queue peut trahir une tension extrême, parfois juste avant une charge. Le même mouvement, deux messages opposés.</p>
+        <p>Une jeune chienne que j'ai accompagnée récemment illustre bien pourquoi il faut observer avant de conclure. En croisant certains congénères, elle aboyait, avançait, puis reculait aussitôt, la queue rentrée. Vu de loin, on aurait pu la croire agressive. En réalité elle était inquiète, mais elle gardait de la curiosité et continuait d'observer. Sans cette lecture d'ensemble, on aurait travaillé le mauvais problème.</p>
+
+        <div class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le réflexe à prendre</p>
+            <p class="art-callout__text">Avant d'interpréter quoi que ce soit, prenez trois secondes pour regarder le corps entier de votre chien, ce qui l'entoure et repensez à son caractère habituel. La réponse est presque toujours là.</p>
+          </div>
+        </div>
+
+        <h3 id="regarder-corps-contexte-individu">Regarder le corps, le contexte et l'individu ensemble</h3>
+        <p>Un signal ne veut rien dire tout seul. Prenez les oreilles rabattues&nbsp;: ça peut être un simple réflexe parce qu'un poil le chatouille, une gêne liée à une otite ou une émotion comme l'inquiétude ou l'anticipation d'un contact. Trois causes très différentes pour une seule posture.</p>
+        <p>Pour lire juste, appuyez-vous sur trois repères à chaque fois. Le positionnement global du chien d'abord&nbsp;: son corps, sa tête, son centre de gravité. L'environnement immédiat ensuite&nbsp;: quels stimuli, quelles contraintes d'espace. Et enfin son tempérament, son histoire, ce que vous savez de lui. Un chien réservé de nature ne s'interprète pas comme un chien habituellement extraverti qui se met soudain en retrait.</p>
+
+        <h3 id="bonnes-questions">Se poser les bonnes questions dans chaque situation</h3>
+        <p>Le comportement canin fonctionne en cercle. Un chien qui saute a peut-être un problème de gestion de la frustration. Un chien qui aboie manque peut-être de dépense. Le symptôme que vous voyez n'est presque jamais la racine. Alors face à une réaction qui vous échappe, posez-vous les bonnes questions&nbsp;: de quelle émotion s'agit-il, quel besoin est en jeu, qu'est-ce que le contexte déclenche.</p>
+        <p>C'est cette vision globale qui change tout. Vous arrêtez de traiter des symptômes un par un et vous commencez à comprendre votre chien dans son ensemble, ce qui reste le vrai objectif quand on cherche comment comprendre son chien au quotidien.</p>
+
+        <h2 id="langage-corporel">Ce que son langage corporel vous apprend</h2>
+
+        <h3 id="lire-ensemble">Lire l'ensemble avant d'isoler un détail</h3>
+        <p>Vouloir attribuer une définition unique à chaque mouvement, c'est tomber dans le piège du tableau à double entrée&nbsp;: oreilles en arrière égale peur, queue basse égale soumission et ainsi de suite. Ça ne marche pas. Le langage corporel du chien est trop contextuel pour se ranger dans des cases.</p>
+        <p>Le bon réflexe reste toujours le même&nbsp;: corréler. Un détail pris isolément vous mènera à un faux diagnostic une fois sur deux. Le même détail, replacé dans la posture globale et le contexte, prend son vrai sens.</p>
+
+        <h3 id="micro-signaux">Les micro-signaux qui précèdent une réaction</h3>
+        <p>Pendant que le grand public regarde la posture générale, les signaux les plus précoces d'un passage à l'acte se jouent ailleurs, dans des détails discrets. Le rythme respiratoire est l'un des plus fiables&nbsp;: une accélération suivie d'une courte apnée annonce souvent une tension montante. La dilatation des pupilles en est un autre. Ces signaux apparaissent bien avant que le corps ne se fige visiblement.</p>
+        <p>Apprendre à repérer ces micro-signaux, c'est déjà comprendre son chien un cran plus finement que la plupart des propriétaires. Vous pouvez agir, changer de trajectoire ou reprendre son attention avant que la situation ne dégénère, au lieu de subir la réaction une fois qu'elle est là.</p>
+
+        <div class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Le battement de queue rapide et sec, tout au bout, quand votre chien fixe quelque chose, n'a rien d'un signe de joie. C'est de la concentration extrême. Méfiez-vous de ce moment plus que d'un grognement franc.</p>
+          </div>
+        </div>
+
+        <h3 id="postures-detente-jeu-tension">Postures de détente, d'appel au jeu et de tension</h3>
+        <p>À l'inverse, un corps souple, des mouvements amples, une invitation au jeu où le chien s'abaisse sur les pattes avant, tout cela signe un état détendu. Le jeu entre chiens mobilise d'ailleurs des postures qui simulent l'agression, avec des grognements et des claquements de dents, sans la moindre intention hostile. C'est bruyant, c'est vif et c'est normal.</p>
+        <p>D'autres comportements méritent qu'on s'y arrête. Le bâillement, par exemple, répond généralement à trois causes&nbsp;: la vraie fatigue, la saturation lors d'un apprentissage mal dosé, ou plus rarement une anxiété profonde. Le chien qui décroche pour renifler le sol au milieu d'un exercice vous envoie un message clair&nbsp;: il n'est plus disponible, il sature. Le léchage, lui, n'est pas toujours un «&nbsp;bisou&nbsp;». Il sert souvent à apaiser un individu que le chien perçoit comme fragile émotionnellement ou parfois encore pour vous demander quelque chose.</p>
+
+        <h2 id="decrypter-emotions">Décrypter ses émotions au-delà des mythes</h2>
+
+        <h3 id="peur-timidite">Peur et timidité, deux réalités à ne pas confondre</h3>
+        <p>Confondre un trait de caractère avec un trouble, c'est l'erreur qui condamne beaucoup de chiens à un mauvais traitement. La timidité est une simple réserve naturelle. Le chien timide observe, garde ses distances, mais n'est pas en souffrance. La peur, elle, provoque un inconfort réel qui peut basculer vers l'agression défensive.</p>
+        <p>Pour les distinguer, une règle simple&nbsp;: la distance. Un chien timide fait un léger écart d'un mètre, un mètre cinquante, reste à proximité et finit par s'apaiser si on ne le force pas. Un chien qui a peur fuit à dix mètres ou se fige complètement et prépare l'offensive s'il ne peut pas s'échapper. La chienne dont je vous parlais plus haut se situait clairement du côté de l'inquiétude gérable&nbsp;: elle gardait de la curiosité, elle n'était pas terrorisée. C'est ce qui laissait présager une belle évolution.</p>
+        <p>Et forcer un chien réservé à «&nbsp;faire la fête&nbsp;» aux gens, c'est nier son identité. Ce manque de respect transforme un chien tranquille en chien qui se défend parce qu'il n'a plus le choix.</p>
+
+        <h3 id="excitation-prise-pouvoir">L'excitation n'est pas une prise de pouvoir</h3>
+        <p>Votre chien vous saute dessus, mordille vos vêtements, tourne sur lui-même, finit par grimper sur votre jambe quand vous rentrez. On vous a peut-être dit qu'il «&nbsp;voulait dominer&nbsp;». C'est faux. Ces comportements sont l'expression désordonnée d'un trop-plein émotionnel face à une attente non comblée. Le chien cherche une connexion, pas une hiérarchie (dans ce cas).</p>
+        <p>Ce trop-plein suit souvent une escalade&nbsp;: sauter pour réduire la distance, mordiller pour forcer le contact, tourner, aboyer, et parfois chevaucher en dernier recours. Un jeune chien que j'accompagne monte exactement comme ça dès qu'il associe un contexte au jeu&nbsp;: l'excitation grimpe si vite qu'il n'entend plus rien et se met à mordiller sans parvenir à redescendre. Le travail ne consiste pas à réprimer cet élan, mais à lui apprendre à monter puis à retomber en pression.</p>
+
+        <div class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Ce que je répète le plus souvent en séance</p>
+            <p class="art-callout__text">Répondre à cette joie par un coup de genou ou un cri crée un conflit de sentiments. Le chien vous offre une émotion positive et reçoit de l'hostilité en retour. À force, l'enthousiasme se transforme en anxiété.</p>
+          </div>
+        </div>
+
+        <h3 id="frustration-escalade">Frustration et escalade émotionnelle</h3>
+        <p>La frustration est une compétence émotionnelle que le chien doit apprendre, au même titre que le renoncement. Un chien qui n'a jamais appris à renoncer reste déstabilisé en permanence. C'est là que vous vous retrouvez avec un chien qui aboie pour obtenir quelque chose, qui tire comme un fou pour aller voir un copain, qui ne supporte pas le moindre «&nbsp;attends&nbsp;».</p>
+        <p>Un chien que j'ai suivi pour cette problématique aboyait dès qu'il apercevait un congénère et ne pouvait pas aller le voir. Toute son énergie sociale se transformait en frustration bruyante. Le fond du travail, ce n'était pas de le faire taire, mais de lui apprendre à gérer l'attente et à se référer à ses humains plutôt qu'à exploser.</p>
+
+        <h2 id="ses-voix">Ses voix et ce qu'il essaie de vous dire</h2>
+
+        <h3 id="aboyer">Aboyer, une façon de communiquer</h3>
+        <p>L'aboiement est un outil de communication, pas un défaut à supprimer. Un aboiement d'alerte normal dure cinq à dix secondes et s'arrête tout seul une fois l'information traitée. Un aboiement qui s'étire, qui persiste sans stimulus réel, raconte autre chose&nbsp;: de la frustration, de l'anxiété, un manque de dépense.</p>
+        <p>Une chienne timide que j'ai suivie posait exactement ce genre de problème à l'arrivée des invités. Elle montait en pression très vite et aboyait tellement que ses propriétaires en étaient réduits à l'isoler dans une autre pièce. Là encore, l'aboiement n'était que la partie visible&nbsp;: derrière, il y avait sa sensibilité et son besoin de gérer la distance à sa façon.</p>
+
+        <div class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Crier sur un chien qui aboie, pour lui, revient à aboyer avec lui. Vous confirmez qu'il y a bien une raison de s'alarmer. Le silence de votre part vaut souvent mieux qu'un «&nbsp;tais-toi&nbsp;» hurlé.</p>
+          </div>
+        </div>
+
+        <h3 id="grognement">Le grognement, un avertissement à respecter</h3>
+        <p>Le grognement est sans doute le signal le plus mal traité par les propriétaires. C'est un avertissement, une politesse même&nbsp;: le chien vous prévient qu'il est mal à l'aise avant d'aller plus loin. Punir ce grognement, c'est supprimer le préavis. Le chien apprend que sa version longue, faite de postures et d'avertissements, ne sert à rien et il passe directement à la morsure. Vous créez vous-même un chien qui mord sans prévenir.</p>
+        <p>Encore faut-il distinguer le grognement de jeu du grognement défensif. Chez un chiot que j'ai accompagné, les grognements et pincements apparaissaient surtout quand on l'empêchait d'accéder à une activité qu'il adorait, comme mordiller ou creuser. Ce n'était pas de l'agressivité, mais de la frustration liée à un besoin. Confondre les deux aurait mené à sanctionner un chien qui communiquait normalement.</p>
+
+        <h3 id="gemissements-soupirs">Gémissements, soupirs et autres sons</h3>
+        <p>Le reste du répertoire vocal mérite la même écoute. Un gémissement peut exprimer une demande, une excitation, une gêne. Un soupir accompagne souvent un vrai relâchement. Le chien a besoin de s'exprimer par la voix, pour communiquer comme pour évacuer sa pression. Vouloir le faire taire systématiquement, c'est lui couper un canal de communication entier.</p>
+        <p>L'idée n'est pas de tout laisser passer, mais d'écouter avant de réagir. Comprendre son chien passe aussi par ses sons&nbsp;: un chien qu'on autorise à s'exprimer est un chien qu'on lit mieux.</p>
+
+        <h2 id="besoins">Les besoins qui expliquent tout le reste</h2>
+
+        <h3 id="bouger-macher-reflechir">Bouger, mâcher, réfléchir&nbsp;: les piliers du calme</h3>
+        <p>Un chien a des besoins fondamentaux qui, s'ils ne sont pas comblés, ressortent sous forme de comportements gênants. Bouger d'abord&nbsp;: à l'état sauvage, un chien parcourrait des dizaines de kilomètres et la plupart de nos chiens se dépensent bien en dessous de ce dont ils ont besoin. Mâcher ensuite, un comportement inné qui évacue la pression et occupe l'esprit. Réfléchir enfin, sans doute le plus sous-estimé&nbsp;: faire penser un chien le fatigue au moins dix fois plus que de le faire courir.</p>
+
+        <div class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le levier que les gens oublient</p>
+            <p class="art-callout__text">Une balade où votre chien renifle, piste, analyse le sol et croise des odeurs le fatigue infiniment plus qu'un lancer de balle répété. La tête épuise mieux que les pattes.</p>
+          </div>
+        </div>
+
+        <h3 id="interagir-congeneres">Le besoin d'interagir avec ses congénères</h3>
+        <p>Le chien reste un animal social. Beaucoup vivent pourtant avec très peu d'interactions entre congénères, alors que chaque balade est l'occasion de reconstituer une forme de groupe. Ce besoin d'interaction, quand il est frustré, alimente une bonne partie des réactions en laisse.</p>
+        <p>Il y a d'ailleurs un principe contre-intuitif&nbsp;: plus un chien croise de congénères régulièrement, moins chaque rencontre devient obsessionnelle. C'est la rareté qui transforme l'envie en pulsion incontrôlable. La régularité banalise et apaise.</p>
+
+        <h3 id="besoin-non-comble">Quand un besoin non comblé se traduit en comportement</h3>
+        <p>C'est le point qui relie tout le reste. Un besoin qu'on ne satisfait pas ne disparaît pas, il se reporte ailleurs. Le chiot dont je parlais reportait son fort besoin de mordillement sur le mobilier, les racines, tout ce qui lui tombait sous la dent et ça finissait en grognements quand on l'interrompait. Un autre, issu d'une portée non sevrée, mangeait ce qu'il trouvait au sol par pur ennui.</p>
+        <p>Dans les deux cas, punir le symptôme n'aurait rien réglé. Combler le besoin, en revanche, a fait disparaître le comportement. Comprendre son chien, c'est souvent ça&nbsp;: regarder derrière la bêtise pour identifier le besoin qu'elle cherche à satisfaire, avant de se demander comment l'arrêter.</p>
+
+        <h2 id="erreurs-interpretation">Les erreurs d'interprétation quand on veut comprendre son chien</h2>
+
+        <h3 id="mythe-dominance">Le mythe de la dominance et du mâle alpha</h3>
+        <p>Le concept de mâle alpha violent a pollué l'éducation canine pendant cinquante ans, et il repose sur une erreur. Les études d'origine observaient des loups sans lien de parenté, forcés de cohabiter en captivité, un peu comme des inconnus enfermés ensemble. La violence y était une question de survie artificielle. En liberté, une meute est une famille solidaire où la coopération prime et le leader est celui qui assure la sécurité du groupe, pas celui qui frappe.</p>
+        <p>La dominance existe, mais elle est contextuelle et fluctuante, jamais un trait de caractère gravé dans le chien. Coller cette étiquette sur un saut, un chevauchement ou un chien qui s'assoit sur vos pieds, c'est passer à côté de l'émotion réelle&nbsp;: le plus souvent une évacuation de pression ou une recherche de réconfort.</p>
+
+        <h3 id="couper-communication">Couper la communication entre chiens</h3>
+        <p>Quand deux chiens interagissent, l'humain a un réflexe&nbsp;: intervenir, dire «&nbsp;stop, stop, stop&nbsp;» en anticipant un problème qui n'arrive pas. C'est une erreur lourde de conséquences. Les chiens se régulent entre eux avec des codes précis, des mises à distance, des pauses. En empêchant un chien de poser ses limites, vous privez l'autre de l'apprentissage des signaux d'arrêt et vous fabriquez un harceleur social incapable de lire les refus.</p>
+        <p>Le risque inverse est tout aussi grave. Le chien à qui on interdit systématiquement d'exprimer ses avertissements apprend que sa communication «&nbsp;polie&nbsp;» ne sert à rien. Il la supprime et passe à l'efficacité brutale. Tant que l'échange ne bascule pas dans une agression réelle, votre meilleure aide est souvent de rester en mouvement et de laisser faire.</p>
+
+        <div class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">L'erreur la plus fréquente en balade</p>
+            <p class="art-callout__text">Se figer quand deux chiens se rencontrent. Votre immobilité est lue comme un état d'alerte et fait monter la tension. Continuez à marcher, restez fluide, et faites confiance à leur langage.</p>
+          </div>
+        </div>
+
+        <h3 id="consoler-punir">Consoler ou punir au mauvais moment</h3>
+        <p>Caresser un chien qui tremble ou qui grogne de peur ne l'apaise pas. Ça valide son émotion&nbsp;: vous lui confirmez qu'il a raison d'avoir peur. De la même façon, forcer le contact en le tenant par le collier pour qu'un ami le caresse, c'est trahir sa confiance et perdre votre valeur de repère rassurant.</p>
+        <p>La règle qui traverse tout cet article tient en une phrase&nbsp;: comprendre son chien avant d'agir. Le bon geste au mauvais moment se retourne contre vous. Un chien qu'on lit correctement est un chien qu'on accompagne sans aggraver ses difficultés, et c'est exactement ce qui vous permet, dans quelques semaines, de croiser un autre chien au parc sans avoir la boule au ventre.</p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ──────────────────────────────────────────────────────── -->
+  <section class="section" id="faq" aria-labelledby="faq-heading">
+    <div class="container" style="max-width: 750px;">
+      <h2 id="faq-heading" style="text-align: center;">Questions <span class="accent">fréquentes</span> pour comprendre son chien</h2>
+      <div class="faq-list" style="margin-top: var(--sp-8);">
+        {faqItems.map((item) => (
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>{item.question}</span>
+              <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  })} />
+
+  <!-- ── CTA ──────────────────────────────────────────────────────── -->
+  <section class="section-dark ec-cta-section" aria-labelledby="ec-cta-h">
+    <div class="container ec-cta-inner">
+      <h2 class="ec-cta-title" id="ec-cta-h">Besoin d'aide pour comprendre votre chien&nbsp;?</h2>
+      <p>Premier rendez-vous gratuit à votre domicile · Sans engagement</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Prendre RDV
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  /* ── Hero ── */
+  .ec-hero {
+    background: var(--kd-paper);
+    padding-block: var(--sp-12) var(--sp-10);
+  }
+
+  .ec-hero-inner {
+    max-width: 780px;
+  }
+
+  .ec-hero-eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--kd-terracotta);
+    margin-bottom: var(--sp-3);
+  }
+
+  .ec-hero-title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-2xl);
+    font-weight: 500;
+    line-height: var(--lh-snug);
+    color: var(--kd-ink);
+    margin-bottom: var(--sp-4);
+  }
+
+  .ec-hero-desc {
+    font-size: var(--fs-md);
+    color: var(--kd-bark);
+    line-height: var(--lh-relaxed);
+    max-width: 720px;
+  }
+
+  /* ── Sections articles ── */
+  .ec-sections {
+    padding-block: var(--sp-12) var(--sp-10);
+  }
+
+  .ec-section {
+    margin-bottom: 0;
+  }
+
+  .ec-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    margin-bottom: var(--sp-6);
+    padding-bottom: var(--sp-4);
+    border-bottom: 1px solid var(--kd-cream-deep);
+  }
+
+  .ec-section-title {
+    font-family: var(--font-sans);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--kd-ink);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  /* ── Cards ── */
+  .ec-cards {
+    display: grid;
+    gap: var(--sp-4);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 600px) {
+    .ec-cards { grid-template-columns: repeat(2, 1fr); }
+    .ec-hero-title { font-size: var(--fs-3xl); }
+  }
+
+  @media (min-width: 900px) {
+    .ec-cards { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .ec-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--kd-paper);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+
+  a.ec-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .ec-card-img {
+    height: 130px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: var(--sp-3);
+    overflow: hidden;
+  }
+
+  .ec-card-img-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .ec-card-body {
+    padding: var(--sp-4) var(--sp-5) var(--sp-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    flex: 1;
+  }
+
+  .ec-card-title {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--kd-ink);
+    line-height: 1.35;
+  }
+
+  .ec-card-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-1);
+    font-size: var(--fs-xs);
+    color: var(--kd-fawn);
+    margin-top: auto;
+  }
+
+  /* ── Contenu SEO ── */
+  .cat-seo {
+    padding-block: var(--sp-8) var(--sp-16);
+  }
+
+  .cat-seo .container {
+    max-width: 780px;
+  }
+
+  /* ── CTA ── */
+  .ec-cta-section {
+    padding-block: var(--sp-16);
+    text-align: center;
+  }
+
+  .ec-cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-5);
+  }
+
+  .ec-cta-title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    color: var(--kd-cream);
+    line-height: var(--lh-snug);
+  }
+
+  .ec-cta-inner > p {
+    color: var(--kd-stone);
+    font-size: var(--fs-md);
+  }
+</style>

@@ -11,6 +11,7 @@ const pages = [
   '/services/cours-collectifs/',
   '/services/stage-intensif/',
   '/education-canine/comportement/',
+  '/education-canine/comportement/comprendre/',
   '/education-canine/comportement/problemes/reactivite/chiens/',
   '/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/',
   '/education-canine/comportement/comprendre/gestion-emotions/balade/',
