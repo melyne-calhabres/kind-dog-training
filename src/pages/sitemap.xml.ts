@@ -3,7 +3,7 @@ import type { APIRoute } from 'astro';
 const pages = [
   '/',
   '/qui-suis-je/',
-  '/tarif-educateur-canin-bordeaux',
+  '/tarif-educateur-canin-bordeaux/',
   '/prendre-rdv/',
   '/services/',
   '/services/cours-individuel-education-canine-bordeaux/',

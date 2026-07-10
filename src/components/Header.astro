@@ -5,7 +5,7 @@ const currentPath = Astro.url.pathname;
 
 const navItems = [
   { label: 'Accueil', href: '/' },
-  { label: 'Tarifs', href: '/tarif-educateur-canin-bordeaux' },
+  { label: 'Tarifs', href: '/tarif-educateur-canin-bordeaux/' },
   { label: 'Qui suis-je ?', href: '/qui-suis-je/' },
 ];
 
@@ -113,7 +113,7 @@ function isActive(href: string): boolean {
           </ul>
         </li>
         <li>
-          <a href="/tarif-educateur-canin-bordeaux" class="nav-link" aria-current={isActive('/tarif-educateur-canin-bordeaux') ? 'page' : undefined}>Tarifs</a>
+          <a href="/tarif-educateur-canin-bordeaux/" class="nav-link" aria-current={isActive('/tarif-educateur-canin-bordeaux/') ? 'page' : undefined}>Tarifs</a>
         </li>
         <li>
           <a href="/qui-suis-je/" class="nav-link" aria-current={isActive('/qui-suis-je/') ? 'page' : undefined}>Qui suis-je ?</a>
