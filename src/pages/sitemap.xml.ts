@@ -2,6 +2,12 @@ import type { APIRoute } from 'astro';
 
 const pages = [
   '/',
+  '/educateur-canin-bruges/',
+  '/educateur-canin-blanquefort/',
+  '/educateur-canin-le-bouscat/',
+  '/educateur-canin-eysines/',
+  '/educateur-canin-merignac/',
+  '/educateur-canin-pessac/',
   '/qui-suis-je/',
   '/tarif-educateur-canin-bordeaux/',
   '/prendre-rdv/',
