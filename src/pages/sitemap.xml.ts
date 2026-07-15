@@ -3,6 +3,9 @@ import type { APIRoute } from 'astro';
 const pages = [
   '/',
   '/educateur-canin-bruges/',
+  '/educateur-canin-le-haillan/',
+  '/educateur-canin-talence/',
+  '/educateur-canin-begles/',
   '/educateur-canin-blanquefort/',
   '/educateur-canin-le-bouscat/',
   '/educateur-canin-eysines/',
