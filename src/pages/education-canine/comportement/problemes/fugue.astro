@@ -1,0 +1,713 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Icon from '../../../../components/Icon.astro';
+import ArticleProgressBar from '../../../../components/ArticleProgressBar.astro';
+import '../../../../styles/services.css';
+import '../../../../styles/article.css';
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Chien qui Fugue : Comprendre Pourquoi et l\'Aider à Rester',
+  metaDescription: 'Chien qui fugue : Identifiez la cause et découvrez comment aider votre chien à rester, sans collier ni clôture électrique.',
+};
+
+// ── Article metadata ──────────────────────────────────────────────────────────
+const article = {
+  category:       'Comportement',
+  categoryUrl:    '/education-canine/comportement/',
+  breadcrumbLabel:'Chien qui fugue',
+  titleBefore:    '',
+  titleAccent:    'Chien qui fugue',
+  titleAfter:     ' : comprendre pourquoi et l\'aider à rester',
+  publishDate:    '16 juillet 2026',
+  publishDateIso: '2026-07-16',
+  readTime:       '14 min',
+  author:         'Mélyne',
+  authorInitial:  'M',
+  authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
+  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
+  coverAlt:       'Chien en extérieur près d\'une clôture, illustrant la problématique de la fugue chez le chien',
+};
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Faut-il faire castrer un chien qui fugue ?',
+    answer:   'Ça dépend de la cause. Si votre mâle fugue clairement à cause des chaleurs des femelles du quartier, la castration peut réduire cette pulsion qu\'il ne maîtrise pas. Mais ce n\'est jamais une solution magique. Un chien qui fugue par ennui, par peur ou par manque de lien continuera de fuguer après la castration, parce que la vraie raison n\'a pas bougé. Avant de passer par la castration, posez le bon diagnostic. La castration règle une cause précise, pas la fugue en général.',
+  },
+  {
+    question: 'Quelles races fuguent le plus ?',
+    answer:   'Aucune race n\'est fugueuse par nature, malgré ce qu\'on entend sur les huskys par exemple. Ce qui est vrai, c\'est que certaines races ont des besoins plus exigeants. Un chien nordique ou un chien de chasse a un besoin d\'exploration et de mouvement énorme. Si on ne le respecte pas, le chien ira le combler seul. La génétique ne fait pas fuguer. Un mode de vie inadapté à ce que le chien est, oui. Un husky dont les besoins sont comblés ne fugue pas plus qu\'un autre.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type':       'Article',
+      headline:      article.titleBefore + article.titleAccent + article.titleAfter,
+      description:   page.metaDescription,
+      datePublished: '2026-07-16T09:00:00+02:00',
+      dateModified:  '2026-07-16T09:00:00+02:00',
+      inLanguage:    'fr-FR',
+      url:           pageUrl,
+      image: {
+        '@type':  'ImageObject',
+        url:      siteUrl + '/images/article-chien-qui-fugue.webp',
+        width:    925,
+        height:   456,
+      },
+      author: {
+        '@type':    'Person',
+        name:       article.author,
+        url:        siteUrl + '/qui-suis-je/',
+        jobTitle:   'Éducatrice & comportementaliste canin',
+        description: article.authorDesc,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url:     siteUrl + '/images/logo.png',
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id':   pageUrl,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',                    item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: article.category,             item: siteUrl + article.categoryUrl },
+        { '@type': 'ListItem', position: 3, name: article.breadcrumbLabel },
+      ],
+    },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
+  ],
+};
+
+// ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
+const tldr = [
+  'La fugue n\'est pas un défaut de caractère ni une fatalité de race : c\'est le symptôme d\'un besoin non comblé ou d\'un lien à reconstruire',
+  'Gronder votre chien quand il revient est l\'erreur la plus fréquente et la plus contre-productive',
+  'Avant de chercher une solution, il faut identifier la cause : ennui, chaleurs, peur, ou envie de vous rejoindre',
+  'Un chien qui sort par un portail resté ouvert n\'est pas un fugueur, c\'est un opportuniste. Ce n\'est pas le même travail',
+  'Combler ses vrais besoins (dépense physique, activités qui font réfléchir) représente quasi systématiquement le socle du travail',
+  'Les colliers anti-fugue et clôtures électriques masquent le problème et créent souvent un chien qui n\'ose plus rentrer',
+];
+
+// ── Table of contents ─────────────────────────────────────────────────────────
+const toc = [
+  { label: 'Pourquoi votre chien fugue',                         href: '#pourquoi-votre-chien-fugue', sub: false },
+  { label: 'L\'ennui et le jardin qui devient une prison',       href: '#ennui-jardin-prison',        sub: true  },
+  { label: 'Les chaleurs et les pulsions qu\'il ne maîtrise pas',href: '#chaleurs-pulsions',          sub: true  },
+  { label: 'Fugue par peur : orages, feux d\'artifice',          href: '#fugue-par-peur',             sub: true  },
+  { label: 'Quand il part pour vous rejoindre',                  href: '#part-pour-vous-rejoindre',   sub: true  },
+  { label: 'Un chien qui fugue, ça se règle',                    href: '#ca-se-regle',                sub: false },
+  { label: 'La fugue est un symptôme',                           href: '#fugue-symptome',             sub: true  },
+  { label: 'Ne pas gronder le chien qui revient',                href: '#ne-pas-gronder',             sub: true  },
+  { label: 'Poser le bon diagnostic avant d\'agir',              href: '#poser-bon-diagnostic',       sub: true  },
+  { label: 'Fugue ou simple manque de rappel ?',                 href: '#fugue-ou-manque-rappel',     sub: false },
+  { label: 'Le chien opportuniste qui sort par le portail',      href: '#chien-opportuniste',         sub: true  },
+  { label: 'Le suivi naturel, ce qui manque avant le rappel',    href: '#suivi-naturel',              sub: true  },
+  { label: 'Combler ses besoins pour qu\'il n\'ait plus envie de partir', href: '#combler-besoins',   sub: false },
+  { label: 'Le dépenser pour de vrai, physiquement et mentalement',      href: '#depenser-pour-de-vrai', sub: true },
+  { label: 'Canaliser l\'instinct de chasse',                    href: '#canaliser-instinct-chasse',  sub: true  },
+  { label: 'Renforcer le lien plutôt que la clôture',            href: '#renforcer-le-lien',          sub: false },
+  { label: 'Redevenir plus intéressant que l\'extérieur',        href: '#redevenir-interessant',      sub: true  },
+  { label: 'La longe comme sécurité le temps du travail',        href: '#longe-securite',             sub: true  },
+  { label: 'Les erreurs : colliers anti-fugue et clôtures électriques', href: '#erreurs-colliers-clotures', sub: false },
+  { label: 'Ce que le chien apprend vraiment de la décharge',    href: '#apprend-de-la-decharge',     sub: true  },
+  { label: 'Sécuriser l\'environnement sans lui faire mal',      href: '#securiser-environnement',    sub: true  },
+];
+
+// ── Articles connexes ─────────────────────────────────────────────────────────
+const related = [
+  {
+    title:    'Anxiété de séparation chez le chien : que faire concrètement ?',
+    readTime: '16 min',
+    img:      '/images/article-anxiete-separation-chien.webp',
+    imgAlt:   'Chien couché seul près de la porte d\'entrée, en attente du retour de ses propriétaires',
+    url:      '/education-canine/comportement/problemes/anxiete/separation/',
+  },
+  {
+    title:    'Mon chien est réactif aux autres chiens en balade',
+    readTime: '13 min',
+    img:      '/images/article-reactivite-chiens.webp',
+    imgAlt:   'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
+    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
+  },
+  {
+    title:    'Adolescence du chien : les fausses croyances',
+    readTime: '15 min',
+    img:      '/images/article-adolescence-chien.webp',
+    imgAlt:   'Jeune chien adolescent en extérieur, attentif, à la sortie de sa phase chiot',
+    url:      '/education-canine/comportement/comprendre/adolescence-chien/',
+  },
+];
+
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ──────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href={article.categoryUrl}>{article.category}</a></li>
+        <li aria-current="page">{article.breadcrumbLabel}</li>
+      </ol>
+    </div>
+  </nav>
+
+
+  <!-- ── ARTICLE ───────────────────────────────────────────────────── -->
+  <article aria-labelledby="art-h1">
+
+    <!-- En-tête de l'article -->
+    <header class="art-header">
+      <div class="container">
+        <h1 class="art-title" id="art-h1">
+          {article.titleBefore}<span class="accent">{article.titleAccent}</span>{article.titleAfter}
+        </h1>
+        <div class="art-meta">
+          <div class="art-author">
+            <div class="art-avatar" aria-hidden="true">
+              <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
+            </div>
+            <p class="art-author-info">
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+            </p>
+          </div>
+          <div class="art-share">
+            <button id="art-copy-link" class="art-share-btn" type="button" aria-label="Copier le lien de l'article">
+              <Icon name="link" width={16} height={16} strokeWidth={2} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Image hero -->
+    <div class="art-hero-wrap">
+      <div class="container">
+        <figure class="art-hero">
+          <picture>
+            <source media="(max-width: 767px)" srcset="/images/article-chien-qui-fugue-mobile.webp" width="400" height="351" />
+            <img
+              src="/images/article-chien-qui-fugue.webp"
+              alt={article.coverAlt}
+              width="925"
+              height="456"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              class="art-hero-img"
+            />
+          </picture>
+        </figure>
+      </div>
+    </div>
+
+    <!-- L'essentiel -->
+    <div class="container">
+      <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+        <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+        <p class="art-tldr-title">Ce qu'il faut retenir</p>
+        <ul class="art-tldr-list" role="list">
+          {tldr.map((item) => (
+            <li>
+              <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="art-tldr-footer">
+          <Icon name="clock" width={14} height={14} strokeWidth={2} />
+          Lecture complète&nbsp;: {article.readTime} · Pour aller plus loin, lisez l'article entier
+        </p>
+      </aside>
+    </div>
+
+    <!-- Sommaire accordéon — mobile uniquement -->
+    <div class="container art-toc-mobile">
+      <details class="art-toc-accordion">
+        <summary class="art-toc-accordion-header">
+          Sommaire
+          <Icon name="chevron-down" width={16} height={16} strokeWidth={2} class="art-toc-chevron" />
+        </summary>
+        <nav class="art-toc-accordion-body" aria-label="Sommaire de l'article">
+          {toc.map((item) => (
+            <a
+              href={item.href}
+              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+            >
+              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+
+    <!-- Corps à deux colonnes : contenu + sidebar sticky -->
+    <div class="container art-layout">
+
+      <!-- Colonne principale -->
+      <div class="art-content">
+
+        <p>Votre chien saute la clôture, creuse sous le grillage, ou file dès que le portail s'entrouvre. Vous vivez avec la boule au ventre, à surveiller chaque sortie. Et vous avez sûrement déjà entendu qu'un chien qui fugue, c'est comme ça, surtout si c'est un husky ou un beagle.</p>
+
+        <p>C'est faux. Un chien qui fugue vous dit quelque chose. Le comprendre, c'est déjà la moitié du chemin.</p>
+
+        <h2 id="pourquoi-votre-chien-fugue">Pourquoi votre chien fugue</h2>
+
+        <h3 id="ennui-jardin-prison">L'ennui et le jardin qui devient une prison (fugue par ennui)</h3>
+
+        <p>Beaucoup de propriétaires pensent bien faire en laissant leur chien au jardin toute la journée. De l'espace, de l'air libre. Sauf que pour un chien seul, un jardin, c'est vite une prison dorée. Il y est coupé de son groupe social, sans rien à faire, sans personne avec qui interagir.</p>
+
+        <p>Un chien qui s'ennuie va chercher de l'occupation ailleurs. Il creuse, il escalade, il trouve la faille. Il ne fugue pas contre vous, il fugue parce qu'il cherche quoi faire.</p>
+
+        <h3 id="chaleurs-pulsions">Les chaleurs et les pulsions qu'il ne maîtrise pas (fugue «&nbsp;sexuelle&nbsp;»)</h3>
+
+        <p>Un mâle non castré qui sent une femelle en chaleur à plusieurs centaines de mètres n'est plus vraiment lui-même. C'est une déconnexion quasi totale&nbsp;: le cerveau s'allume et plus rien d'autre n'existe. Ni vous, ni la clôture, ni le danger de la route. Dans ces moments, le chien ne désobéit pas, il est débordé par quelque chose de plus fort que lui.</p>
+
+        <h3 id="fugue-par-peur">Fugue par peur&nbsp;: orages, feux d'artifice, etc</h3>
+
+        <p>Le 14&nbsp;juillet, le soir du nouvel an, un gros orage. Chaque année, énormément de chiens fuguent ces jours-là. Là, il ne s'agit pas d'exploration mais d'une fuite panique. Le chien cherche uniquement à s'extraire d'une situation qui le terrifie et il peut parcourir des kilomètres sans savoir où il va.</p>
+
+        <h3 id="part-pour-vous-rejoindre">Quand il part pour vous rejoindre</h3>
+
+        <p>Il y a un cas particulier&nbsp;: le chien qui fugue non pas pour s'éloigner, mais pour vous retrouver. C'est fréquent chez les chiens en <a href="/education-canine/comportement/problemes/anxiete/separation/">anxiété de séparation</a>, qui ne supportent pas votre absence. La fugue devient un acte de ralliement.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">J'ai suivi un jeune malinois très attaché à sa propriétaire. Dès qu'elle s'éloignait, même un peu, il montait en pression&nbsp;: agitation, vocalises, incapacité à se poser. Pour ce type de chien, s'échapper pour partir la chercher peut parfois arriver. Le vrai travail porte sur l'autonomie et le détachement, pas sur la clôture. Un sujet qui a sa propre page, tant il est vaste.</p>
+          </div>
+        </aside>
+
+        <h2 id="ca-se-regle">Un chien qui fugue, ça se règle</h2>
+
+        <h3 id="fugue-symptome">La fugue est un symptôme, pas un trait de caractère</h3>
+
+        <p>La fugue n'est jamais un caprice ni une fatalité génétique. C'est la manifestation visible d'autre chose&nbsp;: un besoin qui n'est pas comblé, une pulsion que le chien ne maîtrise pas, ou un lien social qui s'est distendu. Tant qu'on traite le symptôme (rehausser la clôture, ne plus jamais détacher) sans s'attaquer à la cause, on tourne en rond.</p>
+
+        <p>La bonne nouvelle, c'est qu'un comportement de fugue se travaille. Plus il est pris tôt, plus la rééducation est fluide. Un chien de deux ans qui commence à s'échapper se rétablit plus vite qu'un chien chez qui le schéma est installé depuis six ans. Mais même dans les cas anciens, il y a toujours une porte de sortie.</p>
+
+        <h3 id="ne-pas-gronder">Ne pas gronder le chien qui revient</h3>
+
+        <p>C'est le réflexe numéro un et c'est une catastrophe. Votre chien rentre après deux heures d'angoisse à le chercher, vous le grondez pour lui faire comprendre. Sauf que dans sa tête, il ne fait pas le lien avec la fugue. Il associe la punition au fait de revenir vers vous.</p>
+
+        <p>Résultat&nbsp;: la prochaine fois, il hésitera à rentrer, ou traînera encore plus longtemps dehors. Vous venez de rendre le retour désagréable.</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">La règle à retenir</p>
+            <p class="art-callout__text">Quoi qu'il arrive, quel que soit le temps qu'il a passé dehors, votre chien doit toujours associer son retour vers vous à quelque chose d'agréable. On accueille, on ne punit pas.</p>
+          </div>
+        </aside>
+
+        <h3 id="poser-bon-diagnostic">Poser le bon diagnostic avant d'agir</h3>
+
+        <p>Maintenant que les grandes causes sont posées, encore faut-il identifier la bonne. Un chien qui fugue par ennui, un chien qui fuit un orage et un chien qui part rejoindre une femelle en chaleur ne se travaillent pas de la même façon. Avant toute chose, il faut identifier ce qui pousse votre chien dehors. C'est souvent l'étape que les gens sautent ou ne savent pas identifier correctement et c'est pour ça qu'ils échouent.</p>
+
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous n'arrivez pas à identifier la cause de la fugue&nbsp;?</p>
+          <p class="art-inline-cta-desc">Bilan comportemental à domicile pour poser le bon diagnostic avant de perdre des semaines sur un mauvais protocole</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+        </aside>
+
+        <h2 id="fugue-ou-manque-rappel">Fugue ou simple manque de rappel&nbsp;?</h2>
+
+        <h3 id="chien-opportuniste">Le chien opportuniste qui sort par le portail ouvert</h3>
+
+        <p>Attention à ne pas tout mettre dans le même sac. Un chien qui sort par un portail resté ouvert et part renifler trois maisons plus loin n'est pas techniquement un fugueur. C'est un chien curieux, opportuniste, à qui il manque simplement un cadre et un rappel fiable.</p>
+
+        <p>La différence compte, parce que le travail n'est pas le même. Dans un cas, on soigne une cause émotionnelle profonde. Dans l'autre, on met en place des limites claires et on construit une vraie écoute.</p>
+
+        <h3 id="suivi-naturel">Le suivi naturel, ce qui manque vraiment avant le rappel</h3>
+
+        <p>On croit souvent que la solution, c'est de travailler le rappel encore et encore. Sauf que le rappel formel repose sur quelque chose de plus fondamental&nbsp;: le suivi naturel. C'est la capacité de votre chien à garder un œil sur vous, à se soucier de là où vous êtes, sans que vous ayez à dire quoi que ce soit.</p>
+
+        <p>Un chien qui ne vous regarde jamais en balade ne reviendra pas au rappel, peu importe le nombre de fois où vous répétez son nom. C'est là-dessus qu'il faut bâtir.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Sur un chien peu connecté, je commence toujours pareil&nbsp;: je dis son prénom, je me mets en mouvement et dès qu'il revient vers moi, je récompense (attention c'est différent du rappel). Puis je me tais et je bouge&nbsp;: s'il revient de lui-même, il gagne. On construit l'habitude de me chercher du regard avant même de parler de rappel.</p>
+          </div>
+        </aside>
+
+        <h2 id="combler-besoins">Combler ses besoins pour qu'il n'ait plus envie de partir</h2>
+
+        <h3 id="depenser-pour-de-vrai">Le dépenser pour de vrai, physiquement et mentalement</h3>
+
+        <p>Un chien qui fugue est très souvent un chien qui manque de dépense. À l'état sauvage, un chien parcourrait entre 30 et 50&nbsp;km par jour. Aujourd'hui, la plupart des chiens de famille sont largement en dessous de ce dont ils auraient besoin. Ce trop-plein d'énergie doit sortir quelque part.</p>
+
+        <p>Et la dépense physique ne fait pas tout. Faire réfléchir un chien le fatigue bien plus que de le faire courir. Une balade où il piste, flaire, analyse le terrain, rencontre d'autres chiens vaut dix fois une heure de course en ligne droite. Un chien fatigué dans sa tête n'a plus l'envie ni l'énergie d'aller chercher l'aventure par-dessus la clôture.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">L'ordre qui compte</p>
+            <p class="art-callout__text">Un chien bien dépensé le matin gère beaucoup mieux une journée de solitude ensuite. Soyez stratégique sur vos balades pour mieux apprendre à votre chien à ne rien faire.</p>
+          </div>
+        </aside>
+
+        <h3 id="canaliser-instinct-chasse">Canaliser l'instinct de chasse au lieu de le subir</h3>
+
+        <p>Certains chiens fuguent pour chasser. L'instinct de prédation est inné et chez un chien de chasse ou un chien de mouvement, il est puissant. Le nier ne sert à rien. Le canaliser, oui.</p>
+
+        <p>Ça passe par des activités qui donnent un exutoire à cette pulsion&nbsp;: le jeu de balle, qui est une phase de poursuite, le pistage, un flirt pole pour les chiens qui ont besoin de courir après quelque chose. Un chien de berger australien qui a tout donné sur un jeu de traque cadré a beaucoup moins de raisons de partir traquer un chevreuil tout seul.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">J'ai travaillé avec un chien à très fort instinct de prédation, débordé par le moindre mouvement. En début de séance, on le défoulait au flirt pole. La différence était nette&nbsp;: une fois vraiment déchargé, il redevenait disponible et à l'écoute. L'énergie qui alimentait ses débordements avait enfin trouvé une sortie.</p>
+          </div>
+        </aside>
+
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous ne savez pas comment vraiment dépenser votre chien&nbsp;?</p>
+          <p class="art-inline-cta-desc">Bilan à domicile pour construire un plan d'activités adapté à sa race, son âge et son énergie, sans engagement</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
+        </aside>
+
+        <h2 id="renforcer-le-lien">Renforcer le lien avec votre chien plutôt que la clôture</h2>
+
+        <h3 id="redevenir-interessant">Redevenir plus intéressant que ce qu'il y a dehors</h3>
+
+        <p>La sécurité d'un chien ne dépend pas de la hauteur de vos clôtures, mais de la solidité du lien qui vous unit. Un chien qui vit des choses intéressantes avec vous, tous les jours, n'a aucune raison d'aller chercher son bonheur ailleurs.</p>
+
+        <p>C'est simple à dire, plus long à construire. Ça veut dire des balades variées, des jeux, des moments partagés qui font de vous le centre de son intérêt. Quand l'extérieur devient moins attirant que ce que vous proposez, l'envie de fuguer tombe d'elle-même.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Un chien privé de liberté et de contacts se jettera sur la moindre occasion de s'échapper, comme quelqu'un qu'on aurait enfermé trop longtemps. La solution n'est pas de verrouiller encore plus, mais souvent d'offrir plus de liberté cadrée, pas moins.</p>
+          </div>
+        </aside>
+
+        <h3 id="longe-securite">La longe comme sécurité le temps du travail</h3>
+
+        <p>Pendant que vous reconstruisez ce lien et ce suivi naturel, il faut sécuriser sans enfermer. La longe est faite pour ça. C'est un filet de sécurité qui vous permet de laisser du mouvement à votre chien tout en gardant la main.</p>
+
+        <p>C'est un outil de transition, pas un mode de vie. On l'utilise le temps d'installer les bons automatismes, puis on l'allège progressivement. Là aussi, il y a une vraie technique derrière, qui mérite qu'on s'y attarde à part.</p>
+
+        <h2 id="erreurs-colliers-clotures">Les erreurs à ne pas faire&nbsp;: colliers anti-fugue et clôtures électriques</h2>
+
+        <h3 id="apprend-de-la-decharge">Ce que le chien apprend vraiment de la décharge</h3>
+
+        <p>Les colliers à décharge et les clôtures invisibles partent d'une idée simple&nbsp;: le chien reçoit une douleur en franchissant la limite, donc il arrête. Parfois ça marche, parfois non.</p>
+
+        <p>Dans certains cas le chien comprend vite qu'en traversant la zone à toute vitesse, la douleur est brève. Il sort quand même. Sauf qu'une fois dehors, la peur de reprendre une décharge l'empêche de rentrer. Vous obtenez l'inverse du but recherché&nbsp;: un chien qui s'échappe et qui, ensuite, n'ose plus revenir. Et si la fugue était déclenchée par une peur (un orage), vous venez d'ajouter de la douleur à un chien déjà terrorisé. Le cercle vicieux est complet.</p>
+
+        <p>Surtout, ces dispositifs ne traitent jamais la cause. L'ennui est toujours là, la pulsion aussi, l'anxiété aussi. On masque le symptôme et on punit le chien pour avoir simplement cherché à répondre à un besoin.</p>
+
+        <h3 id="securiser-environnement">Sécuriser l'environnement sans lui faire mal</h3>
+
+        <p>Sécuriser un chien fugueur, c'est du bon sens matériel, pas de la douleur. Une clôture physique en bon état, un portail qui ferme vraiment, un passage bouché là où il creuse. Pendant ce temps, on travaille le fond. La barrière empêche l'accident le temps de régler le vrai problème, elle ne remplace pas le travail.</p>
+
+      </div><!-- /.art-content -->
+
+      <!-- Sidebar sticky — desktop uniquement -->
+      <aside class="art-sidebar" aria-labelledby="art-toc-heading">
+        <nav class="art-toc" aria-labelledby="art-toc-heading">
+          <details class="art-toc-details">
+            <summary class="art-toc-title" id="art-toc-heading">
+              Sommaire
+              <svg class="art-toc-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="art-toc-links">
+              {toc.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+                >
+                  <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        </nav>
+
+        <div class="art-sidebar-cta">
+          <p class="art-sidebar-cta-title">Votre chien fugue et vous ne savez plus quoi faire&nbsp;?</p>
+          <p class="art-sidebar-cta-desc">Bilan comportemental à domicile pour identifier la vraie cause et construire un plan sur mesure</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            Prendre RDV
+            <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
+          </a>
+        </div>
+      </aside>
+
+    </div><!-- /.art-layout -->
+
+    <!-- Like / Dislike -->
+    <section class="art-feedback-wrap" aria-label="Votre avis sur cet article">
+      <div class="container">
+        <div class="art-feedback" id="art-feedback">
+          <p class="art-feedback-question">Cet article vous a été utile&nbsp;?</p>
+          <div class="art-feedback-buttons">
+            <button type="button" class="art-feedback-btn art-feedback-btn--like" id="art-like-btn" aria-label="J'aime cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>
+              </svg>
+              Oui
+            </button>
+            <button type="button" class="art-feedback-btn art-feedback-btn--dislike" id="art-dislike-btn" aria-label="Je n'aime pas cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>
+              </svg>
+              Non
+            </button>
+          </div>
+
+          <div class="art-feedback-form" id="art-feedback-form" hidden>
+            <label for="art-feedback-text" class="art-feedback-label">Qu'est-ce qui pourrait être amélioré&nbsp;?</label>
+            <textarea
+              id="art-feedback-text"
+              class="art-feedback-textarea"
+              rows="3"
+              maxlength="500"
+              placeholder="Votre retour nous aide à améliorer nos contenus…"
+            ></textarea>
+            <div class="art-feedback-form-footer">
+              <span class="art-feedback-hint" id="art-feedback-hint">10 caractères minimum</span>
+              <button type="button" class="btn btn-primary art-feedback-submit" id="art-feedback-submit" disabled>Envoyer</button>
+            </div>
+          </div>
+
+          <div class="art-feedback-thanks" id="art-feedback-thanks" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span>Merci ! Je prends en compte tous vos retours pour améliorer la qualité des articles et vous aider le plus possible :)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Biographie auteure -->
+    <footer class="art-bio-wrap">
+      <div class="container">
+        <div class="art-bio">
+          <div class="art-bio-avatar" aria-hidden="true">
+            <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="64" height="64" loading="lazy" decoding="async" style="display:block;" />
+          </div>
+          <div>
+            <p class="art-bio-name">À propos de {article.author}</p>
+            <p class="art-bio-role">{article.authorRole}</p>
+            <p class="art-bio-desc">{article.authorDesc}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </article><!-- /article -->
+
+
+  <!-- ── FAQ ───────────────────────────────────────────────────────── -->
+  {faqItems.length > 0 && (
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 750px;">
+        <h2 id="faq-heading" style="text-align: center;">Questions fréquentes sur le <span class="accent">chien fugueur</span></h2>
+        <div class="faq-list" style="margin-top: var(--sp-8);">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>{item.question}</span>
+                <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────────────── -->
+  <section class="section-dark art-cta-section" aria-labelledby="art-cta-h">
+    <div class="container art-cta-inner">
+      <h2 class="art-cta-title" id="art-cta-h">Votre chien continue de fuguer malgré tous vos efforts&nbsp;?</h2>
+      <p>Bilan comportemental gratuit à domicile, Bordeaux et métropole</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Réserver mon bilan gratuit
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── ARTICLES QUI PEUVENT VOUS INTÉRESSER ───────────────────────── -->
+  <section class="art-related" aria-labelledby="art-related-h">
+    <div class="container">
+      <p class="art-related-divider" id="art-related-h">Articles qui peuvent vous intéresser</p>
+      <div class="art-related-grid">
+        {related.map((card) => (
+          <a href={card.url} class="art-related-card">
+            <img
+              src={card.img}
+              alt={card.imgAlt}
+              class="art-related-card-img"
+              width="360"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="art-related-card-body">
+              <p class="art-related-card-title">{card.title}</p>
+              <p class="art-related-card-meta">{card.readTime} de lecture</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
+  <ArticleProgressBar />
+
+  <script is:inline>
+    (function () {
+      var MIN_CHARS = 10;
+      var feedbackWrap = document.getElementById('art-feedback');
+      var likeBtn = document.getElementById('art-like-btn');
+      var dislikeBtn = document.getElementById('art-dislike-btn');
+      var feedbackForm = document.getElementById('art-feedback-form');
+      var feedbackText = document.getElementById('art-feedback-text');
+      var feedbackHint = document.getElementById('art-feedback-hint');
+      var feedbackSubmit = document.getElementById('art-feedback-submit');
+      var feedbackThanks = document.getElementById('art-feedback-thanks');
+
+      if (!feedbackWrap || !likeBtn || !dislikeBtn) return;
+
+      function sendGA4Event(eventName, params) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: eventName }, params));
+      }
+
+      function getArticleTitle() {
+        var h1 = document.querySelector('h1');
+        return h1 ? h1.textContent.trim() : document.title;
+      }
+
+      function showThanks() {
+        feedbackWrap.querySelectorAll('.art-feedback-buttons, .art-feedback-form, .art-feedback-question').forEach(
+          function (el) { el.hidden = true; }
+        );
+        feedbackThanks.hidden = false;
+      }
+
+      likeBtn.addEventListener('click', function () {
+        sendGA4Event('article_like', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+        });
+        showThanks();
+      });
+
+      dislikeBtn.addEventListener('click', function () {
+        likeBtn.hidden = true;
+        dislikeBtn.classList.add('art-feedback-btn--selected');
+        dislikeBtn.disabled = true;
+        feedbackForm.hidden = false;
+        feedbackText.focus();
+      });
+
+      feedbackText.addEventListener('input', function () {
+        var len = feedbackText.value.trim().length;
+        var valid = len >= MIN_CHARS;
+        feedbackSubmit.disabled = !valid;
+        if (len === 0) {
+          feedbackHint.textContent = MIN_CHARS + ' caractères minimum';
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else if (!valid) {
+          feedbackHint.textContent = 'Encore ' + (MIN_CHARS - len) + ' caractère' + (MIN_CHARS - len > 1 ? 's' : '');
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else {
+          feedbackHint.textContent = 'Prêt à envoyer';
+          feedbackHint.classList.add('art-feedback-hint--ok');
+        }
+      });
+
+      feedbackSubmit.addEventListener('click', function () {
+        var text = feedbackText.value.trim();
+        if (text.length < MIN_CHARS) return;
+        sendGA4Event('article_dislike', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+          user_feedback: text,
+        });
+        showThanks();
+      });
+    })();
+  </script>
+
+  <script>
+    const btn = document.getElementById('art-copy-link');
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+        } catch {
+          const el = Object.assign(document.createElement('input'), { value: window.location.href });
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          el.remove();
+        }
+        btn.setAttribute('data-copied', '');
+        setTimeout(() => btn.removeAttribute('data-copied'), 2000);
+      });
+    }
+  </script>
+
+</Layout>

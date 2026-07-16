@@ -3,6 +3,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 export default defineConfig({
   site: 'https://kind-dog-training.fr',
   output: 'static',
+  trailingSlash: 'always',
   integrations: [],
   image: {
     service: {

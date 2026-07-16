@@ -27,6 +27,7 @@ const pages = [
   '/education-canine/comportement/comprendre/adolescence-chien/',
   '/education-canine/comportement/problemes/gestion-emotions/balade/',
   '/education-canine/comportement/problemes/anxiete/separation/',
+  '/education-canine/comportement/problemes/fugue/',
 ];
 
 export const GET: APIRoute = ({ site }) => {
