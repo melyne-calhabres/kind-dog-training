@@ -500,6 +500,11 @@ p {
   border-bottom: 1px solid var(--kd-cream-deep);
   padding: var(--sp-4);
   box-shadow: var(--shadow-md);
+  max-height: calc(100vh - var(--header-height));
+  max-height: calc(100dvh - var(--header-height));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .main-nav.is-open {
@@ -821,6 +826,8 @@ p {
     border: none;
     padding: 0;
     box-shadow: none;
+    max-height: none;
+    overflow: visible;
   }
 
   .nav-list {

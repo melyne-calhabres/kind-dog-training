@@ -1,0 +1,749 @@
+---
+import Layout from '../../../../../layouts/Layout.astro';
+import Icon from '../../../../../components/Icon.astro';
+import ArticleProgressBar from '../../../../../components/ArticleProgressBar.astro';
+import '../../../../../styles/services.css';
+import '../../../../../styles/article.css';
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Mon Chien Attaque les Autres Chiens : Comment Réagir',
+  metaDescription: 'Votre chien attaque les autres chiens en balade ? Découvrez comment réagir, reconnaître une vraie attaque et surtout éviter que ça recommence.',
+};
+
+// ── Article metadata ──────────────────────────────────────────────────────────
+const article = {
+  category:       'Comportement',
+  categoryUrl:    '/education-canine/comportement/',
+  breadcrumbLabel:'Chien qui attaque',
+  titleBefore:    'Mon chien ',
+  titleAccent:    'attaque les autres chiens',
+  titleAfter:     ' en balade : comment réagir ?',
+  publishDate:    '17 juillet 2026',
+  publishDateIso: '2026-07-17',
+  readTime:       '16 min',
+  author:         'Mélyne',
+  authorInitial:  'M',
+  authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
+  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
+  coverAlt:       'Deux chiens en tension face à face en pleine balade, illustrant une situation d\'attaque entre congénères',
+};
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Mon chien peut-il redevenir sociable après avoir attaqué un autre chien ?',
+    answer:   'Oui, dans la grande majorité des cas. Il faut juste ajuster ses attentes. L\'objectif réaliste n\'est pas forcément un chien qui adore tous ses congénères mais un chien capable de les croiser sans passer à l\'acte, avec des interactions calmes quand elles sont possibles. J\'ai vu des chiens réactifs depuis deux ans retrouver des balades sereines et même des copains de jeu. La réhabilitation prend du temps et dépend du passé du chien, mais il est toujours possible de supprimer les attaques et de restaurer une vraie vie sociale.',
+  },
+  {
+    question: 'Faut-il le punir juste après une attaque ?',
+    answer:   'Non, et c\'est même une des erreurs les plus coûteuses. Punir votre chien après coup ne lui apprend pas à ne plus attaquer, ça lui apprend que les autres chiens annoncent des ennuis, ce qui renforce sa tension. Pire, si vous punissez ses signaux d\'avertissement, vous risquez de créer un chien qui saute les préavis et mord sans prévenir. Dans l\'instant, votre travail est de sécuriser et de ramener le calme, pas de corriger.',
+  },
+  {
+    question: 'La castration réduit-elle l\'agressivité entre mâles ?',
+    answer:   'Elle peut aider dans certains cas, notamment quand un chien est en pleine montée hormonale et monte très vite en pression face à d\'autres mâles. Mais ce n\'est pas un interrupteur. La castration agit sur une partie hormonale du comportement, pas sur la peur, la frustration ou une mauvaise expérience, qui sont les vraies causes dans la plupart des situations. La présenter comme la solution reviendrait à ignorer le fond du problème. C\'est un levier possible à discuter avec votre vétérinaire, à intégrer dans un travail global, jamais à la place de ce travail.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type':       'Article',
+      headline:      article.titleBefore + article.titleAccent + article.titleAfter,
+      description:   page.metaDescription,
+      datePublished: '2026-07-17T09:00:00+02:00',
+      dateModified:  '2026-07-17T09:00:00+02:00',
+      inLanguage:    'fr-FR',
+      url:           pageUrl,
+      image: {
+        '@type': 'ImageObject',
+        url:     siteUrl + '/images/article-chien-attaque-autre-chien.webp',
+        width:   925,
+        height:  456,
+      },
+      author: {
+        '@type':     'Person',
+        name:        article.author,
+        url:         siteUrl + '/qui-suis-je/',
+        jobTitle:    'Éducatrice & comportementaliste canin',
+        description: article.authorDesc,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url:     siteUrl + '/images/logo.png',
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id':   pageUrl,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',                item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: article.category,         item: siteUrl + article.categoryUrl },
+        { '@type': 'ListItem', position: 3, name: article.breadcrumbLabel },
+      ],
+    },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
+  ],
+};
+
+// ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
+const tldr = [
+  'Ces situations vont très vite et personne ne garde une tête froide : si vous avez mal réagi, ne culpabilisez pas',
+  'Si votre chien attaque les autres chiens, la meilleure chose à faire en attendant de régler le problème avec un pro est de mettre une muselière',
+  'Si votre chien vous mord en pleine bagarre, c\'est une morsure de redirection, pas une morsure volontaire : ne le grondez pas pour ça',
+  'Beaucoup de ce qui ressemble à une attaque n\'en est pas : un recadrage entre deux chiens qui se parlent n\'a rien à voir avec une vraie montée en agressivité',
+  'La cause la plus fréquente d\'un chien qui attaque ses congénères, c\'est la peur, souvent née d\'une mauvaise expérience ou d\'une socialisation trop courte',
+  'Certaines de vos habitudes nourrissent le problème sans que vous le sachiez : anticiper avec la laisse, éviter tous les autres chiens',
+  'Gérer une vraie agression entre chiens seul est risqué. Se faire accompagner n\'est pas un échec, c\'est la voie la plus sûre. Choisissez un professionnel qui vous propose une balade dès le premier rendez-vous',
+];
+
+// ── Table of contents ─────────────────────────────────────────────────────────
+const toc = [
+  { label: 'Ce qu\'il faut faire dans l\'instant',                       href: '#reagir-dans-l-instant',          sub: false },
+  { label: 'Séparer deux chiens sans y laisser vos mains',              href: '#separer-deux-chiens',            sub: true  },
+  { label: 'Pourquoi crier et tirer sur la laisse aggrave la situation',href: '#crier-tirer-laisse',             sub: true  },
+  { label: 'Rester en mouvement plutôt que se figer',                   href: '#rester-en-mouvement',            sub: true  },
+  { label: 'Reconnaître une vraie attaque d\'une communication brutale',href: '#reconnaitre-vraie-attaque',      sub: false },
+  { label: 'Recadrage et mise à distance entre chiens',                 href: '#recadrage-mise-a-distance',      sub: true  },
+  { label: 'Les signaux d\'une réelle montée en tension',               href: '#signaux-montee-tension',         sub: true  },
+  { label: 'Le danger de punir un chien qui communiquait',              href: '#danger-punir-communication',     sub: true  },
+  { label: 'Pourquoi votre chien en arrive à attaquer',                 href: '#pourquoi-votre-chien-attaque',   sub: false },
+  { label: 'La peur, le moteur le plus fréquent',                       href: '#peur-moteur-frequent',           sub: true  },
+  { label: 'La frustration et l\'excitation qui débordent',             href: '#frustration-excitation',         sub: true  },
+  { label: 'Une mauvaise expérience ou une socialisation incomplète',   href: '#mauvaise-experience-socialisation', sub: true },
+  { label: 'Ce que vous faites peut-être sans le savoir',               href: '#habitudes-qui-nourrissent',      sub: false },
+  { label: 'L\'anticipation qui passe par la laisse',                   href: '#anticipation-laisse',            sub: true  },
+  { label: 'Éviter tous les chiens ne règle jamais le problème',        href: '#eviter-tous-les-chiens',         sub: true  },
+  { label: 'Pourquoi cette situation demande un professionnel',         href: '#accompagnement-professionnel',   sub: false },
+  { label: 'Sécuriser d\'abord : la muselière en attendant',            href: '#museliere-securiser',            sub: true  },
+  { label: 'Pourquoi les conseils en ligne peuvent empirer les choses', href: '#conseils-en-ligne',              sub: true  },
+  { label: 'Ce qu\'un accompagnement individualisé change vraiment',    href: '#accompagnement-individualise',   sub: true  },
+  { label: 'Reconnaître un éducateur en qui avoir confiance',           href: '#reconnaitre-educateur',          sub: true  },
+];
+
+// ── Articles connexes ─────────────────────────────────────────────────────────
+const related = [
+  {
+    title:    'Mon chien a été attaqué, que faire pour éviter qu\'il ne devienne réactif ?',
+    readTime: '12 min',
+    img:      '/images/article-attaque-chien-que-faire-apres.webp',
+    imgAlt:   'Chien après une altercation, illustrant les démarches à suivre après une attaque',
+    url:      '/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/',
+  },
+  {
+    title:    'Mon chien est réactif aux autres chiens en balade',
+    readTime: '13 min',
+    img:      '/images/article-reactivite-chiens.webp',
+    imgAlt:   'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
+    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
+  },
+  {
+    title:    'Chien qui fugue : comprendre pourquoi et l\'aider à rester',
+    readTime: '14 min',
+    img:      '/images/article-chien-qui-fugue.webp',
+    imgAlt:   'Chien en extérieur près d\'une clôture, illustrant la problématique de la fugue chez le chien',
+    url:      '/education-canine/comportement/problemes/fugue/',
+  },
+];
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ──────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href={article.categoryUrl}>{article.category}</a></li>
+        <li aria-current="page">{article.breadcrumbLabel}</li>
+      </ol>
+    </div>
+  </nav>
+
+
+  <!-- ── ARTICLE ───────────────────────────────────────────────────── -->
+  <article aria-labelledby="art-h1">
+
+    <!-- En-tête de l'article -->
+    <header class="art-header">
+      <div class="container">
+        <h1 class="art-title" id="art-h1">
+          {article.titleBefore}<span class="accent">{article.titleAccent}</span>{article.titleAfter}
+        </h1>
+        <div class="art-meta">
+          <div class="art-author">
+            <div class="art-avatar" aria-hidden="true">
+              <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
+            </div>
+            <p class="art-author-info">
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+            </p>
+          </div>
+          <div class="art-share">
+            <button id="art-copy-link" class="art-share-btn" type="button" aria-label="Copier le lien de l'article">
+              <Icon name="link" width={16} height={16} strokeWidth={2} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Image hero -->
+    <div class="art-hero-wrap">
+      <div class="container">
+        <figure class="art-hero">
+          <picture>
+            <source media="(max-width: 767px)" srcset="/images/article-chien-attaque-autre-chien-mobile.webp" width="400" height="351" />
+            <img
+              src="/images/article-chien-attaque-autre-chien.webp"
+              alt={article.coverAlt}
+              width="925"
+              height="456"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              class="art-hero-img"
+            />
+          </picture>
+        </figure>
+      </div>
+    </div>
+
+    <!-- L'essentiel -->
+    <div class="container">
+      <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+        <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+        <p class="art-tldr-title">Ce qu'il faut retenir</p>
+        <ul class="art-tldr-list" role="list">
+          {tldr.map((item) => (
+            <li>
+              <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="art-tldr-footer">
+          <Icon name="clock" width={14} height={14} strokeWidth={2} />
+          Lecture complète&nbsp;: {article.readTime} · Pour aller plus loin, lisez l'article entier
+        </p>
+      </aside>
+    </div>
+
+    <!-- Sommaire accordéon — mobile uniquement -->
+    <div class="container art-toc-mobile">
+      <details class="art-toc-accordion">
+        <summary class="art-toc-accordion-header">
+          Sommaire
+          <Icon name="chevron-down" width={16} height={16} strokeWidth={2} class="art-toc-chevron" />
+        </summary>
+        <nav class="art-toc-accordion-body" aria-label="Sommaire de l'article">
+          {toc.map((item) => (
+            <a
+              href={item.href}
+              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+            >
+              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+
+    <!-- Corps à deux colonnes : contenu + sidebar sticky -->
+    <div class="container art-layout">
+
+      <!-- Colonne principale -->
+      <div class="art-content">
+
+        <p>Votre chien s'est jeté sur un autre chien en pleine balade. Peut-être qu'il a juste chargé, peut-être qu'il y a eu contact. Dans tous les cas, vous êtes reparti le cœur battant, en vous demandant ce que vous étiez censé faire à ce moment-là et surtout comment éviter que ça recommence. Je vais vous donner de quoi comprendre ce qui se passe et réagir sans vous mettre en danger. Pas un protocole à appliquer seul dans votre coin, parce que ce serait vous mentir sur la difficulté réelle du travail.</p>
+
+        <h2 id="reagir-dans-l-instant">Ce qu'il faut faire dans l'instant où votre chien se jette sur un congénère</h2>
+
+        <h3 id="separer-deux-chiens">Séparer deux chiens sans y laisser vos mains</h3>
+
+        <p>Commençons par enlever un poids de vos épaules. Séparer deux chiens qui s'accrochent, c'est une des situations les plus violentes et les plus stressantes qu'un propriétaire puisse vivre. Tout va très vite, l'adrénaline monte et personne ne garde une tête parfaitement froide dans ces moments-là. Si vous avez déjà mal réagi, si vous vous êtes figé ou si vous avez plongé les mains dans la mêlée, vous n'êtes ni un mauvais maître ni le seul. On fait ce qu'on peut avec ce qu'on a sur le moment, et c'est déjà beaucoup.</p>
+
+        <p>Cela dit, il y a une chose à garder en tête pour vous protéger, vous. L'idéal, c'est que vos mains restent loin des deux gueules. Un chien en plein état de tension ne vous reconnaît pas vraiment, il mord ce qui passe, et ce qui passe peut être votre poignet. Alors quand c'est possible, voilà ce que vous pouvez essayer de faire&nbsp;:</p>
+
+        <ul class="art-list" role="list">
+          <li>Tirer les pattes arrière de votre chien pour le déséquilibrer et le faire lâcher (attention à une potentielle morsure de redirection)</li>
+          <li>Taper dans le plexus (au niveau du thorax mais dangereux pour vous car vrai risque de morsure par redirection). Cela va couper l'arrivée d'oxygène pendant quelques secondes, obligeant le chien à lâcher pour respirer.</li>
+        </ul>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Ne plongez pas les mains dans la mêlée</p>
+            <p class="art-callout__text">Le réflexe naturel, c'est de plonger les mains dans la mêlée pour arracher son chien. C'est humain et c'est aussi ce qui envoie le plus de propriétaires aux urgences. Un chien en perte de contrôle redirige sa morsure sur le premier support disponible, et ce support, c'est souvent la main qui approche. Gardez en tête que si cela arrive, votre chien ne l'a pas fait exprès. Ne le fâchez pas pour ça car il s'agit d'une morsure de redirection. Ce n'est pas une morsure volontaire envers vous.</p>
+          </div>
+        </aside>
+
+        <p>Dans tous les cas, un chien qui lâche par surprise ou manque d'oxygène a de fortes chances de ré-engueuler 2x plus fort juste après. Attention donc à récupérer du contrôle immédiatement.</p>
+
+        <p>Je préfère être honnête avec vous&nbsp;: même en connaissant tout ça, séparer deux chiens qui s'accrochent pour de vrai reste difficile et fait peur. Ne culpabilisez pas si vous n'y arrivez pas comme dans les vidéos. Si vous en êtes là régulièrement, le vrai enjeu n'est pas de devenir parfait dans l'urgence, c'est de sécuriser la situation en amont pour ne plus jamais avoir à vivre ça.</p>
+
+        <h3 id="crier-tirer-laisse">Pourquoi crier et tirer sur la laisse aggrave la situation</h3>
+
+        <p>Quand votre chien attaque un autre chien, votre corps réagit avant votre cerveau&nbsp;: vous criez, vous tirez de toutes vos forces sur la laisse. C'est humain. C'est aussi contre-productif. En plus de ça, tirer sur la laisse crée une tension qui va à l'opposé de la prise de votre chien, ce qui l'incite à serrer encore plus la mâchoire pour maintenir sa prise.</p>
+
+        <p>J'ai suivi un staffie qui réagissait uniquement en présence de sa propriétaire. Avec la personne qui le gardait en journée, aucun incident. La différence ne venait pas du chien, elle venait de la charge émotionnelle que sa propriétaire mettait, sans le vouloir, dans chaque croisement. Le chien lisait son inquiétude et répondait à cette inquiétude.</p>
+
+        <h3 id="rester-en-mouvement">Rester en mouvement plutôt que se figer</h3>
+
+        <p>Ça semble contre-intuitif, mais se figer est une des pires choses à faire. Pour un chien, un humain immobile et tendu ressemble à un état de choc ou à un focus de prédateur. Votre immobilité devient un signal d'alerte de plus. Continuer à avancer, garder une ligne de marche, souffler, tout ça fluidifie la situation et donne à votre chien une direction à suivre plutôt qu'un mur de tension.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le corps parle avant la voix</p>
+            <p class="art-callout__text">Épaules relâchées, respiration lente, on continue de marcher. Un chien capte votre posture bien avant vos mots. Si votre corps dit «&nbsp;c'est gérable&nbsp;», il a plus de chances de le croire.</p>
+          </div>
+        </aside>
+
+        <h2 id="reconnaitre-vraie-attaque">Reconnaître une vraie attaque d'une communication un peu brutale</h2>
+
+        <h3 id="recadrage-mise-a-distance">Recadrage et mise à distance&nbsp;: quand deux chiens règlent les choses entre eux</h3>
+
+        <p>Avant de parler d'attaque, il faut savoir ce qu'on regarde. Les chiens ont un langage, et ce langage passe parfois par des gestes qui nous paraissent «&nbsp;violents&nbsp;». Un chien qui en recadre un autre peut grogner, bomber le torse, s'interposer, aller jusqu'à poser les pattes sur le dos de l'autre. Sans la moindre hostilité derrière. C'est de la régulation, pas de l'agression.</p>
+
+        <p>Un jeune chien que j'ai accompagné, hypersociable et un peu casse-pieds s'est fait recadrer par mon propre chien lors d'une rencontre. Le recadrage a été net et le jeune l'a parfaitement accepté, sans montée en tension. C'est exactement comme ça qu'un chien apprend les limites&nbsp;: par un autre chien qui les lui pose clairement. Bien évidemment je sais que mon chien est suffisamment stable et bien codé pour laisser l'interaction. Restez tout de même attentif si cela arrive avec un chien que vous ne connaissez pas. Beaucoup de chiens sont très bien codés et sont mesurés dans leurs interactions donc l'idée n'est pas d'être tendu à chaque croisement mais d'être juste attentif aux signaux de communication de vos toutous.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le grognement n'est pas votre ennemi</p>
+            <p class="art-callout__text">Un grognement, c'est un avertissement poli. C'est votre chien qui dit «&nbsp;là, c'est trop pour moi&nbsp;». Le punir revient à débrancher son alarme parce qu'elle fait du bruit.</p>
+          </div>
+        </aside>
+
+        <h3 id="signaux-montee-tension">Les signaux qui annoncent une réelle montée en tension</h3>
+
+        <p>Une vraie montée, ça se lit dans le corps entier. Chez le staffie dont je vous parlais, les croisements difficiles ressemblaient à ça&nbsp;: jet en avant, oreilles portées vers l'avant, queue haute, poils hérissés le long du dos, pupilles dilatées, grognements et aboiements. La communication souple a disparu. Le chien se raidit et se prépare. La fluidité corporelle disparaît, tout devient rigide et frontal.</p>
+
+        <p>La différence avec le jeu ou le recadrage tient à cette raideur et à la connaissance de votre chien. Un chien qui joue reste souple, fait des appels au jeu, se met en pause. Un chien qui bascule se fige, fixe, et coupe tous les préavis.</p>
+
+        <h3 id="danger-punir-communication">Le danger de punir un chien qui communiquait correctement</h3>
+
+        <p>Voici le point que je vois passer sous les radars de la plupart des propriétaires. Si vous punissez systématiquement votre chien à chaque fois qu'il grogne ou pose une limite, vous ne supprimez pas le problème, vous supprimez les avertissements. Le chien comprend que sa version longue, celle avec les postures et les grognements polis, lui attire des ennuis. Alors il passe à la version courte&nbsp;: il enlève les préavis et mord directement. Sans prévenir.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">On me présente parfois des chiens «&nbsp;qui mordent sans raison, sans prévenir&nbsp;». Il y a toujours des raisons et des préavis. Vous ne les avez pas vus ou ils ont juste été punis assez longtemps pour disparaître.</p>
+          </div>
+        </aside>
+
+        <p>C'est une des raisons pour lesquelles je suis prudente avec les conseils appliqués à l'aveugle. Sanctionner un chien qui parlait juste, c'est se tirer une balle dans le pied et abîmer la confiance qu'il vous accorde.</p>
+
+        <div class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Difficile de savoir si votre chien attaque vraiment ou communique&nbsp;?</p>
+          <p class="art-inline-cta-desc">Bilan comportemental à domicile pour observer votre chien en situation réelle et poser un vrai diagnostic, sans engagement</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+        </div>
+
+        <h2 id="pourquoi-votre-chien-attaque">Pourquoi votre chien en arrive à attaquer ses congénères</h2>
+
+        <h3 id="peur-moteur-frequent">La peur, le moteur le plus fréquent</h3>
+
+        <p>Quand on pense «&nbsp;chien qui attaque&nbsp;», on imagine un chien dominant, sûr de lui. Dans la réalité, c'est souvent l'inverse. La peur est la forme d'agressivité la plus répandue. Un chien qui a peur cherche d'abord à fuir. S'il ne peut pas, parce qu'il est tenu en laisse courte par exemple, parce que l'autre chien arrive frontalement, il finit par attaquer pour faire reculer la menace. Et comme ça marche, l'autre s'éloigne, il apprend que l'attaque est efficace.</p>
+
+        <p>J'ai travaillé avec une jeune chienne qui illustrait bien ça. Suite à une mauvaise rencontre, elle avait perdu confiance&nbsp;: elle aboyait, avançait puis reculait aussitôt, mettait la queue entre les jambes. Ce qui était précieux dans son cas, c'est qu'elle gardait de la curiosité malgré son inquiétude. Elle n'était pas terrorisée, juste sur la défensive. Un très bon terrain de travail, à condition de ne jamais la forcer au contact.</p>
+
+        <h3 id="frustration-excitation">La frustration et l'excitation qui débordent</h3>
+
+        <p>Toutes les attaques ne viennent pas de la peur. Certains chiens débordent d'envie d'aller voir les autres et ne savent pas gérer ce trop-plein. L'excitation monte, monte, monte, et faute de savoir redescendre, elle se transforme en réaction désordonnée. Le chien voudrait aller jouer mais sort une charge à la place, parce que son émotion a pris le dessus.</p>
+
+        <p>Le staffie que j'accompagnais montait très fort en pression et redescendait difficilement seul. Un jouet qu'il n'avait pas, un autre chien avec un bâton en gueule et la frustration explosait. Chez ce genre de chien, le vrai travail n'est pas sur d'autres chiens, il est d'abord sur la capacité à <a href="/education-canine/comportement/problemes/gestion-emotions/balade/">gérer ses propres montées émotionnelles</a>.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le symptôme n'est pas toujours la cause</p>
+            <p class="art-callout__text">Un chien qui attaque manque souvent de dépense physique, de contacts sociaux réguliers, ou de repères pour redescendre. On croit travailler l'agressivité alors qu'on travaille un déséquilibre global.</p>
+          </div>
+        </aside>
+
+        <h3 id="mauvaise-experience-socialisation">Une mauvaise expérience ou une socialisation incomplète</h3>
+
+        <p>Beaucoup de <a href="/education-canine/comportement/problemes/reactivite/chiens/">chiens réactifs</a> le sont devenus après un événement précis. Une attaque subie, une frayeur et le rapport aux congénères bascule. Le staffie dont je parle est devenu réactif vers ses un an, après une altercation avec un Shiba. Mon propre chien a développé une agressivité envers ses congénères après avoir été attaqué. Un cocker que j'ai suivi est devenu réactif après une attaque récente qui avait changé sa perception de tout son environnement.</p>
+
+        <p>L'autre grande cause, c'est une socialisation trop courte ou mal faite. L'essentiel du rapport au monde se joue entre zéro et cinq mois. Un chiot qu'on a peu sorti, peu exposé aux autres, arrive à l'âge adulte sans le mode d'emploi social. Il ne sait pas lire les autres, ni se faire comprendre, et l'incompréhension tourne vite au conflit.</p>
+
+        <h2 id="habitudes-qui-nourrissent">Ce que vous faites peut-être sans le savoir et qui nourrit l'agressivité</h2>
+
+        <h3 id="anticipation-laisse">L'anticipation qui passe par la laisse</h3>
+
+        <p>Vous voyez un chien au loin. Sans même y penser, votre main se crispe, la laisse se raccourcit, vous retenez votre souffle. Votre chien sent tout ça avant même d'avoir vu l'autre. Vous venez de lui annoncer, avec votre corps, qu'un danger approche. L'à-coup de laisse donné au moment où il regarde le congénère crée une association simple dans sa tête&nbsp;: autre chien égale inconfort. Vous fabriquez la réaction que vous vouliez éviter.</p>
+
+        <p>Je vois cette mécanique en permanence. Le propriétaire anticipe, le chien lit l'anticipation, la tension monte des deux côtés. C'est un cercle et le premier maillon sur lequel on peut agir, c'est vous.</p>
+
+        <h3 id="eviter-tous-les-chiens">Éviter tous les chiens ne règle jamais le problème</h3>
+
+        <p>L'autre réflexe compréhensible, c'est d'éviter. On change de trottoir, on ne sort plus qu'à des heures creuses, on isole le chien «&nbsp;pour le protéger&nbsp;». Sauf qu'un chien privé de contacts se désocialise encore plus. Il perd le peu de codes qu'il lui restait, et chaque chien croisé devient un événement énorme, donc encore plus stressant. L'évitement soulage sur le moment et aggrave sur la durée.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Fuir le problème, ça n'a jamais réglé un problème. Ni chez les chiens, ni ailleurs. Le but n'est pas de fuir les chiens pour toujours, mais de réapprendre à les croiser sereinement.</p>
+          </div>
+        </aside>
+
+        <div class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous voulez arrêter de nourrir le problème sans le vouloir&nbsp;?</p>
+          <p class="art-inline-cta-desc">Bilan à domicile pour identifier vos automatismes de balade et mettre en place les bons réflexes, gratuit et sans engagement</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
+        </div>
+
+        <h2 id="accompagnement-professionnel">Pourquoi cette situation demande l'accompagnement d'un professionnel</h2>
+
+        <h3 id="museliere-securiser">Sécuriser d'abord&nbsp;: la muselière en attendant, un outil et non une punition</h3>
+
+        <p>Tant que le risque de morsure existe, la priorité absolue est de sécuriser. La muselière n'est pas une punition ni un aveu que votre chien est «&nbsp;méchant&nbsp;». Bien choisie, une muselière panier permet à votre chien de haleter, de boire, d'être récompensé. Elle vous permet, à vous, d'arrêter de «&nbsp;puer la peur&nbsp;» à chaque sortie, parce que vous savez qu'un accident est impossible.</p>
+
+        <p>Un détail qui change tout&nbsp;: ne sortez pas la muselière uniquement dans les moments de conflit, sinon elle devient un signal de guerre. On l'associe à des jeux, à des balades agréables, pour qu'elle devienne un simple accessoire.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">La muselière rassure aussi les autres</p>
+            <p class="art-callout__text">Un chien muselé, c'est un propriétaire qui signale qu'il gère. Beaucoup de gens se détendent en la voyant et certains proposent même d'aider pour des exercices de croisement.</p>
+          </div>
+        </aside>
+
+        <h3 id="conseils-en-ligne">Pourquoi les conseils glanés en ligne peuvent empirer les choses</h3>
+
+        <p>Internet regorge de méthodes miracles pour un chien qui attaque un autre chien. Le souci, c'est qu'une technique appliquée sans comprendre le chien qu'on a en face peut faire l'inverse de ce qu'on cherche. Distribuer des friandises au sol pour détourner l'attention, par exemple, peut confirmer à un chien anxieux que l'autre est bien une menace dont il faut le distraire. On ne règle pas un problème en l'occultant.</p>
+
+        <p>Certaines vidéos montrent aussi des gestes d'intervention musclés que je ne reprendrai pas ici, parce qu'ils sont dangereux et souvent injustifiés. Le geste qui marche pour un chien peut traumatiser le suivant. C'est toute la limite du conseil générique.</p>
+
+        <p>Pour des situations compliquées ou qui vous angoissent, mieux vaut faire appel à un professionnel pour être sûr de bien lire et comprendre les signaux de votre chien. Lire et appliquer des conseils pris sur internet reste risqué.</p>
+
+        <h3 id="accompagnement-individualise">Ce qu'un accompagnement individualisé change vraiment</h3>
+
+        <p>Un vrai travail sur l'agressivité entre congénères, c'est un enchaînement fin d'étapes. Chaque étape demande de lire l'émotion du chien en temps réel et d'ajuster. C'est précisément ce qui est très difficile à mener seul en tant que particulier.</p>
+
+        <p>Avec le staffie évoqué précédemment, il a fallu passer par la gestion des émotions au jeu, le focus, des croisements encadrés avec une chienne calme, puis en milieu ouvert, avant les cours collectifs. Étape par étape, ses déclenchements sont passés de systématiques à deux sur une dizaine de chiens croisés. Ce résultat n'est pas venu d'une astuce, il est venu d'un plan construit sur mesure et suivi dans la durée.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Aucune fatalité</p>
+            <p class="art-callout__text">On peut ne pas toujours transformer un chien réactif en chien qui adore ses congénères. Mais supprimer le passage à l'acte et lui rendre des balades sereines, ça, c'est toujours possible.</p>
+          </div>
+        </aside>
+
+        <h3 id="reconnaitre-educateur">Reconnaître un éducateur en qui avoir confiance</h3>
+
+        <p>Cherchez quelqu'un qui vous pose des questions avant de vous donner des solutions, qui vient voir votre chien dans son vrai contexte plutôt que de vous vendre une séance générique en club ou terrain fermé et qui a déjà travaillé des cas d'agressivité, pas seulement des assis-couché. Surtout, si vous recherchez un professionnel pour un problème d'attaque envers les autres chiens, assurez-vous que le professionnel vous demande de faire une balade lors du premier rdv. C'est indispensable pour observer les réactions de votre chien en environnement réel. Sans ça, il est impossible de réfléchir à une stratégie.</p>
+
+        <p>Méfiez-vous des discours fatalistes du type «&nbsp;c'est la race, il ne changera jamais&nbsp;». Méfiez-vous autant des promesses de résultat en une séance. Un bon accompagnement, c'est un suivi, pas un dépannage. Et vous devez pouvoir parler de vos difficultés sans vous sentir jugé sur ce que vous avez fait ou pas fait jusqu'ici.</p>
+
+      </div><!-- /.art-content -->
+
+      <!-- Sidebar sticky — desktop uniquement -->
+      <aside class="art-sidebar" aria-labelledby="art-toc-heading">
+        <nav class="art-toc" aria-labelledby="art-toc-heading">
+          <details class="art-toc-details">
+            <summary class="art-toc-title" id="art-toc-heading">
+              Sommaire
+              <svg class="art-toc-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="art-toc-links">
+              {toc.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+                >
+                  <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        </nav>
+
+        <div class="art-sidebar-cta">
+          <p class="art-sidebar-cta-title">Votre chien attaque les autres chiens en balade&nbsp;?</p>
+          <p class="art-sidebar-cta-desc">Bilan comportemental à domicile pour identifier la vraie cause et sécuriser vos sorties sans attendre</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            Prendre RDV
+            <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
+          </a>
+        </div>
+      </aside>
+
+    </div><!-- /.art-layout -->
+
+    <!-- Like / Dislike -->
+    <section class="art-feedback-wrap" aria-label="Votre avis sur cet article">
+      <div class="container">
+        <div class="art-feedback" id="art-feedback">
+          <p class="art-feedback-question">Cet article vous a été utile&nbsp;?</p>
+          <div class="art-feedback-buttons">
+            <button type="button" class="art-feedback-btn art-feedback-btn--like" id="art-like-btn" aria-label="J'aime cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>
+              </svg>
+              Oui
+            </button>
+            <button type="button" class="art-feedback-btn art-feedback-btn--dislike" id="art-dislike-btn" aria-label="Je n'aime pas cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>
+              </svg>
+              Non
+            </button>
+          </div>
+
+          <div class="art-feedback-form" id="art-feedback-form" hidden>
+            <label for="art-feedback-text" class="art-feedback-label">Qu'est-ce qui pourrait être amélioré&nbsp;?</label>
+            <textarea
+              id="art-feedback-text"
+              class="art-feedback-textarea"
+              rows="3"
+              maxlength="500"
+              placeholder="Votre retour nous aide à améliorer nos contenus…"
+            ></textarea>
+            <div class="art-feedback-form-footer">
+              <span class="art-feedback-hint" id="art-feedback-hint">10 caractères minimum</span>
+              <button type="button" class="btn btn-primary art-feedback-submit" id="art-feedback-submit" disabled>Envoyer</button>
+            </div>
+          </div>
+
+          <div class="art-feedback-thanks" id="art-feedback-thanks" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span>Merci ! Je prends en compte tous vos retours pour améliorer la qualité des articles et vous aider le plus possible :)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Biographie auteure -->
+    <footer class="art-bio-wrap">
+      <div class="container">
+        <div class="art-bio">
+          <div class="art-bio-avatar" aria-hidden="true">
+            <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="64" height="64" loading="lazy" decoding="async" style="display:block;" />
+          </div>
+          <div>
+            <p class="art-bio-name">À propos de {article.author}</p>
+            <p class="art-bio-role">{article.authorRole}</p>
+            <p class="art-bio-desc">{article.authorDesc}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </article><!-- /article -->
+
+
+  <!-- ── FAQ ───────────────────────────────────────────────────────── -->
+  {faqItems.length > 0 && (
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 750px;">
+        <h2 id="faq-heading" style="text-align: center;">Questions fréquentes sur un <span class="accent">chien qui attaque ses congénères</span></h2>
+        <div class="faq-list" style="margin-top: var(--sp-8);">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>{item.question}</span>
+                <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────────────── -->
+  <section class="section-dark art-cta-section" aria-labelledby="art-cta-h">
+    <div class="container art-cta-inner">
+      <h2 class="art-cta-title" id="art-cta-h">Votre chien attaque encore ses congénères en balade&nbsp;?</h2>
+      <p>Bilan comportemental gratuit à domicile, Bordeaux et métropole</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Réserver mon bilan gratuit
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── ARTICLES QUI PEUVENT VOUS INTÉRESSER ───────────────────────── -->
+  <section class="art-related" aria-labelledby="art-related-h">
+    <div class="container">
+      <p class="art-related-divider" id="art-related-h">Articles qui peuvent vous intéresser</p>
+      <div class="art-related-grid">
+        {related.map((card) => (
+          <a href={card.url} class="art-related-card">
+            <img
+              src={card.img}
+              alt={card.imgAlt}
+              class="art-related-card-img"
+              width="360"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="art-related-card-body">
+              <p class="art-related-card-title">{card.title}</p>
+              <p class="art-related-card-meta">{card.readTime} de lecture</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
+  <ArticleProgressBar />
+
+  <script is:inline>
+    (function () {
+      var MIN_CHARS = 10;
+      var feedbackWrap = document.getElementById('art-feedback');
+      var likeBtn = document.getElementById('art-like-btn');
+      var dislikeBtn = document.getElementById('art-dislike-btn');
+      var feedbackForm = document.getElementById('art-feedback-form');
+      var feedbackText = document.getElementById('art-feedback-text');
+      var feedbackHint = document.getElementById('art-feedback-hint');
+      var feedbackSubmit = document.getElementById('art-feedback-submit');
+      var feedbackThanks = document.getElementById('art-feedback-thanks');
+
+      if (!feedbackWrap || !likeBtn || !dislikeBtn) return;
+
+      function sendGA4Event(eventName, params) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: eventName }, params));
+      }
+
+      function getArticleTitle() {
+        var h1 = document.querySelector('h1');
+        return h1 ? h1.textContent.trim() : document.title;
+      }
+
+      function showThanks() {
+        feedbackWrap.querySelectorAll('.art-feedback-buttons, .art-feedback-form, .art-feedback-question').forEach(
+          function (el) { el.hidden = true; }
+        );
+        feedbackThanks.hidden = false;
+      }
+
+      likeBtn.addEventListener('click', function () {
+        sendGA4Event('article_like', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+        });
+        showThanks();
+      });
+
+      dislikeBtn.addEventListener('click', function () {
+        likeBtn.hidden = true;
+        dislikeBtn.classList.add('art-feedback-btn--selected');
+        dislikeBtn.disabled = true;
+        feedbackForm.hidden = false;
+        feedbackText.focus();
+      });
+
+      feedbackText.addEventListener('input', function () {
+        var len = feedbackText.value.trim().length;
+        var valid = len >= MIN_CHARS;
+        feedbackSubmit.disabled = !valid;
+        if (len === 0) {
+          feedbackHint.textContent = MIN_CHARS + ' caractères minimum';
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else if (!valid) {
+          feedbackHint.textContent = 'Encore ' + (MIN_CHARS - len) + ' caractère' + (MIN_CHARS - len > 1 ? 's' : '');
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else {
+          feedbackHint.textContent = 'Prêt à envoyer';
+          feedbackHint.classList.add('art-feedback-hint--ok');
+        }
+      });
+
+      feedbackSubmit.addEventListener('click', function () {
+        var text = feedbackText.value.trim();
+        if (text.length < MIN_CHARS) return;
+        sendGA4Event('article_dislike', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+          user_feedback: text,
+        });
+        showThanks();
+      });
+    })();
+  </script>
+
+  <script>
+    const btn = document.getElementById('art-copy-link');
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+        } catch {
+          const el = Object.assign(document.createElement('input'), { value: window.location.href });
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          el.remove();
+        }
+        btn.setAttribute('data-copied', '');
+        setTimeout(() => btn.removeAttribute('data-copied'), 2000);
+      });
+    }
+  </script>
+
+</Layout>

@@ -28,6 +28,7 @@ const pages = [
   '/education-canine/comportement/problemes/gestion-emotions/balade/',
   '/education-canine/comportement/problemes/anxiete/separation/',
   '/education-canine/comportement/problemes/fugue/',
+  '/education-canine/comportement/problemes/agressivite/comment-reagir-chien-attaque-autre-chien/',
 ];
 
 export const GET: APIRoute = ({ site }) => {
