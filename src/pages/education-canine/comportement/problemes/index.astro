@@ -1,0 +1,585 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Icon from '../../../../components/Icon.astro';
+import '../../../../styles/homepage.css';
+import '../../../../styles/services.css';
+import '../../../../styles/article.css';
+
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Votre chien a des Problèmes de Comportement ? Par où Commencer ?',
+  metaDescription: 'Problème de comportement chez le chien : trouble réel ou simple gêne ? Comprenez le pourquoi, ce qui aggrave tout, et quand chercher de l\'aide.',
+};
+
+// ── À retenir ────────────────────────────────────────────────────────────────
+const tldr: string[] = [
+  'Un chien qui aboie, mordille, saute ou grogne ne fait pas forcément un trouble : beaucoup de comportements qui vous agacent sont juste un chien qui fait le chien.',
+  'Un problème de comportement chez le chien n\'arrive jamais par hasard. Derrière le symptôme visible, il y a presque toujours un besoin non comblé, un manque de socialisation ou un signal que vous envoyez sans le savoir.',
+  'Le comportement qui vous dérange en cache souvent un autre : la destruction peut cacher une anxiété, la réactivité peut cacher une peur. Traiter le symptôme seul ne règle rien.',
+  'Punir sans montrer quoi faire à la place, ou éviter les situations pour « protéger » votre chien aggrave presque toujours la situation.',
+  'Avant de conclure à un trouble, on écarte un souci de santé. Ensuite, on cherche un professionnel de confiance.',
+  'Il n\'est jamais trop tard. Un chien adulte peut changer, même après des années.',
+];
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Mon chien peut-il encore changer, même adulte ?',
+    answer:   'Oui. C\'est même une des idées reçues les plus tenaces et les plus fausses. Un problème de comportement chez le chien n\'est pas gravé dans le marbre parce que l\'animal a passé l\'âge du chiot. J\'ai accompagné des chiens adultes avec un lourd passé, dont un chien attaqué et un chien à la socialisation quasi nulle et ils ont progressé. Les séquelles d\'une mauvaise gestion peuvent laisser des traces, votre chien n\'aimera peut-être jamais tous ses congénères, mais on peut presque toujours supprimer le passage à l\'acte et retrouver une vie sereine. « Il ne changera jamais » est une phrase d\'éducateur qui abandonne, pas une vérité sur votre chien.',
+  },
+  {
+    question: 'Je vais voir qui : le vétérinaire ou l\'éducateur ?',
+    answer:   'Commencez par écarter le médical, surtout si le comportement est apparu brutalement ou s\'accompagne de signes physiques (léchage compulsif, changement d\'appétit, douleur au contact). Le vétérinaire est là pour ça. Une fois qu\'on sait que le corps va bien, l\'éducateur ou le comportementaliste prend le relais pour comprendre et retravailler le comportement lui-même. Les deux ne s\'opposent pas, ils interviennent chacun à leur niveau. Et on ne met jamais un chien sous traitement en première intention : on travaille d\'abord.',
+  },
+  {
+    question: 'Est-ce que c\'est ma faute s\'il se comporte comme ça ?',
+    answer:   'C\'est la question que presque tout le monde se pose face à un problème de comportement, souvent en silence, et je vais être honnête : la culpabilité ne vous aidera pas, et elle n\'aidera pas votre chien. Oui, nos réactions influencent nos chiens, parfois dans le mauvais sens, et le plus souvent sans qu\'on s\'en rende compte. Mais vous avez fait avec ce que vous saviez, avec les conseils que vous aviez sous la main, dont beaucoup sont mauvais. Ce qui compte maintenant, ce n\'est pas de savoir qui est responsable, c\'est de comprendre ce qui se joue et de repartir dans le bon sens. Un bon accompagnement commence toujours par vous déculpabiliser, jamais par vous juger.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',      item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Comportement', item: siteUrl + '/education-canine/comportement/' },
+        { '@type': 'ListItem', position: 3, name: 'Problèmes',    item: pageUrl },
+      ],
+    },
+    {
+      '@type':       'CollectionPage',
+      name:          'Problèmes de comportement du chien',
+      description:   page.metaDescription,
+      url:           pageUrl,
+      inLanguage:    'fr-FR',
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqItems.map(({ question, answer }) => ({
+        '@type': 'Question',
+        name: question,
+        acceptedAnswer: { '@type': 'Answer', text: answer },
+      })),
+    },
+  ],
+};
+
+// ── Articles de la catégorie ──────────────────────────────────────────────────
+type Card = {
+  title: string;
+  meta: string;
+  url: string | null;
+  image: string | null;
+  imageAlt?: string;
+  imagePosition?: string;
+  gradient: string;
+  soon: boolean;
+};
+
+const articles: Card[] = [
+  {
+    title:    'Mon chien est réactif aux autres chiens en balade : comprendre ce qui se passe et agir',
+    meta:     'Réactivité · 13 min',
+    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
+    image:    '/images/article-reactivite-chiens.webp',
+    imageAlt: 'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
+    gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
+    soon:     false,
+  },
+  {
+    title:    'Mon chien attaque les autres chiens en balade : comment réagir ?',
+    meta:     'Agressivité · 16 min',
+    url:      '/education-canine/comportement/problemes/agressivite/comment-reagir-chien-attaque-autre-chien/',
+    image:    '/images/article-chien-attaque-autre-chien.webp',
+    imageAlt: 'Deux chiens en tension face à face en pleine balade, illustrant une situation d\'attaque entre congénères',
+    gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
+    soon:     false,
+  },
+  {
+    title:    'Mon chien a été attaqué, que faire pour éviter qu\'il ne devienne réactif ?',
+    meta:     'Réactivité · 10 min',
+    url:      '/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/',
+    image:    '/images/article-attaque-chien-que-faire-apres.webp',
+    imageAlt: 'Deux chiens se font face en extérieur, un propriétaire tient son chien en laisse à distance',
+    gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
+    soon:     false,
+  },
+  {
+    title:    'Mon chien a du mal à gérer ses émotions en balade : que faire ?',
+    meta:     'Gestion émotions · 8 min',
+    url:      '/education-canine/comportement/problemes/gestion-emotions/balade/',
+    image:    '/images/article-gestion-emotions-balade-solutions.webp',
+    imageAlt: 'Chien en balade qui apprend à se canaliser et à rester attentif à son maître en extérieur',
+    gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
+    soon:     false,
+  },
+  {
+    title:    'Anxiété de séparation chez le chien : que faire concrètement ?',
+    meta:     'Anxiété · 16 min',
+    url:      '/education-canine/comportement/problemes/anxiete/separation/',
+    image:    '/images/article-anxiete-separation-chien.webp',
+    imageAlt: 'Chien couché seul près de la porte d\'entrée, en attente du retour de ses propriétaires',
+    gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
+    soon:     false,
+  },
+  {
+    title:    'Mon chien fugue : comprendre et agir',
+    meta:     'Fugue · 14 min',
+    url:      '/education-canine/comportement/problemes/fugue/',
+    image:    '/images/article-chien-qui-fugue.webp',
+    imageAlt: 'Chien en extérieur près d\'une clôture, illustrant la problématique de la fugue chez le chien',
+    gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
+    soon:     false,
+  },
+  {
+    title:    'Aboiements excessifs : que faire ?',
+    meta:     'Bientôt disponible',
+    url:      null,
+    image:    null,
+    gradient: 'linear-gradient(135deg, #C8D8E2 0%, #A8B8C2 70%)',
+    soon:     true,
+  },
+  {
+    title:    'Mon chien n\'arrête pas de mordiller, que dois-je faire ?',
+    meta:     'Bientôt disponible',
+    url:      null,
+    image:    null,
+    gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
+    soon:     true,
+  },
+];
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ─────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/education-canine/comportement/">Comportement</a></li>
+        <li aria-current="page">Problèmes</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ── EN-TÊTE ──────────────────────────────────────────────────── -->
+  <header class="ec-hero">
+    <div class="container ec-hero-inner">
+      <p class="ec-hero-eyebrow">Comportement</p>
+      <h1 class="ec-hero-title">Votre chien a un <span class="accent">problème de comportement</span>&nbsp;? Voici par où commencer</h1>
+      <p class="ec-hero-desc">Votre chien aboie dès que vous partez, se transforme en furie au bout de la laisse, saute sur tout ce qui bouge ou grogne sur son os&nbsp;? Avant de vous précipiter sur une technique, la vraie question est ailleurs&nbsp;: est-ce un vrai trouble ou un chien qui se comporte simplement comme un chien&nbsp;? Cette page vous donne les repères pour faire la différence, comprendre d'où vient le problème et savoir quand chercher de l'aide. Les articles ci-dessous détaillent chaque situation.</p>
+    </div>
+  </header>
+
+  <!-- ── ARTICLES DE LA CATÉGORIE ─────────────────────────────────── -->
+  <div class="ec-sections">
+    <div class="container">
+
+      <section class="ec-section" aria-labelledby="cat-articles-h2">
+        <div class="ec-section-head">
+          <h2 class="ec-section-title" id="cat-articles-h2">Régler ou anticiper des problèmes spécifiques chez votre chien</h2>
+        </div>
+
+        <div class="ec-cards">
+          {articles.map((card) => (
+            card.url ? (
+              <a href={card.url} class="ec-card">
+                <div class="ec-card-img" style={card.image ? undefined : `background: ${card.gradient};`} role="presentation">
+                  {card.image && (
+                    <img src={card.image} alt={card.imageAlt ?? ''} class="ec-card-img-photo" loading="lazy" decoding="async" style={card.imagePosition ? `object-position: ${card.imagePosition};` : undefined} />
+                  )}
+                </div>
+                <div class="ec-card-body">
+                  <p class="ec-card-title">{card.title}</p>
+                  <p class="ec-card-meta">
+                    <Icon name="clock" width={12} height={12} strokeWidth={2} />
+                    {card.meta}
+                  </p>
+                </div>
+              </a>
+            ) : (
+              <div class="ec-card ec-card--soon">
+                <div class="ec-card-img" style={`background: ${card.gradient};`} role="presentation">
+                  <span class="ec-card-soon-badge">Bientôt</span>
+                </div>
+                <div class="ec-card-body">
+                  <p class="ec-card-title">{card.title}</p>
+                  <p class="ec-card-meta ec-card-meta--soon">{card.meta}</p>
+                </div>
+              </div>
+            )
+          ))}
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ── CONTENU SEO ──────────────────────────────────────────────── -->
+  <section class="cat-seo">
+    <div class="container">
+      <div class="art-content">
+
+        <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+          <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+          <p class="art-tldr-title">Ce qu'il faut retenir</p>
+          <ul class="art-tldr-list" role="list">
+            {tldr.map((item) => (
+              <li>
+                <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </aside>
+
+        <p>Vous vivez avec un chien qui aboie dès que vous partez, qui se transforme en furie au bout de la laisse, qui saute sur tout ce qui bouge ou qui grogne sur son os. Vous avez peut-être déjà cherché sur internet, essayé deux ou trois conseils vus en vidéo et rien n'a vraiment bougé. Avant de vous précipiter sur une technique, la vraie question est ailleurs&nbsp;: est-ce que votre chien a un vrai problème de comportement, ou est-ce qu'il se comporte simplement comme un chien&nbsp;? Cet article vous donne les repères pour faire la différence, comprendre d'où vient un problème de comportement chez le chien et savoir quand aller chercher de l'aide.</p>
+
+        <h2 id="vrai-trouble-ou-comportement-genant">Votre chien a-t-il un vrai trouble du comportement, ou juste un comportement gênant&nbsp;?</h2>
+
+        <h3 id="chien-qui-fait-le-chien">Ce qui est normal&nbsp;: un chien qui fait le chien</h3>
+        <p>Un chien a des besoins qui n'ont rien à voir avec les nôtres. Il a besoin de bouger, de mâcher, de jouer, de renifler, d'interagir avec ses congénères et même de «&nbsp;parler&nbsp;». Aboyer, ce n'est pas un défaut de fabrication, c'est un moyen de communiquer et d'évacuer la pression. Mordiller, chez un chiot, c'est sa façon de découvrir le monde, exactement comme un enfant qui met tout à la bouche.</p>
+        <p>Le souci, c'est qu'on a tendance à interpréter chaque comportement à travers nos codes à nous et à voir un problème de comportement là où il n'y a qu'un chien qui vit sa vie de chien. Un chien qui grimpe sur une jambe n'est pas «&nbsp;dominant&nbsp;» ni «&nbsp;hypersexuel&nbsp;»&nbsp;: la plupart du temps, il évacue un trop-plein d'émotions qu'il ne sait pas gérer autrement. J'accompagne régulièrement des chiens qu'on m'a présentés comme «&nbsp;ingérables&nbsp;» et qui, après analyse, sont simplement des chiens dont les besoins de base ne sont pas remplis.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le test tout simple</p>
+            <p class="art-callout__text">Avant de parler de trouble, demandez-vous si votre chien a de quoi bouger, mâcher, renifler et rencontrer d'autres chiens dans sa semaine. Beaucoup de «&nbsp;problèmes&nbsp;» disparaissent (ou s'atténuent grandement) quand on comble d'abord ces besoins.</p>
+          </div>
+        </aside>
+
+        <h3 id="signaux-a-ne-pas-laisser-passer">Les signaux que vous ne devez pas laisser passer</h3>
+        <p>Là où il faut tendre l'oreille, c'est quand le comportement s'installe, s'intensifie, ou quand votre chien n'arrive plus à redescendre. Un chiot qui mordille, c'est normal. Un chien qui mord de plus en plus fort parce qu'on l'a repoussé avec les mains à chaque fois, c'est un mécanisme qui s'aggrave. Un chien qui grogne dans un jeu, c'est courtois. Un chien qui se fige, fixe et grogne de l'estomac face à une menace, c'est un vrai signal.</p>
+        <p>La différence entre un simple comportement gênant et un vrai problème de comportement n'est pas toujours évidente à voir seul et c'est normal. Ce qui compte, c'est de repérer quand votre chien vit dans un état de tension permanent plutôt que de traverser un moment d'excitation qui retombe.</p>
+
+        <h2 id="comportements-problematiques-frequents">Ces comportements problématiques que vous reconnaissez sûrement</h2>
+        <p>La plupart des problèmes de comportement chez le chien se rangent dans quelques grandes familles. En voici les principales, celles que je retrouve le plus souvent en rendez-vous.</p>
+
+        <h3 id="grogne-protege-jette">Quand il grogne, protège ou se jette sur les autres chiens</h3>
+        <p>C'est sans doute la catégorie la plus lourde à vivre au quotidien. Un cocker que j'ai suivi avait vécu une attaque&nbsp;: depuis, ses balades étaient devenues une loterie. Certaines se passaient bien, d'autres tournaient au déclenchement complet, avec fixation, aboiements et grognements, et un retour au calme très lent. Ce type de problème de comportement vient rarement d'une méchanceté. Il naît d'une peur, d'un manque de codes sociaux, ou d'une frustration accumulée.</p>
+        <p>J'ai aussi accompagné une jeune chienne qui réagissait par pure inquiétude&nbsp;: elle aboyait, avançait, puis reculait aussitôt, la queue entre les jambes. Ce qui était intéressant dans son cas, c'est qu'elle gardait malgré tout de la curiosité pour les autres chiens. Deux chiens qui «&nbsp;réagissent&nbsp;» peuvent avoir deux histoires radicalement différentes, et donc deux travaux totalement différents.</p>
+
+        <h3 id="aboie-detruit-besoins-en-absence">Quand il aboie, détruit ou fait ses besoins dès que vous partez</h3>
+        <p>Pleurs, aboiements, mobilier rongé, pipi dans l'entrée&nbsp;: quand ça arrive uniquement en votre absence, on regarde du côté de la solitude. J'ai travaillé avec une jeune Shiba qui s'était mise à manger la table, le mur et la tapisserie du jour au lendemain. En creusant, on retrouvait une succession de changements&nbsp;: une stérilisation qui avait baissé son activité, les fêtes passées collée à ses propriétaires, puis une reprise du travail brutale. Le comportement de destruction n'était pas le problème. C'était le symptôme d'une difficulté à gérer l'absence.</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Ce que la destruction raconte souvent</p>
+            <p class="art-callout__text">Quand un chien détruit en votre absence, il n'évacue pas de la colère et il ne «&nbsp;se venge&nbsp;» pas. Il évacue un stress. C'est votre départ qui pèse.</p>
+          </div>
+        </aside>
+
+        <h3 id="saute-mordille-redescend-pas">Quand il saute, mordille et ne redescend jamais</h3>
+        <p>Le chien qui vous accueille en sautant, en attrapant les manches, en mordillant sans savoir s'arrêter, c'est parfois un chien dont le sevrage a fait défaut et qui n'a jamais appris à se contrôler. J'ai eu un jeune staffie exactement dans ce cas&nbsp;: excitation énorme à l'arrivée des invités, sauts, mordillements, incapacité totale de se poser et un tirage en laisse qui rendait les sorties presque impossibles pour sa propriétaire seule. Le fond du travail n'était pas «&nbsp;d'empêcher les sauts&nbsp;». C'était de lui apprendre à monter en émotion puis à redescendre.</p>
+
+        <h2 id="pourquoi-votre-chien-fait-ca">Pourquoi votre chien fait ça (ce n'est jamais un hasard)</h2>
+        <p>Un problème de comportement chez le chien a toujours une cause. On en retrouve presque toujours une parmi les trois qui suivent, souvent plusieurs en même temps.</p>
+
+        <h3 id="besoins-non-combles">Ses besoins ne sont pas comblés</h3>
+        <p>Un chien manque aujourd'hui d'environ 60&nbsp;% de la dépense physique dont il aurait besoin. Ajoutez à ça un déficit de jeu, de mastication et de vraies rencontres, et vous obtenez une cocotte-minute. Un chiot que je suivais, issu d'une portée non sevrée, mangeait tout ce qu'il trouvait au sol par pur ennui. Le comportement gênant n'était que la sortie de secours d'un besoin qui débordait ailleurs.</p>
+
+        <h3 id="pas-assez-sociabilise">Il n'a pas été assez sociabilisé</h3>
+        <p>La fenêtre pendant laquelle un chiot intègre le monde comme «&nbsp;normal&nbsp;» se referme vers trois mois et demi. Tout ce qu'il n'a pas rencontré à ce moment risque de devenir une source de peur. C'est pour ça qu'un chiot devrait croiser énormément de chiens très tôt&nbsp;: quand il en voit des dizaines par semaine, une mauvaise rencontre reste une anecdote. Quand il n'en voit qu'un par mois et que celui-là est désagréable, il peut en être marqué durablement.</p>
+
+        <h3 id="signaux-envoyes-sans-le-savoir">Vous lui envoyez des signaux sans même le savoir</h3>
+        <p>C'est souvent la partie la plus déstabilisante à entendre. Quand un chien est réactif en laisse, on a le réflexe de raccourcir, de tendre, de parler fort, parfois de mettre un à-coup avant même que le chien ait eu le temps de traiter l'information. Résultat, on associe la vue d'un congénère à une tension désagréable et on renforce exactement ce qu'on voulait éteindre. Pourtant vous vous dites probablement «&nbsp;il a décidé de ne plus écouter&nbsp;», alors que c'est souvent nous qui, sans le vouloir, l'avons amené là.</p>
+
+        <h2 id="detresse-emotionnelle">Derrière le comportement qui vous agace, souvent une détresse émotionnelle</h2>
+
+        <h3 id="probleme-en-cache-un-autre">Un problème en cache presque toujours un autre</h3>
+        <p>En éducation, tout est lié, et c'est ce qui rend un problème de comportement chez le chien plus complexe qu'il n'en a l'air. Un chien qui saute a souvent un souci de gestion émotionnelle. Un chien qui détruit cache fréquemment une anxiété de séparation. Un chien réactif en balade peut aussi mal vivre la solitude. La jeune chienne inquiète dont je vous parlais plus haut cumulait réactivité et petite anxiété au départ. Ce n'est pas un hasard&nbsp;: les deux venaient de la même difficulté à gérer ses émotions et à se référer à ses humains.</p>
+
+        <h3 id="attaquer-symptome-ne-regle-rien">Pourquoi vous attaquer au symptôme seul ne règle rien</h3>
+        <p>Si vous ne traitez que ce qui se voit, vous jouez au chat et à la souris. C'est la raison pour laquelle tant de problèmes de comportement chez le chien reviennent après avoir semblé réglés. Le collier anti-fugue en est l'exemple parfait&nbsp;: il masque la sortie du terrain sans jamais toucher à la cause, l'ennui ou l'anxiété qui poussent le chien dehors. Le chien reste malheureux et vous ajoutez une couche de stress par-dessus. C'est en comprenant le «&nbsp;pourquoi&nbsp;» qu'on trouve la sortie, pas en éteignant le voyant sur le tableau de bord.</p>
+
+        <h2 id="reactions-qui-aggravent">Ces réactions qui, sans le vouloir, aggravent tout</h2>
+        <p>Face à un problème de comportement, nos réflexes les plus naturels sont souvent ceux qui enveniment la situation. Deux reviennent tout le temps.</p>
+
+        <h3 id="punir-sans-montrer">Le punir sans jamais lui montrer quoi faire à la place</h3>
+        <p>Crier sur un chien surexcité, c'est, de son point de vue, aboyer avec lui&nbsp;: vous montez l'ambiance au lieu de la faire redescendre. Le repousser avec les mains quand il mordille, c'est lui répondre par le jeu. Dans tous ces cas, il obtient une réaction et la réaction lui suffit. Avant de pouvoir dire «&nbsp;non&nbsp;» à un comportement, il faut avoir montré au chien ce qu'on attend de lui, et l'avoir aidé à y arriver. Interdire sans avoir enseigné, ça ne marche pas.</p>
+
+        <h3 id="isoler-eviter-bien-faire">L'isoler ou l'éviter en croyant bien faire</h3>
+        <p>Face à un chien réactif, le conseil qu'on entend le plus, c'est de détourner le regard, de faire un détour, d'éviter les autres chiens. Sur le moment, ça soulage. Sur la durée, ça enferme. Un chien qu'on désocialise «&nbsp;pour le protéger&nbsp;» perd encore un peu plus ses codes et devient encore plus réactif. Et quand vous détournez systématiquement, vous lui dites soit «&nbsp;j'ai encore plus peur que toi&nbsp;», soit vous imitez une approche en contournement, ce qui l'inquiète davantage.</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Éviter n'est pas protéger</p>
+            <p class="art-callout__text">Contourner un autre chien apaise votre stress à vous sur l'instant. Pour votre chien, ça confirme surtout que l'autre était bien une menace.</p>
+          </div>
+        </aside>
+
+        <h2 id="chercher-de-l-aide">Vous ne vous en sortez pas seul&nbsp;? Quand aller chercher de l'aide</h2>
+        <p>Certains problèmes de comportement se règlent avec quelques ajustements à la maison. D'autres demandent un regard extérieur. Voici comment savoir vers qui vous tourner.</p>
+
+        <h3 id="ecarter-souci-de-sante">D'abord, écartez un souci de santé</h3>
+        <p>Tous les problèmes de comportement chez le chien ne se règlent pas en éducation et certains comportements qui ressemblent à un trouble sont d'abord une question de corps. Un chien qui lèche le sol, qui mange des cailloux, qui se mordille une patte ou qui grogne quand on le touche peut avoir mal, un souci digestif, ou autre chose. Chez le chien qui vieillit, un changement brutal peut aussi venir d'une cause médicale. La règle est simple&nbsp;: au moindre doute, on passe d'abord par le vétérinaire pour écarter le médical, avant de conclure à un problème de comportement.</p>
+
+        <h3 id="trouver-quelqu-un-de-confiance">Trouver quelqu'un en qui vous avez vraiment confiance</h3>
+        <p>Un bon professionnel commence par vous écouter. Il vous explique le «&nbsp;pourquoi&nbsp;» de chaque chose dans un langage clair, sans jargon pour vous impressionner. Il vous emmène là où sont vos vrais problèmes, en ville ou en forêt, pas seulement dans un club fermé où tout est facile et pas seulement chez vous si vos problèmes sont en extérieur. Et il ne vous impose pas un collier ou un harnais dès la première minute. Si le courant ne passe pas, ou si les solutions proposées ne vous semblent pas logiques, écoutez ce doute. Personne ne connaît votre chien mieux que vous.</p>
+        <p>Dans quelques semaines de travail cohérent, cette balade qui vous nouait le ventre à chaque coin de rue peut redevenir un moment tranquille. Pas par magie. Juste parce que vous aurez travaillé dans le bon sens et compris ce que votre chien essayait de vous dire depuis le début. C'est comme ça qu'un problème de comportement se règle&nbsp;: en s'attaquant à la cause, pas au décor.</p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ──────────────────────────────────────────────────────── -->
+  <section class="section" id="faq" aria-labelledby="faq-heading">
+    <div class="container" style="max-width: 750px;">
+      <h2 id="faq-heading" style="text-align: center;">Vos questions sur les <span class="accent">problèmes de comportement</span> du chien</h2>
+      <div class="faq-list" style="margin-top: var(--sp-8);">
+        {faqItems.map((item) => (
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>{item.question}</span>
+              <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ──────────────────────────────────────────────────────── -->
+  <section class="section-dark ec-cta-section" aria-labelledby="ec-cta-h">
+    <div class="container ec-cta-inner">
+      <h2 class="ec-cta-title" id="ec-cta-h">Besoin d'aide face à un problème de comportement&nbsp;?</h2>
+      <p>Premier rendez-vous gratuit à votre domicile · Sans engagement</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Prendre RDV
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  /* ── Hero ── */
+  .ec-hero {
+    background: var(--kd-paper);
+    padding-block: var(--sp-12) var(--sp-10);
+  }
+
+  .ec-hero-inner {
+    max-width: 780px;
+  }
+
+  .ec-hero-eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--kd-terracotta);
+    margin-bottom: var(--sp-3);
+  }
+
+  .ec-hero-title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-2xl);
+    font-weight: 500;
+    line-height: var(--lh-snug);
+    color: var(--kd-ink);
+    margin-bottom: var(--sp-4);
+  }
+
+  .ec-hero-desc {
+    font-size: var(--fs-md);
+    color: var(--kd-bark);
+    line-height: var(--lh-relaxed);
+    max-width: 720px;
+  }
+
+  /* ── Sections articles ── */
+  .ec-sections {
+    padding-block: var(--sp-12) var(--sp-10);
+  }
+
+  .ec-section {
+    margin-bottom: 0;
+  }
+
+  .ec-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    margin-bottom: var(--sp-6);
+    padding-bottom: var(--sp-4);
+    border-bottom: 1px solid var(--kd-cream-deep);
+  }
+
+  .ec-section-title {
+    font-family: var(--font-sans);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--kd-ink);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  /* ── Cards ── */
+  .ec-cards {
+    display: grid;
+    gap: var(--sp-4);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 600px) {
+    .ec-cards { grid-template-columns: repeat(2, 1fr); }
+    .ec-hero-title { font-size: var(--fs-3xl); }
+  }
+
+  @media (min-width: 900px) {
+    .ec-cards { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .ec-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--kd-paper);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+
+  a.ec-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .ec-card--soon {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  .ec-card-img {
+    height: 130px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: var(--sp-3);
+    overflow: hidden;
+  }
+
+  .ec-card-img-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .ec-card-soon-badge {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(4px);
+    color: var(--kd-white);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    padding: var(--sp-1) var(--sp-3);
+    border-radius: var(--radius-pill);
+  }
+
+  .ec-card-body {
+    padding: var(--sp-4) var(--sp-5) var(--sp-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    flex: 1;
+  }
+
+  .ec-card-title {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--kd-ink);
+    line-height: 1.35;
+  }
+
+  .ec-card-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-1);
+    font-size: var(--fs-xs);
+    color: var(--kd-fawn);
+    margin-top: auto;
+  }
+
+  .ec-card-meta--soon {
+    color: var(--kd-stone);
+    font-style: italic;
+  }
+
+  /* ── Contenu SEO ── */
+  .cat-seo {
+    padding-block: var(--sp-8) var(--sp-16);
+  }
+
+  .cat-seo .container {
+    max-width: 780px;
+  }
+
+  /* ── CTA ── */
+  .ec-cta-section {
+    padding-block: var(--sp-16);
+    text-align: center;
+  }
+
+  .ec-cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-5);
+  }
+
+  .ec-cta-title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    color: var(--kd-cream);
+    line-height: var(--lh-snug);
+  }
+
+  .ec-cta-inner > p {
+    color: var(--kd-stone);
+    font-size: var(--fs-md);
+  }
+</style>
