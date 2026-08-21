@@ -149,6 +149,62 @@
   line-height: var(--lh-relaxed);
 }
 
+/* ===== SERVICES — FIL D'ARIANE ===== */
+.svc-hero-breadcrumb {
+  margin-bottom: 4px;
+}
+
+.svc-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--fs-xs);
+  color: var(--kd-stone);
+}
+
+.svc-breadcrumb li {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.svc-breadcrumb li:not(:last-child)::after {
+  content: '›';
+  margin-inline: var(--sp-2);
+  color: var(--kd-stone);
+}
+
+.svc-breadcrumb a {
+  color: var(--kd-fawn);
+  text-decoration: none;
+}
+
+.svc-breadcrumb a:hover {
+  color: var(--kd-terracotta);
+}
+
+.svc-breadcrumb [aria-current="page"] {
+  color: var(--kd-bark);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 220px;
+}
+
+.svc-hero-breadcrumb .svc-breadcrumb,
+.svc-hero-breadcrumb .svc-breadcrumb a,
+.svc-hero-breadcrumb .svc-breadcrumb [aria-current="page"] {
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+@media (min-width: 768px) {
+  .svc-breadcrumb [aria-current="page"] { max-width: 480px; }
+}
+
 /* ===== SERVICES — DESKTOP OVERRIDES ===== */
 @media (min-width: 768px) {
   .pricing-grid {
