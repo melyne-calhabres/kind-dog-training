@@ -23,6 +23,8 @@ const article = {
   titleAfter:     ' : que faire concrètement',
   publishDate:    '29 juin 2026',
   publishDateIso: '2026-06-29',
+  updateDate:     '9 septembre 2026',
+  updateDateIso:  '2026-09-09',
   readTime:       '8 min',
   author:         'Mélyne',
   authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
@@ -57,8 +59,8 @@ const jsonLd = {
       '@type':       'Article',
       headline:      article.titleBefore + article.titleAccent + article.titleAfter,
       description:   page.metaDescription,
-      datePublished: '2026-06-29T09:00:00+02:00',
-      dateModified:  '2026-06-29T09:00:00+02:00',
+      datePublished: `${article.publishDateIso}T09:00:00+02:00`,
+      dateModified:  `${article.updateDateIso}T09:00:00+02:00`,
       inLanguage:    'fr-FR',
       url:           pageUrl,
       image: {
@@ -198,7 +200,7 @@ const related = [
               <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
             </div>
             <p class="art-author-info">
-              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.updateDateIso}>{article.updateDate}</time>&nbsp;· {article.readTime} de lecture
             </p>
           </div>
           <div class="art-share">
@@ -278,7 +280,7 @@ const related = [
       <!-- Colonne principale -->
       <div class="art-content">
 
-        <p>Vous l'avez sûrement déjà vécu&nbsp;: à peine sorti, votre chien tire, couine, fixe le premier congénère à cinquante mètres et n'entend plus un mot de ce que vous lui dites. Si votre chien a du mal à gérer ses émotions en balade, ça se travaille avec quelques compétences à construire dans le bon ordre. Cet article est la suite pratique de <a href="/education-canine/comportement/comprendre/gestion-emotions/balade/">celui qui explique pourquoi votre chien déborde dehors</a>. Ici, on passe au comment faire.</p>
+        <p>Vous l'avez sûrement déjà vécu&nbsp;: à peine sorti, votre chien tire, couine, fixe le premier congénère à cinquante mètres et n'entend plus un mot de ce que vous lui dites. Si votre chien a du mal à gérer ses émotions en balade, ça se travaille avec quelques compétences à construire dans le bon ordre. C'est l'un des <a href="/education-canine/comportement/problemes/">problèmes de comportement</a> les plus courants, et il se règle avec de la méthode. Cet article est la suite pratique de <a href="/education-canine/comportement/comprendre/gestion-emotions/balade/">celui qui explique pourquoi votre chien déborde dehors</a>. Ici, on passe au comment faire.</p>
 
         <h2 id="combler-besoins">Commencez par combler ses besoins, c'est la base du retour au calme</h2>
 
@@ -303,9 +305,9 @@ const related = [
 
         <h3 id="interactions-regulieres">Des interactions régulières pour banaliser les rencontres</h3>
 
-        <p>Beaucoup de chiens ne croisent jamais de congénère autrement que de loin, en laisse. Le problème, c'est que ce qui est rare devient obsessionnel. Un chien qui ne rencontre presque jamais d'autres chiens traite chaque croisement comme un événement énorme. Plus un chien interagit régulièrement, moins chaque rencontre a de valeur, et plus il devient capable de passer son chemin. Offrir des interactions régulières banalise les congénères et, à terme, calme vos balades.</p>
+        <p>Beaucoup de chiens ne croisent jamais de congénère autrement que de loin, en laisse. Le problème, c'est que ce qui est rare devient obsessionnel. Un chien qui ne rencontre presque jamais d'autres chiens traite chaque croisement comme un événement énorme. C'est souvent là que se construit une <a href="/education-canine/comportement/problemes/reactivite/chiens/">réactivité envers les autres chiens en balade</a>. Plus un chien interagit régulièrement, moins chaque rencontre a de valeur, et plus il devient capable de passer son chemin. Offrir des interactions régulières banalise les congénères et, à terme, calme vos balades.</p>
 
-        <p>Appliquer ce conseil pourra peut-être vous demander un peu d'effort de recherche mais rencontrez d'autres chiens avec des profils différents&nbsp;: des chiens stables quoi qu'il arrive (bien codés), des chiens plutôt calmes, des chiens plutôt joueurs, toutes races, etc. Veillez cependant à ce que les rencontres ne livrent pas les chiens à eux-mêmes. Une bonne rencontre est une rencontre en mouvement, pendant laquelle les chiens peuvent passer d'une phase à l'autre et communiquer sereinement. Si votre chien est très excité, évitez en premier lieu les rencontres statiques ou celles où vous laissez les chiens faire ce qui leur chante pendant que vous discutez avec l'autre propriétaire sans bouger. Votre chien n'apprend rien comme ça.</p>
+        <p>Appliquer ce conseil pourra peut-être vous demander un peu d'effort de recherche mais rencontrez d'autres chiens avec des profils différents&nbsp;: des chiens stables quoi qu'il arrive (bien codés), des chiens plutôt calmes, des chiens plutôt joueurs, toutes races, etc. Veillez cependant à ce que les rencontres ne livrent pas les chiens à eux-mêmes. Une bonne rencontre est une rencontre en mouvement, pendant laquelle les chiens peuvent passer d'une phase à l'autre et communiquer sereinement. Si votre chien est très excité, évitez en premier lieu les rencontres statiques ou celles où vous laissez les chiens faire ce qui leur chante pendant que vous discutez avec l'autre propriétaire sans bouger. Votre chien n'apprend rien comme ça. Si votre chien a vécu une attaque, la démarche de resocialisation est spécifique et détaillée dans <a href="/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/">que faire après une attaque</a>.</p>
 
         <h2 id="monter-redescendre">Apprenez-lui à monter puis à redescendre en excitation</h2>
 
@@ -380,6 +382,8 @@ const related = [
             <p class="art-callout__text">Avec un jeune chien qui montait très vite en pression dehors, le travail en longe de 5&nbsp;mètres a tout changé. Le cadre de la longe, plus le couché, lui ont permis de redescendre lorsqu'on lui laissait le temps. Les positions statiques l'aidaient clairement à mieux gérer ses émotions.</p>
           </div>
         </aside>
+
+        <p>Quand ce débordement en balade s'est déjà cristallisé en vraie <a href="/education-canine/comportement/problemes/reactivite/">réactivité</a>, le dossier dédié détaille les trois formes possibles et par où reprendre le travail.</p>
 
         <!-- CTA inline — visible sur mobile uniquement -->
         <aside class="art-inline-cta" aria-label="Prendre rendez-vous">

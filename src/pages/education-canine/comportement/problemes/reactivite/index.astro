@@ -1,0 +1,812 @@
+---
+import Layout from '../../../../../layouts/Layout.astro';
+import Icon from '../../../../../components/Icon.astro';
+import ArticleProgressBar from '../../../../../components/ArticleProgressBar.astro';
+import '../../../../../styles/services.css';
+import '../../../../../styles/article.css';
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Chien Réactif : Agir pour des Balades plus Sereines',
+  metaDescription: 'Votre chien est réactif en balade ? Comprenez les 3 formes de réactivité, les erreurs qui aggravent tout et les gestes concrets pour des sorties apaisées.',
+};
+
+// ── Article metadata ──────────────────────────────────────────────────────────
+const article = {
+  category:       'Comportement',
+  categoryUrl:    '/education-canine/comportement/',
+  parentLabel:    'Problèmes',
+  parentUrl:      '/education-canine/comportement/problemes/',
+  breadcrumbLabel:'Chien réactif',
+  titleBefore:    '',
+  titleAccent:    'Chien réactif',
+  titleAfter:     ' : comprendre et agir au quotidien',
+  publishDate:    '9 septembre 2026',
+  publishDateIso: '2026-09-09',
+  updateDate:     '9 septembre 2026',
+  updateDateIso:  '2026-09-09',
+  readTime:       '15 min',
+  author:         'Mélyne',
+  authorInitial:  'M',
+  authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
+  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
+  coverAlt:       'Chien en laisse qui aboie et tire vers un congénère au loin lors d\'une balade en ville',
+};
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Est-ce que mon chien peut redevenir « normal » en promenade ?',
+    answer:   'Dans la grande majorité des cas, oui. Un chien réactif se travaille et progresse, souvent bien plus vite qu\'on ne l\'imagine. L\'objectif réaliste n\'est pas forcément que votre chien adore tous ses congénères, mais qu\'il devienne indifférent : capable de croiser sans réagir, de rester calme à côté d\'un autre chien. Certains retrouvent même le plaisir de jouer. Tout dépend de l\'origine du problème et de la régularité du travail, mais le fatalisme du « il ne changera jamais » est toujours faux. J\'ai vu des chiens jugés irrécupérables retrouver des balades sereines.',
+  },
+  {
+    question: 'À partir de quel âge peut-on travailler la réactivité ?',
+    answer:   'À tout âge. L\'idéal reste la prévention en bas âge, en socialisant massivement le chiot avant ses quatre mois et demi, la fenêtre où il absorbe le monde comme une éponge. Mais un chien adulte, même âgé, se rééduque. La réactivité qui apparaît à l\'adolescence, avec la montée hormonale, est extrêmement fréquente et se travaille très bien. Chez un adulte, on est sur de la rééducation plutôt que de l\'éducation : c\'est parfois plus long, mais tout à fait possible. L\'âge n\'est jamais une raison d\'abandonner.',
+  },
+  {
+    question: 'Faut-il éviter les autres chiens en attendant ?',
+    answer:   'Non, et c\'est même contre-productif. Éviter systématiquement les congénères désocialise le chien et renforce sa réactivité. La nuance est importante : éviter le contact forcé, oui, mais pas fuir la présence des autres chiens. On veut apprendre au chien à rester serein en présence de ses congénères, pas à ne plus jamais en croiser. Continuez à sortir, à l\'exposer à distance raisonnable, tout en travaillant le calme et le renoncement. C\'est l\'exposition encadrée, pas l\'isolement, qui fait progresser.',
+  },
+  {
+    question: 'La castration peut-elle aider un chien réactif ?',
+    answer:   'Parfois, mais ce n\'est pas une solution miracle. La castration ne calme pas un chien en soi : elle baisse la testostérone et augmente les œstrogènes chez le mâle. Sur une réactivité liée aux hormones, notamment entre mâles, elle peut faire gagner 20 à 30 %, à condition d\'être faite au bon moment. Sur une réactivité par peur, par frustration ou par manque de socialisation, elle ne changera rien au fond du problème. Attention aussi chez les femelles, où l\'effet peut être inverse. Avant d\'envisager le bistouri, un implant chimique permet de tester l\'effet de façon réversible. La castration accompagne un travail, elle ne le remplace pas.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type':       'Article',
+      headline:      article.titleBefore + article.titleAccent + article.titleAfter,
+      description:   page.metaDescription,
+      datePublished: `${article.publishDateIso}T09:00:00+02:00`,
+      dateModified:  `${article.updateDateIso}T09:00:00+02:00`,
+      inLanguage:    'fr-FR',
+      url:           pageUrl,
+      image: {
+        '@type':  'ImageObject',
+        url:      siteUrl + '/images/article-chien-reactif.webp',
+        width:    1200,
+        height:   800,
+      },
+      author: {
+        '@type':    'Person',
+        name:       article.author,
+        url:        siteUrl + '/qui-suis-je/',
+        jobTitle:   'Éducatrice & comportementaliste canin',
+        description: article.authorDesc,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url:     siteUrl + '/images/logo.png',
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id':   pageUrl,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',                    item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: article.category,             item: siteUrl + article.categoryUrl },
+        { '@type': 'ListItem', position: 3, name: article.parentLabel,          item: siteUrl + article.parentUrl },
+        { '@type': 'ListItem', position: 4, name: article.breadcrumbLabel },
+      ],
+    },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
+  ],
+};
+
+// ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
+const tldr = [
+  'Un chien réactif n\'est pas forcément un chien agressif : dans l\'immense majorité des cas, il exprime un inconfort, une peur ou une frustration, pas une intention de blesser.',
+  'La réactivité prend trois grandes formes : par peur, par frustration ou excitation, et par protection d\'une ressource. Chacune se travaille différemment.',
+  'Les signaux qui inquiètent le plus (crête sur le dos, aboiements, queue haute) trompent souvent : ils traduisent le plus souvent une décharge d\'émotion, pas de la méchanceté.',
+  'Vos réflexes de propriétaire comptent autant que le comportement du chien. Jeter des friandises au sol, éviter tous les autres chiens ou donner un à-coup de laisse avant même de parler aggravent la situation.',
+  'Votre calme est le seul ancrage fiable de votre chien. S\'il vous sent stressé à chaque croisement, il monte avec vous.',
+  'On récupère un chien réactif en reprenant l\'obéissance de base, en le resocialisant avec un chien stable et en lui apprenant l\'indifférence en laisse. Ce n\'est jamais figé.',
+];
+
+// ── Table of contents ─────────────────────────────────────────────────────────
+const toc = [
+  { label: 'Réactif ne veut pas dire agressif',           href: '#reactif-pas-agressif',        sub: false },
+  { label: 'Les signaux qui trompent',                    href: '#signaux-qui-trompent',        sub: true  },
+  { label: 'Pourquoi tout retombe si vite',               href: '#tout-retombe',                sub: true  },
+  { label: 'Aboyer, grogner, charger',                    href: '#aboyer-grogner-charger',      sub: true  },
+  { label: 'Les trois formes de réactivité',              href: '#trois-formes',                sub: false },
+  { label: 'La réactivité par peur',                      href: '#reactivite-par-peur',         sub: true  },
+  { label: 'La réactivité par frustration',               href: '#reactivite-par-frustration',  sub: true  },
+  { label: 'La protection de ressource',                  href: '#protection-de-ressource',     sub: true  },
+  { label: 'Les déclencheurs les plus fréquents',         href: '#declencheurs',                sub: false },
+  { label: 'Face aux autres chiens',                      href: '#face-aux-chiens',             sub: true  },
+  { label: 'Face aux mouvements rapides',                 href: '#mouvements-rapides',          sub: true  },
+  { label: 'Face aux véhicules',                          href: '#face-aux-vehicules',          sub: true  },
+  { label: 'Face aux humains',                            href: '#face-aux-humains',            sub: true  },
+  { label: 'Comment réagir quand ça s\'emballe',          href: '#comment-reagir',              sub: false },
+  { label: 'Casser la fixation visuelle',                 href: '#casser-la-fixation',          sub: true  },
+  { label: 'Rester neutre',                               href: '#rester-neutre',               sub: true  },
+  { label: 'Récupérer son attention',                     href: '#recuperer-attention',         sub: true  },
+  { label: 'Les erreurs qui empirent la situation',       href: '#erreurs',                     sub: false },
+  { label: 'Jeter des friandises au sol',                 href: '#friandises-au-sol',           sub: true  },
+  { label: 'Éviter systématiquement',                     href: '#eviter-systematiquement',     sub: true  },
+  { label: 'L\'à-coup de laisse',                         href: '#a-coup-de-laisse',            sub: true  },
+  { label: 'Réconforter à voix basse',                    href: '#reconforter',                 sub: true  },
+  { label: 'Porter le chiot dans les bras',               href: '#porter-le-chiot',             sub: true  },
+  { label: 'Par où commencer',                            href: '#par-ou-commencer',            sub: false },
+  { label: 'Reprendre l\'obéissance de base',             href: '#obeissance-de-base',          sub: true  },
+  { label: 'Resocialiser avec un chien stable',           href: '#resocialiser',                sub: true  },
+  { label: 'La politesse canine',                         href: '#politesse-canine',            sub: true  },
+  { label: 'Quand se faire accompagner',                  href: '#se-faire-accompagner',        sub: true  },
+];
+
+// ── Articles connexes ─────────────────────────────────────────────────────────
+const related = [
+  {
+    title:    'Mon chien est réactif aux autres chiens en balade',
+    readTime: '13 min',
+    img:      '/images/article-reactivite-chiens.webp',
+    imgAlt:   'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
+    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
+  },
+  {
+    title:    'Mon chien a été attaqué : que faire après ?',
+    readTime: '10 min',
+    img:      '/images/article-attaque-chien-que-faire-apres.webp',
+    imgAlt:   'Deux chiens en pleine altercation dans un pré',
+    url:      '/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/',
+  },
+  {
+    title:    'Gérer ses émotions en balade : que faire',
+    readTime: '8 min',
+    img:      '/images/article-gestion-emotions-balade-solutions.webp',
+    imgAlt:   'Chien en balade qui apprend à se canaliser et à rester attentif à son maître',
+    url:      '/education-canine/comportement/problemes/gestion-emotions/balade/',
+  },
+];
+
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ──────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href={article.categoryUrl}>{article.category}</a></li>
+        <li><a href={article.parentUrl}>{article.parentLabel}</a></li>
+        <li aria-current="page">{article.breadcrumbLabel}</li>
+      </ol>
+    </div>
+  </nav>
+
+
+  <!-- ── ARTICLE ───────────────────────────────────────────────────── -->
+  <article aria-labelledby="art-h1">
+
+    <!-- En-tête de l'article -->
+    <header class="art-header">
+      <div class="container">
+        <h1 class="art-title" id="art-h1">
+          {article.titleBefore}<span class="accent">{article.titleAccent}</span>{article.titleAfter}
+        </h1>
+        <div class="art-meta">
+          <div class="art-author">
+            <div class="art-avatar" aria-hidden="true">
+              <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
+            </div>
+            <p class="art-author-info">
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.updateDateIso}>{article.updateDate}</time>&nbsp;· {article.readTime} de lecture
+            </p>
+          </div>
+          <div class="art-share">
+            <button id="art-copy-link" class="art-share-btn" type="button" aria-label="Copier le lien de l'article">
+              <Icon name="link" width={16} height={16} strokeWidth={2} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Image hero -->
+    <div class="art-hero-wrap">
+      <div class="container">
+        <figure class="art-hero">
+          <picture>
+            <source media="(max-width: 767px)" srcset="/images/article-chien-reactif-mobile.webp" width="400" height="351" />
+            <img
+              src="/images/article-chien-reactif.webp"
+              alt={article.coverAlt}
+              width="925"
+              height="456"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              class="art-hero-img"
+            />
+          </picture>
+        </figure>
+      </div>
+    </div>
+
+    <!-- L'essentiel -->
+    <div class="container">
+      <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+        <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+        <p class="art-tldr-title">Ce qu'il faut retenir</p>
+        <ul class="art-tldr-list" role="list">
+          {tldr.map((item) => (
+            <li>
+              <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="art-tldr-footer">
+          <Icon name="clock" width={14} height={14} strokeWidth={2} />
+          Lecture complète&nbsp;: {article.readTime} · Pour aller plus loin, lisez l'article entier
+        </p>
+      </aside>
+    </div>
+
+    <!-- Sommaire accordéon — mobile uniquement -->
+    <div class="container art-toc-mobile">
+      <details class="art-toc-accordion">
+        <summary class="art-toc-accordion-header">
+          Sommaire
+          <Icon name="chevron-down" width={16} height={16} strokeWidth={2} class="art-toc-chevron" />
+        </summary>
+        <nav class="art-toc-accordion-body" aria-label="Sommaire de l'article">
+          {toc.map((item) => (
+            <a
+              href={item.href}
+              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+            >
+              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+
+    <!-- Corps à deux colonnes : contenu + sidebar sticky -->
+    <div class="container art-layout">
+
+      <!-- Colonne principale -->
+      <div class="art-content">
+
+        <p>Vous avez sûrement déjà entendu qu'un chien qui aboie, tire et se jette au bout de la laisse est un chien «&nbsp;méchant&nbsp;» ou «&nbsp;dominant&nbsp;». Peut-être même de la part de professionnels. C'est faux dans la grande majorité des cas. Un chien réactif, c'est un chien qui réagit trop fort à quelque chose de son environnement&nbsp;: un autre chien, un vélo, un joggeur, un inconnu qui arrive de face. La réactivité fait partie des <a href="/education-canine/comportement/problemes/">problèmes de comportement</a> que je rencontre le plus souvent, et c'est l'un des plus mal compris. Derrière ce comportement spectaculaire se cache presque toujours une émotion mal gérée, pas une volonté de faire du mal.</p>
+
+        <p>J'accompagne ces chiens et leurs propriétaires au quotidien à Bordeaux. Je vis aussi avec Ramsey, mon staffie, qui a développé une réactivité envers ses congénères après une attaque. Je sais donc de quoi je parle, des deux côtés de la laisse. Voici comment comprendre ce que votre chien traverse, et par où commencer pour retrouver des balades tranquilles.</p>
+
+        <h2 id="reactif-pas-agressif">Réactif ne veut pas dire agressif&nbsp;: ce que votre chien essaie de vous dire</h2>
+
+        <p>Le mot «&nbsp;agressif&nbsp;» colle à la peau des chiens réactifs et il fait beaucoup de dégâts. Un chien qui aboie derrière une laisse tendue est, dans une écrasante majorité de cas, un «&nbsp;faux agressif&nbsp;». Il ne cherche pas à attaquer. Il exprime un trop-plein qu'il n'arrive pas à gérer autrement. Les vrais cas où votre chien <a href="/education-canine/comportement/problemes/agressivite/comment-reagir-chien-attaque-autre-chien/">attaque un autre chien</a> existent, mais ils sont bien plus rares et se travaillent différemment.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le vrai danger, c'est l'étiquette</p>
+            <p class="art-callout__text">Quand on répète à un propriétaire que son chien est agressif, il commence à anticiper chaque rencontre avec angoisse. Cette tension descend directement dans la laisse. Et le chien, lui, comprend qu'il y a bien une raison d'avoir peur.</p>
+          </div>
+        </aside>
+
+        <h3 id="signaux-qui-trompent">Les signaux qui trompent&nbsp;: crête sur le dos, aboiements, port de queue haut</h3>
+
+        <p>On croit lire de la menace là où il y a souvent tout autre chose. La crête de poils sur le dos, par exemple, ressemble à un signal d'agression, mais c'est d'abord une décharge nerveuse involontaire. Un Rhodesian ridgeback l'a en permanence par sélection génétique, sans être agressif pour autant.</p>
+
+        <p>Le port de queue induit tout autant en erreur. Un chien que j'ai suivi fixait ses cibles de loin, crête levée, aboyait et se jetait vers les autres chiens&nbsp;: le tableau parfait du chien «&nbsp;dangereux&nbsp;». Sauf que tout retombait dès qu'on relâchait l'attention. Le battement de queue haut et rapide, qu'on prend pour de la joie, sert surtout à évacuer de la pression. Chez un chien très excité que j'ai accompagné, la queue montait très droit avec de légers battements, les oreilles bien droites et les pupilles dilatées&nbsp;: de la pure excitation, jamais suivie de morsure.</p>
+
+        <p>À l'inverse, un Bouvier bernois que j'ai suivi déclenchait avec la gueule ouverte, un port de queue plutôt neutre et des pupilles non dilatées. Aucune dilatation, aucune fixation figée&nbsp;: on était sur de la frustration, pas sur de l'agressivité. Ce sont ces détails, lus dans l'ensemble et pas isolément, qui changent tout le diagnostic.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Ne lisez jamais un signal seul. Des oreilles en arrière peuvent vouloir dire la peur, une simple démangeaison, ou une anticipation de contact. C'est la posture globale, le contexte et le tempérament du chien qui donnent le sens.</p>
+          </div>
+        </aside>
+
+        <h3 id="tout-retombe">Pourquoi tout retombe dès que la stimulation s'éloigne</h3>
+
+        <p>Un point déroute beaucoup de propriétaires&nbsp;: leur chien réactif passe d'une furie complète à un calme total en quelques secondes, dès que le déclencheur disparaît. C'est justement la preuve qu'on n'est pas face à un chien profondément agressif.</p>
+
+        <p>Un chien que j'accompagnais en était l'exemple type. Fixation intense, aboiements, tentatives de se jeter, puis plus rien dès que l'autre chien s'éloignait ou qu'on cassait le contact visuel. Un chien réellement dangereux ne fonctionne pas comme ça. Ici, le comportement est réactionnel&nbsp;: il monte avec le stimulus et redescend avec lui. Cette réversibilité est une excellente nouvelle. Elle veut dire que le chien réagit à une émotion ponctuelle, et qu'on peut travailler dessus.</p>
+
+        <h3 id="aboyer-grogner-charger">Aboyer, grogner, charger&nbsp;: trois façons d'exprimer un inconfort</h3>
+
+        <p>Aboyer, grogner ou charger, ce sont trois volumes différents du même message&nbsp;: «&nbsp;je ne suis pas à l'aise, mettez de la distance&nbsp;». L'aboiement est souvent de la frustration ou de l'appel. Le grognement est un avertissement honnête, et le punir revient à retirer au chien son avertissement avant qu'il ne passe à la prochaine phase qui peut faire mal. La charge, elle, arrive quand la pression est montée trop haut sans soupape.</p>
+
+        <p>J'ai suivi un chien issu de la SPA qui fixait intensément puis montait progressivement jusqu'à la charge, avec déjà quelques pincements. Chez lui, le tirage permanent en laisse et la tension constante nourrissaient cette montée et l'empêchaient de redescendre. La charge n'était pas le point de départ du problème, mais le bout d'une chaîne&nbsp;: fixation, tension, excitation, explosion. C'est cette chaîne qu'on désamorce, pas juste le dernier maillon.</p>
+
+        <h2 id="trois-formes">Les trois formes de réactivité et leurs origines</h2>
+
+        <p>Toutes les réactivités ne se ressemblent pas. Un chien réactif par peur et un chien réactif par excitation ont besoin de deux travails opposés. Confondre les deux, c'est prendre le risque d'aggraver la situation. Un chien réactif se travaille toujours à partir de son origine, avant de s'occuper du symptôme visible. Voici les trois grandes familles.</p>
+
+        <h3 id="reactivite-par-peur">La réactivité par peur&nbsp;: manque de socialisation ou mauvaise expérience</h3>
+
+        <p>La peur est la cause la plus fréquente. Un chien qui n'a pas assez rencontré ses congénères pendant sa période d'imprégnation, ou qui a vécu une mauvaise expérience, par exemple avec un vélo, un joggeur etc, finit par anticiper le conflit. Il fixe, cherche à fuir, et s'il ne peut pas, il déclenche. Quand la mauvaise expérience est une agression subie, j'ai détaillé <a href="/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/">quoi faire après une attaque</a> pour éviter qu'elle bascule en réactivité durable.</p>
+
+        <p>Une jeune chienne que j'ai accompagnée illustre bien cette forme. Après une mauvaise rencontre, elle a perdu confiance&nbsp;: elle aboyait, avançait, puis reculait, la queue entre les jambes. Ce qui était précieux chez elle, c'est qu'elle n'était pas terrorisée. Elle gardait de la curiosité et de l'envie d'interagir malgré l'inquiétude. Ce type de chien réactif offre un excellent terrain de travail, parce qu'il reste capable d'observer et de réfléchir.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">La socialisation ne se rattrape pas n'importe quand</p>
+            <p class="art-callout__text">L'essentiel du caractère social d'un chien se joue avant ses quatre mois et demi. Passé cette fenêtre, on peut toujours travailler, mais c'est de la rééducation, plus long et plus fin. D'où l'importance de sortir un chiot tôt, beaucoup, et pas de le garder «&nbsp;sous cloche&nbsp;» en attendant les rappels de vaccins.</p>
+          </div>
+        </aside>
+
+        <h3 id="reactivite-par-frustration">La réactivité par frustration ou excitation&nbsp;: il veut y aller sans y arriver</h3>
+
+        <p>Ici, le chien n'a pas peur du tout&nbsp;: il veut aller voir et la laisse l'en empêche. La frustration monte, et elle sort en aboiements, en tension, en agitation désordonnée. Ce sont souvent des chiens «&nbsp;horriblement gentils&nbsp;» qui n'ont jamais appris à renoncer.</p>
+
+        <p>L'un d'eux tirait énormément en laisse, ce qui alimentait ses montées en pression à chaque chien croisé. Une jeune chienne pleine d'énergie explosait d'excitation dès qu'elle associait un lieu au jeu. Un jeune mâle entier d'un an grognait ou chargeait dès qu'il montait trop haut, par pur excès d'émotion. Le point commun de tous ces chiens&nbsp;: un besoin social énorme et zéro apprentissage du «&nbsp;on ne va pas toujours voir tout le monde&nbsp;».</p>
+
+        <p>Un chien roumain que j'ai suivi le montrait de façon spectaculaire en cours collectif. Privé de contact avec les autres chiens, il montait très haut et aboyait. Mais dès qu'on lui rendait l'accès, il redescendait presque instantanément. La preuve qu'on était sur de la frustration et un manque, pas sur de l'agressivité. Ce mécanisme rejoint plus largement la <a href="/education-canine/comportement/comprendre/gestion-emotions/balade/">difficulté à gérer ses émotions en balade</a>, dont la réactivité est souvent la forme la plus visible.</p>
+
+        <h3 id="protection-de-ressource">La réactivité par protection d'une ressource ou de son humain</h3>
+
+        <p>Plus rare en balade, cette forme apparaît quand le chien défend quelque chose qu'il considère comme à lui&nbsp;: une balle, sa gamelle, un lieu, ou même son propriétaire. Un chien qui vous sent fragile ou peu sûr de vous peut se mettre à «&nbsp;gérer&nbsp;» les rencontres à votre place, en repoussant tout ce qui approche.</p>
+
+        <p>Le travail de fond consiste alors à faire comprendre au chien que rien n'est à lui et que tout est à vous, par des exercices de partage type prend-donne, et surtout à vous réinstaller comme référent fiable. La protection de ressources mérite un accompagnement à part entière, car elle touche à l'organisation de toute la vie du foyer.</p>
+
+        <!-- CTA inline — mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous ne savez pas quelle forme de réactivité concerne votre chien&nbsp;?</p>
+          <p class="art-inline-cta-desc">Bilan à domicile pour identifier l'origine (peur, frustration, ressource) et poser le bon travail, c'est gratuit et sans engagement</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV</a>
+        </aside>
+
+        <h2 id="declencheurs">Les déclencheurs les plus fréquents&nbsp;: congénères, vélos, joggeurs, humains</h2>
+
+        <p>Un chien réactif l'est rarement sur tout. Il a ses déclencheurs, et les identifier précisément est la première étape du travail. Deux chiens réactifs peuvent avoir des listes de déclencheurs complètement différentes.</p>
+
+        <h3 id="face-aux-chiens">Face aux autres chiens, le cas que j'ai le plus souvent en suivi</h3>
+
+        <p>Les congénères arrivent largement en tête. C'est le déclencheur numéro un chez les chiens réactifs que j'accompagne. J'ai détaillé ce qui se joue et ce que vous pouvez faire dans un article dédié&nbsp;: <a href="/education-canine/comportement/problemes/reactivite/chiens/">mon chien est réactif aux autres chiens en balade</a>. La bonne nouvelle, c'est que ce sont aussi les situations où le progrès se voit le plus vite quand on travaille dans le bon sens.</p>
+
+        <p>Un détail que j'observe très souvent&nbsp;: le premier croisement avec un chien inconnu déclenche, mais au second passage avec le même chien, la réaction chute nettement. J'ai eu un chien qui faisait exactement ça. Ça montre que la «&nbsp;surprise&nbsp;» et l'anticipation jouent un rôle énorme et qu'un chien peut apprendre à banaliser une présence.</p>
+
+        <h3 id="mouvements-rapides">Face aux mouvements rapides&nbsp;: vélos, trottinettes, joggeurs</h3>
+
+        <p>Les vélos, trottinettes, skateboards et joggeurs activent autre chose&nbsp;: l'instinct de poursuite. Le mouvement rapide déclenche un patron moteur de prédation, présent chez tous les chiens à des degrés variables.</p>
+
+        <p>Un cocker aux forts patrons de chasse que j'ai suivi pouvait pincer les joggeurs et les vélos. Un chien rapatrié de Roumanie réagissait aux hommes qui couraient et à tout ce qui filait vite. Sur ce type de chien, on ne s'attaque pas directement au vélo&nbsp;: on travaille d'abord le contrôle et le renoncement sur des jouets et des balles en mouvement, avant de confronter le chien au vrai stimulus. On donne au chien une façon acceptable de vivre ce besoin, au lieu de simplement l'interdire.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Un chien qui poursuit a un besoin, pas juste un défaut</p>
+            <p class="art-callout__text">Le jeu de balle bien encadré, le flirt pole, le pistage&nbsp;: ce sont des soupapes. Un chien à fort instinct de poursuite qu'on prive de tout exutoire déchargera sur ce qui bouge dehors. Occupez sa tête et son corps et la moitié du problème s'allège.</p>
+          </div>
+        </aside>
+
+        <h3 id="face-aux-vehicules">Face aux véhicules&nbsp;: voitures, camions, tracteurs</h3>
+
+        <p>Certains chiens ne réagissent qu'aux gros véhicules&nbsp;: camions, bus, tracteurs. Le bruit, la masse et le mouvement se combinent. Un chien que j'ai suivi déclenchait sur les camions et les tracteurs, en plus des chiens&nbsp;: il les fixait dès qu'ils apparaissaient au bout de la rue, se raidissait, puis grognait en tirant vers eux. Un détail parlant, ça n'apparaissait que lorsqu'il était en laisse.</p>
+
+        <p>La logique de travail reste la même que pour les mouvements rapides&nbsp;: casser la fixation avant que la pression monte, garder le chien connecté à vous, et récompenser chaque passage géré dans le calme. On désensibilise par exposition progressive, à distance d'abord, jamais en jetant le chien dans le grand bain.</p>
+
+        <h3 id="face-aux-humains">Face aux humains qui s'approchent trop vite ou trop frontalement</h3>
+
+        <p>Un humain qui arrive de face, vite, en tendant la main au-dessus de la tête du chien, coche toutes les cases de l'approche menaçante pour un chien inquiet. Beaucoup de réactivité envers les humains vient de là, ou d'interactions non respectueuses vécues quand le chien était chiot.</p>
+
+        <p>Un spitz mâle que j'ai accompagné aboyait sans cesse sur les humains en extérieur&nbsp;: lors du bilan, il a aboyé 20 à 30 minutes avant de réussir à redescendre. Son comportement venait d'interactions répétées où ses signaux d'inconfort avaient été ignorés petit. L'aboiement était devenu son seul moyen de communication efficace. Chez lui comme chez la plupart, reposer un cadre clair et sécurisant à la maison a fait chuter la réactivité dehors, parce qu'un chien sécurisé n'a plus besoin de tout gérer seul.</p>
+
+        <h2 id="comment-reagir">Comment réagir quand votre chien s'emballe en balade</h2>
+
+        <p>Passons au concret. Que faire sur le trottoir, quand la situation monte&nbsp;? Trois réflexes valent tous les gadgets.</p>
+
+        <h3 id="casser-la-fixation">Casser la fixation visuelle avant que la pression monte</h3>
+
+        <p>Tout commence par le regard. Avant même l'aboiement, votre chien fixe. Cette fixation est le premier maillon de la chaîne&nbsp;: si vous la cassez tôt, la pression n'a pas le temps de grimper. Attendez qu'il soit déjà en pleine crise et il est trop tard, il ne vous entend plus.</p>
+
+        <p>Concrètement, on utilise des mouvements du corps larges, en arc de cercle autour de la tête du chien, pour attirer naturellement son regard vers vous. C'est ce qui a marché avec plusieurs chiens que j'accompagne&nbsp;: plus l'environnement est vide, plus le chien a tendance à s'accrocher visuellement à la cible au loin et plus le mouvement devient utile pour rompre ce focus. On ne tire pas sur la laisse&nbsp;; on redevient simplement plus intéressant que le stimulus.</p>
+
+        <h3 id="rester-neutre">Rester neutre&nbsp;: votre calme est le seul ancrage</h3>
+
+        <p>Votre chien lit vos émotions mieux que vous ne le croyez. Il perçoit votre tension, votre changement de respiration, votre bras qui se crispe sur la laisse. Si vous vous préparez au drame à chaque croisement, vous lui confirmez qu'il y a un drame.</p>
+
+        <p>Rester neutre n'est pas jouer la comédie du calme. Votre chien sent réellement votre état interne. Il faut donc vraiment décider que ce croisement est banal&nbsp;: épaules droites, respiration posée, on continue d'avancer. Sur un cocker que je suivais, cette posture du conducteur, souffler profondément et garder les épaules ouvertes, faisait une différence nette sur les croisements. Ne rentrez pas dans le jeu du «&nbsp;qui aboie le plus fort&nbsp;». Vous décidez, sans émotion, et le chien finit par s'appuyer sur votre stabilité.</p>
+
+        <h3 id="recuperer-attention">Récupérer son attention avec le prénom, le regard, un bruit de bouche</h3>
+
+        <p>Une fois la fixation cassée et votre calme installé, il faut ramener le chien vers vous. On dit le prénom une seule fois, on attend le regard, on recule légèrement pour l'aspirer vers soi, et on récompense dès qu'il revient. Un léger bruit de bouche peut aider à accrocher l'attention sans avoir à parler.</p>
+
+        <p>La règle d'or&nbsp;: on ne répète pas le prénom dix fois. Le répéter en boucle apprend au chien à l'ignorer. Un mot, puis on accompagne le mouvement. Cet exercice, que j'appelle le refocus, se travaille au calme avant de l'emmener en situation. Une jeune chienne que j'accompagnais est devenue très performante là-dessus dès la première séance, et c'est ce qui a débloqué ses croisements.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Travaillez le focus avant de sortir, pas pendant la crise</p>
+            <p class="art-callout__text">Prenez deux minutes en début de balade pour reconnecter votre chien à vous&nbsp;: prénom, regard, récompense. Un chien déjà connecté au départ gère infiniment mieux les rencontres qu'un chien lancé dans l'environnement sans préparation.</p>
+          </div>
+        </aside>
+
+        <!-- CTA inline — mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous n'arrivez pas à casser la fixation en balade&nbsp;?</p>
+          <p class="art-inline-cta-desc">Un bilan à domicile pour poser les bons réflexes et retrouver des balades tranquilles, à Bordeaux et sa métropole</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+        </aside>
+
+        <h2 id="erreurs">Les erreurs qui empirent la situation sans que vous le sachiez</h2>
+
+        <p>La plupart des propriétaires que je rencontre font empirer les choses avec les meilleures intentions du monde. Ce n'est pas un reproche, ce sont des réflexes logiques mais contre-productifs. En voici cinq à corriger en priorité.</p>
+
+        <h3 id="friandises-au-sol">Jeter des friandises au sol pour détourner l'attention</h3>
+
+        <p>C'est le conseil qu'on lit partout, et c'est une erreur. Jeter des croquettes au sol quand un chien approche ne règle rien&nbsp;: ça occulte le problème au lieu de le traiter. Pire, ça vous installe en position de fragilité et ça confirme au chien que le stimulus est bien une menace, puisqu'il faut le distraire pour la lui faire oublier. On veut que le chien apprenne à gérer la présence de l'autre, pas à détourner les yeux en mangeant.</p>
+
+        <h3 id="eviter-systematiquement">Éviter systématiquement les déclencheurs</h3>
+
+        <p>Changer de trottoir à chaque chien, ne plus sortir aux heures de pointe, éviter les parcs&nbsp;: on comprend le réflexe, mais l'évitement systématique aggrave la réactivité. Un chien qu'on désocialise «&nbsp;pour le protéger&nbsp;» perd encore plus ses repères et devient plus réactif, pas moins.</p>
+
+        <p>Attention à la nuance&nbsp;: ne pas éviter ne veut pas dire foncer dans le tas. On ne cherche pas le contact forcé. On apprend au chien à rester indifférent dans l'espace public, à croiser sans interagir, ce qui est très différent de la fuite.</p>
+
+        <h3 id="a-coup-de-laisse">Donner un à-coup de laisse avant même la première parole</h3>
+
+        <p>Voici l'erreur technique la plus destructrice. Beaucoup de propriétaires donnent un à-coup de laisse dès qu'ils voient l'autre chien, avant même d'avoir dit un mot. Résultat&nbsp;: le chien associe la douleur ou l'inconfort à la vue du congénère. Vous fabriquez précisément l'association que vous voulez éviter.</p>
+
+        <p>L'ordre correct est toujours le même&nbsp;: d'abord le mot, on laisse au chien le temps de traiter l'information et de décider, et seulement ensuite, si besoin, une correction (mesurée évidemment). Un chien équilibré peut être abîmé en quelques secondes par la combinaison d'une laisse trop courte et d'un à-coup injustifié au mauvais moment. La rééducation d'un tel traumatisme prend ensuite des mois.</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le mot avant le geste, toujours</p>
+            <p class="art-callout__text">C'est la règle que je répète le plus en séance. Le chien doit avoir une chance de bien faire avant qu'on intervienne. Un geste qui arrive avant la parole, c'est une punition qu'il ne comprend pas.</p>
+          </div>
+        </aside>
+
+        <h3 id="reconforter">Réconforter à voix basse quand il tremble ou grogne</h3>
+
+        <p>Quand votre chien a peur et que vous le caressez en murmurant «&nbsp;c'est bon, calme-toi&nbsp;», vous pensez le rassurer. En réalité, vous validez son état émotionnel. Vous lui dites&nbsp;: «&nbsp;tu as raison d'avoir peur, je te récompense d'être dans cet état&nbsp;». Le faux réconfort renforce la peur au lieu de l'apaiser.</p>
+
+        <p>Un chien inquiet se rassure sur votre indifférence tranquille face au stimulus, bien plus que sur une voix douce. Continuez votre activité, montrez par votre attitude que la situation est banale. C'est ça, l'ancrage dont il a besoin.</p>
+
+        <h3 id="porter-le-chiot">Porter le chiot dans les bras dès qu'un chien approche</h3>
+
+        <p>Prendre son petit chien ou son chiot dans les bras à chaque congénère semble protecteur. C'est une des meilleures façons de fabriquer un chien réactif. En hauteur, le chien se sent fort et intouchable, mais une fois au sol il est complètement démuni et instable.</p>
+
+        <p>Laissez votre chien au sol, gardez votre calme et laissez les interactions se faire. Votre panique se transmet instantanément par la laisse. Le pire parasite d'une rencontre, c'est souvent l'humain au bout de la longe.</p>
+
+        <h2 id="par-ou-commencer">Par où commencer pour retrouver des balades tranquilles</h2>
+
+        <p>Bonne nouvelle pour finir&nbsp;: un chien réactif se récupère toujours. La réactivité n'est jamais figée, il n'est jamais trop tard. Voici l'ordre dans lequel je travaille avec les propriétaires que j'accompagne.</p>
+
+        <h3 id="obeissance-de-base">Reprendre l'obéissance de base pour vous réinstaller en référent</h3>
+
+        <p>Avant de toucher à la réactivité elle-même, on solidifie les fondations&nbsp;: rappel, immobilité, marche en laisse détendue. Ces exercices ne servent pas à faire joli. Ils vous réinstallent comme référent, celui vers qui le chien se tourne quand il ne sait pas quoi faire.</p>
+
+        <p>Un chien qui a un guide fiable n'a plus besoin de gérer seul ses inquiétudes. Chez un chien que j'ai suivi, le cadre à la maison était trop souple&nbsp;: il répondait vite à mes demandes, mais lentement à celles de ses propriétaires. Gagner en cohérence et en fermeté dans le quotidien change tout dehors.</p>
+
+        <h3 id="resocialiser">Resocialiser avec un chien stable et encadré</h3>
+
+        <p>On ne resocialise pas un chien réactif en le lâchant dans un parc à chiens. On le fait rencontrer un chien parfaitement stable, qui ne réagira pas, dans un cadre maîtrisé. C'est le rôle que joue Ramsey, mon staffie, dans presque tous mes suivis. Grâce à sa stabilité, le chien réactif vit des croisements calmes, puis reste côte à côte, puis interagit.</p>
+
+        <p>Un cocker que je suivais, après des débuts en réactivité par frustration, s'est retrouvé capable de rester côte à côte avec Ramsey au bout de quelques croisements. Un bon chien régulateur apprend aussi au chien réactif les codes qu'il a parfois ratés&nbsp;: poser des limites, renoncer, redescendre. Ce sont des apprentissages qui passent mieux entre chiens qu'à travers nos ordres.</p>
+
+        <h3 id="politesse-canine">La politesse canine&nbsp;: apprendre l'indifférence en laisse</h3>
+
+        <p>Le cœur du travail à long terme, c'est ce que j'appelle la politesse canine&nbsp;: apprendre au chien que quand il est en laisse, on ne va pas dire bonjour à tout le monde. Zéro contact avec les autres chiens et les humains tant qu'il est attaché.</p>
+
+        <p>Ça paraît sévère, c'est en fait libérateur. Un chien à qui on donne des contacts en permanence devient capricieux&nbsp;: il estime que s'il veut y aller, c'est tout de suite. Un chien qui a intégré que l'absence d'interaction est normale et sans danger devient beaucoup plus calme. On ne change pas de trottoir, on n'évite pas&nbsp;: on traverse l'espace public en restant indifférent. C'est là que les balades redeviennent reposantes.</p>
+
+        <h3 id="se-faire-accompagner">Quand se faire accompagner par un professionnel</h3>
+
+        <p>Vous pouvez avancer seul sur beaucoup de points. Mais si votre chien charge, pince, si vous avez peur au bout de la laisse, ou si vous tournez en rond depuis des mois, un accompagnement fait gagner un temps précieux et évite les erreurs qui ancrent le problème.</p>
+
+        <p>Un bon professionnel commence par vous écouter et observer votre binôme, pas par sauter sur votre chien avec des friandises. Il vous emmène dans la vraie vie, en ville ou en forêt, là où sont vos difficultés, pas dans un enclos fermé. Et il vous explique le «&nbsp;pourquoi&nbsp;» de chaque exercice. Si le courant ne passe pas ou si les solutions ne sont pas claires, changez. Dans quelques semaines, ce croisement qui vous nouait le ventre à chaque coin de rue peut devenir un non-événement. Pas par magie, juste par un travail fait dans le bon sens.</p>
+
+        <p>Pour aller plus loin sur les compétences concrètes à construire en balade (décrochage, focus, renoncement), l'article dédié à <a href="/education-canine/comportement/problemes/gestion-emotions/balade/">gérer ses émotions en balade au quotidien</a> reprend chaque brique pas à pas.</p>
+
+        <!-- CTA inline — mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Retrouver des balades sereines, ça se prépare</p>
+          <p class="art-inline-cta-desc">Premier bilan gratuit à domicile · Je me déplace à Bordeaux et sa métropole · Sans engagement</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
+        </aside>
+
+      </div><!-- /.art-content -->
+
+      <!-- Sidebar sticky — desktop uniquement -->
+      <aside class="art-sidebar" aria-labelledby="art-toc-heading">
+        <nav class="art-toc" aria-labelledby="art-toc-heading">
+          <details class="art-toc-details">
+            <summary class="art-toc-title" id="art-toc-heading">
+              Sommaire
+              <svg class="art-toc-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="art-toc-links">
+              {toc.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+                >
+                  <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        </nav>
+
+        <div class="art-sidebar-cta">
+          <p class="art-sidebar-cta-title">Votre chien est réactif&nbsp;?</p>
+          <p class="art-sidebar-cta-desc">Bilan comportemental à domicile pour retrouver des balades sereines</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            Prendre RDV
+            <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
+          </a>
+        </div>
+      </aside>
+
+    </div><!-- /.art-layout -->
+
+    <!-- Like / Dislike -->
+    <section class="art-feedback-wrap" aria-label="Votre avis sur cet article">
+      <div class="container">
+        <div class="art-feedback" id="art-feedback">
+          <p class="art-feedback-question">Cet article vous a été utile&nbsp;?</p>
+          <div class="art-feedback-buttons">
+            <button type="button" class="art-feedback-btn art-feedback-btn--like" id="art-like-btn" aria-label="J'aime cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>
+              </svg>
+              Oui
+            </button>
+            <button type="button" class="art-feedback-btn art-feedback-btn--dislike" id="art-dislike-btn" aria-label="Je n'aime pas cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>
+              </svg>
+              Non
+            </button>
+          </div>
+
+          <div class="art-feedback-form" id="art-feedback-form" hidden>
+            <label for="art-feedback-text" class="art-feedback-label">Qu'est-ce qui pourrait être amélioré&nbsp;?</label>
+            <textarea
+              id="art-feedback-text"
+              class="art-feedback-textarea"
+              rows="3"
+              maxlength="500"
+              placeholder="Votre retour nous aide à améliorer nos contenus…"
+            ></textarea>
+            <div class="art-feedback-form-footer">
+              <span class="art-feedback-hint" id="art-feedback-hint">10 caractères minimum</span>
+              <button type="button" class="btn btn-primary art-feedback-submit" id="art-feedback-submit" disabled>Envoyer</button>
+            </div>
+          </div>
+
+          <div class="art-feedback-thanks" id="art-feedback-thanks" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span>Merci ! Je prends en compte tous vos retours pour améliorer la qualité des articles et vous aider le plus possible :)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Biographie auteure -->
+    <footer class="art-bio-wrap">
+      <div class="container">
+        <div class="art-bio">
+          <div class="art-bio-avatar" aria-hidden="true">
+            <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="64" height="64" loading="lazy" decoding="async" style="display:block;" />
+          </div>
+          <div>
+            <p class="art-bio-name">À propos de {article.author}</p>
+            <p class="art-bio-role">{article.authorRole}</p>
+            <p class="art-bio-desc">{article.authorDesc}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </article><!-- /article -->
+
+
+  <!-- ── FAQ ───────────────────────────────────────────────────────── -->
+  {faqItems.length > 0 && (
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 750px;">
+        <h2 id="faq-heading" style="text-align: center;">Questions fréquentes sur la <span class="accent">réactivité canine</span></h2>
+        <div class="faq-list" style="margin-top: var(--sp-8);">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>{item.question}</span>
+                <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────────────── -->
+  <section class="section-dark art-cta-section" aria-labelledby="art-cta-h">
+    <div class="container art-cta-inner">
+      <h2 class="art-cta-title" id="art-cta-h">Envie de retrouver des balades sereines avec votre chien&nbsp;?</h2>
+      <p>Bilan comportemental gratuit à domicile · Bordeaux et métropole</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Réserver mon bilan gratuit
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── ARTICLES QUI PEUVENT VOUS INTÉRESSER ───────────────────────── -->
+  <section class="art-related" aria-labelledby="art-related-h">
+    <div class="container">
+      <p class="art-related-divider" id="art-related-h">Articles qui peuvent vous intéresser</p>
+      <div class="art-related-grid">
+        {related.map((card) => (
+          <a href={card.url} class="art-related-card">
+            <img
+              src={card.img}
+              alt={card.imgAlt}
+              class="art-related-card-img"
+              width="360"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="art-related-card-body">
+              <p class="art-related-card-title">{card.title}</p>
+              <p class="art-related-card-meta">{card.readTime} de lecture</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
+  <ArticleProgressBar />
+
+  <script is:inline>
+    (function () {
+      var MIN_CHARS = 10;
+      var feedbackWrap = document.getElementById('art-feedback');
+      var likeBtn = document.getElementById('art-like-btn');
+      var dislikeBtn = document.getElementById('art-dislike-btn');
+      var feedbackForm = document.getElementById('art-feedback-form');
+      var feedbackText = document.getElementById('art-feedback-text');
+      var feedbackHint = document.getElementById('art-feedback-hint');
+      var feedbackSubmit = document.getElementById('art-feedback-submit');
+      var feedbackThanks = document.getElementById('art-feedback-thanks');
+
+      if (!feedbackWrap || !likeBtn || !dislikeBtn) return;
+
+      function sendGA4Event(eventName, params) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: eventName }, params));
+      }
+
+      function getArticleTitle() {
+        var h1 = document.querySelector('h1');
+        return h1 ? h1.textContent.trim() : document.title;
+      }
+
+      function showThanks() {
+        feedbackWrap.querySelectorAll('.art-feedback-buttons, .art-feedback-form, .art-feedback-question').forEach(
+          function (el) { el.hidden = true; }
+        );
+        feedbackThanks.hidden = false;
+      }
+
+      likeBtn.addEventListener('click', function () {
+        sendGA4Event('article_like', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+        });
+        showThanks();
+      });
+
+      dislikeBtn.addEventListener('click', function () {
+        likeBtn.hidden = true;
+        dislikeBtn.classList.add('art-feedback-btn--selected');
+        dislikeBtn.disabled = true;
+        feedbackForm.hidden = false;
+        feedbackText.focus();
+      });
+
+      feedbackText.addEventListener('input', function () {
+        var len = feedbackText.value.trim().length;
+        var valid = len >= MIN_CHARS;
+        feedbackSubmit.disabled = !valid;
+        if (len === 0) {
+          feedbackHint.textContent = MIN_CHARS + ' caractères minimum';
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else if (!valid) {
+          feedbackHint.textContent = 'Encore ' + (MIN_CHARS - len) + ' caractère' + (MIN_CHARS - len > 1 ? 's' : '');
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else {
+          feedbackHint.textContent = 'Prêt à envoyer';
+          feedbackHint.classList.add('art-feedback-hint--ok');
+        }
+      });
+
+      feedbackSubmit.addEventListener('click', function () {
+        var text = feedbackText.value.trim();
+        if (text.length < MIN_CHARS) return;
+        sendGA4Event('article_dislike', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+          user_feedback: text,
+        });
+        showThanks();
+      });
+    })();
+  </script>
+
+  <script>
+    const btn = document.getElementById('art-copy-link');
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+        } catch {
+          const el = Object.assign(document.createElement('input'), { value: window.location.href });
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          el.remove();
+        }
+        btn.setAttribute('data-copied', '');
+        setTimeout(() => btn.removeAttribute('data-copied'), 2000);
+      });
+    }
+  </script>
+
+</Layout>

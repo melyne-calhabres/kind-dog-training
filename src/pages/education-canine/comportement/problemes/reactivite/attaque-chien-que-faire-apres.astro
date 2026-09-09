@@ -23,6 +23,8 @@ const article = {
   titleAfter:     ' : que faire après pour éviter qu\'il devienne réactif',
   publishDate:    '17 juin 2026',
   publishDateIso: '2026-06-17',
+  updateDate:     '9 septembre 2026',
+  updateDateIso:  '2026-09-09',
   readTime:       '10 min',
   author:         'Mélyne',
   authorInitial:  'M',
@@ -58,8 +60,8 @@ const jsonLd = {
       '@type':       'Article',
       headline:      article.titleBefore + article.titleAccent + article.titleAfter,
       description:   page.metaDescription,
-      datePublished: '2026-06-17T09:00:00+02:00',
-      dateModified:  '2026-06-17T09:00:00+02:00',
+      datePublished: `${article.publishDateIso}T09:00:00+02:00`,
+      dateModified:  `${article.updateDateIso}T09:00:00+02:00`,
       inLanguage:    'fr-FR',
       url:           pageUrl,
       image: {
@@ -203,7 +205,7 @@ const related = [
               <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
             </div>
             <p class="art-author-info">
-              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.updateDateIso}>{article.updateDate}</time>&nbsp;· {article.readTime} de lecture
             </p>
           </div>
           <div class="art-share">
@@ -280,7 +282,7 @@ const related = [
       <!-- Colonne principale -->
       <div class="art-content">
 
-        <p>Quand mon chien a été attaqué par un autre chien, que faire après est une question souvent posée trop tard. La plupart des propriétaires viennent me voir plusieurs mois après l'incident, quand <a href="/education-canine/comportement/problemes/reactivite/chiens/">la réactivité envers les autres chiens</a> est déjà installée. Pour éviter que la trace de cette attaque ne devienne un trouble durable, vous avez besoin de repères concrets dès les premiers jours.</p>
+        <p>Quand mon chien a été attaqué par un autre chien, que faire après est une question souvent posée trop tard. Cet article fait partie de mon dossier sur la <a href="/education-canine/comportement/problemes/reactivite/">réactivité canine</a>, dont l'attaque subie est l'une des causes les plus fréquentes. La plupart des propriétaires viennent me voir plusieurs mois après l'incident, quand <a href="/education-canine/comportement/problemes/reactivite/chiens/">la réactivité envers les autres chiens</a> est déjà installée. Pour éviter que la trace de cette attaque ne devienne un trouble durable, vous avez besoin de repères concrets dès les premiers jours.</p>
 
         <h2 id="reconnaitre-les-signes">Reconnaître les signes d'un chien traumatisé par ce qu'il a vécu</h2>
 
@@ -288,7 +290,7 @@ const related = [
 
         <p>Dans les heures qui suivent l'attaque, certains chiens montrent immédiatement un stress visible&nbsp;: tremblements, refus de manger, recherche d'un coin où se replier, posture basse. D'autres ne montrent rien dans les premiers jours, et c'est souvent là que les propriétaires se rassurent à tort.</p>
 
-        <p>J'ai accompagné un cocker récemment attaqué. Sa réactivité envers les autres chiens était fluctuante&nbsp;: certaines balades se passaient sans déclenchement, d'autres non. Quand il réagissait, les signaux étaient nets&nbsp;: port de queue haut, fixation intense, abaissement du centre de gravité, aboiements et grognements. Après une montée émotionnelle, il ne redescendait pas. Cette fluctuation est très classique d'un chien attaqué par un autre chien&nbsp;: que faire après dépend justement de la lecture fine de ces signaux.</p>
+        <p>J'ai accompagné un cocker récemment attaqué. Sa réactivité envers les autres chiens était fluctuante&nbsp;: certaines balades se passaient sans déclenchement, d'autres non. Quand il réagissait, les signaux étaient nets&nbsp;: port de queue haut, fixation intense, abaissement du centre de gravité, aboiements et grognements. Après une montée émotionnelle, il ne redescendait pas. Cette fluctuation est très classique d'un chien attaqué par un autre chien&nbsp;: que faire après dépend justement de la lecture fine de ces signaux. Un chien qui, à l'inverse, passe à l'acte sur un autre chien relève d'un travail différent, que j'ai détaillé côté <a href="/education-canine/comportement/problemes/agressivite/comment-reagir-chien-attaque-autre-chien/">comment réagir quand votre chien attaque</a>.</p>
 
         <aside class="art-callout art-callout--soft" role="note">
           <div class="art-callout__icon" aria-hidden="true">
@@ -346,7 +348,7 @@ const related = [
 
         <p>L'instinct des propriétaires après une attaque, c'est l'évitement. Pas de parc, pas de balade aux heures où il y a du monde, traversées de rue pour ne croiser personne. Cette stratégie est compréhensible mais elle aggrave tout. Un chien qui ne croise plus de congénères perd ses codes, et chaque rencontre rare devient un événement, donc une bombe à retardement.</p>
 
-        <p>Avec le staffie marqué par son altercation, le travail a inclus une à deux heures de jeu par semaine avec ses «&nbsp;super potes&nbsp;», des chiens connus et stables. L'objectif&nbsp;: que les autres chiens redeviennent banals à ses yeux. Plus la rencontre est ordinaire, moins elle déclenche.</p>
+        <p>Avec le staffie marqué par son altercation, le travail a inclus une à deux heures de jeu par semaine avec ses «&nbsp;super potes&nbsp;», des chiens connus et stables. L'objectif&nbsp;: que les autres chiens redeviennent banals à ses yeux. Plus la rencontre est ordinaire, moins elle déclenche. Pour construire à côté les compétences de balade (décrochage, focus, renoncement), voir l'article <a href="/education-canine/comportement/problemes/gestion-emotions/balade/">gérer ses émotions en balade au quotidien</a>.</p>
 
         <h2 id="votre-etat-emotionnel">Votre propre état émotionnel pèse sur celui de votre chien</h2>
 
@@ -389,7 +391,7 @@ const related = [
 
         <h3 id="age-du-chien">L'âge du chien au moment de l'attaque change tout</h3>
 
-        <p>Un chien de moins de cinq mois est dans sa fenêtre critique de socialisation. Une attaque à cet âge peut basculer sa lecture des congénères pour le reste de sa vie. À l'inverse, un adulte stable avec un bon historique social a plus de ressources pour absorber l'incident. <a href="/education-canine/comportement/comprendre/adolescence-chien/">L'adolescence</a> reste une période fragile&nbsp;: la montée hormonale rend la réactivité plus probable, et de petites expériences passées peuvent ressortir à ce moment-là.</p>
+        <p>Un chien de moins de cinq mois est dans sa fenêtre critique de socialisation. Une attaque à cet âge peut basculer sa lecture des congénères pour le reste de sa vie. À l'inverse, un adulte stable avec un bon historique social a plus de ressources pour absorber l'incident. L'adolescence reste une période fragile&nbsp;: la montée hormonale rend la réactivité plus probable, et de petites expériences passées peuvent ressortir à ce moment-là.</p>
 
         <h3 id="histoire-de-ramsey">L'histoire de Ramsey, point de départ de Kind Dog Training</h3>
 

@@ -23,6 +23,8 @@ const article = {
   titleAfter:     ' chez le chien : que faire concrètement ?',
   publishDate:    '4 juillet 2026',
   publishDateIso: '2026-07-04',
+  updateDate:     '9 septembre 2026',
+  updateDateIso:  '2026-09-09',
   readTime:       '16 min',
   author:         'Mélyne',
   authorInitial:  'M',
@@ -58,8 +60,8 @@ const jsonLd = {
       '@type':       'Article',
       headline:      article.titleBefore + article.titleAccent + article.titleAfter,
       description:   page.metaDescription,
-      datePublished: '2026-07-04T09:00:00+02:00',
-      dateModified:  '2026-07-04T09:00:00+02:00',
+      datePublished: `${article.publishDateIso}T09:00:00+02:00`,
+      dateModified:  `${article.updateDateIso}T09:00:00+02:00`,
       inLanguage:    'fr-FR',
       url:           pageUrl,
       image: {
@@ -209,7 +211,7 @@ const related = [
               <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
             </div>
             <p class="art-author-info">
-              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.updateDateIso}>{article.updateDate}</time>&nbsp;· {article.readTime} de lecture
             </p>
           </div>
           <div class="art-share">
@@ -301,13 +303,13 @@ const related = [
 
         <h2 id="vraie-anxiete-hyperattachement-manque-cadre">Vraie anxiété de séparation, hyperattachement ou simple manque de cadre&nbsp;?</h2>
 
-        <p>Avant de travailler quoi que ce soit, il faut savoir ce qu'on travaille. Beaucoup de propriétaires arrivent en me disant «&nbsp;mon chien a de l'anxiété de séparation&nbsp;». Dans les faits, une fois sur deux, il se passe autre chose. Poser le mauvais diagnostic sur une anxiété de séparation, c'est perdre des semaines à traiter un problème qui n'existe pas.</p>
+        <p>Avant de travailler quoi que ce soit, il faut savoir ce qu'on travaille. Beaucoup de propriétaires arrivent en me disant «&nbsp;mon chien a de l'anxiété de séparation&nbsp;». Dans les faits, une fois sur deux, il se passe autre chose. Poser le mauvais diagnostic sur une anxiété de séparation, c'est perdre des semaines à traiter un problème qui n'existe pas. Elle fait partie des <a href="/education-canine/comportement/problemes/">problèmes de comportement</a> les plus fréquemment mal identifiés.</p>
 
         <h3 id="dependance-foyer-mauvais-demarrage">Le chien dépendant du foyer vs le chien parti d'un mauvais démarrage de vie</h3>
 
         <p>L'anxiété de séparation, au sens strict, c'est un chien tellement attaché à ses propriétaires qu'il devient anxieux dès qu'il se retrouve seul. Mais l'origine de cet attachement change tout. Chez certains chiens, la dépendance s'est construite à la maison, jour après jour, à force de présence permanente et d'un chien qui décide de toutes les interactions. Chez d'autres, la fragilité vient de bien plus loin.</p>
 
-        <p>J'ai suivi une chienne dont l'anxiété de séparation ne collait pas au tableau habituel. Elle ne suivait pas ses propriétaires partout, ne dormait pas avec eux, ne montait pas sur le canapé. Les bases du détachement étaient là. Pourtant, dès qu'elle restait seule, elle aboyait. En creusant, tout pointait vers un mauvais démarrage de vie&nbsp;: sevrage trop précoce, conditions d'élevage, comportement maternel. Son anxiété n'avait pas été fabriquée dans le foyer mais venait d'avant. Le travail reste le même sur le fond mais on part avec un chien déjà bien dans ses pattes, ce qui change le pronostic.</p>
+        <p>J'ai suivi une chienne dont l'anxiété de séparation ne collait pas au tableau habituel. Elle ne suivait pas ses propriétaires partout, ne dormait pas avec eux, ne montait pas sur le canapé. Les bases du détachement étaient là. Pourtant, dès qu'elle restait seule, elle aboyait. En creusant, tout pointait vers un mauvais démarrage de vie&nbsp;: sevrage trop précoce, conditions d'élevage, comportement maternel. Son anxiété n'avait pas été fabriquée dans le foyer mais venait d'avant. Le travail reste le même sur le fond mais on part avec un chien déjà bien dans ses pattes, ce qui change le pronostic. On accuse aussi souvent l'adolescence ou la stérilisation quand ces troubles apparaissent tardivement, alors que la cause est presque toujours ailleurs, comme je le détaille dans l'article sur <a href="/education-canine/comportement/comprendre/adolescence-chien/">l'adolescence du chien</a>.</p>
 
         <aside class="art-callout art-callout--soft" role="note">
           <div class="art-callout__icon" aria-hidden="true">
@@ -464,7 +466,7 @@ const related = [
 
         <p>Le signe le plus révélateur est aussi le plus discret, parce qu'il se produit quand vous êtes encore là. Un chien qui vous suit dans toutes les pièces, qui se réveille au moindre de vos mouvements, qui se met à s'agiter dès que vous commencez à vous préparer, qui surveille la fenêtre ou la baie vitrée. La détresse ne commence pas quand la porte se ferme. Elle commence bien avant, dans l'anticipation. C'est aussi pour ça qu'on travaille autant en amont du départ.</p>
 
-        <p>Voir son chien retrouver la capacité de rester tranquille pendant qu'on enfile ses chaussures, ça n'a l'air de rien. Pour un propriétaire qui a vécu des mois de boule au ventre à chaque sortie, c'est le premier vrai signe que les choses changent.</p>
+        <p>Voir son chien retrouver la capacité de rester tranquille pendant qu'on enfile ses chaussures, ça n'a l'air de rien. Pour un propriétaire qui a vécu des mois de boule au ventre à chaque sortie, c'est le premier vrai signe que les choses changent. Chez certains chiens, cette détresse pousse jusqu'à s'échapper pour retrouver leurs propriétaires, un cas particulier que je traite dans l'article sur <a href="/education-canine/comportement/problemes/fugue/">le chien qui fugue</a>.</p>
 
       </div><!-- /.art-content -->
 

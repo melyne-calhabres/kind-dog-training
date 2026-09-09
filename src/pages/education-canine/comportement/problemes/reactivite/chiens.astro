@@ -17,12 +17,16 @@ const article = {
   categoryUrl:    '/education-canine/comportement/',
   parentLabel:    'Problèmes',
   parentUrl:      '/education-canine/comportement/problemes/',
+  subParentLabel: 'Réactivité',
+  subParentUrl:   '/education-canine/comportement/problemes/reactivite/',
   breadcrumbLabel:'Mon chien est réactif en balade',
   titleBefore:    'Mon chien est ',
   titleAccent:    'réactif aux autres chiens',
   titleAfter:     ' en balade : comprendre ce qui se passe et agir',
-  publishDate:    '29 juin 2026',
-  publishDateIso: '2026-06-29',
+  publishDate:    '12 juin 2026',
+  publishDateIso: '2026-06-12',
+  updateDate:     '9 septembre 2026',
+  updateDateIso:  '2026-09-09',
   readTime:       '13 min',
   author:         'Mélyne',
   authorInitial:  'M',
@@ -58,8 +62,8 @@ const jsonLd = {
       '@type':       'Article',
       headline:      article.titleBefore + article.titleAccent + article.titleAfter,
       description:   page.metaDescription,
-      datePublished: '2026-06-12T09:00:00+02:00',
-      dateModified:  '2026-06-29T09:00:00+02:00',
+      datePublished: `${article.publishDateIso}T09:00:00+02:00`,
+      dateModified:  `${article.updateDateIso}T09:00:00+02:00`,
       inLanguage:    'fr-FR',
       url:           pageUrl,
       image: {
@@ -95,7 +99,8 @@ const jsonLd = {
         { '@type': 'ListItem', position: 1, name: 'Accueil',                    item: siteUrl + '/' },
         { '@type': 'ListItem', position: 2, name: article.category,             item: siteUrl + article.categoryUrl },
         { '@type': 'ListItem', position: 3, name: article.parentLabel,          item: siteUrl + article.parentUrl },
-        { '@type': 'ListItem', position: 4, name: article.breadcrumbLabel },
+        { '@type': 'ListItem', position: 4, name: article.subParentLabel,       item: siteUrl + article.subParentUrl },
+        { '@type': 'ListItem', position: 5, name: article.breadcrumbLabel },
       ],
     },
     ...(faqItems.length > 0
@@ -183,6 +188,7 @@ const related = [
         <li><a href="/">Accueil</a></li>
         <li><a href={article.categoryUrl}>{article.category}</a></li>
         <li><a href={article.parentUrl}>{article.parentLabel}</a></li>
+        <li><a href={article.subParentUrl}>{article.subParentLabel}</a></li>
         <li aria-current="page">{article.breadcrumbLabel}</li>
       </ol>
     </div>
@@ -204,7 +210,7 @@ const related = [
               <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
             </div>
             <p class="art-author-info">
-              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.updateDateIso}>{article.updateDate}</time>&nbsp;· {article.readTime} de lecture
             </p>
           </div>
           <div class="art-share">
@@ -287,6 +293,8 @@ const related = [
         <h2 id="ce-que-vous-faites-sans-le-savoir">Ce que vous faites sans le savoir et qui alimente la réactivité congénères</h2>
 
         <h3 id="l-anticipation-physique-sur-la-laisse">L'anticipation physique sur la laisse</h3>
+
+        <p>La réactivité envers les congénères est l'une des formes les plus fréquentes de la <a href="/education-canine/comportement/problemes/reactivite/">réactivité canine</a>, et c'est celle sur laquelle j'accompagne le plus de propriétaires. Voici ce qui se joue vraiment quand votre chien explose face à un autre chien en balade, et ce que vous pouvez faire pour l'aider.</p>
 
         <p>Votre chien vient de repérer un autre chien au loin. Avant même qu'il ait eu le temps de réagir, vous raccourcissez la laisse, vous cambrez légèrement le dos et vous retenez votre souffle. C'est un réflexe humain totalement naturel. Mais pour votre chien, ce changement dans votre corps est une information. Il dit&nbsp;: « Quelque chose d'anormal se prépare. »</p>
 
@@ -435,6 +443,8 @@ const related = [
         <p>Pour un chien réactif, la longe peut être intéressante dans certains contextes de travail parce qu'elle lui laisse la possibilité de gérer sa distance par rapport au stimulus. J'ai accompagné un chien dont la réactivité disparaissait totalement dès qu'on le détachait. En longe, il observait, reniflait, se positionnait. Mais ça ne veut pas dire que la laisse était le problème&nbsp;: le problème, c'est que ses propriétaires la raccourcissaient systématiquement à l'approche d'un congénère. Quand ils ont appris à garder du mou et à rester calmes sur une laisse classique, les résultats ont suivi aussi. Ce n'est évidemment pas le seul travail qui a été fait et c'est juste un exemple parmi tout ce que j'ai pu observer et mettre en place pour eux.</p>
 
         <p>Ni la laisse ni la longe ne sont une fin en soi. L'objectif reste de travailler vers un chien capable de gérer ses émotions et de se référer à vous dans les moments difficiles, quel que soit l'outil au bout duquel il se trouve. Dans quelques semaines de travail régulier, ce croisement qui vous donnait des sueurs froides peut devenir quelque chose que vous gérez simplement, sans saut d'adrénaline avant même d'avoir vu le chien au bout de la rue.</p>
+
+        <p>Pour aller plus loin sur les compétences concrètes à construire, l'article dédié à <a href="/education-canine/comportement/problemes/gestion-emotions/balade/">gérer ses émotions en balade au quotidien</a> reprend le décrochage, le focus et le renoncement pas à pas.</p>
 
         <h2 id="accompagnement-professionnel">Quand la situation demande un accompagnement professionnel</h2>
 

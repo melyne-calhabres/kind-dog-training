@@ -23,6 +23,7 @@ const pages = [
   '/education-canine/comportement/',
   '/education-canine/comportement/comprendre/',
   '/education-canine/comportement/problemes/',
+  '/education-canine/comportement/problemes/reactivite/',
   '/education-canine/comportement/problemes/reactivite/chiens/',
   '/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/',
   '/education-canine/comportement/comprendre/gestion-emotions/balade/',

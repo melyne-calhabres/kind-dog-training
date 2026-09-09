@@ -23,6 +23,8 @@ const article = {
   titleAfter:     ' : comprendre pourquoi et l\'aider à rester',
   publishDate:    '16 juillet 2026',
   publishDateIso: '2026-07-16',
+  updateDate:     '9 septembre 2026',
+  updateDateIso:  '2026-09-09',
   readTime:       '14 min',
   author:         'Mélyne',
   authorInitial:  'M',
@@ -54,8 +56,8 @@ const jsonLd = {
       '@type':       'Article',
       headline:      article.titleBefore + article.titleAccent + article.titleAfter,
       description:   page.metaDescription,
-      datePublished: '2026-07-16T09:00:00+02:00',
-      dateModified:  '2026-07-16T09:00:00+02:00',
+      datePublished: `${article.publishDateIso}T09:00:00+02:00`,
+      dateModified:  `${article.updateDateIso}T09:00:00+02:00`,
       inLanguage:    'fr-FR',
       url:           pageUrl,
       image: {
@@ -204,7 +206,7 @@ const related = [
               <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
             </div>
             <p class="art-author-info">
-              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.updateDateIso}>{article.updateDate}</time>&nbsp;· {article.readTime} de lecture
             </p>
           </div>
           <div class="art-share">
@@ -286,7 +288,7 @@ const related = [
 
         <p>Votre chien saute la clôture, creuse sous le grillage, ou file dès que le portail s'entrouvre. Vous vivez avec la boule au ventre, à surveiller chaque sortie. Et vous avez sûrement déjà entendu qu'un chien qui fugue, c'est comme ça, surtout si c'est un husky ou un beagle.</p>
 
-        <p>C'est faux. Un chien qui fugue vous dit quelque chose. Le comprendre, c'est déjà la moitié du chemin.</p>
+        <p>C'est faux. Un chien qui fugue vous dit quelque chose. Le comprendre, c'est déjà la moitié du chemin. La fugue fait partie des <a href="/education-canine/comportement/problemes/">problèmes de comportement</a> les plus visibles, mais aussi l'un des plus mal lus.</p>
 
         <h2 id="pourquoi-votre-chien-fugue">Pourquoi votre chien fugue</h2>
 
@@ -323,7 +325,7 @@ const related = [
 
         <p>La fugue n'est jamais un caprice ni une fatalité génétique. C'est la manifestation visible d'autre chose&nbsp;: un besoin qui n'est pas comblé, une pulsion que le chien ne maîtrise pas, ou un lien social qui s'est distendu. Tant qu'on traite le symptôme (rehausser la clôture, ne plus jamais détacher) sans s'attaquer à la cause, on tourne en rond.</p>
 
-        <p>La bonne nouvelle, c'est qu'un comportement de fugue se travaille. Plus il est pris tôt, plus la rééducation est fluide. Un chien de deux ans qui commence à s'échapper se rétablit plus vite qu'un chien chez qui le schéma est installé depuis six ans. Mais même dans les cas anciens, il y a toujours une porte de sortie.</p>
+        <p>La bonne nouvelle, c'est qu'un comportement de fugue se travaille. Plus il est pris tôt, plus la rééducation est fluide. Un chien de deux ans qui commence à s'échapper se rétablit plus vite qu'un chien chez qui le schéma est installé depuis six ans. Mais même dans les cas anciens, il y a toujours une porte de sortie. On met souvent la fugue sur le compte de l'adolescence, mais l'âge n'explique presque jamais rien à lui seul, comme je le détaille dans l'article sur <a href="/education-canine/comportement/comprendre/adolescence-chien/">l'adolescence du chien</a>.</p>
 
         <h3 id="ne-pas-gronder">Ne pas gronder le chien qui revient</h3>
 

@@ -21,8 +21,10 @@ const article = {
   titleBefore:    'Mon chien a du mal à ',
   titleAccent:    'gérer ses émotions en balade',
   titleAfter:     ' : comprendre et reprendre la main',
-  publishDate:    '29 juin 2026',
-  publishDateIso: '2026-06-29',
+  publishDate:    '26 juin 2026',
+  publishDateIso: '2026-06-26',
+  updateDate:     '9 septembre 2026',
+  updateDateIso:  '2026-09-09',
   readTime:       '13 min',
   author:         'Mélyne',
   authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
@@ -57,8 +59,8 @@ const jsonLd = {
       '@type':       'Article',
       headline:      article.titleBefore + article.titleAccent + article.titleAfter,
       description:   page.metaDescription,
-      datePublished: '2026-06-26T09:00:00+02:00',
-      dateModified:  '2026-06-29T09:00:00+02:00',
+      datePublished: `${article.publishDateIso}T09:00:00+02:00`,
+      dateModified:  `${article.updateDateIso}T09:00:00+02:00`,
       inLanguage:    'fr-FR',
       url:           pageUrl,
       image: {
@@ -203,7 +205,7 @@ const related = [
               <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
             </div>
             <p class="art-author-info">
-              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.updateDateIso}>{article.updateDate}</time>&nbsp;· {article.readTime} de lecture
             </p>
           </div>
           <div class="art-share">
@@ -305,7 +307,7 @@ const related = [
 
         <p>C'est exactement l'inverse qu'il faut viser. Plus un chien interagit régulièrement, moins chaque rencontre a de valeur, et plus il sait renoncer. C'est là que vous vous retrouvez avec un chien qui hurle et tracte de tout son poids dès qu'il aperçoit un copain potentiel à cinquante mètres.</p>
 
-        <p>Ce genre de situations peut faire accumuler beaucoup de frustration chez votre chien et peut potentiellement le rendre <a href="/education-canine/comportement/problemes/reactivite/chiens/">réactif envers les autres chiens</a> si vous ne faites rien.</p>
+        <p>Ce genre de situations peut faire accumuler beaucoup de frustration chez votre chien et peut potentiellement le rendre <a href="/education-canine/comportement/problemes/reactivite/chiens/">réactif envers les autres chiens</a> si vous ne faites rien. C'est le point de bascule vers la <a href="/education-canine/comportement/problemes/reactivite/">réactivité canine</a>, à laquelle j'ai consacré un dossier complet pour comprendre ses formes et la travailler.</p>
 
         <h3 id="pas-de-jeu">Pas de vraies phases de jeu avec vous</h3>
 

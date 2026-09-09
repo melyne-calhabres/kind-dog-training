@@ -23,6 +23,8 @@ const article = {
   titleAfter:     ' en balade : comment réagir ?',
   publishDate:    '17 juillet 2026',
   publishDateIso: '2026-07-17',
+  updateDate:     '9 septembre 2026',
+  updateDateIso:  '2026-09-09',
   readTime:       '16 min',
   author:         'Mélyne',
   authorInitial:  'M',
@@ -58,8 +60,8 @@ const jsonLd = {
       '@type':       'Article',
       headline:      article.titleBefore + article.titleAccent + article.titleAfter,
       description:   page.metaDescription,
-      datePublished: '2026-07-17T09:00:00+02:00',
-      dateModified:  '2026-07-17T09:00:00+02:00',
+      datePublished: `${article.publishDateIso}T09:00:00+02:00`,
+      dateModified:  `${article.updateDateIso}T09:00:00+02:00`,
       inLanguage:    'fr-FR',
       url:           pageUrl,
       image: {
@@ -207,7 +209,7 @@ const related = [
               <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
             </div>
             <p class="art-author-info">
-              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.publishDateIso}>{article.publishDate}</time>&nbsp;· {article.readTime} de lecture
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.updateDateIso}>{article.updateDate}</time>&nbsp;· {article.readTime} de lecture
             </p>
           </div>
           <div class="art-share">
@@ -287,7 +289,7 @@ const related = [
       <!-- Colonne principale -->
       <div class="art-content">
 
-        <p>Votre chien s'est jeté sur un autre chien en pleine balade. Peut-être qu'il a juste chargé, peut-être qu'il y a eu contact. Dans tous les cas, vous êtes reparti le cœur battant, en vous demandant ce que vous étiez censé faire à ce moment-là et surtout comment éviter que ça recommence. Je vais vous donner de quoi comprendre ce qui se passe et réagir sans vous mettre en danger. Pas un protocole à appliquer seul dans votre coin, parce que ce serait vous mentir sur la difficulté réelle du travail.</p>
+        <p>Votre chien s'est jeté sur un autre chien en pleine balade. Peut-être qu'il a juste chargé, peut-être qu'il y a eu contact. Dans tous les cas, vous êtes reparti le cœur battant, en vous demandant ce que vous étiez censé faire à ce moment-là et surtout comment éviter que ça recommence. Je vais vous donner de quoi comprendre ce qui se passe et réagir sans vous mettre en danger. Pas un protocole à appliquer seul dans votre coin, parce que ce serait vous mentir sur la difficulté réelle du travail. Ce cas de figure fait partie des <a href="/education-canine/comportement/problemes/">problèmes de comportement</a> qui demandent le plus de méthode et d'accompagnement.</p>
 
         <h2 id="reagir-dans-l-instant">Ce qu'il faut faire dans l'instant où votre chien se jette sur un congénère</h2>
 
@@ -407,7 +409,7 @@ const related = [
 
         <h3 id="mauvaise-experience-socialisation">Une mauvaise expérience ou une socialisation incomplète</h3>
 
-        <p>Beaucoup de <a href="/education-canine/comportement/problemes/reactivite/chiens/">chiens réactifs</a> le sont devenus après un événement précis. Une attaque subie, une frayeur et le rapport aux congénères bascule. Le staffie dont je parle est devenu réactif vers ses un an, après une altercation avec un Shiba. Mon propre chien a développé une agressivité envers ses congénères après avoir été attaqué. Un cocker que j'ai suivi est devenu réactif après une attaque récente qui avait changé sa perception de tout son environnement.</p>
+        <p>Beaucoup de <a href="/education-canine/comportement/problemes/reactivite/chiens/">chiens réactifs</a> le sont devenus après un événement précis. Une attaque subie, une frayeur et le rapport aux congénères bascule. Le staffie dont je parle est devenu réactif vers ses un an, après une altercation avec un Shiba. Mon propre chien a développé une agressivité envers ses congénères après avoir été attaqué. Un cocker que j'ai suivi est devenu réactif après une attaque récente qui avait changé sa perception de tout son environnement. Si vous êtes côté chien attaqué, j'ai détaillé à part <a href="/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/">quoi faire après une attaque</a> pour éviter que la trace ne se cristallise en réactivité durable.</p>
 
         <p>L'autre grande cause, c'est une socialisation trop courte ou mal faite. L'essentiel du rapport au monde se joue entre zéro et cinq mois. Un chiot qu'on a peu sorti, peu exposé aux autres, arrive à l'âge adulte sans le mode d'emploi social. Il ne sait pas lire les autres, ni se faire comprendre, et l'incompréhension tourne vite au conflit.</p>
 
@@ -485,6 +487,8 @@ const related = [
         <p>Cherchez quelqu'un qui vous pose des questions avant de vous donner des solutions, qui vient voir votre chien dans son vrai contexte plutôt que de vous vendre une séance générique en club ou terrain fermé et qui a déjà travaillé des cas d'agressivité, pas seulement des assis-couché. Surtout, si vous recherchez un professionnel pour un problème d'attaque envers les autres chiens, assurez-vous que le professionnel vous demande de faire une balade lors du premier rdv. C'est indispensable pour observer les réactions de votre chien en environnement réel. Sans ça, il est impossible de réfléchir à une stratégie.</p>
 
         <p>Méfiez-vous des discours fatalistes du type «&nbsp;c'est la race, il ne changera jamais&nbsp;». Méfiez-vous autant des promesses de résultat en une séance. Un bon accompagnement, c'est un suivi, pas un dépannage. Et vous devez pouvoir parler de vos difficultés sans vous sentir jugé sur ce que vous avez fait ou pas fait jusqu'ici.</p>
+
+        <p>Et si votre chien réagit fort en laisse sans jamais passer réellement à l'acte, il s'agit plus vraisemblablement d'un cas de <a href="/education-canine/comportement/problemes/reactivite/">réactivité canine</a>, que je traite dans un dossier dédié.</p>
 
       </div><!-- /.art-content -->
 
