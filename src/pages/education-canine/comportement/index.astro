@@ -2,29 +2,59 @@
 import Layout from '../../../layouts/Layout.astro';
 import Icon from '../../../components/Icon.astro';
 import '../../../styles/homepage.css';
+import '../../../styles/services.css';
 import '../../../styles/article.css';
 
 const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
 const pageUrl  = Astro.url.href;
 
+// ── Page SEO ──────────────────────────────────────────────────────────────────
 const page = {
-  metaTitle:       'Comportement canin — Conseils & guides pratiques | Kind Dog Training',
-  metaDescription: 'Comprendre et améliorer le comportement de votre chien : réactivité, agressivité, anxiété. Guides rédigés par une éducatrice comportementaliste à Bordeaux.',
+  metaTitle:       'Comportement du Chien : Comprendre Avant de Corriger',
+  metaDescription: 'Comportement du chien : ce qui distingue le comportemental du dressage, pourquoi le symptôme cache autre chose, et comment travailler avec votre chien.',
 };
 
+// ── À retenir ────────────────────────────────────────────────────────────────
+const tldr: string[] = [
+  'Comportement, apprentissages et dressage sont trois chantiers différents. Un chien peut avoir un rappel parfait et rester ingérable en balade.',
+  'Le travail comportemental s\'intéresse au pourquoi du chien, pas seulement à sa réponse sur commande. Plaquer un ordre sur un problème émotionnel ne tient jamais dans la durée.',
+  'Le symptôme visible (saut, tirage, réactivité) cache presque toujours autre chose : besoins non comblés, cadre flou, gestion émotionnelle absente.',
+  'Comprendre le langage corporel, les signaux d\'apaisement et de stress est un préalable à tout travail sérieux. Sans lecture du chien, chaque comportement devient un mystère.',
+  'La dominance est un concept dévoyé. Environ 60 % des chiens s\'en moquent, 30 % sont dans un entre-deux, seuls 10 % exigent un cadre très strict.',
+  'Cohérence, régularité et temps expliquent la quasi-totalité de ce qui marche sur le terrain. Aucune méthode ne remplace ces trois-là.',
+];
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Comportement, éducation, dressage : par quoi on commence ?',
+    answer:   'Par la lecture de votre chien et par ses besoins de base. Un chien mal dépensé, mal cadré à la maison, mal compris n\'apprend rien de solide, quelle que soit la méthode qu\'on lui applique ensuite. Une fois ce socle posé, on peut installer l\'obéissance (le dressage utile), puis travailler les points de comportement qui coincent. À l\'inverse, s\'entêter à empiler des exercices d\'obéissance sur un chien qui déborde émotionnellement, c\'est perdre du temps et se décourager pour rien.',
+  },
+  {
+    question: 'Un problème de comportement peut-il disparaître tout seul avec le temps ?',
+    answer:   'C\'est très rare. Ce qui disparaît parfois seul, ce sont des comportements de jeune chien qui s\'atténuent avec la maturité, comme les mordillements ou certaines phases d\'excitation liées à l\'adolescence. En revanche, une vraie réactivité, une peur ancrée, une agressivité, un hyperattachement ne s\'améliorent pas avec le temps s\'ils ne sont pas travaillés. Le plus souvent, ils s\'installent et se renforcent. Attendre "que ça passe" fait rarement passer quoi que ce soit.',
+  },
+  {
+    question: 'Est-ce que la race de mon chien explique son comportement ?',
+    answer:   'La race compte pour environ 20 % dans la plupart des troubles. Les 80 % restants tiennent à l\'histoire du chien, à sa socialisation, à son environnement, à ce qu\'il a vécu tôt, et à la manière dont vous vivez avec lui. Croire que "c\'est un staffie, c\'est comme ça" ou "c\'est un husky, il fuguera toujours", c\'est se condamner à ne rien faire. Le déterminisme racial est un des premiers moteurs d\'échec en éducation canine, parce qu\'il vous fait renoncer avant même d\'avoir essayé.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Accueil',       item: siteUrl + '/' },
-        { '@type': 'ListItem', position: 2, name: 'Comportement',  item: pageUrl },
+        { '@type': 'ListItem', position: 1, name: 'Accueil',          item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Éducation canine', item: siteUrl + '/education-canine/' },
+        { '@type': 'ListItem', position: 3, name: 'Comportement' },
       ],
     },
     {
       '@type':       'CollectionPage',
-      name:          'Comportement canin',
+      name:          'Comportement du chien',
       description:   page.metaDescription,
       url:           pageUrl,
       inLanguage:    'fr-FR',
@@ -34,117 +64,19 @@ const jsonLd = {
         url:     siteUrl,
       },
     },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
   ],
 };
 
-type Card = {
-  title: string;
-  meta: string;
-  url: string | null;
-  image: string | null;
-  imageAlt?: string;
-  imagePosition?: string;
-  gradient: string;
-  soon: boolean;
-};
-
-const sections: { id: string; label: string; seeAllUrl: string | null; cards: Card[] }[] = [
-  {
-    id:         'problemes',
-    label:      'Travailler et régler les problèmes de comportement',
-    seeAllUrl:  null,
-    cards: [
-      {
-        title:    'Mon chien est réactif aux autres chiens en balade : comprendre ce qui se passe et agir',
-        meta:     'Réactivité · 13 min',
-        url:      '/education-canine/comportement/problemes/reactivite/chiens/',
-        image:    '/images/article-reactivite-chiens.webp',
-        imageAlt: 'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
-        gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
-        soon:     false,
-      },
-      {
-        title:    'Mon chien a été attaqué, que faire pour éviter qu\'il ne devienne réactif ?',
-        meta:     'Réactivité · 10 min',
-        url:      '/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/',
-        image:    '/images/article-attaque-chien-que-faire-apres.webp',
-        imageAlt: 'Deux chiens se font face en extérieur, un propriétaire tient son chien en laisse à distance',
-        gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
-        soon:     false,
-      },
-      {
-        title:    'Mon chien a du mal à gérer ses émotions en balade : que faire ?',
-        meta:     'Gestion émotions · 8 min',
-        url:      '/education-canine/comportement/problemes/gestion-emotions/balade/',
-        image:    '/images/article-gestion-emotions-balade-solutions.webp',
-        imageAlt: 'Chien en balade qui apprend à se canaliser et à rester attentif à son maître en extérieur',
-        gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
-        soon:     false,
-      },
-      {
-        title:    'Anxiété de séparation chez le chien : que faire concrètement ?',
-        meta:     'Anxiété · 16 min',
-        url:      '/education-canine/comportement/problemes/anxiete/separation/',
-        image:    '/images/article-anxiete-separation-chien.webp',
-        imageAlt: 'Chien couché seul près de la porte d\'entrée, en attente du retour de ses propriétaires',
-        gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
-        soon:     false,
-      },
-      {
-        title:    'Mon chien fugue : comprendre et agir',
-        meta:     'Fugue · 14 min',
-        url:      '/education-canine/comportement/problemes/fugue/',
-        image:    '/images/article-chien-qui-fugue.webp',
-        imageAlt: 'Chien en extérieur près d\'une clôture, illustrant la problématique de la fugue chez le chien',
-        gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
-        soon:     false,
-      },
-      {
-        title:    'Mon chien tire en laisse : que faire ?',
-        meta:     'Bientôt disponible',
-        url:      null,
-        image:    null,
-        gradient: 'linear-gradient(135deg, #D9DCC4 0%, #6E7A4A 70%)',
-        soon:     true,
-      },
-      {
-        title:    'Aboiements excessifs : causes et solutions',
-        meta:     'Bientôt disponible',
-        url:      null,
-        image:    null,
-        gradient: 'linear-gradient(135deg, #C8D8E2 0%, #A8B8C2 70%)',
-        soon:     true,
-      },
-    ],
-  },
-  {
-    id:         'comprendre',
-    label:      'Comprendre votre chien',
-    seeAllUrl:  null,
-    cards: [
-      {
-        title:    'Mon chien a du mal à gérer ses émotions en balade : comprendre et reprendre la main',
-        meta:     'Gestion émotions · 13 min',
-        url:      '/education-canine/comportement/comprendre/gestion-emotions/balade/',
-        image:    '/images/article-gestion-emotions-balade.webp',
-        imageAlt: 'Chien en balade en extérieur, en pleine montée émotionnelle face à un stimulus',
-        imagePosition: '50% 60%',
-        gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
-        soon:     false,
-      },
-      {
-        title:    'Adolescence du chien : les fausses croyances',
-        meta:     'Adolescence · 15 min',
-        url:      '/education-canine/comportement/comprendre/adolescence-chien/',
-        image:    '/images/article-adolescence-chien.webp',
-        imageAlt: 'Jeune chien adolescent en extérieur, attentif, à la sortie de sa phase chiot',
-        imagePosition: '50% 50%',
-        gradient: 'linear-gradient(135deg, #E6A487 0%, #C8623A 70%)',
-        soon:     false,
-      },
-    ],
-  },
-];
 ---
 
 <Layout
@@ -158,6 +90,7 @@ const sections: { id: string; label: string; seeAllUrl: string | null; cards: Ca
     <div class="container">
       <ol class="art-breadcrumb">
         <li><a href="/">Accueil</a></li>
+        <li><a href="/education-canine/">Éducation canine</a></li>
         <li aria-current="page">Comportement</li>
       </ol>
     </div>
@@ -165,73 +98,163 @@ const sections: { id: string; label: string; seeAllUrl: string | null; cards: Ca
 
   <!-- ── EN-TÊTE ──────────────────────────────────────────────────── -->
   <header class="ec-hero">
-    <div class="container ec-hero-inner">
-      <p class="ec-hero-eyebrow">Éducation canine</p>
-      <h1 class="ec-hero-title">Comprendre le <span class="accent">comportement</span> de votre chien</h1>
-      <p class="ec-hero-desc">Guides pratiques rédigés par une éducatrice comportementaliste pour vous aider à mieux comprendre votre chien et agir efficacement.</p>
+    <div class="ec-hero-inner">
+      <h1 class="ec-hero-title"><span class="accent">Comportement du chien</span>&nbsp;: comprendre avant de corriger</h1>
+      <p class="ec-hero-desc">Le grand public utilise «&nbsp;éducation canine&nbsp;» comme un mot valise. Derrière se cachent trois chantiers très différents&nbsp;: les apprentissages, le dressage, et le comportement du chien. Les confondre, c'est la raison numéro un pour laquelle tant de propriétaires tournent en rond avec un chien «&nbsp;qui n'écoute pas&nbsp;». Vous êtes peut-être venu ici avec un problème de comportement précis (réactivité en laisse, aboiements, agressivité, anxiété de séparation, hyperattachement) ou parce que vous voulez d'abord mieux lire votre chien, son langage corporel, ses émotions, ses besoins. Cette page mère est le carrefour.</p>
     </div>
   </header>
 
-  <!-- ── SECTIONS PAR SOUS-CATÉGORIE ──────────────────────────────── -->
-  <div class="ec-sections">
-    <div class="container">
+  <!-- ── CONTENU ──────────────────────────────────────────────────── -->
+  <section class="ec-content">
+    <div class="ec-content-inner">
+      <div class="art-content">
 
-      {sections.map((section) => (
-        <section class="ec-section" id={section.id} aria-labelledby={`ec-h2-${section.id}`}>
-          <div class="ec-section-head">
-            <h2 class="ec-section-title" id={`ec-h2-${section.id}`}>{section.label}</h2>
-            {section.seeAllUrl && (
-              <a href={section.seeAllUrl} class="ec-see-all">
-                Voir tout
-                <Icon name="arrow-right" width={14} height={14} strokeWidth={2} />
-              </a>
-            )}
-          </div>
-
-          <div class="ec-cards">
-            {section.cards.map((card) => (
-              card.url ? (
-                <a href={card.url} class="ec-card">
-                  <div class="ec-card-img" style={card.image ? undefined : `background: ${card.gradient};`} role="presentation">
-                    {card.image && (
-                      <img src={card.image} alt={card.imageAlt ?? ''} class="ec-card-img-photo" loading="lazy" decoding="async" style={card.imagePosition ? `object-position: ${card.imagePosition};` : undefined} />
-                    )}
-                  </div>
-                  <div class="ec-card-body">
-                    <p class="ec-card-title">{card.title}</p>
-                    <p class="ec-card-meta">
-                      <Icon name="clock" width={12} height={12} strokeWidth={2} />
-                      {card.meta}
-                    </p>
-                  </div>
-                </a>
-              ) : (
-                <div class="ec-card ec-card--soon">
-                  <div class="ec-card-img" style={`background: ${card.gradient};`} role="presentation">
-                    <span class="ec-card-soon-badge">Bientôt</span>
-                  </div>
-                  <div class="ec-card-body">
-                    <p class="ec-card-title">{card.title}</p>
-                    <p class="ec-card-meta ec-card-meta--soon">{card.meta}</p>
-                  </div>
-                </div>
-              )
+        <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+          <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+          <p class="art-tldr-title">Ce qu'il faut retenir</p>
+          <ul class="art-tldr-list" role="list">
+            {tldr.map((item) => (
+              <li>
+                <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+                {item}
+              </li>
             ))}
+          </ul>
+        </aside>
+
+        <h2 id="trois-travails">Comportement, apprentissages, dressage&nbsp;: trois travails à ne pas confondre</h2>
+        <p>Cette page est l'un des versants de <a href="/education-canine/">l'éducation canine</a> dans son ensemble, celui qui s'attache au pourquoi du chien plutôt qu'à sa réponse sur commande. Un chien peut avoir un assis, un couché et un rappel parfaits, et rester complètement ingérable en balade. À l'inverse, un chien avec zéro obéissance peut être stable, adaptable et facile à vivre au quotidien. Les <a href="/education-canine/apprentissages/">apprentissages</a> et le comportement canin ne se mesurent pas sur la même échelle. Poser le bon cadre à la maison et régler un comportement gênant demande une autre logique que d'ajouter des ordres.</p>
+
+        <h3 id="dressage-vs-comportement">Le dressage apprend au chien à faire sur commande, le comportement cherche à comprendre pourquoi il fait</h3>
+        <p>Le dressage mécanise une réponse. Vous dites «&nbsp;assis&nbsp;», le chien s'assoit. C'est utile, c'est rassurant, mais ça ne dit rien de son état intérieur. Le travail comportemental, lui, s'intéresse au pourquoi. Pourquoi ce chien aboie sur tel congénère, pourquoi il fixe avant d'exploser, pourquoi il ne supporte pas la solitude, pourquoi il monte en excitation à la seconde où quelqu'un rentre chez vous. La gestion émotionnelle passe avant la commande.</p>
+        <p>Vous pouvez apprendre à votre chien à s'asseoir au pied quand il croise un autre chien. Si en dessous il reste terrifié, vous avez plaqué un ordre sur un problème émotionnel. L'ordre tiendra tant que la charge reste faible. Il sautera dès que la situation dépassera son seuil.</p>
+
+        <h3 id="impasses-manque-dressage">Pourquoi ranger un problème de comportement dans «&nbsp;il lui manque du dressage&nbsp;» mène à des impasses</h3>
+        <p>C'est le raccourci le plus fréquent en consultation. Un chien qui saute sur les invités, on lui apprend le «&nbsp;pas bouger&nbsp;». Un chien qui tire, on ajoute des séances de marche au pied. Un chien réactif, on répète le rappel. Ça peut donner un mieux visuel pendant quelques semaines, puis ça retombe.</p>
+        <p>Vince, un jeune staffie que j'accompagne, illustre bien ça. Sa propriétaire est arrivée en pensant qu'il lui manquait «&nbsp;des bases&nbsp;». En réalité, son sevrage lui avait fait défaut. Il n'avait jamais appris à se contrôler, à monter et redescendre en émotion, à rester posé. On a d'abord travaillé la gestion des émotions et le retour au calme avant même de reprendre la marche en laisse. Les résultats sont apparus en vingt à trente minutes sur la première séance, là où des mois d'exercices d'obéissance n'avaient rien donné.</p>
+
+        <h3 id="travailler-comportement-kdt">Ce que veut dire «&nbsp;travailler le comportement&nbsp;» chez Kind Dog Training</h3>
+        <p>Poser un diagnostic avant de proposer un exercice. Comprendre le tempérament du chien, son histoire, son cadre de vie, ce que fait le propriétaire au quotidien, ce qui déclenche le trouble du comportement et ce qui l'entretient. Ensuite seulement, on choisit les outils.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
           </div>
+          <div>
+            <p class="art-callout__title">Le test qui trie</p>
+            <p class="art-callout__text">Si un éducateur canin vous vend un protocole avant d'avoir vu votre chien, ce n'est pas du travail comportemental. C'est du copier-coller.</p>
+          </div>
+        </aside>
 
-          {section.seeAllUrl && (
-            <div class="ec-see-all-mobile">
-              <a href={section.seeAllUrl} class="ec-see-all">
-                Voir tout
-                <Icon name="arrow-right" width={14} height={14} strokeWidth={2} />
-              </a>
-            </div>
-          )}
-        </section>
-      ))}
+        <h2 id="ce-que-recouvre">Ce que recouvre vraiment le comportement de votre chien</h2>
+        <p>Ce site sépare le comportement en deux grandes portes d'entrée&nbsp;: comprendre son chien, et corriger ce qui pose problème. Les deux sont indissociables. On ne corrige pas ce qu'on n'a pas compris, et comprendre sans jamais poser de cadre laisse le chien seul avec ses débordements.</p>
 
+        <h3 id="comprendre-porte">Comprendre&nbsp;: le langage corporel, les émotions, les besoins</h3>
+        <p>C'est la porte «&nbsp;amont&nbsp;». Elle rassemble ce que vous devriez savoir lire avant même de parler de problème&nbsp;: le langage corporel de votre chien, ses signaux d'apaisement, ses signaux de stress, ses émotions, ses besoins réels, son intelligence propre, sa manière de communiquer avec ses congénères. Sans <a href="/education-canine/comportement/comprendre/">cette lecture d'ensemble de votre chien</a>, chaque comportement devient un mystère à interpréter au feeling, ce qui mène presque toujours à des erreurs d'attribution («&nbsp;il me domine&nbsp;», «&nbsp;il fait exprès&nbsp;», «&nbsp;il est vengeur&nbsp;»).</p>
+
+        <h3 id="corriger-porte">Corriger&nbsp;: les problèmes qui pourrissent le quotidien</h3>
+        <p>C'est la porte «&nbsp;aval&nbsp;». Réactivité, agressivité, aboiements, anxiété de séparation, mordillements, sauts, hyperactivité, fugue, coprophagie, hyperattachement, peurs. Chaque famille a ses mécanismes propres, ses causes possibles, ses pièges de travail. Les <a href="/education-canine/comportement/problemes/">problèmes de comportement</a> les plus fréquents ont leur dossier dédié qui les détaille un par un. Cette page mère ne les traite pas dans le détail, elle vous aide à savoir vers laquelle aller.</p>
+
+        <h3 id="deux-portes">Deux portes d'entrée vers le même chien</h3>
+        <p>Peu importe par laquelle vous entrez. Un propriétaire qui vient parce que son chien tire en laisse va tomber sur du langage corporel dès qu'on lui expliquera les signaux d'excitation. Un propriétaire qui vient pour «&nbsp;mieux comprendre son chien&nbsp;» finira toujours par tomber sur un comportement gênant à ajuster. Les deux se rejoignent.</p>
+
+        <h2 id="comprendre-avant-changer">Comprendre votre chien avant de vouloir le changer</h2>
+
+        <h3 id="langage-corporel">Lire son langage corporel et ses signaux d'apaisement</h3>
+        <p>Un chien qui joue, un chien qui menace, un chien qui régule un congénère plus jeune&nbsp;: de l'extérieur, ça peut se ressembler. Des claquements de dents, des grognements, une posture ramassée. Sauf que ce sont trois messages différents. Un grognement de jeu s'inscrit dans une séquence fluide, souple, avec des appels au jeu. Un grognement offensif s'inscrit dans une séquence de menace, corps tendu, orientation directe. Confondre les deux et interrompre un chien qui régule correctement, c'est le priver de son outil social le plus important.</p>
+        <p>Sur le terrain, ça se joue à peu de choses. Une femelle Rottweiler qui vient s'interposer entre deux jeunes chiens excités ne «&nbsp;cherche pas la bagarre&nbsp;», elle apprend à l'autre à renoncer et à gérer sa frustration. Si vous coupez ça à coups de «&nbsp;stop stop stop&nbsp;», vous entravez un apprentissage social que rien d'autre ne remplace.</p>
+
+        <h3 id="signaux-stress">Reconnaître les signaux de stress avant l'explosion</h3>
+        <p>Je vois beaucoup de propriétaires qui disent «&nbsp;il a explosé sans prévenir&nbsp;». Presque toujours, en reprenant la scène, il y avait dix signaux avant&nbsp;: fixation, gueule fermée, pupille dilatée, corps figé. Le chien parlait, dans une langue que personne ne lisait. Casser cette fixation avant l'explosion est un des premiers réflexes qu'on installe en séance. Dans neuf cas sur dix, la scène redoutée n'aurait pas eu lieu si le propriétaire avait vu venir.</p>
+
+        <h3 id="besoins-intelligence">Décoder ses besoins et son intelligence propre</h3>
+        <p>Un chien mal dépensé physiquement et mentalement ne peut pas apprendre à se gérer. Son système nerveux ne redescend pas, ça n'a rien à voir avec de la mauvaise volonté. Combler ses besoins, c'est le socle. On n'éduque pas un chien à besoin comblé de la même manière qu'un chien saturé. Le premier travail est parfois juste de remettre de la vraie promenade, de vraies phases olfactives, de vrais temps calmes.</p>
+
+        <h3 id="mythe-dominance">Le mythe de la dominance&nbsp;: ce qui se joue vraiment derrière ce mot</h3>
+        <p>Le concept de «&nbsp;mâle alpha&nbsp;» vient d'études sur des loups en captivité, entassés artificiellement, forcés à vivre ensemble. En liberté, une meute fonctionne comme une famille solidaire, pas comme une prison. La dominance chez le chien est contextuelle et fluide, jamais un trait de caractère fixe. Un chien qui saute, qui monte, qui s'assoit sur vos pieds n'essaie pas de «&nbsp;prendre le pouvoir&nbsp;». Il évacue une émotion, il cherche un contact, il compense une insécurité. La grille de lecture «&nbsp;dominance&nbsp;» est le chemin le plus court pour détruire une relation.</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Ce qu'il faut retenir sur la dominance</p>
+            <p class="art-callout__text">Environ 60&nbsp;% des chiens se moquent complètement de la hiérarchie. 30&nbsp;% sont dans un entre-deux. Seuls 10&nbsp;% exigent un cadre très strict. Coller la même lecture «&nbsp;dominance&nbsp;» sur les trois groupes n'a aucun sens.</p>
+          </div>
+        </aside>
+
+        <h2 id="problemes-frequents">Les problèmes de comportement qu'on croise le plus en séance</h2>
+
+        <h3 id="reactivite-agressivite">Réactivité, agressivité, aboiements&nbsp;: ce qui se voit et s'entend</h3>
+        <p>Ce sont les motifs de consultation les plus fréquents. La réactivité n'est pas une catégorie unique&nbsp;: elle peut naître d'un manque de socialisation, d'une mauvaise expérience, d'un déficit de gestion émotionnelle, ou d'un mélange des trois. L'agressivité se décline en formes très différentes qu'on ne travaille pas de la même manière&nbsp;: hiérarchique, prédatrice, territoriale, par peur, par protection de ressources, ou redirigée. Les aboiements ne veulent pas dire la même chose selon qu'ils traduisent une demande, une frustration, un rôle de garde, ou une peur.</p>
+
+        <h3 id="anxiete-hyperattachement">Anxiété de séparation, peurs, hyperattachement&nbsp;: ce qui déborde en silence</h3>
+        <p>Les problèmes qu'on voit moins, mais qui pèsent lourd. Une vraie anxiété de séparation, c'est un défaut d'apprentissage de la solitude. L'hyperattachement, souvent confondu avec l'anxiété de séparation, est différent&nbsp;: le chien ne supporte pas la rupture du lien, souvent parce qu'on a nourri cette pathologie en la prenant pour une preuve d'amour. Distinguer les deux change complètement le protocole de travail.</p>
+
+        <h3 id="mordillements-sauts">Mordillements, sauts, hyperactivité&nbsp;: le trop-plein qui sort mal</h3>
+        <p>Les mordillements chez le jeune chien, les sauts sur les invités, une agitation permanente&nbsp;: ce sont rarement des problèmes en soi. Ce sont des symptômes d'un chien qui n'a pas appris à contenir ses émotions, ou d'un système nerveux resté en tension parce que le foyer n'installe jamais de temps faibles. Un chien surstimulé en permanence ne sait plus se mettre en veille tout seul.</p>
+
+        <h3 id="fugue-coprophagie-tirage">Fugue, coprophagie, tirer en laisse&nbsp;: ces signaux qu'on prend pour des défauts</h3>
+        <p>Un chien qui fugue peut être un chien mal dépensé, un chien poussé par les hormones, ou un chien qui ne trouve pas assez d'intérêt à rester. La coprophagie peut avoir une origine médicale, ou signaler un chien qui s'ennuie profondément. Le tirage en laisse a une multitude de causes, du manque de bases à un excès d'excitation en début de balade. Ce sont autant de messages, à décoder avant de sanctionner.</p>
+
+        <h2 id="symptome-cache-autre-chose">Pourquoi le symptôme visible cache presque toujours autre chose</h2>
+
+        <h3 id="chien-saute">Le chien qui saute est souvent un chien frustré et pas assez dépensé</h3>
+        <p>Quand quelqu'un vient pour «&nbsp;mon chien saute sur les invités&nbsp;», je pose systématiquement les mêmes questions sur la promenade, sur la gestion des temps calmes à la maison, sur l'alternance stimulation-repos. Neuf fois sur dix, le problème n'est pas le saut. C'est un chien saturé qui n'a plus d'exutoire propre. Le saut est une évacuation de pression émotionnelle, pas une prise de pouvoir.</p>
+
+        <h3 id="chien-reactif-deborde">Le chien réactif est souvent un chien émotionnellement débordé</h3>
+        <p>«&nbsp;Mon chien est une furie dehors, je ne sais pas comment le canaliser.&nbsp;» Cette phrase revient dans presque toutes les demandes. Derrière, il y a systématiquement un cocktail&nbsp;: manque de dépense physique, manque de dépense mentale, mauvaise gestion émotionnelle. L'éducation canine fonctionne en cercle&nbsp;: si un maillon lâche, tout le reste dérive. Travailler la réactivité sans traiter le socle, c'est écoper un bateau avec un seau troué.</p>
+
+        <h3 id="pas-ce-qui-vous-a-fait-appeler">Ce qu'on travaille en premier n'est presque jamais ce qui vous a fait appeler</h3>
+        <p>Vous appelez pour le tirage en laisse, on démarre par les temps de repos à la maison. Vous appelez pour les sauts, on commence par les rituels d'accueil. Vous appelez pour la réactivité, on travaille d'abord la lecture de votre chien et ses besoins de base. C'est le vrai point d'entrée. Le symptôme dont vous vous plaignez est le plus visible, rarement le plus profond.</p>
+
+        <h2 id="travailler-comportement-concretement">Travailler le comportement, ça ressemble à quoi concrètement</h2>
+
+        <h3 id="pas-de-protocole">Pas de protocole standard, du sur-mesure adossé à une lecture du chien</h3>
+        <p>Deux chiens avec le même symptôme n'auront pas le même plan de travail. Un staffie jeune qui saute par manque de sevrage ne se travaille pas comme un shiba adulte qui saute par insécurité. Les exercices se ressemblent peut-être, mais le sens qu'ils prennent dans le quotidien, le tempo, le rôle du propriétaire dedans, tout change.</p>
+
+        <h3 id="cadre-coherence">Votre cadre et votre cohérence pèsent plus que n'importe quel exercice</h3>
+        <p>C'est le message que je répète le plus. Les règles doivent être les mêmes, tous les jours, appliquées de la même manière par toutes les personnes du foyer. Vous devez travailler les exercices chaque semaine, pas seulement en séance. C'est ça qui construit une éducation solide, pas la fermeté du ton ni la beauté du protocole. Un maître qui s'énerve, qui hurle, qui devient injuste perd ses moyens et perd sa fiabilité. Un chien ne suit pas quelqu'un qui n'est pas fiable.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Ce qui fait vraiment la différence</p>
+            <p class="art-callout__text">Cohérence, régularité, temps. Trois mots qui ne font pas rêver sur les réseaux, qui n'ont rien d'ésotérique, mais qui expliquent la quasi-totalité de ce qui marche sur le terrain.</p>
+          </div>
+        </aside>
+
+        <h3 id="seul-ou-pro">Ce que vous pouvez faire seul, ce qui nécessite un pro</h3>
+        <p>Beaucoup de choses se travaillent seul&nbsp;: lire son chien, poser un cadre plus clair à la maison, mieux combler ses besoins, retirer les erreurs les plus courantes. C'est déjà énorme et ça règle une partie des cas. Un éducateur canin devient utile quand le chien mord ou charge, quand la peur est ancienne et paralysante, quand vous n'arrivez plus à passer une porte sans crise, quand vous avez essayé plusieurs approches sans effet.</p>
+        <p>J'ai récupéré Vidocq, un shiba impossible à approcher, à qui l'on ne pouvait ni parler ni faire faire un pas dehors. Un an plus tard, il mène une vie de chien parfaitement normale. Plusieurs kilomètres de balade par jour, des copains, une tolérance nette envers les humains, une confiance totale envers ses propriétaires. Aucun chien n'est un cas désespéré. Certains ont juste besoin d'un binôme pour y arriver.</p>
+
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- ── FAQ ──────────────────────────────────────────────────────── -->
+  <section class="section" id="faq" aria-labelledby="faq-heading">
+    <div class="container" style="max-width: 750px;">
+      <h2 id="faq-heading" style="text-align: center;">Vos questions sur le <span class="accent">comportement de votre chien</span></h2>
+      <div class="faq-list" style="margin-top: var(--sp-8);">
+        {faqItems.map((item) => (
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>{item.question}</span>
+              <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <!-- ── CTA ──────────────────────────────────────────────────────── -->
   <section class="section-dark ec-cta-section" aria-labelledby="ec-cta-h">
@@ -255,17 +278,10 @@ const sections: { id: string; label: string; seeAllUrl: string | null; cards: Ca
   }
 
   .ec-hero-inner {
-    max-width: 680px;
-  }
-
-  .ec-hero-eyebrow {
-    font-family: var(--font-sans);
-    font-size: var(--fs-xs);
-    font-weight: 700;
-    letter-spacing: var(--tracking-caps);
-    text-transform: uppercase;
-    color: var(--kd-terracotta);
-    margin-bottom: var(--sp-3);
+    width: 100%;
+    max-width: 780px;
+    margin-inline: auto;
+    padding-inline: var(--sp-8);
   }
 
   .ec-hero-title {
@@ -281,164 +297,51 @@ const sections: { id: string; label: string; seeAllUrl: string | null; cards: Ca
     font-size: var(--fs-md);
     color: var(--kd-bark);
     line-height: var(--lh-relaxed);
-    max-width: 600px;
-  }
-
-  /* ── Sections ── */
-  .ec-sections {
-    padding-block: var(--sp-12) var(--sp-20);
-  }
-
-  .ec-section {
-    margin-bottom: var(--sp-16);
-  }
-
-  .ec-section:last-child {
-    margin-bottom: 0;
-  }
-
-  .ec-section-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--sp-4);
-    margin-bottom: var(--sp-6);
-    padding-bottom: var(--sp-4);
-    border-bottom: 1px solid var(--kd-cream-deep);
-  }
-
-  .ec-section-title {
-    font-family: var(--font-sans);
-    font-size: var(--fs-lg);
-    font-weight: 700;
-    color: var(--kd-ink);
-    letter-spacing: var(--tracking-tight);
-  }
-
-  .ec-see-all {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--sp-1);
-    font-size: var(--fs-sm);
-    font-weight: 600;
-    color: var(--kd-terracotta);
-    text-decoration: none;
-    white-space: nowrap;
-    flex-shrink: 0;
-    transition: gap var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
-  }
-
-  .ec-see-all:hover {
-    color: var(--kd-terracotta-deep);
-    gap: var(--sp-2);
-    text-decoration: none;
-  }
-
-  .ec-see-all-mobile {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: var(--sp-5);
-  }
-
-  /* ── Cards ── */
-  .ec-cards {
-    display: grid;
-    gap: var(--sp-4);
-    grid-template-columns: 1fr;
+    max-width: 720px;
   }
 
   @media (min-width: 600px) {
-    .ec-cards { grid-template-columns: repeat(2, 1fr); }
     .ec-hero-title { font-size: var(--fs-3xl); }
   }
 
-  @media (min-width: 900px) {
-    .ec-cards { grid-template-columns: repeat(3, 1fr); }
+  /* ── Contenu ── */
+  .ec-content {
+    padding-block: var(--sp-8) var(--sp-16);
   }
 
-  .ec-card {
-    display: flex;
-    flex-direction: column;
-    background: var(--kd-paper);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    text-decoration: none;
-    color: inherit;
-    transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
-  }
-
-  a.ec-card:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-3px);
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .ec-card--soon {
-    opacity: 0.6;
-    cursor: default;
-  }
-
-  .ec-card-img {
-    height: 130px;
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    padding: var(--sp-3);
-    overflow: hidden;
-  }
-
-  .ec-card-img-photo {
-    position: absolute;
-    inset: 0;
+  .ec-content-inner {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    max-width: 780px;
+    margin-inline: auto;
+    padding-inline: var(--sp-8);
   }
 
-  .ec-card-soon-badge {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(4px);
-    color: var(--kd-white);
-    font-size: var(--fs-xs);
-    font-weight: 700;
-    letter-spacing: var(--tracking-caps);
-    text-transform: uppercase;
-    padding: var(--sp-1) var(--sp-3);
-    border-radius: var(--radius-pill);
+  /* ── Puces : texte qui coule normalement (annule le flex à 2 colonnes) ── */
+  .ec-content .art-list {
+    list-style: none;
+    padding: 0;
+    display: block;
   }
 
-  .ec-card-body {
-    padding: var(--sp-4) var(--sp-5) var(--sp-5);
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-2);
-    flex: 1;
+  .ec-content .art-list li {
+    display: block;
+    position: relative;
+    padding-left: var(--sp-5);
+    margin-bottom: var(--sp-2);
+    color: var(--kd-bark);
+    line-height: var(--lh-relaxed);
   }
 
-  .ec-card-title {
-    font-family: var(--font-serif);
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--kd-ink);
-    line-height: 1.35;
-  }
-
-  .ec-card-meta {
-    display: flex;
-    align-items: center;
-    gap: var(--sp-1);
-    font-size: var(--fs-xs);
-    color: var(--kd-fawn);
-    margin-top: auto;
-  }
-
-  .ec-card-meta--soon {
-    color: var(--kd-stone);
-    font-style: italic;
+  .ec-content .art-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--kd-terracotta);
+    margin-top: 0;
   }
 
   /* ── CTA ── */

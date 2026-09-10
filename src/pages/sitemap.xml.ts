@@ -20,6 +20,8 @@ const pages = [
   '/services/bilan-comportemental/',
   '/services/cours-collectifs/',
   '/services/stage-intensif/',
+  '/education-canine/',
+  '/education-canine/apprentissages/',
   '/education-canine/comportement/',
   '/education-canine/comportement/comprendre/',
   '/education-canine/comportement/problemes/',

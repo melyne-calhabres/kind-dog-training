@@ -1,0 +1,390 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import '../../styles/homepage.css';
+import '../../styles/services.css';
+import '../../styles/article.css';
+
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Éducation Canine : les Vrais Piliers et par où Commencer',
+  metaDescription: 'L\'éducation canine, ce n\'est pas juste l\'obéissance. Panorama complet : comportement, apprentissages, dépense, méthode. Par où commencer, vers quoi aller.',
+};
+
+// ── À retenir ────────────────────────────────────────────────────────────────
+const tldr: string[] = [
+  'L\'éducation canine ne se réduit pas à l\'obéissance. Elle recouvre trois territoires qui se répondent en permanence : le comportement, les apprentissages et l\'obéissance.',
+  'Le comportement visible qui vous gêne n\'est presque jamais la vraie cause. Il faut lire le chien dans sa globalité avant de traiter un symptôme isolé.',
+  'L\'obéissance n\'est pas une soumission : c\'est un outil de liberté. Un rappel fiable, une marche en laisse détendue, un « pas bouger » solide rendent la vie commune possible.',
+  'La fenêtre d\'imprégnation du chiot se referme entre 3,5 et 4 mois. Ce qui n\'y est pas posé devient un rattrapage difficile, pas un apprentissage neutre.',
+  'Un chien adulte peut encore changer, à tout âge. Rien n\'est figé, mais rien ne se règle non plus en deux séances.',
+  'Cohérence, régularité et temps pèsent plus lourd que n\'importe quelle « fermeté ». Sans eux, aucune méthode ne tient sur la durée.',
+];
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Éducation, dressage, comportement : c\'est la même chose ?',
+    answer:   'Non, et confondre les trois complique tout. L\'éducation, c\'est l\'ensemble des apprentissages qui permettent à votre chien de vivre bien avec vous et dans son environnement (obéissance, propreté, socialisation, gestion émotionnelle). Le dressage, c\'est le versant technique et souvent spécialisé : apprendre à un chien de troupeau à conduire des moutons, à un chien de sport à faire de l\'agility, à un chien policier à mordre sur commande. Le comportement, enfin, désigne tout ce qui touche aux émotions, à la relation, aux problèmes comportementaux (réactivité, anxiété, agressivité). Un même chien peut avoir besoin des trois selon son âge et sa situation.',
+  },
+  {
+    question: 'À quel âge commencer, et jusqu\'à quel âge peut-on encore agir ?',
+    answer:   'Le plus tôt possible, dès l\'arrivée du chiot à la maison. La fenêtre d\'imprégnation se referme entre 3,5 et 4 mois : c\'est là que se joue une grande partie de la socialisation et des fondations. Cela dit, il n\'y a pas d\'âge limite pour reprendre les bases. J\'ai accompagné des chiens de 8, 10, 12 ans dont le quotidien s\'est nettement amélioré après un travail sérieux. Ça demande plus de patience avec un chien adulte qui a des habitudes installées, mais ça reste possible. Aucun chien n\'est un cas désespéré, quel que soit son âge.',
+  },
+  {
+    question: 'Peut-on tout faire seul ou faut-il un professionnel ?',
+    answer:   'Cela dépend de votre chien, de votre expérience et du problème rencontré. Pour un chiot équilibré, chez un propriétaire disponible qui prend le temps de bien s\'informer, l\'auto-formation fonctionne souvent. Pour un chien adulte avec un vrai trouble du comportement (réactivité marquée, anxiété de séparation sévère, agressivité), l\'accompagnement d\'un éducateur ou d\'un comportementaliste sur le terrain est plus qu\'utile. Un bon professionnel voit ce que vous ne voyez pas, ajuste en direct, et vous évite des mois de tâtonnement.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',          item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Éducation canine', item: pageUrl },
+      ],
+    },
+    {
+      '@type':       'CollectionPage',
+      name:          'Éducation canine',
+      description:   page.metaDescription,
+      url:           pageUrl,
+      inLanguage:    'fr-FR',
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+      },
+    },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
+  ],
+};
+
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ─────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li aria-current="page">Éducation canine</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ── EN-TÊTE ──────────────────────────────────────────────────── -->
+  <header class="ec-hero">
+    <div class="ec-hero-inner">
+      <h1 class="ec-hero-title"><span class="accent">Éducation canine</span>&nbsp;: les vrais piliers et par où commencer</h1>
+      <p class="ec-hero-desc">L'éducation canine, c'est un mot que vous entendez partout, et derrière lequel on met à peu près tout et n'importe quoi. En vérité, elle recouvre bien plus que l'obéissance&nbsp;: la marche en laisse, le rappel, la propreté du chiot, la socialisation, la gestion des émotions, la relation entre vous et votre chien, le cadre que vous posez au quotidien. Cette page a un rôle simple&nbsp;: vous donner une vue d'ensemble et vous renvoyer vers les contenus qui traitent en profondeur chaque sujet.</p>
+    </div>
+  </header>
+
+  <!-- ── CONTENU ──────────────────────────────────────────────────── -->
+  <section class="ec-content">
+    <div class="ec-content-inner">
+      <div class="art-content">
+
+        <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+          <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+          <p class="art-tldr-title">Ce qu'il faut retenir</p>
+          <ul class="art-tldr-list" role="list">
+            {tldr.map((item) => (
+              <li>
+                <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </aside>
+
+        <p>Pas de recette miracle, pas de méthode magique, pas de discours qui vend du rêve. Juste ce que je vois tous les jours sur le terrain, en tant qu'éducatrice canine à Bordeaux, avec des chiens et des propriétaires bien réels.</p>
+
+        <h2 id="eduquer-plus-que-obeir">Éduquer votre chien, c'est bien plus que lui apprendre à obéir</h2>
+        <p>La première erreur que je vois chez la plupart des propriétaires, c'est de réduire l'éducation à l'obéissance. On imagine un chien assis au pied, qui répond au sifflet, qui donne la patte au bon moment. Ça, c'est de l'obéissance. C'est une brique importante, mais ce n'est qu'une brique.</p>
+
+        <h3 id="chien-ensemble-jamais-symptome">Un chien fonctionne comme un ensemble, jamais par symptôme</h3>
+        <p>Un chien qui tire en laisse n'a pas seulement un problème de marche. Un chien qui saute sur les invités n'a pas seulement un problème de politesse. Un chien réactif aux autres chiens n'a pas seulement un problème de sociabilité. Dans la quasi-totalité des cas que je rencontre, le comportement gênant n'est que la partie visible d'un iceberg. Ce qui pousse le propriétaire à m'appeler cache toujours quelque chose de plus large.</p>
+        <p>J'ai accompagné récemment Vince, un jeune staffie d'un an. La demande de sa propriétaire tenait en deux phrases&nbsp;: il tire comme un fou en laisse et il saute sur tout ce qui bouge quand quelqu'un arrive à la maison. Sur le papier, deux problèmes séparés. Sur le terrain, un seul et même sujet&nbsp;: un chien dont le sevrage a fait défaut, qui n'a jamais appris à se contrôler, qui monte en émotions sans savoir redescendre. On a travaillé la gestion des émotions, l'auto-contrôle, le retour au calme après l'excitation. Résultat&nbsp;: la marche en laisse s'est réglée en même temps que l'accueil des invités.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Ce qu'on ne vous dit pas assez souvent</p>
+            <p class="art-callout__text">Le symptôme visible n'est presque jamais ce qu'il faut travailler en premier. Un chien, c'est un ensemble. Chaque comportement s'inscrit dans une globalité&nbsp;: besoins comblés ou pas, cadre clair ou pas, socialisation faite ou pas, relation solide ou pas.</p>
+          </div>
+        </aside>
+
+        <h3 id="trois-territoires">Trois territoires qui se répondent&nbsp;: comportement, apprentissages, obéissance</h3>
+        <p>Pour clarifier ce que recouvre vraiment l'éducation, je la découpe en trois grands territoires qui se répondent en permanence.</p>
+        <p>Le premier, c'est <a href="/education-canine/comportement/">le comportement</a>&nbsp;: tout ce qui touche aux émotions du chien, à sa manière d'interagir avec son environnement, aux problèmes qu'il peut développer (réactivité, aboiements, anxiété, fugue, agressivité). Le deuxième, c'est <a href="/education-canine/apprentissages/">les apprentissages</a>&nbsp;: ce que le chien intègre au fil de sa vie, du chiot au chien adulte (propreté, socialisation, autonomie, gestion de la solitude). Le troisième, c'est l'obéissance&nbsp;: les ordres, les commandes, le rappel, la marche en laisse. Ces trois territoires ne fonctionnent pas indépendamment. Vous ne pouvez pas régler un problème de comportement sans passer par des apprentissages solides. Vous ne pouvez pas obtenir une obéissance fiable sans cadre comportemental.</p>
+
+        <h3 id="probleme-cache-autre-chose">Pourquoi votre problème du moment cache souvent autre chose</h3>
+        <p>Vous arrivez peut-être ici parce que votre chien tire en laisse, ou fugue, ou réagit à tout ce qui passe en balade. Vous cherchez la solution ciblée à ce problème précis. Elle existe, et vous la trouverez dans les articles dédiés (voir plus bas). Mais gardez en tête que ce que vous voyez à la surface n'est presque jamais la vraie cause. C'est la raison pour laquelle, en premier rendez-vous, je passe autant de temps à observer le chien dans sa globalité avant de vous donner un seul exercice. Et c'est aussi pour ça que je vais vous parler de choses qui n'ont l'air d'avoir aucun rapport avec votre demande initiale.</p>
+
+        <h2 id="obeissance">Obéissance&nbsp;: la marche, le rappel, les ordres, un outil de liberté</h2>
+        <p>L'obéissance, c'est le versant le plus visible et le plus commenté de l'éducation canine. C'est aussi celui qu'on comprend le plus mal.</p>
+
+        <h3 id="ce-que-recouvre-obeissance">Ce que recouvre vraiment l'obéissance</h3>
+        <p>L'obéissance, c'est la capacité de votre chien à répondre à une consigne dans un contexte donné. Point. Ni preuve d'amour, ni preuve de dominance&nbsp;: un outil, rien de plus. Un outil précieux, parce qu'il vous permet, à vous, de sécuriser votre chien dans un monde humain qui n'est pas fait pour lui.</p>
+        <p>Un rappel fiable vous permet de lâcher votre chien en forêt sans avoir la boule au ventre. Une marche en laisse détendue rend la balade quotidienne agréable, pour lui comme pour vous. Un «&nbsp;pas bouger&nbsp;» solide évite que votre chien traverse la route au mauvais moment. Rien de tout ça n'est un tour de cirque, un caprice esthétique ou une soumission&nbsp;: c'est ce qui rend la vie commune possible.</p>
+
+        <h3 id="ordres-de-base">Les ordres de base qui changent votre quotidien</h3>
+        <p>Il y a une poignée d'ordres de base qui, une fois solidement acquis, transforment la vie avec un chien&nbsp;: assis, couché, pas bouger, viens, stop, donne. Vous n'avez pas besoin de lui apprendre à faire le mort ou à ranger ses jouets par couleur pour avoir un chien bien éduqué. Vous avez besoin que ces ordres fonctionnent, dans le calme du salon comme au milieu d'une place bondée. C'est là que la plupart des propriétaires calent&nbsp;: le chien connaît l'ordre à la maison, mais l'oublie dès qu'il y a de la distraction.</p>
+
+        <h3 id="marche-rappel-piliers">Marche en laisse, marche au pied, rappel&nbsp;: trois piliers hors du foyer</h3>
+        <p>Ces trois apprentissages méritent une attention particulière parce qu'ils se travaillent en extérieur, dans des conditions rarement idéales. La marche en laisse, c'est ce qu'on me demande le plus souvent en séance. Le chien tire, le propriétaire s'épuise, la balade devient un combat. La solution ne passe pas par un collier étrangleur ni par du renforcement mécanique&nbsp;: elle passe par la compréhension du besoin du chien, du bon matériel, et d'une méthode cohérente.</p>
+        <p>Le rappel, c'est la clé de la liberté. Un chien qui revient vous voir dès que vous l'appelez, c'est un chien qui peut être détaché plus souvent. C'est aussi un chien qui ne finit pas sous une voiture, et qui limite drastiquement les risques de fugue. Il se travaille dès le plus jeune âge, en s'appuyant sur la friandise, le jeu et la relation.</p>
+
+        <h3 id="obeissance-relation">L'obéissance ne se dresse pas dans le vide, elle s'ancre dans la relation</h3>
+        <p>Un chien qui vous obéit uniquement parce qu'il a peur de vous n'est pas un chien éduqué. C'est un chien qui subit. Un chien éduqué, c'est un chien qui vous obéit parce qu'il vous a compris. Il sait que vous êtes fiable, cohérent, et que suivre vos indications rend sa vie plus simple. La différence tient à la qualité de la relation, pas à la fermeté du ton.</p>
+
+        <h2 id="comportement">Comportement&nbsp;: ce qui se joue derrière les problèmes du quotidien</h2>
+        <p>C'est probablement la partie de l'éducation qui vous préoccupe le plus si vous êtes arrivé ici en tapant «&nbsp;chien réactif&nbsp;» ou «&nbsp;anxiété de séparation&nbsp;» dans Google. Le comportement, c'est le versant émotionnel et relationnel. C'est aussi celui qui demande le plus de finesse et de patience.</p>
+
+        <h3 id="trouble-ou-genant">Trouble de comportement ou comportement gênant&nbsp;: la nuance qui change tout</h3>
+        <p>Tous les comportements qui vous gênent ne sont pas des troubles. Un chien qui aboie quand quelqu'un sonne à la porte, c'est un chien qui fait son boulot de chien. Ça peut être ennuyeux, ça se travaille, mais ce n'est pas pathologique. En revanche, un chien qui hurle pendant six heures dès que vous quittez l'appartement, qui détruit tout, qui se blesse, ça c'est un trouble. La différence n'est pas cosmétique&nbsp;: elle change complètement l'axe de travail.</p>
+
+        <h3 id="comprendre-avant-corriger">Comprendre votre chien avant de vouloir le corriger</h3>
+        <p>Avant de «&nbsp;corriger&nbsp;» quoi que ce soit, il faut comprendre. Comprendre le langage corporel, les signaux d'apaisement, ce que votre chien vous dit avec ses oreilles, sa queue, sa posture, la position de ses pupilles. Un chien qui fixe un congénère, ferme la gueule, et dont la pupille se dilate, c'est un chien qui va exploser dans la seconde qui suit. Je rencontre ce schéma dans 90&nbsp;% des cas de réactivité que je traite. Si vous ne savez pas le repérer, vous passez à côté de la fenêtre d'intervention.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Observer, ce n'est pas fixer</p>
+            <p class="art-callout__text">La différence est fine, mais capitale. Un chien qui observe prend l'information de manière apaisée. Un chien qui fixe se tend, se concentre, se surcharge émotionnellement. La bascule entre les deux est le moment clé.</p>
+          </div>
+        </aside>
+
+        <h3 id="problemes-recurrents">Les problèmes qui reviennent le plus en séance</h3>
+        <p>Sur le terrain, quelques problématiques reviennent en boucle. La réactivité aux autres chiens en balade est probablement la plus fréquente&nbsp;; elle a plusieurs formes et plusieurs causes. Vient ensuite l'anxiété de séparation, qu'on confond très souvent avec de l'hyperattachement. Puis les problèmes de gestion émotionnelle en balade, les fugues, les aboiements, l'agressivité, les mordillements chez le chiot. Chacun de ces sujets a sa page dédiée. Cette page mère est un point de départ, pas une réponse à chaque problème précis.</p>
+
+        <h3 id="probleme-cache-un-autre">Quand un problème visible en cache un autre</h3>
+        <p>Charly, un Bouvier bernois que j'ai accompagné, arrivait pour un travail sur sa réactivité en laisse envers les autres chiens. Au fil de l'observation, ce qui a émergé, c'est un manque de confiance dans les environnements urbains, du stress, des chouinements, un besoin de réassurance qui n'était pas comblé. La réactivité n'était que la sortie de secours émotionnelle. On a travaillé sur la relation avec sa propriétaire, sur le refocus, sur la neutralité avant de travailler sur la réactivité elle-même. C'est là que la vision d'ensemble prend tout son sens.</p>
+
+        <h2 id="chiot-a-adulte">Du chiot à l'adulte&nbsp;: ce qui s'apprend à chaque âge</h2>
+        <p>L'éducation ne se joue pas au même rythme, ni avec les mêmes leviers, selon l'âge de votre chien. Ce qui est urgent à deux mois n'a plus de sens à trois ans, et inversement.</p>
+
+        <h3 id="chiot">Le chiot&nbsp;: arrivée, propreté, socialisation, fenêtre critique</h3>
+        <p>Le chiot, c'est une phase où tout compte, très vite. La fenêtre d'imprégnation se referme entre 3,5 et 4 mois. C'est le moment où le cerveau du chiot est encore plastique, où il enregistre le monde comme normal ou anormal. Passé ce délai, chaque manque de socialisation devient un handicap qui se rattrape difficilement. C'est court, très court. Beaucoup de propriétaires attendent la fin des rappels vaccinaux pour sortir leur chiot, et se retrouvent avec un chien de 4&nbsp;mois qui n'a jamais vu un vélo, un bus ou un enfant.</p>
+        <p>L'arrivée du chiot à la maison, la propreté, la gestion de la solitude, la mise en place de la socialisation, les mordillements&nbsp;: ce sont les briques des premières semaines. Un cas que j'ai suivi récemment, Henry, est un exemple typique de ce que j'aimerais voir plus souvent. Les propriétaires m'ont contactée avant même l'adoption pour préparer l'arrivée du chiot&nbsp;: installer une routine claire, habituer progressivement à la solitude, amorcer la socialisation. Résultat&nbsp;: les trois premiers mois se sont passés sans les crises classiques qu'on voit dans 80&nbsp;% des adoptions.</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Un mot sur la règle des 5 minutes par mois d'âge</p>
+            <p class="art-callout__text">Vous l'avez peut-être lue quelque part&nbsp;: «&nbsp;ne promenez pas votre chiot plus de 5&nbsp;minutes par mois d'âge, sinon vous allez abîmer ses articulations&nbsp;». Cette règle est dépassée. Elle empêche la socialisation, alimente la frustration, prépare le chiot à devenir un chien difficile en balade. Une balade adaptée à son rythme, structurée, n'a jamais cassé les hanches d'un chiot.</p>
+          </div>
+        </aside>
+
+        <h3 id="adolescence">L'adolescence&nbsp;: ni crise ni fatalité</h3>
+        <p>Vers 6 à 18&nbsp;mois, votre chien traverse ce qu'on appelle communément la «&nbsp;crise d'ado&nbsp;». Il ne vous écoute plus, il fugue, il tire, il fait le sourd au rappel. La version «&nbsp;rassurante&nbsp;» vous dira que c'est une phase, que ça va passer tout seul. La réalité est moins agréable à entendre&nbsp;: l'adolescence ne crée pas les problèmes, elle les révèle. Elle met en lumière tout ce qui n'a pas été posé solidement avant. Si vous n'avez pas travaillé le rappel «&nbsp;parce qu'on avait le temps&nbsp;», oublié le suivi naturel «&nbsp;parce que ça sert à rien&nbsp;», mis de côté la gestion des émotions «&nbsp;parce qu'on a la flemme&nbsp;», vous vous retrouvez avec un chien devenu grand et fort qui teste tout ce qu'il n'a jamais eu à intégrer.</p>
+
+        <h3 id="chien-adulte">Le chien adulte&nbsp;: rien n'est figé, rien n'est trop tard</h3>
+        <p>Une des questions qui revient le plus, en séance comme en DM&nbsp;: «&nbsp;Est-ce que mon chien peut encore changer à son âge&nbsp;?&nbsp;» La réponse est oui, quasiment toujours. J'ai vu des chiens de 8&nbsp;ans arrêter de réagir aux autres après un travail sérieux, des chiens réactifs devenir capables de vivre en collectivité, des chiens dits «&nbsp;fichus&nbsp;» redevenir fréquentables. Aucun chien n'est un cas désespéré. Ça demande du travail, de la constance et parfois un vrai investissement, mais c'est possible.</p>
+
+        <h2 id="activites-besoins">Activités et besoins comblés&nbsp;: la base sans laquelle rien ne tient</h2>
+        <p>Cette section est celle qu'on oublie le plus. C'est aussi celle qui, dans mon expérience, explique la moitié des problèmes que je vois arriver en consultation.</p>
+
+        <h3 id="besoins-non-combles">Un chien qui n'a pas ce qu'il lui faut ne peut pas apprendre</h3>
+        <p>Un chien qui n'est pas suffisamment dépensé physiquement et mentalement est un chien en tension permanente. Une cocotte-minute. Vous pouvez lui apprendre tous les ordres du monde, poser tout le cadre que vous voulez&nbsp;: si ses besoins fondamentaux ne sont pas comblés, il n'aura pas les ressources cognitives pour intégrer ce que vous lui demandez. C'est aussi bête que ça. Une des phrases que je répète le plus souvent&nbsp;: «&nbsp;l'éducation canine est un cercle complet, tout doit être travaillé ensemble&nbsp;».</p>
+
+        <h3 id="promenade-active">Promenade active&nbsp;: dépense physique, olfactive et décisionnelle</h3>
+        <p>Une balade utile, ce n'est pas 20&nbsp;minutes de tour du pâté de maisons en tirant sur la laisse. C'est un vrai temps pendant lequel votre chien peut renifler, prendre des décisions, se dépenser physiquement, observer le monde. Un chien qui rentre d'une balade uniquement fonctionnelle est un chien qui va s'ennuyer, chercher à s'occuper seul (courser, chasser, détruire), monter en frustration. Le lien direct entre balade appauvrie et problèmes de comportement est massif.</p>
+
+        <h3 id="stimulation-mentale">Stimulation mentale et sports canins&nbsp;: plaisir avant obligation</h3>
+        <p>Le pistage, les tapis de fouille, les jeux de recherche, les sports canins (agility, cani-cross, mantrailing) sont des outils précieux. Ils apportent une dépense mentale que la balade seule ne fournit pas. Attention cependant à un piège&nbsp;: le sport canin ne doit pas devenir une obligation ni la «&nbsp;drogue&nbsp;» qui masque un manque de dépense globale. C'est un bonus, pas un pansement. Si votre chien a besoin de trois heures de cani-cross par jour pour être vivable, il y a probablement autre chose à travailler en amont.</p>
+
+        <h2 id="vous-avant-tout">Vous, avant tout&nbsp;: votre cohérence pèse plus que la méthode</h2>
+        <p>Je garde le point le plus important pour la fin, parce que c'est celui qui fait le plus de différence sur le terrain.</p>
+
+        <h3 id="pas-de-courant-etiquete">Pourquoi nous refusons de nous ranger dans un courant étiqueté</h3>
+        <p>Vous êtes probablement tombé sur des éducateurs qui affichent fièrement leur appartenance à un courant&nbsp;: «&nbsp;éduqueur exclusivement en positif&nbsp;», «&nbsp;adepte de la méthode X&nbsp;», «&nbsp;spécialiste de telle école&nbsp;». Chez Kind Dog Training, on ne vous dira jamais ça. La raison est simple&nbsp;: chaque chien est un individu, chaque famille est différente, chaque contexte de vie est unique. Ce qui fonctionne pour un labrador d'appartement ne fonctionne pas pour un malinois de villa avec jardin. Ce qui apaise un chien de refuge traumatisé ne convient pas à un jeune staffie fougueux. Se ranger dans une étiquette, c'est se priver de tout ce qui pourrait aider votre chien.</p>
+
+        <h3 id="coherence-regularite-temps">Cohérence, régularité, temps&nbsp;: ce qui fait vraiment la différence</h3>
+        <p>Sur les groupes Facebook, dès qu'un primo-adoptant pose une question d'éducation, la réponse est presque toujours «&nbsp;il faut être ferme&nbsp;». La fermeté en éducation canine, ça veut tout et rien dire. Ce qui construit vraiment un chien équilibré, ce n'est pas le ton, c'est trois choses&nbsp;: la cohérence (les règles sont les mêmes tous les jours, avec tout le monde), la régularité (les exercices sont travaillés toutes les semaines, pas quand on y pense), et le temps (rien ne se règle en deux séances, aucune méthode ne remplace des mois de travail patient). Vous pouvez durcir le ton autant que vous voulez&nbsp;: sans cohérence, ça ne marchera pas.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">La fermeté ne remplace pas la constance</p>
+            <p class="art-callout__text">Un «&nbsp;non&nbsp;» ferme prononcé un jour sur trois, contredit par l'autre membre du foyer, ne construit rien. Un «&nbsp;non&nbsp;» calme, prononcé systématiquement, dans les mêmes circonstances, par tout le monde, ça construit un chien qui comprend.</p>
+          </div>
+        </aside>
+
+        <h3 id="votre-etat">Votre état à vous compte dans l'équation</h3>
+        <p>C'est un sujet dont on parle très peu, et qui pourtant pèse énormément. Votre état physique et mental influence directement votre chien. Un propriétaire épuisé, stressé, en pleine tempête personnelle, a un chien qui capte tout ça et qui réagit en miroir. Ce n'est pas un jugement, juste un constat de terrain. Prendre soin de vous, poser des séances quand votre chien vous exaspère plutôt qu'insister au bord des nerfs, faire garder votre chien une journée quand vous n'en pouvez plus, ce sont des actes éducatifs à part entière.</p>
+
+        <h3 id="seul-ou-educateur">Vous éduquer seul, ou faire appel à un éducateur canin</h3>
+        <p>Beaucoup de propriétaires arrivent parfaitement à éduquer leur chien seuls, avec de la lecture, des vidéos, du bon sens et de la constance. Ça se fait, particulièrement quand le chien est équilibré et le propriétaire disponible. À l'inverse, dès qu'un vrai problème comportemental apparaît (réactivité, agressivité, anxiété sévère), l'accompagnement d'un professionnel devient nécessaire. Un bon éducateur canin ne vous vend pas une recette, il vous apprend à lire votre chien et à ajuster votre quotidien. Si vous êtes sur Bordeaux ou la métropole bordelaise, c'est ce que je fais tous les jours.</p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ──────────────────────────────────────────────────────── -->
+  <section class="section" id="faq" aria-labelledby="faq-heading">
+    <div class="container" style="max-width: 750px;">
+      <h2 id="faq-heading" style="text-align: center;">Vos questions sur l'<span class="accent">éducation de votre chien</span></h2>
+      <div class="faq-list" style="margin-top: var(--sp-8);">
+        {faqItems.map((item) => (
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>{item.question}</span>
+              <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ──────────────────────────────────────────────────────── -->
+  <section class="section-dark ec-cta-section" aria-labelledby="ec-cta-h">
+    <div class="container ec-cta-inner">
+      <h2 class="ec-cta-title" id="ec-cta-h">Besoin d'aide pour l'éducation de votre chien&nbsp;?</h2>
+      <p>Premier rendez-vous gratuit à votre domicile · Sans engagement</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Prendre RDV
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  /* ── Hero ── */
+  .ec-hero {
+    background: var(--kd-paper);
+    padding-block: var(--sp-12) var(--sp-10);
+  }
+
+  .ec-hero-inner {
+    width: 100%;
+    max-width: 780px;
+    margin-inline: auto;
+    padding-inline: var(--sp-8);
+  }
+
+  .ec-hero-title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-2xl);
+    font-weight: 500;
+    line-height: var(--lh-snug);
+    color: var(--kd-ink);
+    margin-bottom: var(--sp-4);
+  }
+
+  .ec-hero-desc {
+    font-size: var(--fs-md);
+    color: var(--kd-bark);
+    line-height: var(--lh-relaxed);
+    max-width: 720px;
+  }
+
+  @media (min-width: 600px) {
+    .ec-hero-title { font-size: var(--fs-3xl); }
+  }
+
+  /* ── Contenu ── */
+  .ec-content {
+    padding-block: var(--sp-8) var(--sp-16);
+  }
+
+  .ec-content-inner {
+    width: 100%;
+    max-width: 780px;
+    margin-inline: auto;
+    padding-inline: var(--sp-8);
+  }
+
+  /* ── Puces : texte qui coule normalement (annule le flex à 2 colonnes) ── */
+  .ec-content .art-list {
+    list-style: none;
+    padding: 0;
+    display: block;
+  }
+
+  .ec-content .art-list li {
+    display: block;
+    position: relative;
+    padding-left: var(--sp-5);
+    margin-bottom: var(--sp-2);
+    color: var(--kd-bark);
+    line-height: var(--lh-relaxed);
+  }
+
+  .ec-content .art-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--kd-terracotta);
+    margin-top: 0;
+  }
+
+  /* ── CTA ── */
+  .ec-cta-section {
+    padding-block: var(--sp-16);
+    text-align: center;
+  }
+
+  .ec-cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-5);
+  }
+
+  .ec-cta-title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    color: var(--kd-cream);
+    line-height: var(--lh-snug);
+  }
+
+  .ec-cta-inner > p {
+    color: var(--kd-stone);
+    font-size: var(--fs-md);
+  }
+</style>

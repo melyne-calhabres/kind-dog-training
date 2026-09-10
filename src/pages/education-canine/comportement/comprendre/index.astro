@@ -21,9 +21,10 @@ const jsonLd = {
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Accueil',       item: siteUrl + '/' },
-        { '@type': 'ListItem', position: 2, name: 'Comportement',  item: siteUrl + '/education-canine/comportement/' },
-        { '@type': 'ListItem', position: 3, name: 'Comprendre',    item: pageUrl },
+        { '@type': 'ListItem', position: 1, name: 'Accueil',          item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Éducation canine', item: siteUrl + '/education-canine/' },
+        { '@type': 'ListItem', position: 3, name: 'Comportement',     item: siteUrl + '/education-canine/comportement/' },
+        { '@type': 'ListItem', position: 4, name: 'Comprendre',       item: pageUrl },
       ],
     },
     {
@@ -98,6 +99,7 @@ const articles: Card[] = [
     <div class="container">
       <ol class="art-breadcrumb">
         <li><a href="/">Accueil</a></li>
+        <li><a href="/education-canine/">Éducation canine</a></li>
         <li><a href="/education-canine/comportement/">Comportement</a></li>
         <li aria-current="page">Comprendre</li>
       </ol>
@@ -106,10 +108,10 @@ const articles: Card[] = [
 
   <!-- ── EN-TÊTE ──────────────────────────────────────────────────── -->
   <header class="ec-hero">
-    <div class="container ec-hero-inner">
+    <div class="ec-hero-inner">
       <p class="ec-hero-eyebrow">Comportement</p>
       <h1 class="ec-hero-title">Comment <span class="accent">comprendre son chien</span>&nbsp;: lire son comportement et ses signaux au quotidien</h1>
-      <p class="ec-hero-desc">Vous passez vos journées avec votre chien et pourtant certaines de ses réactions vous laissent complètement démuni. Apprendre à comprendre son chien, ce n'est pas mémoriser une liste de postures&nbsp;: c'est réapprendre à observer, à remettre chaque comportement dans son contexte et à écouter ce qu'il essaie de vous dire. Les articles ci-dessous détaillent chaque situation. Cette page, elle, vous donne la grille de lecture globale qui les relie toutes.</p>
+      <p class="ec-hero-desc">Vous passez vos journées avec votre chien et pourtant certaines de ses réactions vous laissent complètement démuni. Apprendre à comprendre son chien, ce n'est pas mémoriser une liste de postures&nbsp;: c'est réapprendre à observer, à remettre chaque comportement dans son contexte et à écouter ce qu'il essaie de vous dire. Les articles ci-dessous détaillent chaque situation. Cette page, versant amont du <a href="/education-canine/comportement/">travail sur le comportement</a>, vous donne la grille de lecture globale qui les relie toutes.</p>
     </div>
   </header>
 
@@ -143,9 +145,9 @@ const articles: Card[] = [
     </div>
   </div>
 
-  <!-- ── CONTENU SEO ──────────────────────────────────────────────── -->
-  <section class="cat-seo">
-    <div class="container">
+  <!-- ── CONTENU ──────────────────────────────────────────────────── -->
+  <section class="ec-content">
+    <div class="ec-content-inner">
       <div class="art-content">
 
         <h2 id="par-ou-commencer">Par où commencer pour comprendre son chien</h2>
@@ -348,7 +350,10 @@ const articles: Card[] = [
   }
 
   .ec-hero-inner {
+    width: 100%;
     max-width: 780px;
+    margin-inline: auto;
+    padding-inline: var(--sp-8);
   }
 
   .ec-hero-eyebrow {
@@ -483,13 +488,16 @@ const articles: Card[] = [
     margin-top: auto;
   }
 
-  /* ── Contenu SEO ── */
-  .cat-seo {
+  /* ── Contenu ── */
+  .ec-content {
     padding-block: var(--sp-8) var(--sp-16);
   }
 
-  .cat-seo .container {
+  .ec-content-inner {
+    width: 100%;
     max-width: 780px;
+    margin-inline: auto;
+    padding-inline: var(--sp-8);
   }
 
   /* ── CTA ── */
