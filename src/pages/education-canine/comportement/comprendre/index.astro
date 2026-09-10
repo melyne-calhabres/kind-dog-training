@@ -42,16 +42,6 @@ const jsonLd = {
   ],
 };
 
-// ── Articles de la catégorie ──────────────────────────────────────────────────
-type Card = {
-  title: string;
-  meta: string;
-  url: string;
-  image: string;
-  imageAlt: string;
-  imagePosition?: string;
-};
-
 // ── FAQ ───────────────────────────────────────────────────────────────────────
 const faqItems: { question: string; answer: string }[] = [
   {
@@ -68,24 +58,6 @@ const faqItems: { question: string; answer: string }[] = [
   },
 ];
 
-const articles: Card[] = [
-  {
-    title:    'Mon chien a du mal à gérer ses émotions en balade : comprendre et reprendre la main',
-    meta:     'Gestion émotions · 13 min',
-    url:      '/education-canine/comportement/comprendre/gestion-emotions/balade/',
-    image:    '/images/article-gestion-emotions-balade.webp',
-    imageAlt: 'Chien en balade en extérieur, en pleine montée émotionnelle face à un stimulus',
-    imagePosition: '50% 60%',
-  },
-  {
-    title:    'Adolescence du chien : les fausses croyances',
-    meta:     'Adolescence · 15 min',
-    url:      '/education-canine/comportement/comprendre/adolescence-chien/',
-    image:    '/images/article-adolescence-chien.webp',
-    imageAlt: 'Jeune chien adolescent en extérieur, attentif, à la sortie de sa phase chiot',
-    imagePosition: '50% 50%',
-  },
-];
 ---
 
 <Layout
@@ -109,41 +81,10 @@ const articles: Card[] = [
   <!-- ── EN-TÊTE ──────────────────────────────────────────────────── -->
   <header class="ec-hero">
     <div class="ec-hero-inner">
-      <p class="ec-hero-eyebrow">Comportement</p>
       <h1 class="ec-hero-title">Comment <span class="accent">comprendre son chien</span>&nbsp;: lire son comportement et ses signaux au quotidien</h1>
       <p class="ec-hero-desc">Vous passez vos journées avec votre chien et pourtant certaines de ses réactions vous laissent complètement démuni. Apprendre à comprendre son chien, ce n'est pas mémoriser une liste de postures&nbsp;: c'est réapprendre à observer, à remettre chaque comportement dans son contexte et à écouter ce qu'il essaie de vous dire. Les articles ci-dessous détaillent chaque situation. Cette page, versant amont du <a href="/education-canine/comportement/">travail sur le comportement</a>, vous donne la grille de lecture globale qui les relie toutes.</p>
     </div>
   </header>
-
-  <!-- ── ARTICLES DE LA CATÉGORIE ─────────────────────────────────── -->
-  <div class="ec-sections">
-    <div class="container">
-
-      <section class="ec-section" aria-labelledby="cat-articles-h2">
-        <div class="ec-section-head">
-          <h2 class="ec-section-title" id="cat-articles-h2">Les articles de la catégorie</h2>
-        </div>
-
-        <div class="ec-cards">
-          {articles.map((card) => (
-            <a href={card.url} class="ec-card">
-              <div class="ec-card-img" role="presentation">
-                <img src={card.image} alt={card.imageAlt} class="ec-card-img-photo" loading="lazy" decoding="async" style={card.imagePosition ? `object-position: ${card.imagePosition};` : undefined} />
-              </div>
-              <div class="ec-card-body">
-                <p class="ec-card-title">{card.title}</p>
-                <p class="ec-card-meta">
-                  <Icon name="clock" width={12} height={12} strokeWidth={2} />
-                  {card.meta}
-                </p>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-
-    </div>
-  </div>
 
   <!-- ── CONTENU ──────────────────────────────────────────────────── -->
   <section class="ec-content">
@@ -207,7 +148,7 @@ const articles: Card[] = [
 
         <h3 id="excitation-prise-pouvoir">L'excitation n'est pas une prise de pouvoir</h3>
         <p>Votre chien vous saute dessus, mordille vos vêtements, tourne sur lui-même, finit par grimper sur votre jambe quand vous rentrez. On vous a peut-être dit qu'il «&nbsp;voulait dominer&nbsp;». C'est faux. Ces comportements sont l'expression désordonnée d'un trop-plein émotionnel face à une attente non comblée. Le chien cherche une connexion, pas une hiérarchie (dans ce cas).</p>
-        <p>Ce trop-plein suit souvent une escalade&nbsp;: sauter pour réduire la distance, mordiller pour forcer le contact, tourner, aboyer, et parfois chevaucher en dernier recours. Un jeune chien que j'accompagne monte exactement comme ça dès qu'il associe un contexte au jeu&nbsp;: l'excitation grimpe si vite qu'il n'entend plus rien et se met à mordiller sans parvenir à redescendre. Le travail ne consiste pas à réprimer cet élan, mais à lui apprendre à monter puis à retomber en pression.</p>
+        <p>Ce trop-plein suit souvent une escalade&nbsp;: sauter pour réduire la distance, mordiller pour forcer le contact, tourner, aboyer, et parfois chevaucher en dernier recours. Un jeune chien que j'accompagne monte exactement comme ça dès qu'il associe un contexte au jeu&nbsp;: l'excitation grimpe si vite qu'il n'entend plus rien et se met à mordiller sans parvenir à redescendre. Le travail ne consiste pas à réprimer cet élan, mais à lui apprendre à monter puis à retomber en pression. Cette lecture vaut particulièrement pour <a href="/education-canine/comportement/comprendre/adolescence-chien/">l'adolescence du chien</a>, période où l'on prend trop vite ces débordements pour une prise de pouvoir.</p>
 
         <div class="art-callout art-callout--soft" role="note">
           <div class="art-callout__icon" aria-hidden="true">
@@ -263,7 +204,7 @@ const articles: Card[] = [
 
         <h3 id="interagir-congeneres">Le besoin d'interagir avec ses congénères</h3>
         <p>Le chien reste un animal social. Beaucoup vivent pourtant avec très peu d'interactions entre congénères, alors que chaque balade est l'occasion de reconstituer une forme de groupe. Ce besoin d'interaction, quand il est frustré, alimente une bonne partie des réactions en laisse.</p>
-        <p>Il y a d'ailleurs un principe contre-intuitif&nbsp;: plus un chien croise de congénères régulièrement, moins chaque rencontre devient obsessionnelle. C'est la rareté qui transforme l'envie en pulsion incontrôlable. La régularité banalise et apaise.</p>
+        <p>Il y a d'ailleurs un principe contre-intuitif&nbsp;: plus un chien croise de congénères régulièrement, moins chaque rencontre devient obsessionnelle. C'est la rareté qui transforme l'envie en pulsion incontrôlable. La régularité banalise et apaise. Quand ce besoin frustré fait basculer votre chien en surexcitation dès la sortie, c'est le terrain d'un chien qui a du mal à <a href="/education-canine/comportement/comprendre/gestion-emotions/balade/">gérer ses émotions en balade</a>.</p>
 
         <h3 id="besoin-non-comble">Quand un besoin non comblé se traduit en comportement</h3>
         <p>C'est le point qui relie tout le reste. Un besoin qu'on ne satisfait pas ne disparaît pas, il se reporte ailleurs. Le chiot dont je parlais reportait son fort besoin de mordillement sur le mobilier, les racines, tout ce qui lui tombait sous la dent et ça finissait en grognements quand on l'interrompait. Un autre, issu d'une portée non sevrée, mangeait ce qu'il trouvait au sol par pur ennui.</p>
