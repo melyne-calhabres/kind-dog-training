@@ -1,0 +1,693 @@
+---
+import Layout from '../../../../../layouts/Layout.astro';
+import Icon from '../../../../../components/Icon.astro';
+import ArticleProgressBar from '../../../../../components/ArticleProgressBar.astro';
+import { pickRandomArticles } from '../../../../../utils/pickRandomArticles';
+import '../../../../../styles/services.css';
+import '../../../../../styles/article.css';
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Votre Chien est Anxieux ? Reconnaître les Signes et Agir',
+  metaDescription: 'Anxiété chez le chien : reconnaissez les signes physiques avant les aboiements, distinguez peur et anxiété, découvrez les réflexes qui aggravent le trouble.',
+};
+
+// ── Article metadata ──────────────────────────────────────────────────────────
+const article = {
+  category:       'Comportement',
+  categoryUrl:    '/education-canine/comportement/',
+  parentLabel:    'Problèmes',
+  parentUrl:      '/education-canine/comportement/problemes/',
+  breadcrumbLabel:'Anxiété chez le chien',
+  titleBefore:    'Votre chien est ',
+  titleAccent:    'anxieux',
+  titleAfter:     ' ? Reconnaître les signes et agir',
+  publishDate:    '10 septembre 2026',
+  publishDateIso: '2026-09-10',
+  updateDate:     '10 septembre 2026',
+  updateDateIso:  '2026-09-10',
+  readTime:       '9 min',
+  author:         'Mélyne',
+  authorInitial:  'M',
+  authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
+  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
+  coverAlt:       'Chien anxieux couché au sol, oreilles en arrière et regard inquiet, illustrant les signes physiques de l\'anxiété',
+};
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Est-ce qu\'un chien anxieux peut vraiment redevenir serein ?',
+    answer:   'Oui, dans l\'écrasante majorité des cas. Un chien anxieux reste bloqué dans un mode de survie, il n\'est jamais cassé. Une fois qu\'on remet à plat les besoins, le cadre et les réflexes du propriétaire, la sérénité revient, souvent plus vite qu\'on ne l\'imagine. Rien de magique là-dedans, juste de la méthode. J\'ai suivi des chiens qui vivaient dans l\'alerte permanente depuis des années et qui, après quelques mois de travail, arrivaient à dormir profondément dans une pièce vide. Le curseur ne saute pas de zéro à cent, il se déplace point par point.',
+  },
+  {
+    question: 'Faut-il éviter les situations qui l\'angoissent en attendant ?',
+    answer:   'Éviter et fuir sont deux choses différentes. Éviter provisoirement une situation trop haute pour lui, le temps de faire le travail préparatoire, c\'est intelligent. Fuir systématiquement tout ce qui le stresse, ça confirme au chien que le monde est bien menaçant. Le bon curseur, c\'est de baisser l\'intensité pour rester dans une zone où il peut apprendre, sans supprimer complètement l\'exposition. Un chien qu\'on met sous cloche ne progresse pas.',
+  },
+  {
+    question: 'À quel âge est-ce trop tard pour agir ?',
+    answer:   'Il n\'y a pas d\'âge. J\'ai accompagné des chiens de plusieurs années qui vivaient depuis toujours dans l\'anxiété et qui ont retrouvé un vrai équilibre. Le cerveau du chien reste plastique, sa capacité à réapprendre ne disparaît pas. Ce qui change avec l\'âge, c\'est parfois la vitesse de progression et le confort du chien : plus on attend, plus les schémas sont installés, plus le travail demande de rigueur. Mais « trop tard » n\'existe pas.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type':       'Article',
+      headline:      article.titleBefore + article.titleAccent + article.titleAfter,
+      description:   page.metaDescription,
+      datePublished: `${article.publishDateIso}T09:00:00+02:00`,
+      dateModified:  `${article.updateDateIso}T09:00:00+02:00`,
+      inLanguage:    'fr-FR',
+      url:           pageUrl,
+      image: {
+        '@type':  'ImageObject',
+        url:      siteUrl + '/images/article-anxiete-chien.webp',
+        width:    925,
+        height:   456,
+      },
+      author: {
+        '@type':    'Person',
+        name:       article.author,
+        url:        siteUrl + '/qui-suis-je/',
+        jobTitle:   'Éducatrice & comportementaliste canin',
+        description: article.authorDesc,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url:     siteUrl + '/images/logo.png',
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id':   pageUrl,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',                    item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Éducation canine',           item: siteUrl + '/education-canine/' },
+        { '@type': 'ListItem', position: 3, name: article.category,             item: siteUrl + article.categoryUrl },
+        { '@type': 'ListItem', position: 4, name: article.parentLabel,          item: siteUrl + article.parentUrl },
+        { '@type': 'ListItem', position: 5, name: article.breadcrumbLabel },
+      ],
+    },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
+  ],
+};
+
+// ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
+const tldr = [
+  'L\'anxiété chez le chien se lit dans le corps avant les vocalisations : halètement en dehors de la chaleur, tremblements, léchage compulsif, chien qui colle',
+  'Timidité, peur et anxiété ne se traitent pas de la même façon. Confondre les trois, c\'est aggraver le trouble',
+  'Trois grandes formes : anxiété de séparation, phobies (bruits, humains, environnement), privation sensorielle du chien qui n\'a pas eu de vraie vie avant vous',
+  'L\'origine est souvent en amont du foyer : héritage prénatal, sélection de la race, besoins non comblés au quotidien',
+  'Vos réflexes bien intentionnés peuvent enfermer votre chien dans l\'anxiété : le caresser au moment du tremblement, ritualiser les départs, empiler les jouets, enfermer en cage',
+  'La médication existe, elle passe en dernier, jamais avant un vrai travail comportemental',
+  'Aucun chien n\'est un cas désespéré, même après plusieurs années',
+];
+
+// ── Table of contents ─────────────────────────────────────────────────────────
+const toc = [
+  { label: 'Comment savoir s\'il est vraiment anxieux',       href: '#comment-savoir-vraiment-anxieux',      sub: false },
+  { label: 'Les signes que vous voyez sans les nommer',       href: '#signes-que-vous-voyez',                sub: true  },
+  { label: 'Timidité, peur, anxiété : arrêter la confusion',  href: '#timidite-peur-anxiete',                sub: true  },
+  { label: 'Anxieux ou juste en manque d\'occupation ?',      href: '#anxieux-ou-manque-occupation',         sub: true  },
+  { label: 'Séparation, phobies, hyperattachement',           href: '#separation-phobies-hyperattachement',  sub: false },
+  { label: 'Anxiété de séparation vs hyperattachement',       href: '#anxiete-separation-vs-hyperattachement', sub: true },
+  { label: 'Les phobies qui s\'installent',                   href: '#phobies-qui-sinstallent',              sub: true  },
+  { label: 'La privation sensorielle',                        href: '#privation-sensorielle',                sub: true  },
+  { label: 'Ce qui l\'a mis dans cet état',                   href: '#ce-qui-la-mis-dans-cet-etat',          sub: false },
+  { label: 'Ce qu\'il a hérité avant même de naître',         href: '#herite-avant-de-naitre',               sub: true  },
+  { label: 'Les besoins qu\'on ne comble pas',                href: '#besoins-non-combles',                  sub: true  },
+  { label: 'Votre stress devient le sien',                    href: '#votre-stress-devient-le-sien',         sub: true  },
+  { label: 'Vos réflexes qui l\'enferment dans le trouble',   href: '#vos-reflexes-qui-lenferment',          sub: false },
+  { label: 'Le caresser quand il tremble',                    href: '#le-caresser-quand-il-tremble',         sub: true  },
+  { label: 'Arrêter les rituels de départ',                   href: '#arreter-rituels-depart',               sub: true  },
+  { label: 'Le musée des jouets à la maison',                 href: '#musee-des-jouets',                     sub: true  },
+  { label: 'La cage n\'est pas une solution',                 href: '#la-cage-nest-pas-une-solution',        sub: true  },
+  { label: 'Par où commencer pour l\'apaiser',                href: '#par-ou-commencer',                     sub: false },
+  { label: 'Combler d\'abord ses vrais besoins',              href: '#combler-vrais-besoins',                sub: true  },
+  { label: 'La longe plutôt que la laisse courte',            href: '#longe-plutot-que-laisse',              sub: true  },
+  { label: 'Poser un cadre clair et prévisible',              href: '#poser-un-cadre-clair',                 sub: true  },
+  { label: 'Désensibiliser progressivement',                  href: '#desensibiliser-progressivement',       sub: true  },
+  { label: 'Quand faire appel à un pro',                      href: '#quand-faire-appel-a-un-pro',           sub: false },
+  { label: 'Les signaux qui doivent vous décider',            href: '#signaux-qui-doivent-vous-decider',     sub: true  },
+  { label: 'La médication en dernier recours',                href: '#medication-en-dernier-recours',        sub: true  },
+  { label: 'Ce qu\'un accompagnement change',                 href: '#ce-quun-accompagnement-change',        sub: true  },
+];
+
+// ── Articles connexes (rotation aléatoire à chaque build) ────────────────────
+const related = pickRandomArticles(3, '/education-canine/comportement/problemes/anxiete/');
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ──────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/education-canine/">Éducation canine</a></li>
+        <li><a href={article.categoryUrl}>{article.category}</a></li>
+        <li><a href={article.parentUrl}>{article.parentLabel}</a></li>
+        <li aria-current="page">{article.breadcrumbLabel}</li>
+      </ol>
+    </div>
+  </nav>
+
+
+  <!-- ── ARTICLE ───────────────────────────────────────────────────── -->
+  <article aria-labelledby="art-h1">
+
+    <!-- En-tête de l'article -->
+    <header class="art-header">
+      <div class="container">
+        <h1 class="art-title" id="art-h1">
+          {article.titleBefore}<span class="accent">{article.titleAccent}</span>{article.titleAfter}
+        </h1>
+        <div class="art-meta">
+          <div class="art-author">
+            <div class="art-avatar" aria-hidden="true">
+              <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
+            </div>
+            <p class="art-author-info">
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.updateDateIso}>{article.updateDate}</time>&nbsp;· {article.readTime} de lecture
+            </p>
+          </div>
+          <div class="art-share">
+            <button id="art-copy-link" class="art-share-btn" type="button" aria-label="Copier le lien de l'article">
+              <Icon name="link" width={16} height={16} strokeWidth={2} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Image hero -->
+    <div class="art-hero-wrap">
+      <div class="container">
+        <figure class="art-hero">
+          <picture>
+            <source media="(max-width: 767px)" srcset="/images/article-anxiete-chien-mobile.webp" width="400" height="351" />
+            <img
+              src="/images/article-anxiete-chien.webp"
+              alt={article.coverAlt}
+              width="925"
+              height="456"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              class="art-hero-img"
+            />
+          </picture>
+        </figure>
+      </div>
+    </div>
+
+    <!-- L'essentiel -->
+    <div class="container">
+      <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+        <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+        <p class="art-tldr-title">Ce qu'il faut retenir</p>
+        <ul class="art-tldr-list" role="list">
+          {tldr.map((item) => (
+            <li>
+              <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="art-tldr-footer">
+          <Icon name="clock" width={14} height={14} strokeWidth={2} />
+          Lecture complète&nbsp;: {article.readTime} · Pour aller plus loin, lisez l'article entier
+        </p>
+      </aside>
+    </div>
+
+    <!-- Sommaire accordéon — mobile uniquement -->
+    <div class="container art-toc-mobile">
+      <details class="art-toc-accordion">
+        <summary class="art-toc-accordion-header">
+          Sommaire
+          <Icon name="chevron-down" width={16} height={16} strokeWidth={2} class="art-toc-chevron" />
+        </summary>
+        <nav class="art-toc-accordion-body" aria-label="Sommaire de l'article">
+          {toc.map((item) => (
+            <a
+              href={item.href}
+              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+            >
+              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+
+    <!-- Corps à deux colonnes : contenu + sidebar sticky -->
+    <div class="container art-layout">
+
+      <!-- Colonne principale -->
+      <div class="art-content">
+
+        <h2 id="comment-savoir-vraiment-anxieux">Comment savoir si votre chien est vraiment anxieux</h2>
+
+        <p>L'anxiété est l'un des <a href="/education-canine/comportement/problemes/">problèmes de comportement du chien</a> les plus fréquents, et l'un des plus discrets à repérer. Un chien anxieux, on le repère au corps avant de l'entendre. Le halètement quand il ne fait ni chaud ni effort, les tremblements en présence d'un déclencheur banal, le léchage compulsif d'une patte, la queue basse ou plaquée, les oreilles en arrière, le chien qui vous colle sans jamais lâcher votre jambe des yeux. Les vocalisations et les destructions arrivent après, quand la pression émotionnelle n'a plus d'autre sortie. Chez Muxu, une jeune shiba que j'ai suivie, ça se traduisait par des morceaux de table, de mur et de tapisserie mangés pendant les absences. Ce n'était pas de la bêtise&nbsp;: son besoin masticatoire, décuplé par le stress du départ, ne trouvait aucune autre sortie.</p>
+
+        <h3 id="signes-que-vous-voyez">Les signes que vous voyez tous les jours sans les nommer</h3>
+
+        <p>La plupart des propriétaires que je rencontre ont vu les symptômes d'anxiété depuis des mois sans les identifier. L'hypervigilance, par exemple&nbsp;: le chien qui se réveille dès que vous bougez, qui vous suit à la salle de bain, qui surveille par la baie vitrée. Drako, un jeune malinois, restait en alerte permanente au domicile de sa propriétaire, incapable de somnoler dès qu'elle changeait de pièce. Un chien qui n'arrive pas à finir sa sieste est un chien qui n'a pas de sécurité intérieure. À ça s'ajoutent la malpropreté qui revient sans cause médicale, les aboiements ou hurlements dès la porte fermée, les destructions ciblées sur les objets qui portent votre odeur.</p>
+
+        <h3 id="timidite-peur-anxiete">Timidité, peur, anxiété&nbsp;: arrêter de tout mettre dans le même sac</h3>
+
+        <p>Ce sont trois choses différentes. La timidité est un trait de caractère&nbsp;: votre chien fait un écart d'un mètre, un mètre et demi à la rencontre, il observe, il finit par revenir tranquillement. La peur, c'est une émotion évolutive qui déclenche fuite, figement ou attaque défensive. Un chien qui décroche à dix mètres du stimulus ou qui se fige totalement, c'est de la peur, pas de la timidité. L'anxiété, elle, est un état de fond&nbsp;: une anticipation continue de la menace, même quand il n'y a rien à craindre. Confondre timidité et peur mène soit à l'inaction, soit à la sur-stimulation qui pousse à l'agression défensive. Forcer un chien réservé à «&nbsp;faire la fête&nbsp;» aux gens transforme un chien poli en chien qui mord par nécessité.</p>
+
+        <h3 id="anxieux-ou-manque-occupation">Anxieux ou juste en manque d'occupation&nbsp;?</h3>
+
+        <p>Toutes les fixations bizarres ne sont pas de l'anxiété. Un chien qui court après les ombres, les mouches ou l'aspirateur peut simplement s'être inventé une obsession pour combler un ennui profond. Le test est simple&nbsp;: quand les besoins physiques et intellectuels sont comblés correctement, le comportement disparaît. Si vous partez sur une piste anxieuse alors que le fond du problème est le vide de la journée, vous allez multiplier les protocoles sans jamais toucher la cause.</p>
+
+        <h2 id="separation-phobies-hyperattachement">Séparation, phobies, hyperattachement&nbsp;: de quoi souffre votre chien&nbsp;?</h2>
+
+        <p>Le mot juste, c'est l'axe du travail. L'anxiété chez le chien n'est pas un bloc unique.</p>
+
+        <h3 id="anxiete-separation-vs-hyperattachement">L'anxiété de séparation, à distinguer de l'hyperattachement</h3>
+
+        <p>L'<a href="/education-canine/comportement/problemes/anxiete/separation/">anxiété de séparation</a> est la forme la plus fréquente. Le chien ne supporte pas la rupture du lien&nbsp;: pleurs, aboiements, destructions, parfois malpropreté. Colette, une chienne que j'accompagne, en présente une version liée à un mauvais démarrage de vie (sevrage, élevage), pas à une dépendance créée par ses propriétaires. Autre profil, autre travail. L'hyperattachement ressemble à de l'anxiété de séparation, mais le moteur est différent&nbsp;: le chien ne peut plus être seul parce qu'il vit dans un contrôle permanent de son humain. Il vous flique, se réveille au moindre mouvement, ne peut plus se poser. Ce n'est pas de l'amour, c'est une pathologie qui empêche le chien de vivre sa propre vie. Le traiter comme une preuve d'attachement au lieu d'un trouble bloque toute possibilité d'amélioration.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le piège du diagnostic valorisant</p>
+            <p class="art-callout__text">Se dire «&nbsp;il ne peut pas vivre sans moi&nbsp;» est plus flatteur que «&nbsp;il souffre en mon absence&nbsp;». C'est humain. Sauf que cette lecture-là condamne le chien à rester dans son trouble. Un chien qui vous aime peut très bien vous laisser partir tranquille.</p>
+          </div>
+        </aside>
+
+        <h3 id="phobies-qui-sinstallent">Les phobies qui s'installent&nbsp;: bruits, humains, environnement</h3>
+
+        <p>Les phobies sont des peurs figées sur un stimulus précis. Orage, aspirateur, humains inconnus, hommes à casquette, chiens noirs, sol qui glisse. Ce qui les distingue d'une simple appréhension, c'est le seuil de déclenchement&nbsp;: le chien phobique n'attend pas d'être exposé, il anticipe. Le rituel de départ, la préparation de l'aspirateur, les premiers grondements de l'orage suffisent à déclencher la panique. Chez certains, ça se cristallise après un vécu banal en apparence mais mal digéré. Chez d'autres, la sélection de la race joue&nbsp;: un Patou ou un Cane Corso ont été sélectionnés pendant cinquante à soixante ans pour la méfiance envers l'inconnu, et cette qualité utilitaire devient un handicap en environnement urbain.</p>
+
+        <h3 id="privation-sensorielle">Le chien qui n'a pas eu de vie avant vous&nbsp;: la privation sensorielle</h3>
+
+        <p>Certains chiens n'arrivent pas dans leur foyer avec un cerveau prêt à recevoir le monde. Élevages douteux, chiot arraché trop tôt à sa mère, environnement pauvre&nbsp;: le chien devient incapable de s'adapter à l'ordinaire. Un objet précis qui déclenche la peur (stade 1), un environnement entier qui devient anxiogène (stade 2), ou une santé qui décroche&nbsp;: sommeil, alimentation, dépression (stade 3). Ces chiens-là ne se rééduquent pas à coups de balades sportives&nbsp;: ils ont besoin d'abord d'un cadre de vie ultra-prévisible avant même d'ouvrir la porte sur le monde.</p>
+
+        <!-- CTA inline — mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous n'arrivez pas à savoir de quelle forme d'anxiété souffre votre chien&nbsp;?</p>
+          <p class="art-inline-cta-desc">Bilan comportemental gratuit à domicile pour poser un vrai diagnostic entre séparation, phobies et hyperattachement, et savoir par où commencer</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+        </aside>
+
+        <h2 id="ce-qui-la-mis-dans-cet-etat">Ce qui l'a mis dans cet état</h2>
+
+        <p>Personne ne rend un chien anxieux du jour au lendemain. C'est un empilement.</p>
+
+        <h3 id="herite-avant-de-naitre">Ce qu'il a hérité avant même de naître</h3>
+
+        <p>Quand les deux parents sont peureux, le chiot a 20 à 25&nbsp;% de risque de développer un trouble anxieux. Ajoutez le stress prénatal&nbsp;: une mère qui vit un traumatisme pendant la gestation transmet chimiquement son anxiété aux fœtus. Vous récupérez alors un chiot avec une prédisposition câblée dans le corps, pas un caprice de tempérament. Et la sélection de la race pèse aussi&nbsp;: un chien fabriqué pour surveiller un troupeau isolé en montagne devient un chien anxieux quand vous le placez en plein centre-ville.</p>
+
+        <h3 id="besoins-non-combles">Les besoins qu'on ne comble pas&nbsp;: bouger, mâcher, réfléchir, interagir</h3>
+
+        <p>Un chien qui ne bouge pas assez, qui ne mâche jamais, qui ne renifle pas, qui n'a personne à qui parler dans sa journée, va compenser autrement. L'anxiété est l'une des sorties possibles. La dépense physique brute ne suffit pas&nbsp;: deux heures de forêt fabriquent un athlète endurant, pas un chien apaisé. Quinze minutes de ville, avec ses bruits, ses odeurs, ses stimuli variés, produisent une fatigue sensorielle bien plus utile pour le retour au calme. C'est ce qu'on met en place par exemple avec un chien qui explose à la porte&nbsp;: on ne le fait pas courir davantage, on le fait réfléchir davantage.</p>
+
+        <h3 id="votre-stress-devient-le-sien">Votre stress devient le sien</h3>
+
+        <p>Le chien détecte les chimiossignaux, ces molécules d'anxiété qu'on émet sans le savoir. Vous ne le trompez pas en faisant semblant d'être calme. Onze heures de boulot, une charge mentale saturée, une inquiétude permanente au sujet de son comportement&nbsp;: vous polluez sa capacité à se poser. J'ai souvent vu les progrès du chien s'accélérer le jour où le propriétaire, lui aussi, s'est remis en route.</p>
+
+        <h2 id="vos-reflexes-qui-lenferment">Vos réflexes qui l'enferment dans le trouble</h2>
+
+        <p>Les erreurs que je vois le plus n'ont rien de méchant. Elles sont dictées par l'affection.</p>
+
+        <h3 id="le-caresser-quand-il-tremble">Le caresser quand il tremble, c'est valider sa peur</h3>
+
+        <p>L'humain rassure comme il rassurerait un enfant. Le chien, lui, lit ce câlin comme une confirmation&nbsp;: «&nbsp;tu as raison d'avoir peur, je te récompense pour cet état.&nbsp;» L'apaisement passe par votre stabilité, votre indifférence au stimulus, votre continuité d'activité. La main sur la tête au moment du tremblement enferme le chien dans son état.</p>
+
+        <h3 id="arreter-rituels-depart">Départs, aspirateur, orage&nbsp;: arrêter les rituels qui préviennent le chien</h3>
+
+        <p>Un rituel prévient le chien qu'un événement anormal arrive. Prendre les clés, mettre les chaussures, ranger les objets qu'il pourrait détruire, changer de ton de voix&nbsp;: à chaque étape, il monte en pression. Chez Muxu, casser ces routines a été une pièce centrale du protocole. On prend les clés et on retourne sur le canapé, on met les chaussures et on va dans la cuisine, on sort le sac et on le pose. Les objets deviennent neutres, le départ redevient un non-événement.</p>
+
+        <h3 id="musee-des-jouets">Le musée des jouets à la maison&nbsp;: quand le trop-plein empêche le repos</h3>
+
+        <p>Un chien noyé sous les jouets d'occupation n'apprend jamais à se poser par lui-même. Il devient dépendant d'un stimulus externe pour dormir. Le jouet d'occupation est un pont utile au début d'un travail sur la solitude. Ce n'est pas une solution durable. L'objectif à moyen terme, c'est un intérieur où le repos redevient l'état par défaut.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Fatigue sensorielle plutôt qu'endurance</p>
+            <p class="art-callout__text">Un chien anxieux hyper-dépensé physiquement devient un athlète insatiable, pas un chien serein. Priorisez le travail de flair, les balades en environnement riche, la mastication. C'est ce qui fait redescendre le rythme cardiaque, pas la vitesse.</p>
+          </div>
+        </aside>
+
+        <h3 id="la-cage-nest-pas-une-solution">La cage n'est pas une solution quand le problème est émotionnel</h3>
+
+        <p>Réduire l'espace d'un chien qui panique parce que vous partez ne calme pas la panique, ça la concentre. J'ai vu des chiens se blesser sur les barreaux tordus, se casser les dents, se déchirer les coussinets. La cage a des usages, l'anxiété de séparation n'en fait pas partie.</p>
+
+        <!-- CTA inline — mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous vous reconnaissez dans ces réflexes&nbsp;?</p>
+          <p class="art-inline-cta-desc">Bilan à domicile sans engagement pour repérer ensemble ce qui aggrave l'anxiété de votre chien au quotidien et remplacer ces réflexes par les bons</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
+        </aside>
+
+        <h2 id="par-ou-commencer">Par où commencer pour l'apaiser au quotidien</h2>
+
+        <p>L'ordre compte. Attaquer un protocole comportemental avant d'avoir remis les fondations en place, c'est bâtir sur du sable.</p>
+
+        <h3 id="combler-vrais-besoins">Combler d'abord ses vrais besoins, pas les vôtres</h3>
+
+        <p>Bouger, mâcher, jouer, interagir, réfléchir. Chacun de ces besoins a un rôle. Ils passent avant tout exercice de désensibilisation. Un chien à qui il manque le sommeil, la mastication et la dépense mentale ne peut rien apprendre de solide.</p>
+
+        <h3 id="longe-plutot-que-laisse">Lui redonner du choix&nbsp;: la longe plutôt que la laisse courte</h3>
+
+        <p>La laisse courte est un outil de contrainte qui fabrique de la <a href="/education-canine/comportement/problemes/reactivite/chiens/">réactivité</a> chez un chien inquiet. Passer sur une longe de cinq à dix mètres redonne au chien la possibilité de gérer sa propre distance de sécurité face à un déclencheur. C'est en lui rendant ce contrôle qu'on reconstruit sa confiance.</p>
+
+        <h3 id="poser-un-cadre-clair">Poser un cadre clair et prévisible</h3>
+
+        <p>Un chien anxieux est un chien qui porte trop de décisions pour ses épaules. Un cadre net (règles constantes, tempos réguliers, ordres tenus) le décharge de la responsabilité de gérer l'environnement. Chez Sacha, un spitz que j'ai suivi pour de la <a href="/education-canine/comportement/problemes/reactivite/">réactivité anxieuse envers les humains</a>, poser un cadre au quotidien a été plus utile que tous les exercices ciblés.</p>
+
+        <h3 id="desensibiliser-progressivement">Désensibiliser progressivement, sans forcer le contact</h3>
+
+        <p>Désensibiliser ne veut pas dire mettre le chien devant ce qui le terrorise «&nbsp;pour qu'il s'y fasse&nbsp;». On baisse l'intensité du stimulus au point où le chien peut le tolérer, puis on remonte, très doucement. Un chien pépère qui sert de modèle est souvent un accélérateur puissant&nbsp;: le chien anxieux se calque sur son calme, ses phéromones apaisantes, sa manière d'ignorer ce qui l'effraie. L'objectif final, c'est l'indifférence, jamais la fiesta.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Viser l'indifférence, pas la fête</p>
+            <p class="art-callout__text">On sait qu'on a gagné quand le chien croise le stimulus sans réagir. Le voir se précipiter dessus en frétillant reste possible, mais rare. Un chien qui l'ignore, c'est déjà une vie apaisée.</p>
+          </div>
+        </aside>
+
+        <p>Un chien anxieux a parfois d'autres sorties de secours, notamment la fuite. Si le vôtre saute la clôture ou file dès qu'une porte s'ouvre, la <a href="/education-canine/comportement/problemes/fugue/">fugue chez le chien</a> peut être le symptôme d'un fond anxieux plus profond.</p>
+
+        <h2 id="quand-faire-appel-a-un-pro">Vous ne vous en sortez pas seul&nbsp;? Quand faire appel à un pro</h2>
+
+        <p>Il y a un moment où le travail à la maison ne suffit plus, et ça ne veut pas dire que vous avez mal fait. Le trouble a simplement besoin d'un œil extérieur pour voir ce que vous n'arrivez plus à voir.</p>
+
+        <h3 id="signaux-qui-doivent-vous-decider">Les signaux qui doivent vous décider</h3>
+
+        <p>Une morsure, même sans casser la peau. Une escalade dans la fréquence ou l'intensité des crises. Un chien qui ne récupère plus entre deux épisodes. Un impact sur votre vie qui vous empêche de partir, d'inviter, de vivre. Ce sont des signaux d'appel à un professionnel, pas des raisons d'attendre.</p>
+
+        <h3 id="medication-en-dernier-recours">La médication en dernier recours, jamais en première ligne</h3>
+
+        <p>Le médicament n'apprend rien à votre chien. Il baisse la pression pour permettre au travail comportemental de passer, quand rien d'autre n'a fonctionné et qu'un vétérinaire comportementaliste valide l'indication. Un chien mis sous anxiolytique sans travail derrière retombera dans son trouble à l'arrêt du traitement. La thérapie comportementale reste le socle, la médication accompagne, elle ne remplace pas.</p>
+
+        <h3 id="ce-quun-accompagnement-change">Ce qu'un accompagnement change concrètement</h3>
+
+        <p>L'intérêt de faire venir quelqu'un, c'est d'aller vite là où vous tournez en rond. Un accompagnement remet dans l'ordre les besoins, le cadre et le travail spécifique. Il vous apprend à lire votre chien plutôt qu'à appliquer une méthode toute faite. Et il rappelle une chose que je tiens à répéter&nbsp;: aucun chien n'est un cas désespéré, quel que soit son âge, sa race ou son passé.</p>
+
+      </div><!-- /.art-content -->
+
+      <!-- Sidebar sticky — desktop uniquement -->
+      <aside class="art-sidebar" aria-labelledby="art-toc-heading">
+        <nav class="art-toc" aria-labelledby="art-toc-heading">
+          <details class="art-toc-details">
+            <summary class="art-toc-title" id="art-toc-heading">
+              Sommaire
+              <svg class="art-toc-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="art-toc-links">
+              {toc.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+                >
+                  <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        </nav>
+
+        <div class="art-sidebar-cta">
+          <p class="art-sidebar-cta-title">Votre chien vit dans l'anxiété&nbsp;?</p>
+          <p class="art-sidebar-cta-desc">Bilan à domicile pour identifier la vraie forme d'anxiété et construire un plan adapté à votre chien</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            Prendre RDV
+            <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
+          </a>
+        </div>
+      </aside>
+
+    </div><!-- /.art-layout -->
+
+    <!-- Like / Dislike -->
+    <section class="art-feedback-wrap" aria-label="Votre avis sur cet article">
+      <div class="container">
+        <div class="art-feedback" id="art-feedback">
+          <p class="art-feedback-question">Cet article vous a été utile&nbsp;?</p>
+          <div class="art-feedback-buttons">
+            <button type="button" class="art-feedback-btn art-feedback-btn--like" id="art-like-btn" aria-label="J'aime cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>
+              </svg>
+              Oui
+            </button>
+            <button type="button" class="art-feedback-btn art-feedback-btn--dislike" id="art-dislike-btn" aria-label="Je n'aime pas cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>
+              </svg>
+              Non
+            </button>
+          </div>
+
+          <div class="art-feedback-form" id="art-feedback-form" hidden>
+            <label for="art-feedback-text" class="art-feedback-label">Qu'est-ce qui pourrait être amélioré&nbsp;?</label>
+            <textarea
+              id="art-feedback-text"
+              class="art-feedback-textarea"
+              rows="3"
+              maxlength="500"
+              placeholder="Votre retour nous aide à améliorer nos contenus…"
+            ></textarea>
+            <div class="art-feedback-form-footer">
+              <span class="art-feedback-hint" id="art-feedback-hint">10 caractères minimum</span>
+              <button type="button" class="btn btn-primary art-feedback-submit" id="art-feedback-submit" disabled>Envoyer</button>
+            </div>
+          </div>
+
+          <div class="art-feedback-thanks" id="art-feedback-thanks" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span>Merci ! Je prends en compte tous vos retours pour améliorer la qualité des articles et vous aider le plus possible :)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Biographie auteure -->
+    <footer class="art-bio-wrap">
+      <div class="container">
+        <div class="art-bio">
+          <div class="art-bio-avatar" aria-hidden="true">
+            <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="64" height="64" loading="lazy" decoding="async" style="display:block;" />
+          </div>
+          <div>
+            <p class="art-bio-name">À propos de {article.author}</p>
+            <p class="art-bio-role">{article.authorRole}</p>
+            <p class="art-bio-desc">{article.authorDesc}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </article><!-- /article -->
+
+
+  <!-- ── FAQ ──────────────────────────────────────────────────────────── -->
+  {faqItems.length > 0 && (
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 750px;">
+        <h2 id="faq-heading" style="text-align: center;">Questions fréquentes sur l'<span class="accent">anxiété du chien</span></h2>
+        <div class="faq-list" style="margin-top: var(--sp-8);">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>{item.question}</span>
+                <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────────────── -->
+  <section class="section-dark art-cta-section" aria-labelledby="art-cta-h">
+    <div class="container art-cta-inner">
+      <h2 class="art-cta-title" id="art-cta-h">Vous voulez sortir votre chien de l'anxiété pour de bon&nbsp;?</h2>
+      <p>Bilan comportemental gratuit à domicile · Bordeaux et métropole</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Réserver mon bilan gratuit
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── ARTICLES QUI PEUVENT VOUS INTÉRESSER ───────────────────────── -->
+  <section class="art-related" aria-labelledby="art-related-h">
+    <div class="container">
+      <p class="art-related-divider" id="art-related-h">Articles qui peuvent vous intéresser</p>
+      <div class="art-related-grid">
+        {related.map((card) => (
+          <a href={card.url} class="art-related-card">
+            <img
+              src={card.img}
+              alt={card.imgAlt}
+              class="art-related-card-img"
+              width="360"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="art-related-card-body">
+              <p class="art-related-card-title">{card.title}</p>
+              <p class="art-related-card-meta">{card.readTime} de lecture</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
+  <ArticleProgressBar />
+
+  <script is:inline>
+    (function () {
+      var MIN_CHARS = 10;
+      var feedbackWrap = document.getElementById('art-feedback');
+      var likeBtn = document.getElementById('art-like-btn');
+      var dislikeBtn = document.getElementById('art-dislike-btn');
+      var feedbackForm = document.getElementById('art-feedback-form');
+      var feedbackText = document.getElementById('art-feedback-text');
+      var feedbackHint = document.getElementById('art-feedback-hint');
+      var feedbackSubmit = document.getElementById('art-feedback-submit');
+      var feedbackThanks = document.getElementById('art-feedback-thanks');
+
+      if (!feedbackWrap || !likeBtn || !dislikeBtn) return;
+
+      function sendGA4Event(eventName, params) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: eventName }, params));
+      }
+
+      function getArticleTitle() {
+        var h1 = document.querySelector('h1');
+        return h1 ? h1.textContent.trim() : document.title;
+      }
+
+      function showThanks() {
+        feedbackWrap.querySelectorAll('.art-feedback-buttons, .art-feedback-form, .art-feedback-question').forEach(
+          function (el) { el.hidden = true; }
+        );
+        feedbackThanks.hidden = false;
+      }
+
+      likeBtn.addEventListener('click', function () {
+        sendGA4Event('article_like', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+        });
+        showThanks();
+      });
+
+      dislikeBtn.addEventListener('click', function () {
+        likeBtn.hidden = true;
+        dislikeBtn.classList.add('art-feedback-btn--selected');
+        dislikeBtn.disabled = true;
+        feedbackForm.hidden = false;
+        feedbackText.focus();
+      });
+
+      feedbackText.addEventListener('input', function () {
+        var len = feedbackText.value.trim().length;
+        var valid = len >= MIN_CHARS;
+        feedbackSubmit.disabled = !valid;
+        if (len === 0) {
+          feedbackHint.textContent = MIN_CHARS + ' caractères minimum';
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else if (!valid) {
+          feedbackHint.textContent = 'Encore ' + (MIN_CHARS - len) + ' caractère' + (MIN_CHARS - len > 1 ? 's' : '');
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else {
+          feedbackHint.textContent = 'Prêt à envoyer';
+          feedbackHint.classList.add('art-feedback-hint--ok');
+        }
+      });
+
+      feedbackSubmit.addEventListener('click', function () {
+        var text = feedbackText.value.trim();
+        if (text.length < MIN_CHARS) return;
+        sendGA4Event('article_dislike', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+          user_feedback: text,
+        });
+        showThanks();
+      });
+    })();
+  </script>
+
+  <script>
+    const btn = document.getElementById('art-copy-link');
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+        } catch {
+          const el = Object.assign(document.createElement('input'), { value: window.location.href });
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          el.remove();
+        }
+        btn.setAttribute('data-copied', '');
+        setTimeout(() => btn.removeAttribute('data-copied'), 2000);
+      });
+    }
+  </script>
+
+</Layout>

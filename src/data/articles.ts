@@ -83,4 +83,11 @@ export const articles: Article[] = [
     imgAlt:   'Jeune chien adolescent en extérieur, attentif, à la sortie de sa phase chiot',
     url:      '/education-canine/comportement/comprendre/adolescence-chien/',
   },
+  {
+    title:    'Chien anxieux : reconnaître les signes et agir',
+    readTime: '9 min',
+    img:      '/images/article-anxiete-chien.webp',
+    imgAlt:   'Chien anxieux couché au sol, oreilles en arrière et regard inquiet, illustrant les signes physiques de l\'anxiété',
+    url:      '/education-canine/comportement/problemes/anxiete/',
+  },
 ];

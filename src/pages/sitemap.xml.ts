@@ -31,6 +31,7 @@ const pages = [
   '/education-canine/comportement/comprendre/gestion-emotions/balade/',
   '/education-canine/comportement/comprendre/adolescence-chien/',
   '/education-canine/comportement/problemes/gestion-emotions/balade/',
+  '/education-canine/comportement/problemes/anxiete/',
   '/education-canine/comportement/problemes/anxiete/separation/',
   '/education-canine/comportement/problemes/fugue/',
   '/education-canine/comportement/problemes/tirage-laisse/',
