@@ -2,6 +2,7 @@
 import Layout from '../../../../../layouts/Layout.astro';
 import Icon from '../../../../../components/Icon.astro';
 import ArticleProgressBar from '../../../../../components/ArticleProgressBar.astro';
+import { pickRandomArticles } from '../../../../../utils/pickRandomArticles';
 import '../../../../../styles/services.css';
 import '../../../../../styles/article.css';
 
@@ -143,30 +144,8 @@ const toc = [
   { label: 'Quand vous faire accompagner',                href: '#accompagnement',              sub: false },
 ];
 
-// ── Articles connexes ─────────────────────────────────────────────────────────
-const related = [
-  {
-    title:    'Gérer ses émotions en balade : que faire',
-    readTime: '8 min',
-    img:      '/images/article-gestion-emotions-balade-solutions.webp',
-    imgAlt:   'Chien en balade qui apprend à se canaliser et à rester attentif à son maître en extérieur',
-    url:      '/education-canine/comportement/problemes/gestion-emotions/balade/',
-  },
-  {
-    title:    'Mon chien est réactif aux autres chiens en balade',
-    readTime: '13 min',
-    img:      '/images/article-reactivite-chiens.webp',
-    imgAlt:   'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
-    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
-  },
-  {
-    title:    'Mon chien a été attaqué, que faire pour éviter qu\'il ne devienne réactif ?',
-    readTime: '10 min',
-    img:      '/images/article-attaque-chien-que-faire-apres.webp',
-    imgAlt:   'Deux chiens se font face en extérieur, un propriétaire tient son chien en laisse à distance',
-    url:      '/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/',
-  },
-];
+// ── Articles connexes (rotation aléatoire à chaque build) ────────────────────
+const related = pickRandomArticles(3, '/education-canine/comportement/comprendre/gestion-emotions/balade/');
 
 ---
 

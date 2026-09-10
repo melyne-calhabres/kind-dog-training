@@ -1,9 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
+import { pickRandomArticles } from '../utils/pickRandomArticles';
 import '../styles/homepage.css';
 import '../styles/services.css';
 import '../styles/article.css';
+
+const homeArticles = pickRandomArticles(3);
 
 const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
 
@@ -741,51 +744,23 @@ const steps = [
     <div class="container">
       <p class="art-related-divider" id="home-related-h">Articles pour vous aider avec votre chien</p>
       <div class="art-related-grid">
-        <a href="/education-canine/comportement/problemes/fugue/" class="art-related-card">
-          <img
-            src="/images/article-chien-qui-fugue.webp"
-            alt="Chien en extérieur près d'une clôture, illustrant la problématique de la fugue chez le chien"
-            class="art-related-card-img"
-            width="360"
-            height="180"
-            loading="lazy"
-            decoding="async"
-          />
-          <div class="art-related-card-body">
-            <p class="art-related-card-title">Mon chien fugue : comprendre et agir</p>
-            <p class="art-related-card-meta">14 min de lecture</p>
-          </div>
-        </a>
-        <a href="/education-canine/comportement/problemes/anxiete/separation/" class="art-related-card">
-          <img
-            src="/images/article-anxiete-separation-chien.webp"
-            alt="Chien couché seul près de la porte d'entrée, en attente du retour de ses propriétaires"
-            class="art-related-card-img"
-            width="360"
-            height="180"
-            loading="lazy"
-            decoding="async"
-          />
-          <div class="art-related-card-body">
-            <p class="art-related-card-title">Anxiété de séparation : que faire concrètement</p>
-            <p class="art-related-card-meta">16 min de lecture</p>
-          </div>
-        </a>
-        <a href="/education-canine/comportement/problemes/gestion-emotions/balade/" class="art-related-card">
-          <img
-            src="/images/article-gestion-emotions-balade-solutions.webp"
-            alt="Chien en balade qui apprend à se canaliser et à rester attentif à son maître en extérieur"
-            class="art-related-card-img"
-            width="360"
-            height="180"
-            loading="lazy"
-            decoding="async"
-          />
-          <div class="art-related-card-body">
-            <p class="art-related-card-title">Mauvaise gestion des émotions en balade : que faire ?</p>
-            <p class="art-related-card-meta">8 min de lecture</p>
-          </div>
-        </a>
+        {homeArticles.map((card) => (
+          <a href={card.url} class="art-related-card">
+            <img
+              src={card.img}
+              alt={card.imgAlt}
+              class="art-related-card-img"
+              width="360"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="art-related-card-body">
+              <p class="art-related-card-title">{card.title}</p>
+              <p class="art-related-card-meta">{card.readTime} de lecture</p>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   </section>

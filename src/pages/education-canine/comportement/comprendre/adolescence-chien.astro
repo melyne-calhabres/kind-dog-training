@@ -2,6 +2,7 @@
 import Layout from '../../../../layouts/Layout.astro';
 import Icon from '../../../../components/Icon.astro';
 import ArticleProgressBar from '../../../../components/ArticleProgressBar.astro';
+import { pickRandomArticles } from '../../../../utils/pickRandomArticles';
 import '../../../../styles/services.css';
 import '../../../../styles/article.css';
 
@@ -151,30 +152,8 @@ const toc = [
   { label: 'L\'anxiété de séparation et la stérilisation',              href: '#anxiete-sterilisation',           sub: true  },
 ];
 
-// ── Articles connexes ─────────────────────────────────────────────────────────
-const related = [
-  {
-    title:    'Mon chien a du mal à gérer ses émotions en balade',
-    readTime: '13 min',
-    img:      '/images/article-gestion-emotions-balade.webp',
-    imgAlt:   'Chien en balade en extérieur, en pleine montée émotionnelle face à un stimulus',
-    url:      '/education-canine/comportement/comprendre/gestion-emotions/balade/',
-  },
-  {
-    title:    'Mon chien est réactif aux autres chiens en balade',
-    readTime: '13 min',
-    img:      '/images/article-reactivite-chiens.webp',
-    imgAlt:   'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
-    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
-  },
-  {
-    title:    'Gérer les émotions du chien en balade : que faire',
-    readTime: '8 min',
-    img:      '/images/article-gestion-emotions-balade-solutions.webp',
-    imgAlt:   'Chien en balade qui apprend à se canaliser et à rester attentif à son maître en extérieur',
-    url:      '/education-canine/comportement/problemes/gestion-emotions/balade/',
-  },
-];
+// ── Articles connexes (rotation aléatoire à chaque build) ────────────────────
+const related = pickRandomArticles(3, '/education-canine/comportement/comprendre/adolescence-chien/');
 
 ---
 

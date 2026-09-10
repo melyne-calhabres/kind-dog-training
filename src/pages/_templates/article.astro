@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Icon from '../../components/Icon.astro';
 import ArticleProgressBar from '../../components/ArticleProgressBar.astro';
+import { pickRandomArticles } from '../../utils/pickRandomArticles';
 import '../../styles/services.css';
 import '../../styles/article.css';
 
@@ -98,30 +99,9 @@ const toc = [
   { label: 'La méthode qui fonctionne', href: '#methode',    sub: false },
 ];
 
-// ── Related articles ──────────────────────────────────────────────────────────
-const related = [
-  {
-    title:    'Mon chien tire en laisse : que faire ?',
-    readTime: '6 min',
-    img:      '/images/REMPLACER.webp',
-    imgAlt:   'Description de la photo de l\'article lié',
-    url:      '/blog/',
-  },
-  {
-    title:    'Le rappel : par où commencer ?',
-    readTime: '8 min',
-    img:      '/images/REMPLACER.webp',
-    imgAlt:   'Description de la photo de l\'article lié',
-    url:      '/blog/',
-  },
-  {
-    title:    'Socialiser un chiot en 5 étapes',
-    readTime: '5 min',
-    img:      '/images/REMPLACER.webp',
-    imgAlt:   'Description de la photo de l\'article lié',
-    url:      '/blog/',
-  },
-];
+// ── Related articles (rotation aléatoire à chaque build) ─────────────────────
+// Remplacer '<url-de-cet-article>' par l'URL complète de la page (avec / final).
+const related = pickRandomArticles(3, '<url-de-cet-article>');
 ---
 
 <Layout

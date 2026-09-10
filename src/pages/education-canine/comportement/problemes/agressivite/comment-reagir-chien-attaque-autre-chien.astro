@@ -2,6 +2,7 @@
 import Layout from '../../../../../layouts/Layout.astro';
 import Icon from '../../../../../components/Icon.astro';
 import ArticleProgressBar from '../../../../../components/ArticleProgressBar.astro';
+import { pickRandomArticles } from '../../../../../utils/pickRandomArticles';
 import '../../../../../styles/services.css';
 import '../../../../../styles/article.css';
 
@@ -148,30 +149,8 @@ const toc = [
   { label: 'Reconnaître un éducateur en qui avoir confiance',           href: '#reconnaitre-educateur',          sub: true  },
 ];
 
-// ── Articles connexes ─────────────────────────────────────────────────────────
-const related = [
-  {
-    title:    'Mon chien a été attaqué, que faire pour éviter qu\'il ne devienne réactif ?',
-    readTime: '12 min',
-    img:      '/images/article-attaque-chien-que-faire-apres.webp',
-    imgAlt:   'Chien après une altercation, illustrant les démarches à suivre après une attaque',
-    url:      '/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/',
-  },
-  {
-    title:    'Mon chien est réactif aux autres chiens en balade',
-    readTime: '13 min',
-    img:      '/images/article-reactivite-chiens.webp',
-    imgAlt:   'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
-    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
-  },
-  {
-    title:    'Chien qui fugue : comprendre pourquoi et l\'aider à rester',
-    readTime: '14 min',
-    img:      '/images/article-chien-qui-fugue.webp',
-    imgAlt:   'Chien en extérieur près d\'une clôture, illustrant la problématique de la fugue chez le chien',
-    url:      '/education-canine/comportement/problemes/fugue/',
-  },
-];
+// ── Articles connexes (rotation aléatoire à chaque build) ────────────────────
+const related = pickRandomArticles(3, '/education-canine/comportement/problemes/agressivite/comment-reagir-chien-attaque-autre-chien/');
 ---
 
 <Layout

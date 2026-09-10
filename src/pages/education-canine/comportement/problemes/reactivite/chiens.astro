@@ -2,6 +2,7 @@
 import Layout from '../../../../../layouts/Layout.astro';
 import Icon from '../../../../../components/Icon.astro';
 import ArticleProgressBar from '../../../../../components/ArticleProgressBar.astro';
+import { pickRandomArticles } from '../../../../../utils/pickRandomArticles';
 import '../../../../../styles/services.css';
 import '../../../../../styles/article.css';
 
@@ -147,30 +148,8 @@ const toc = [
   { label: 'Accompagnement professionnel',           href: '#accompagnement-professionnel',         sub: false },
 ];
 
-// ── Articles connexes ─────────────────────────────────────────────────────────
-const related = [
-  {
-    title:    'Mauvaise gestion des émotions en balade : les causes',
-    readTime: '13 min',
-    img:      '/images/article-gestion-emotions-balade.webp',
-    imgAlt:   'Chien en balade en extérieur, en pleine montée émotionnelle face à un stimulus',
-    url:      '/education-canine/comportement/comprendre/gestion-emotions/balade/',
-  },
-  {
-    title:    'Gérer ses émotions en balade : que faire',
-    readTime: '8 min',
-    img:      '/images/article-gestion-emotions-balade-solutions.webp',
-    imgAlt:   'Chien en balade qui apprend à se canaliser et à rester attentif à son maître en extérieur',
-    url:      '/education-canine/comportement/problemes/gestion-emotions/balade/',
-  },
-  {
-    title:    'Adolescence du chien : les fausses croyances',
-    readTime: '15 min',
-    img:      '/images/article-adolescence-chien.webp',
-    imgAlt:   'Jeune chien adolescent en extérieur, attentif, à la sortie de sa phase chiot',
-    url:      '/education-canine/comportement/comprendre/adolescence-chien/',
-  },
-];
+// ── Articles connexes (rotation aléatoire à chaque build) ────────────────────
+const related = pickRandomArticles(3, '/education-canine/comportement/problemes/reactivite/chiens/');
 
 ---
 

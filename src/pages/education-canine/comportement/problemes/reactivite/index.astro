@@ -2,6 +2,7 @@
 import Layout from '../../../../../layouts/Layout.astro';
 import Icon from '../../../../../components/Icon.astro';
 import ArticleProgressBar from '../../../../../components/ArticleProgressBar.astro';
+import { pickRandomArticles } from '../../../../../utils/pickRandomArticles';
 import '../../../../../styles/services.css';
 import '../../../../../styles/article.css';
 
@@ -159,30 +160,8 @@ const toc = [
   { label: 'Quand se faire accompagner',                  href: '#se-faire-accompagner',        sub: true  },
 ];
 
-// ── Articles connexes ─────────────────────────────────────────────────────────
-const related = [
-  {
-    title:    'Mon chien est réactif aux autres chiens en balade',
-    readTime: '13 min',
-    img:      '/images/article-reactivite-chiens.webp',
-    imgAlt:   'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
-    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
-  },
-  {
-    title:    'Mon chien a été attaqué : que faire après ?',
-    readTime: '10 min',
-    img:      '/images/article-attaque-chien-que-faire-apres.webp',
-    imgAlt:   'Deux chiens en pleine altercation dans un pré',
-    url:      '/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/',
-  },
-  {
-    title:    'Gérer ses émotions en balade : que faire',
-    readTime: '8 min',
-    img:      '/images/article-gestion-emotions-balade-solutions.webp',
-    imgAlt:   'Chien en balade qui apprend à se canaliser et à rester attentif à son maître',
-    url:      '/education-canine/comportement/problemes/gestion-emotions/balade/',
-  },
-];
+// ── Articles connexes (rotation aléatoire à chaque build) ────────────────────
+const related = pickRandomArticles(3, '/education-canine/comportement/problemes/reactivite/');
 
 ---
 

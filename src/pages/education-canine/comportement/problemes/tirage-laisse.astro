@@ -2,6 +2,7 @@
 import Layout from '../../../../layouts/Layout.astro';
 import Icon from '../../../../components/Icon.astro';
 import ArticleProgressBar from '../../../../components/ArticleProgressBar.astro';
+import { pickRandomArticles } from '../../../../utils/pickRandomArticles';
 import '../../../../styles/services.css';
 import '../../../../styles/article.css';
 
@@ -150,30 +151,8 @@ const toc = [
   { label: 'Régler la réactivité avant de régler la traction',              href: '#reactivite-avant-traction',  sub: true  },
 ];
 
-// ── Articles connexes ─────────────────────────────────────────────────────────
-const related = [
-  {
-    title:    'Mon chien est réactif aux autres chiens en balade',
-    readTime: '13 min',
-    img:      '/images/article-reactivite-chiens.webp',
-    imgAlt:   'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
-    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
-  },
-  {
-    title:    'Chien qui fugue : comprendre pourquoi et l\'aider à rester',
-    readTime: '14 min',
-    img:      '/images/article-chien-qui-fugue.webp',
-    imgAlt:   'Chien en extérieur près d\'une clôture, illustrant la problématique de la fugue chez le chien',
-    url:      '/education-canine/comportement/problemes/fugue/',
-  },
-  {
-    title:    'Adolescence du chien : les fausses croyances',
-    readTime: '15 min',
-    img:      '/images/article-adolescence-chien.webp',
-    imgAlt:   'Jeune chien adolescent en extérieur, attentif, à la sortie de sa phase chiot',
-    url:      '/education-canine/comportement/comprendre/adolescence-chien/',
-  },
-];
+// ── Articles connexes (rotation aléatoire à chaque build) ────────────────────
+const related = pickRandomArticles(3, '/education-canine/comportement/problemes/tirage-laisse/');
 
 ---
 
