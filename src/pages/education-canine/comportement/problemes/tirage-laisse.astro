@@ -1,0 +1,717 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Icon from '../../../../components/Icon.astro';
+import ArticleProgressBar from '../../../../components/ArticleProgressBar.astro';
+import '../../../../styles/services.css';
+import '../../../../styles/article.css';
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Chien Qui Tire en Laisse : Un Educateur vous dit quoi faire',
+  metaDescription: 'Votre Chien tire en laisse ? Comprenez la vraie cause, l\'erreur du harnais anti-traction et les gestes pour des balades enfin détendues avec votre chien.',
+};
+
+// ── Article metadata ──────────────────────────────────────────────────────────
+const article = {
+  category:       'Comportement',
+  categoryUrl:    '/education-canine/comportement/',
+  parentLabel:    'Problèmes',
+  parentUrl:      '/education-canine/comportement/problemes/',
+  breadcrumbLabel:'Chien qui tire en laisse',
+  titleBefore:    '',
+  titleAccent:    'Chien qui tire en laisse',
+  titleAfter:     ' : comprendre et retrouver des balades tranquilles',
+  publishDate:    '10 septembre 2026',
+  publishDateIso: '2026-09-10',
+  updateDate:     '10 septembre 2026',
+  updateDateIso:  '2026-09-10',
+  readTime:       '14 min',
+  author:         'Mélyne',
+  authorInitial:  'M',
+  authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
+  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
+  coverAlt:       'Chien en laisse qui tire lors d\'une promenade, illustrant la problématique de la traction en laisse',
+};
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'À partir de quel âge peut-on apprendre la marche en laisse ?',
+    answer:   'Inutile, voire contre-productif, de démarrer un apprentissage formel avant 4 ou 5 mois. Avant cet âge, la priorité va à la socialisation et à la découverte du monde, idéalement via une longe qui laisse au chiot de la liberté sans contrainte physique excessive. On construit d\'abord le lien de confiance et les bonnes expériences. Le travail plus cadré de la marche vient ensuite, quand le chiot a la maturité pour se concentrer. Commencer trop tôt et trop strict ne fait qu\'user tout le monde pour rien.',
+  },
+  {
+    question: 'Un harnais anti-traction peut-il aggraver le problème ?',
+    answer:   'Oui, sur deux plans. Physiquement, un modèle qui agit sur le thorax désaxe le squelette du chien à chaque tension, ce qui pose un risque articulaire sur la durée. Émotionnellement, la pression thoracique fait grimper l\'excitation et le stress. Si votre chien tire déjà par tension vers un congénère, ce surplus d\'excitation peut faire basculer une simple envie de jeu vers de l\'agressivité. Le harnais reste utile pour le sport ou le travail en longe, mais comme outil pour arrêter la traction, il entretient souvent le souci au lieu de le résoudre.',
+  },
+  {
+    question: 'Mon chien ne tire que quand il voit un autre chien, que faire ?',
+    answer:   'C\'est le signe que la marche est acquise et que le vrai sujet est ailleurs : la gestion de ses émotions. Travailler encore et encore la technique de marche ne donnera rien. Il faut apprendre à votre chien à rester sous votre attention au moment du croisement, à comprendre qu\'il n\'a pas besoin de gérer la situation lui-même. Un protocole clair et constant sur les croisements fait souvent bouger les choses vite : une sanction verbale nette sur la tension, une valorisation franche dès qu\'il reste calme. C\'est un travail de réactivité, et il vaut la peine d\'être accompagné.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type':       'Article',
+      headline:      article.titleBefore + article.titleAccent + article.titleAfter,
+      description:   page.metaDescription,
+      datePublished: `${article.publishDateIso}T09:00:00+02:00`,
+      dateModified:  `${article.updateDateIso}T09:00:00+02:00`,
+      inLanguage:    'fr-FR',
+      url:           pageUrl,
+      image: {
+        '@type':  'ImageObject',
+        url:      siteUrl + '/images/article-chien-qui-tire-en-laisse.webp',
+        width:    925,
+        height:   456,
+      },
+      author: {
+        '@type':    'Person',
+        name:       article.author,
+        url:        siteUrl + '/qui-suis-je/',
+        jobTitle:   'Éducatrice & comportementaliste canin',
+        description: article.authorDesc,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url:     siteUrl + '/images/logo.png',
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id':   pageUrl,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',                    item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: article.category,             item: siteUrl + article.categoryUrl },
+        { '@type': 'ListItem', position: 3, name: article.parentLabel,          item: siteUrl + article.parentUrl },
+        { '@type': 'ListItem', position: 4, name: article.breadcrumbLabel },
+      ],
+    },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
+  ],
+};
+
+// ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
+const tldr = [
+  'Un chien tire le plus souvent parce que ses besoins de dépense, de flair et de liberté ne sont pas comblés, pas par entêtement',
+  'La marche en laisse est contraignante par nature. Elle ne peut pas être la seule sortie de la journée. Et surtout de la semaine',
+  'Le tempérament et le gabarit comptent : certains types de chiens se calent naturellement sur vous, d\'autres beaucoup moins',
+  'Tirer sur la laisse en retour aggrave tout. C\'est le réflexe d\'opposition',
+  'Le harnais anti-traction et la laisse à enrouleur entretiennent le problème au lieu de le régler',
+  'Si votre chien ne tire que face à un autre chien, c\'est de la réactivité à travailler, pas la marche',
+];
+
+// ── Table of contents ─────────────────────────────────────────────────────────
+const toc = [
+  { label: 'Votre chien tire parce que ses besoins ne sont pas comblés',   href: '#besoins-non-combles',        sub: false },
+  { label: 'Bouger, flairer, mâcher, jouer : ce qui manque vraiment',      href: '#bouger-flairer-macher',      sub: true  },
+  { label: 'La laisse ne peut pas être son seul mode de sortie',           href: '#laisse-seul-mode-sortie',    sub: true  },
+  { label: 'Un chien défoulé tire beaucoup moins',                          href: '#chien-defoule-tire-moins',   sub: true  },
+  { label: 'Tempérament et gabarit : certains chiens tirent plus',         href: '#temperament-gabarit',        sub: false },
+  { label: 'Chiens « décisionnaires » ou pas',                              href: '#chiens-decisionnaires',      sub: true  },
+  { label: 'Un pas naturel proche du vôtre, ou pas du tout',               href: '#pas-naturel',                sub: true  },
+  { label: 'Le piège des petits chiens qu\'on n\'éduque jamais',            href: '#petits-chiens-non-eduques',  sub: true  },
+  { label: 'Pourquoi il tire, et ce n\'est pas de l\'entêtement',           href: '#pas-de-lentetement',         sub: false },
+  { label: 'Aller plus vite, explorer, renifler : un besoin, pas un caprice', href: '#besoin-pas-caprice',      sub: true  },
+  { label: 'Il marche bien seul mais tire dès qu\'il voit quelque chose ?', href: '#tire-face-stimulus',         sub: true  },
+  { label: 'Ce que vous renforcez sans le vouloir',                         href: '#renforcement-involontaire',  sub: true  },
+  { label: 'Apprendre la marche en laisse sans bras de fer',                href: '#apprendre-sans-bras-de-fer', sub: false },
+  { label: 'Le mouvement de votre jambe donne le rythme',                   href: '#mouvement-jambe',            sub: true  },
+  { label: 'Commencer à la maison, finir dehors',                           href: '#maison-puis-dehors',         sub: true  },
+  { label: 'Récompenser la laisse détendue et libérer au bon moment',       href: '#recompenser-laisse-detendue',sub: true  },
+  { label: 'Harnais, collier, laisse à enrouleur : le matériel',            href: '#materiel',                   sub: false },
+  { label: 'Le harnais anti-traction n\'est pas la solution miracle',       href: '#harnais-anti-traction',      sub: true  },
+  { label: 'La laisse à enrouleur lui apprend à tirer',                     href: '#laisse-enrouleur',           sub: true  },
+  { label: 'Le matériel ne remplace jamais l\'apprentissage',               href: '#materiel-ne-remplace-pas',   sub: true  },
+  { label: 'Quand il tire pour foncer sur un autre chien',                  href: '#foncer-autre-chien',         sub: false },
+  { label: 'En laisse, on ignore ; en liberté, on socialise',               href: '#ignorer-en-laisse',          sub: true  },
+  { label: 'Régler la réactivité avant de régler la traction',              href: '#reactivite-avant-traction',  sub: true  },
+];
+
+// ── Articles connexes ─────────────────────────────────────────────────────────
+const related = [
+  {
+    title:    'Mon chien est réactif aux autres chiens en balade',
+    readTime: '13 min',
+    img:      '/images/article-reactivite-chiens.webp',
+    imgAlt:   'Chien réactif tenu en laisse face à un autre chien pendant une promenade',
+    url:      '/education-canine/comportement/problemes/reactivite/chiens/',
+  },
+  {
+    title:    'Chien qui fugue : comprendre pourquoi et l\'aider à rester',
+    readTime: '14 min',
+    img:      '/images/article-chien-qui-fugue.webp',
+    imgAlt:   'Chien en extérieur près d\'une clôture, illustrant la problématique de la fugue chez le chien',
+    url:      '/education-canine/comportement/problemes/fugue/',
+  },
+  {
+    title:    'Adolescence du chien : les fausses croyances',
+    readTime: '15 min',
+    img:      '/images/article-adolescence-chien.webp',
+    imgAlt:   'Jeune chien adolescent en extérieur, attentif, à la sortie de sa phase chiot',
+    url:      '/education-canine/comportement/comprendre/adolescence-chien/',
+  },
+];
+
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ──────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href={article.categoryUrl}>{article.category}</a></li>
+        <li><a href={article.parentUrl}>{article.parentLabel}</a></li>
+        <li aria-current="page">{article.breadcrumbLabel}</li>
+      </ol>
+    </div>
+  </nav>
+
+
+  <!-- ── ARTICLE ───────────────────────────────────────────────────── -->
+  <article aria-labelledby="art-h1">
+
+    <!-- En-tête de l'article -->
+    <header class="art-header">
+      <div class="container">
+        <h1 class="art-title" id="art-h1">
+          {article.titleBefore}<span class="accent">{article.titleAccent}</span>{article.titleAfter}
+        </h1>
+        <div class="art-meta">
+          <div class="art-author">
+            <div class="art-avatar" aria-hidden="true">
+              <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
+            </div>
+            <p class="art-author-info">
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.updateDateIso}>{article.updateDate}</time>&nbsp;· {article.readTime} de lecture
+            </p>
+          </div>
+          <div class="art-share">
+            <button id="art-copy-link" class="art-share-btn" type="button" aria-label="Copier le lien de l'article">
+              <Icon name="link" width={16} height={16} strokeWidth={2} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Image hero -->
+    <div class="art-hero-wrap">
+      <div class="container">
+        <figure class="art-hero">
+          <picture>
+            <source media="(max-width: 767px)" srcset="/images/article-chien-qui-tire-en-laisse-mobile.webp" width="400" height="351" />
+            <img
+              src="/images/article-chien-qui-tire-en-laisse.webp"
+              alt={article.coverAlt}
+              width="925"
+              height="456"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              class="art-hero-img"
+            />
+          </picture>
+        </figure>
+      </div>
+    </div>
+
+    <!-- L'essentiel -->
+    <div class="container">
+      <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+        <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+        <p class="art-tldr-title">Ce qu'il faut retenir</p>
+        <ul class="art-tldr-list" role="list">
+          {tldr.map((item) => (
+            <li>
+              <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="art-tldr-footer">
+          <Icon name="clock" width={14} height={14} strokeWidth={2} />
+          Lecture complète&nbsp;: {article.readTime} · Pour aller plus loin, lisez l'article entier
+        </p>
+      </aside>
+    </div>
+
+    <!-- Sommaire accordéon — mobile uniquement -->
+    <div class="container art-toc-mobile">
+      <details class="art-toc-accordion">
+        <summary class="art-toc-accordion-header">
+          Sommaire
+          <Icon name="chevron-down" width={16} height={16} strokeWidth={2} class="art-toc-chevron" />
+        </summary>
+        <nav class="art-toc-accordion-body" aria-label="Sommaire de l'article">
+          {toc.map((item) => (
+            <a
+              href={item.href}
+              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+            >
+              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+
+    <!-- Corps à deux colonnes : contenu + sidebar sticky -->
+    <div class="container art-layout">
+
+      <!-- Colonne principale -->
+      <div class="art-content">
+
+        <p>Vous rentrez de balade avec l'épaule en vrac et l'impression d'avoir tenu un tracteur au bout du bras. La promenade censée détendre tout le monde devient une séance de musculation que vous n'avez pas demandée. Un chien qui tire en laisse le fait rarement par caprice ou par tête de mule, c'est l'un des <a href="/education-canine/comportement/problemes/">problèmes de comportement</a> les plus fréquents et les plus mal lus. Avant de chercher la technique miracle ou le énième accessoire, il faut regarder ailleurs. La plupart du temps, ses besoins ne sont pas comblés, et la laisse ne fait que révéler le trop-plein.</p>
+
+        <h2 id="besoins-non-combles">Le plus souvent, votre chien tire parce que ses besoins ne sont pas comblés</h2>
+
+        <p>La marche en laisse, pour un chien, c'est déjà de la privation. Vous lui retirez la possibilité de suivre ses pistes olfactives, d'aller saluer un copain, de partir explorer ce qui l'attire. C'est un compromis nécessaire en ville, mais un compromis quand même. Si le reste de sa vie ne lui offre aucune vraie soupape, il arrive en balade comme une cocotte-minute et la laisse devient le seul endroit où évacuer.</p>
+
+        <h3 id="bouger-flairer-macher">Bouger, flairer, mâcher, jouer&nbsp;: ce qui manque vraiment</h3>
+
+        <p>Un chien a des besoins précis et la plupart des chiens de ville sont largement en dessous du compte. La dépense physique d'un chien aujourd'hui est environ 60&nbsp;% inférieure à ce qu'elle devrait être. À l'état sauvage, il parcourrait entre 30 et 50&nbsp;km. Ajoutez à ça le besoin de flairer, de mâcher, de jouer, d'interagir avec d'autres chiens, de réfléchir. Un chien qui ne fait rien de tout ça accumule une pression qu'il faut bien sortir quelque part, en tirant sur la laisse ou en cherchant à <a href="/education-canine/comportement/problemes/fugue/">fuguer dès que l'occasion se présente</a>.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le calcul à faire avant de corriger la laisse</p>
+            <p class="art-callout__text">Comptez ses vraies sorties de défoulement de la semaine, celles où il court, renifle et rencontre des congénères librement (et pas celles où vous allez juste au caniparc en le laissant se débrouiller). Si la réponse tourne autour de zéro, le problème n'est pas la laisse.</p>
+          </div>
+        </aside>
+
+        <h3 id="laisse-seul-mode-sortie">La laisse ne peut pas être son seul mode de sortie</h3>
+
+        <p>Un jardin, aussi grand soit-il, reste un milieu pauvre et sans nouveauté. La balade attachée, elle, réduit la stimulation mentale de 80 à 90&nbsp;% par rapport à une sortie en liberté. Un chien qui ne connaît que la laisse courte n'a jamais l'occasion de se vider la tête. Vous avez la responsabilité de lui offrir des moments de vraie liberté, ou de semi-liberté en longe, où il peut explorer et renifler à son rythme. Sans ces moments, la marche en laisse devient une prison et personne ne marche bien en prison.</p>
+
+        <h3 id="chien-defoule-tire-moins">Un chien défoulé tire beaucoup moins</h3>
+
+        <p>J'ai accompagné un staffie d'un an, une vraie pile électrique, qui tirait tellement fort que sa propriétaire ne pouvait plus le sortir seule. Son sevrage avait fait défaut. Il n'avait jamais appris à redescendre en pression&nbsp;: il sautait, mordillait, montait en excitation sans savoir revenir au calme. Le tirage n'était que la partie visible. Une fois le cadre posé et la dépense remise à niveau, il est devenu capable de se poser, de mâchouiller tranquillement, chose qu'il n'avait jamais faite. Un chien dont les besoins sont satisfaits finit par choisir de suivre, par confort. Le forcer avant ça, c'est mettre la charrue avant les bœufs.</p>
+
+        <h2 id="temperament-gabarit">Certains chiens tirent plus que d'autres&nbsp;: tempérament et gabarit</h2>
+
+        <p>Tous les chiens peuvent apprendre à marcher sans tirer, mais ils ne partent pas égaux. Leur prédisposition à se caler sur un humain varie énormément selon leur profil. S'acharner de la même façon sur chaque chien, c'est ignorer ce qui le rend unique.</p>
+
+        <h3 id="chiens-decisionnaires">Chiens «&nbsp;décisionnaires&nbsp;» ou pas&nbsp;: ils ne se calent pas tous sur vous</h3>
+
+        <p>Certains chiens prennent naturellement des initiatives. Un Montagne des Pyrénées, par exemple, n'a aucune envie instinctive de coller son rythme au vôtre&nbsp;: avec lui, on négocie plutôt qu'on exige. D'autres, comme le Malinois, ont une facilité innée pour le mimétisme. Ils comprennent très vite que le mouvement de votre jambe donne la direction. Il suffit alors de valoriser ce comportement pour verrouiller l'apprentissage. Deux chiens, deux logiques complètement différentes.</p>
+
+        <h3 id="pas-naturel">Un pas naturel proche du vôtre, ou pas du tout</h3>
+
+        <p>Le gabarit et la vitesse jouent aussi. Un Leonberg ou un Akita ont un pas assez proche de celui d'un humain, ce qui facilite les choses. Un Beagle ou un Jack Russell, vifs et rapides, doivent fournir un effort de contrôle bien plus grand pour caler leur allure sur la vôtre. Ce n'est pas de la mauvaise volonté, c'est de la mécanique.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Un Jack Russell qui tire n'est pas plus têtu qu'un grand chien tranquille. Il a juste un moteur différent, et il vous demande d'ajuster vos attentes, pas de forcer plus fort.</p>
+          </div>
+        </aside>
+
+        <h3 id="petits-chiens-non-eduques">Le piège des petits chiens qu'on n'éduque jamais</h3>
+
+        <p>La marche en laisse est trop souvent négligée chez les petits gabarits, simplement parce que leur traction reste supportable. On laisse couler. Sauf que leur besoin de cadre est exactement le même que celui d'un grand chien. Un petit chien qui n'apprend jamais à marcher correctement, c'est un petit chien qui vit dans le même désordre émotionnel qu'un grand, sans qu'on s'en rende compte.</p>
+
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous ne savez pas si votre chien tire par manque ou par tempérament&nbsp;?</p>
+          <p class="art-inline-cta-desc">Bilan comportemental à domicile pour poser le bon diagnostic avant de partir sur un mauvais protocole, sans engagement</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+        </aside>
+
+        <h2 id="pas-de-lentetement">Pourquoi votre chien tire en laisse, et ce n'est pas de l'entêtement</h2>
+
+        <p>On prête au chien qui tire une volonté de désobéir, de dominer, de faire sa loi. C'est un contresens. Le chien qui tire répond à des mécanismes simples, et une fois qu'on les comprend, tout devient plus logique.</p>
+
+        <h3 id="besoin-pas-caprice">Aller plus vite, explorer, renifler&nbsp;: un besoin, pas un caprice</h3>
+
+        <p>Un chien marche naturellement plus vite qu'un humain, et il a une foule de raisons de vouloir avancer&nbsp;: une odeur intéressante, un endroit à inspecter, un congénère au loin. La laisse le bride en permanence. Tirer, pour lui, c'est juste essayer d'atteindre ce qui l'appelle. Il n'y a aucune intention de vous embêter là-dedans.</p>
+
+        <h3 id="tire-face-stimulus">Il marche bien seul mais tire dès qu'il voit quelque chose&nbsp;?</h3>
+
+        <p>Voilà un point qui change tout dans le diagnostic. Si votre chien marche correctement quand il n'y a personne, mais se transforme dès qu'un stimulus apparaît, alors l'exercice de marche est techniquement acquis. Le souci n'est plus la laisse, c'est la <a href="/education-canine/comportement/problemes/gestion-emotions/balade/">gestion de ses émotions en balade</a>. Deux problèmes très différents, qui demandent deux travaux différents.</p>
+
+        <h3 id="renforcement-involontaire">Ce que vous renforcez sans le vouloir</h3>
+
+        <p>Le chien est un opportuniste logique. S'il tire et qu'il avance quand même, il vient d'apprendre que tirer, ça marche. Si vous le laissez rejoindre un copain une fois sur deux au bout de la laisse tendue, vous créez un chien qui tractera de plus belle à la prochaine occasion. Les contacts distribués au hasard fabriquent un chien capricieux, persuadé que s'il veut y aller, c'est tout de suite.</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">L'erreur la plus courante</p>
+            <p class="art-callout__text">Céder «&nbsp;juste cette fois&nbsp;» pour qu'il aille renifler ou dire bonjour. Chaque fois que la laisse tendue est suivie d'une récompense, vous entretenez exactement le comportement que vous voulez supprimer.</p>
+          </div>
+        </aside>
+
+        <h2 id="apprendre-sans-bras-de-fer">Apprendre la marche en laisse sans bras de fer</h2>
+
+        <p>Régler le tirage ne passe pas par la force. Ça passe par la cohérence et par une bonne communication. Voici les principes de fond&nbsp;; leur mise en place précise dépend de votre chien et gagne à être accompagnée.</p>
+
+        <h3 id="mouvement-jambe">Le mouvement de votre jambe donne le rythme</h3>
+
+        <p>Le secret, c'est le silence. Quand vous parlez sans arrêt, vous braquez l'attention du chien sur vos ordres au lieu de le laisser observer votre corps. Apprenez-lui plutôt que c'est le mouvement de votre jambe qui décide de tout&nbsp;: la direction, le rythme, les arrêts.</p>
+
+        <p>Et surtout, arrêtez de tirer vous-même. Plus vous tirez vers l'arrière, plus le chien tracte vers l'avant par réflexe mécanique. C'est le réflexe d'opposition, le principe exact du canicross. Si vous voulez qu'il arrête de tirer, commencez par lâcher la tension de votre côté.</p>
+
+        <h3 id="maison-puis-dehors">Commencer à la maison, finir dehors</h3>
+
+        <p>Un environnement calme d'abord, puis la difficulté qui monte. Avec le staffie dont je vous parlais, on a travaillé le suivi naturel en longe&nbsp;: des changements de direction fréquents, sans un mot, et une récompense dès qu'il revenait vers ses humains ou relâchait la tension. Dès qu'il tirait, on changeait de cap. Il devait se demander comment ne pas se faire surprendre par le prochain virage, et la réponse était de rester près de la jambe. On a fini par la laisse classique une fois la logique comprise.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Un exercice de marche commencé se termine. Si vous laissez votre chien tirer pour aller uriner au milieu d'une séquence, vous cassez toute la cohérence de la règle et vous repartez de zéro.</p>
+          </div>
+        </aside>
+
+        <h3 id="recompenser-laisse-detendue">Récompenser la laisse détendue et libérer au bon moment</h3>
+
+        <p>La marche en laisse ne doit pas être une punition continue. La libération est la finalité&nbsp;: le chien comprend que marcher correctement d'un point à un autre est ce qui lui ouvre le droit à sa liberté. Récompensez la laisse détendue, pas seulement l'absence de catastrophe. Avec ce staffie, la diminution du tirage a été nette en une à deux séances, dès lors que le cadre était clair, cohérent et répété. Rien de magique, juste du travail fait dans le bon sens.</p>
+
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">La technique ne prend pas avec votre chien&nbsp;?</p>
+          <p class="art-inline-cta-desc">Séance à domicile pour adapter la marche en laisse à son tempérament et à vos contraintes, premier rendez-vous gratuit</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
+        </aside>
+
+        <h2 id="materiel">Harnais, collier, laisse à enrouleur&nbsp;: ce que le matériel change vraiment</h2>
+
+        <p>Le matériel ne remplacera jamais l'apprentissage, mais un mauvais choix peut entretenir le problème. Autant savoir ce que chaque outil fait réellement.</p>
+
+        <h3 id="harnais-anti-traction">Le harnais anti-traction n'est pas la solution miracle</h3>
+
+        <p>Le harnais a été conçu pour faciliter la traction, pour le sport et l'utilité. Le vendre comme une solution à un chien qui tire, c'est un contresens technique. Les modèles dits anti-traction, ceux qui serrent le thorax, fonctionnent en désaxant mécaniquement le squelette du chien à chaque tension. Sur le long terme, c'est mauvais pour son corps. Pire, cette pression thoracique fait monter l'excitation et le stress. Si votre chien tire pour rejoindre un congénère et que vous maintenez cette pression, vous risquez de transformer son envie de jouer en agressivité.</p>
+
+        <h3 id="laisse-enrouleur">La laisse à enrouleur lui apprend à tirer</h3>
+
+        <p>La laisse à enrouleur maintient une tension permanente et apprend au chien que la distance est variable et que tirer permet d'avancer. C'est l'exact inverse de ce que vous cherchez. Pour qu'un chien comprenne un cadre, ce cadre doit être fixe. Prenez cette laisse et offrez-la à quelqu'un que vous n'aimez pas beaucoup.</p>
+
+        <h3 id="materiel-ne-remplace-pas">Le matériel ne remplace jamais l'apprentissage</h3>
+
+        <p>Le collier reste l'outil de communication le plus précis pour travailler la marche. Mais aucun accessoire ne pense à votre place. Un chien bien dans sa tête marchera correctement avec un simple collier&nbsp;; un chien mal géré tirera avec n'importe quel équipement dernier cri. Le matériel est un support, jamais une béquille.</p>
+
+        <h2 id="foncer-autre-chien">Quand il tire pour foncer sur un autre chien</h2>
+
+        <p>C'est le cas le plus fréquent, et le plus mal compris. Le chien ne tire pas pour marcher plus vite, il tire pour atteindre une cible qui le met en tension. Là, travailler la marche ne sert à rien tant qu'on n'a pas travaillé l'émotion.</p>
+
+        <h3 id="ignorer-en-laisse">En laisse, on ignore&nbsp;; en liberté, on socialise</h3>
+
+        <p>La règle d'or&nbsp;: quand il est attaché, zéro contact avec les chiens et les gens qu'on croise. Ça ne veut pas dire changer de trottoir ou fuir. Ça veut dire lui apprendre l'indifférence polie dans l'espace public. Si vous autorisez les contacts au hasard, vous lui laissez croire que c'est normal d'aller voir tout le monde, tout de suite. Résultat&nbsp;: il tracte violemment dès qu'il aperçoit un congénère.</p>
+
+        <h3 id="reactivite-avant-traction">Régler la réactivité avant de régler la traction</h3>
+
+        <p>J'ai suivi un chien qui se mettait à fixer intensément ses congénères de très loin, poil hérissé sur le dos, avant d'aboyer et de se jeter en avant. Et dès qu'on relâchait l'attention et la tension, tout ce cinéma disparaissait. On a mis en place un protocole simple sur les croisements en longe, un «&nbsp;non&nbsp;» clair à la moindre tension, un «&nbsp;oui&nbsp;» et une récompense dès qu'un croisement était bien géré. Les croisements se sont nettement améliorés au fil de la séance, et il est redescendu en pression bien plus vite. La traction n'était qu'un symptôme de <a href="/education-canine/comportement/problemes/reactivite/chiens/">la réactivité aux autres chiens</a>. Vouloir corriger la laisse sans traiter l'émotion, c'est traiter la conséquence en laissant la cause intacte.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Ce que je vois régulièrement</p>
+            <p class="art-callout__text">Un chien parfaitement gérable dans le calme, ingérable dès qu'un congénère apparaît. Les propriétaires arrivent souvent épuisés, persuadés d'avoir un chien «&nbsp;nul en laisse&nbsp;». Neuf fois sur dix, c'est un chien qui n'a jamais appris à gérer ses émotions, pas un chien qui refuse de marcher.</p>
+          </div>
+        </aside>
+
+        <p>Le jour où votre chien croise un autre chien sans que votre bras parte en avant, où vous respirez au lieu d'anticiper le prochain coin de rue, vous réalisez que la balade peut redevenir ce qu'elle aurait toujours dû être&nbsp;: un moment pour vous deux, pas un bras de fer.</p>
+
+      </div><!-- /.art-content -->
+
+      <!-- Sidebar sticky — desktop uniquement -->
+      <aside class="art-sidebar" aria-labelledby="art-toc-heading">
+        <nav class="art-toc" aria-labelledby="art-toc-heading">
+          <details class="art-toc-details">
+            <summary class="art-toc-title" id="art-toc-heading">
+              Sommaire
+              <svg class="art-toc-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="art-toc-links">
+              {toc.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+                >
+                  <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        </nav>
+
+        <div class="art-sidebar-cta">
+          <p class="art-sidebar-cta-title">Votre chien tire en laisse et vous êtes à bout&nbsp;?</p>
+          <p class="art-sidebar-cta-desc">Bilan comportemental à domicile pour identifier la vraie cause et retrouver des balades tranquilles</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            Prendre RDV
+            <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
+          </a>
+        </div>
+      </aside>
+
+    </div><!-- /.art-layout -->
+
+    <!-- Like / Dislike -->
+    <section class="art-feedback-wrap" aria-label="Votre avis sur cet article">
+      <div class="container">
+        <div class="art-feedback" id="art-feedback">
+          <p class="art-feedback-question">Cet article vous a été utile&nbsp;?</p>
+          <div class="art-feedback-buttons">
+            <button type="button" class="art-feedback-btn art-feedback-btn--like" id="art-like-btn" aria-label="J'aime cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>
+              </svg>
+              Oui
+            </button>
+            <button type="button" class="art-feedback-btn art-feedback-btn--dislike" id="art-dislike-btn" aria-label="Je n'aime pas cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>
+              </svg>
+              Non
+            </button>
+          </div>
+
+          <div class="art-feedback-form" id="art-feedback-form" hidden>
+            <label for="art-feedback-text" class="art-feedback-label">Qu'est-ce qui pourrait être amélioré&nbsp;?</label>
+            <textarea
+              id="art-feedback-text"
+              class="art-feedback-textarea"
+              rows="3"
+              maxlength="500"
+              placeholder="Votre retour nous aide à améliorer nos contenus…"
+            ></textarea>
+            <div class="art-feedback-form-footer">
+              <span class="art-feedback-hint" id="art-feedback-hint">10 caractères minimum</span>
+              <button type="button" class="btn btn-primary art-feedback-submit" id="art-feedback-submit" disabled>Envoyer</button>
+            </div>
+          </div>
+
+          <div class="art-feedback-thanks" id="art-feedback-thanks" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span>Merci ! Je prends en compte tous vos retours pour améliorer la qualité des articles et vous aider le plus possible :)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Biographie auteure -->
+    <footer class="art-bio-wrap">
+      <div class="container">
+        <div class="art-bio">
+          <div class="art-bio-avatar" aria-hidden="true">
+            <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="64" height="64" loading="lazy" decoding="async" style="display:block;" />
+          </div>
+          <div>
+            <p class="art-bio-name">À propos de {article.author}</p>
+            <p class="art-bio-role">{article.authorRole}</p>
+            <p class="art-bio-desc">{article.authorDesc}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </article><!-- /article -->
+
+
+  <!-- ── FAQ ───────────────────────────────────────────────────────── -->
+  {faqItems.length > 0 && (
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 750px;">
+        <h2 id="faq-heading" style="text-align: center;">Questions fréquentes sur le <span class="accent">chien qui tire en laisse</span></h2>
+        <div class="faq-list" style="margin-top: var(--sp-8);">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>{item.question}</span>
+                <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────────────── -->
+  <section class="section-dark art-cta-section" aria-labelledby="art-cta-h">
+    <div class="container art-cta-inner">
+      <h2 class="art-cta-title" id="art-cta-h">Vos balades ressemblent encore à un bras de fer&nbsp;?</h2>
+      <p>Bilan comportemental gratuit à domicile, Bordeaux et métropole</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Réserver mon bilan gratuit
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── ARTICLES QUI PEUVENT VOUS INTÉRESSER ───────────────────────── -->
+  <section class="art-related" aria-labelledby="art-related-h">
+    <div class="container">
+      <p class="art-related-divider" id="art-related-h">Articles qui peuvent vous intéresser</p>
+      <div class="art-related-grid">
+        {related.map((card) => (
+          <a href={card.url} class="art-related-card">
+            <img
+              src={card.img}
+              alt={card.imgAlt}
+              class="art-related-card-img"
+              width="360"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="art-related-card-body">
+              <p class="art-related-card-title">{card.title}</p>
+              <p class="art-related-card-meta">{card.readTime} de lecture</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
+  <ArticleProgressBar />
+
+  <script is:inline>
+    (function () {
+      var MIN_CHARS = 10;
+      var feedbackWrap = document.getElementById('art-feedback');
+      var likeBtn = document.getElementById('art-like-btn');
+      var dislikeBtn = document.getElementById('art-dislike-btn');
+      var feedbackForm = document.getElementById('art-feedback-form');
+      var feedbackText = document.getElementById('art-feedback-text');
+      var feedbackHint = document.getElementById('art-feedback-hint');
+      var feedbackSubmit = document.getElementById('art-feedback-submit');
+      var feedbackThanks = document.getElementById('art-feedback-thanks');
+
+      if (!feedbackWrap || !likeBtn || !dislikeBtn) return;
+
+      function sendGA4Event(eventName, params) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: eventName }, params));
+      }
+
+      function getArticleTitle() {
+        var h1 = document.querySelector('h1');
+        return h1 ? h1.textContent.trim() : document.title;
+      }
+
+      function showThanks() {
+        feedbackWrap.querySelectorAll('.art-feedback-buttons, .art-feedback-form, .art-feedback-question').forEach(
+          function (el) { el.hidden = true; }
+        );
+        feedbackThanks.hidden = false;
+      }
+
+      likeBtn.addEventListener('click', function () {
+        sendGA4Event('article_like', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+        });
+        showThanks();
+      });
+
+      dislikeBtn.addEventListener('click', function () {
+        likeBtn.hidden = true;
+        dislikeBtn.classList.add('art-feedback-btn--selected');
+        dislikeBtn.disabled = true;
+        feedbackForm.hidden = false;
+        feedbackText.focus();
+      });
+
+      feedbackText.addEventListener('input', function () {
+        var len = feedbackText.value.trim().length;
+        var valid = len >= MIN_CHARS;
+        feedbackSubmit.disabled = !valid;
+        if (len === 0) {
+          feedbackHint.textContent = MIN_CHARS + ' caractères minimum';
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else if (!valid) {
+          feedbackHint.textContent = 'Encore ' + (MIN_CHARS - len) + ' caractère' + (MIN_CHARS - len > 1 ? 's' : '');
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else {
+          feedbackHint.textContent = 'Prêt à envoyer';
+          feedbackHint.classList.add('art-feedback-hint--ok');
+        }
+      });
+
+      feedbackSubmit.addEventListener('click', function () {
+        var text = feedbackText.value.trim();
+        if (text.length < MIN_CHARS) return;
+        sendGA4Event('article_dislike', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+          user_feedback: text,
+        });
+        showThanks();
+      });
+    })();
+  </script>
+
+  <script>
+    const btn = document.getElementById('art-copy-link');
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+        } catch {
+          const el = Object.assign(document.createElement('input'), { value: window.location.href });
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          el.remove();
+        }
+        btn.setAttribute('data-copied', '');
+        setTimeout(() => btn.removeAttribute('data-copied'), 2000);
+      });
+    }
+  </script>
+
+</Layout>
