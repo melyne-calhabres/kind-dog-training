@@ -42,18 +42,11 @@ export const articles: Article[] = [
     url:      '/education-canine/comportement/problemes/anxiete/separation/',
   },
   {
-    title:    'Gérer ses émotions en balade : que faire',
-    readTime: '8 min',
-    img:      '/images/article-gestion-emotions-balade-solutions.webp',
-    imgAlt:   'Chien en balade qui apprend à se canaliser et à rester attentif à son maître en extérieur',
-    url:      '/education-canine/comportement/problemes/gestion-emotions/balade/',
-  },
-  {
-    title:    'Mauvaise gestion des émotions en balade : les causes',
-    readTime: '13 min',
+    title:    'Mon chien a du mal à gérer ses émotions en balade',
+    readTime: '17 min',
     img:      '/images/article-gestion-emotions-balade.webp',
     imgAlt:   'Chien en balade en extérieur, en pleine montée émotionnelle face à un stimulus',
-    url:      '/education-canine/comportement/comprendre/gestion-emotions/balade/',
+    url:      '/education-canine/comportement/problemes/gestion-emotions/balade/',
   },
   {
     title:    'Mon chien est réactif aux autres chiens en balade',
@@ -89,5 +82,12 @@ export const articles: Article[] = [
     img:      '/images/article-anxiete-chien.webp',
     imgAlt:   'Chien anxieux couché au sol, oreilles en arrière et regard inquiet, illustrant les signes physiques de l\'anxiété',
     url:      '/education-canine/comportement/problemes/anxiete/',
+  },
+  {
+    title:    'Chien qui ne sait pas gérer ses émotions : comprendre et reprendre la main',
+    readTime: '10 min',
+    img:      '/images/article-gestion-emotions.webp',
+    imgAlt:   'Chien en surexcitation à la maison, illustrant un chien qui ne sait pas gérer ses émotions',
+    url:      '/education-canine/comportement/problemes/gestion-emotions/',
   },
 ];

@@ -4,6 +4,10 @@ export default defineConfig({
   site: 'https://kind-dog-training.fr',
   output: 'static',
   trailingSlash: 'always',
+  redirects: {
+    '/education-canine/comportement/comprendre/gestion-emotions/balade/':
+      '/education-canine/comportement/problemes/gestion-emotions/balade/',
+  },
   integrations: [],
   image: {
     service: {

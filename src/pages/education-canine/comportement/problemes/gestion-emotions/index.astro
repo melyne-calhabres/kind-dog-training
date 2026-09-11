@@ -1,0 +1,747 @@
+---
+import Layout from '../../../../../layouts/Layout.astro';
+import Icon from '../../../../../components/Icon.astro';
+import ArticleProgressBar from '../../../../../components/ArticleProgressBar.astro';
+import { pickRandomArticles } from '../../../../../utils/pickRandomArticles';
+import '../../../../../styles/services.css';
+import '../../../../../styles/article.css';
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Votre Chien ne Sait Pas Gérer ses Émotions ? Comprendre et Reprendre la Main',
+  metaDescription: 'Chien qui ne sait pas gérer ses émotions : reconnaître les signes, comprendre d\'où ça vient et poser du calme dans votre quotidien sans épuiser votre chien.',
+};
+
+// ── Article metadata ──────────────────────────────────────────────────────────
+const article = {
+  category:       'Comportement',
+  categoryUrl:    '/education-canine/comportement/',
+  parentLabel:    'Problèmes',
+  parentUrl:      '/education-canine/comportement/problemes/',
+  breadcrumbLabel:'Gérer ses émotions',
+  titleBefore:    'Votre chien ne sait pas ',
+  titleAccent:    'gérer ses émotions',
+  titleAfter:     ' : comprendre d\'où ça vient et reprendre la main',
+  publishDate:    '11 septembre 2026',
+  publishDateIso: '2026-09-11',
+  updateDate:     '11 septembre 2026',
+  updateDateIso:  '2026-09-11',
+  readTime:       '10 min',
+  author:         'Mélyne',
+  authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
+  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
+  coverAlt:       'Chien en surexcitation à la maison, illustrant un chien qui ne sait pas gérer ses émotions',
+};
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Un chiot peut-il déjà apprendre à se maîtriser ?',
+    answer:   'Oui, et c\'est même le meilleur moment pour construire les bases. Le contrôle de l\'impulsion se travaille dès les premières semaines à la maison, à travers des choses simples : attendre son autorisation avant d\'aller manger, ne pas se jeter sur une friandise posée au sol, respecter un mot de fin pendant le jeu. Certains chiots partent avec un handicap (sevrage précoce, portée mal gérée) : ils auront besoin de plus de travail sur cette compétence, mais elle est parfaitement rattrapable. J\'ai suivi Moka, un chiot issu d\'une portée non sevrée, qui montait très vite et redescendait très mal. Avec un cadre régulier et des exercices adaptés à son âge, il a nettement progressé en quelques mois.',
+  },
+  {
+    question: 'Combien de temps faut-il pour voir de vrais progrès ?',
+    answer:   'Les premiers changements sont souvent visibles en quelques séances, à condition que le cadre soit tenu au quotidien à la maison. Un chien perçoit la cohérence très vite. Ce qui prend du temps, c\'est l\'ancrage : passer d\'un comportement obtenu ponctuellement à un automatisme fiable dans toutes les situations. Comptez plusieurs semaines à plusieurs mois selon l\'âge du chien, l\'ancienneté du problème et la régularité du travail. Un défaut installé depuis six mois se travaille plus vite qu\'un défaut installé depuis trois ans.',
+  },
+  {
+    question: 'Peut-on rééduquer un chien adulte qui n\'a jamais appris à se calmer ?',
+    answer:   'Oui. Aucun chien n\'est un cas désespéré, quel que soit son âge. Ce qui change avec un chien adulte, c\'est que les circuits sont plus profonds : il faudra plus de temps, plus de constance, et souvent un accompagnement pour ne pas s\'épuiser. Mais la capacité d\'un chien à apprendre à gérer ses émotions ne disparaît pas avec l\'âge. Je vois régulièrement des chiens de sept ou huit ans passer d\'une vie subie à une vie apaisée quand le cadre est enfin posé correctement.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type':       'Article',
+      headline:      article.titleBefore + article.titleAccent + article.titleAfter,
+      description:   page.metaDescription,
+      datePublished: `${article.publishDateIso}T09:00:00+02:00`,
+      dateModified:  `${article.updateDateIso}T09:00:00+02:00`,
+      inLanguage:    'fr-FR',
+      url:           pageUrl,
+      image: {
+        '@type':  'ImageObject',
+        url:      siteUrl + '/images/article-gestion-emotions.webp',
+        width:    1116,
+        height:   398,
+      },
+      author: {
+        '@type':    'Person',
+        name:       article.author,
+        url:        siteUrl + '/qui-suis-je/',
+        jobTitle:   'Éducatrice & comportementaliste canin',
+        description: article.authorDesc,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url:     siteUrl + '/images/logo.png',
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id':   pageUrl,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',                    item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Éducation canine',           item: siteUrl + '/education-canine/' },
+        { '@type': 'ListItem', position: 3, name: article.category,             item: siteUrl + article.categoryUrl },
+        { '@type': 'ListItem', position: 4, name: article.parentLabel,          item: siteUrl + article.parentUrl },
+        { '@type': 'ListItem', position: 5, name: article.breadcrumbLabel },
+      ],
+    },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
+  ],
+};
+
+// ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
+const tldr = [
+  'Un chien qui ne sait pas gérer ses émotions se reconnaît partout : à la maison quand vous rentrez, dehors au moindre stimulus, et jusque dans ses temps de repos.',
+  'La surexcitation, la frustration et le tirage en laisse ne sont presque jamais un « caractère », mais un défaut d\'apprentissage du calme et du renoncement.',
+  'Vouloir « épuiser » un chien à bout d\'excitation empire la situation : ça crée un chien avec un cardio de marathonien qui monte encore plus haut.',
+  'Les réflexes qui aggravent le problème sont souvent invisibles pour le propriétaire : lui parler pour le calmer, l\'ignorer une fois lancé, le fixer, ou multiplier les rituels ultra-stimulants comme le lancer de balle en boucle.',
+  'Poser le calme passe par trois choses : combler les vrais besoins, instaurer des temps où il ne se passe rien, et travailler le contrôle de l\'impulsion comme un muscle.',
+  'Au-delà de six mois sans travail, le comportement s\'ancre. Attendre a un vrai coût.',
+  'Faire appel à un pro débloque souvent des situations que le propriétaire ne peut plus voir de l\'intérieur, sans que ce soit un aveu d\'échec.',
+];
+
+// ── Table of contents ─────────────────────────────────────────────────────────
+const toc = [
+  { label: 'Comment reconnaître un chien qui perd le contrôle',      href: '#reconnaitre',            sub: false },
+  { label: 'À la maison : saute, mordille, tourne en rond',          href: '#a-la-maison',            sub: true  },
+  { label: 'Dehors : fixe, s\'enflamme, tire',                       href: '#dehors',                 sub: true  },
+  { label: 'Seul ou au repos : n\'arrive pas à se poser',            href: '#au-repos',               sub: true  },
+  { label: 'Un chien qui « ne fait pas exprès »',                    href: '#ne-fait-pas-expres',     sub: true  },
+  { label: 'Par où commencer pour poser le calme',                   href: '#par-ou-commencer',       sub: false },
+  { label: 'Combler ses besoins d\'abord',                           href: '#combler-besoins',        sub: true  },
+  { label: 'Instaurer des temps faibles',                            href: '#temps-faibles',          sub: true  },
+  { label: 'Travailler le « pas toucher » comme un muscle',          href: '#pas-toucher',            sub: true  },
+  { label: 'Poser un signal de fin clair',                           href: '#signal-de-fin',          sub: true  },
+  { label: 'Casser la fixation avant l\'explosion',                  href: '#casser-fixation',        sub: true  },
+  { label: 'Ce que ça change dans votre vie et la sienne',           href: '#ce-que-ca-change',       sub: false },
+  { label: 'Des sorties sous tension au quotidien',                  href: '#sorties-sous-tension',   sub: true  },
+  { label: 'Un chien qui vit en surtension',                         href: '#surtension',             sub: true  },
+  { label: 'Le risque : le comportement s\'ancre',                   href: '#comportement-ancre',     sub: true  },
+  { label: 'Ce qui se cache derrière la surexcitation',              href: '#causes-surexcitation',   sub: false },
+  { label: 'Des besoins sous-évalués (effet cocotte-minute)',        href: '#besoins-sous-evalues',   sub: true  },
+  { label: 'Trop peu d\'interactions vraies',                        href: '#peu-interactions',       sub: true  },
+  { label: 'Un cadre incohérent à la maison',                        href: '#cadre-incoherent',       sub: true  },
+  { label: 'Les réflexes qui aggravent le problème',                 href: '#reflexes-aggravants',    sub: false },
+  { label: 'Lui parler pour le calmer, le fixer',                    href: '#lui-parler',             sub: true  },
+  { label: 'Punir la joie ou l\'accueil désordonné',                 href: '#punir-la-joie',          sub: true  },
+  { label: 'L\'ignorer une fois emballé',                            href: '#ignorer-emballe',        sub: true  },
+  { label: 'Le lancer de balle en boucle',                           href: '#lancer-de-balle',        sub: true  },
+  { label: 'Quand un accompagnement fait la différence',             href: '#accompagnement',         sub: false },
+  { label: 'Les signaux pour appeler un pro',                        href: '#signaux-pro',            sub: true  },
+  { label: 'Ce qu\'un regard extérieur change',                      href: '#regard-exterieur',       sub: true  },
+];
+
+// ── Articles connexes (rotation aléatoire à chaque build) ────────────────────
+const related = pickRandomArticles(3, '/education-canine/comportement/problemes/gestion-emotions/');
+
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ──────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/education-canine/">Éducation canine</a></li>
+        <li><a href={article.categoryUrl}>{article.category}</a></li>
+        <li><a href={article.parentUrl}>{article.parentLabel}</a></li>
+        <li aria-current="page">{article.breadcrumbLabel}</li>
+      </ol>
+    </div>
+  </nav>
+
+
+  <!-- ── ARTICLE ───────────────────────────────────────────────────── -->
+  <article aria-labelledby="art-h1">
+
+    <!-- En-tête de l'article -->
+    <header class="art-header">
+      <div class="container">
+        <h1 class="art-title" id="art-h1">
+          {article.titleBefore}<span class="accent">{article.titleAccent}</span>{article.titleAfter}
+        </h1>
+        <div class="art-meta">
+          <div class="art-author">
+            <div class="art-avatar" aria-hidden="true">
+              <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
+            </div>
+            <p class="art-author-info">
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.updateDateIso}>{article.updateDate}</time>&nbsp;· {article.readTime} de lecture
+            </p>
+          </div>
+          <div class="art-share">
+            <button id="art-copy-link" class="art-share-btn" type="button" aria-label="Copier le lien de l'article">
+              <Icon name="link" width={16} height={16} strokeWidth={2} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Image hero -->
+    <div class="art-hero-wrap">
+      <div class="container">
+        <figure class="art-hero">
+          <picture>
+            <source media="(max-width: 767px)" srcset="/images/article-gestion-emotions-mobile.webp" width="400" height="351" />
+            <img
+              src="/images/article-gestion-emotions.webp"
+              alt={article.coverAlt}
+              width="1116"
+              height="398"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              class="art-hero-img"
+            />
+          </picture>
+        </figure>
+      </div>
+    </div>
+
+    <!-- L'essentiel -->
+    <div class="container">
+      <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+        <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+        <p class="art-tldr-title">Ce qu'il faut retenir</p>
+        <ul class="art-tldr-list" role="list">
+          {tldr.map((item) => (
+            <li>
+              <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="art-tldr-footer">
+          <Icon name="clock" width={14} height={14} strokeWidth={2} />
+          Lecture complète&nbsp;: {article.readTime} · Pour aller plus loin, lisez l'article entier
+        </p>
+      </aside>
+    </div>
+
+    <!-- Sommaire accordéon — mobile uniquement -->
+    <div class="container art-toc-mobile">
+      <details class="art-toc-accordion">
+        <summary class="art-toc-accordion-header">
+          Sommaire
+          <Icon name="chevron-down" width={16} height={16} strokeWidth={2} class="art-toc-chevron" />
+        </summary>
+        <nav class="art-toc-accordion-body" aria-label="Sommaire de l'article">
+          {toc.map((item) => (
+            <a
+              href={item.href}
+              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+            >
+              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+
+    <!-- Corps à deux colonnes : contenu + sidebar sticky -->
+    <div class="container art-layout">
+
+      <!-- Colonne principale -->
+      <div class="art-content">
+
+        <p>Vous vivez avec un chien qui saute au moindre invité, aboie au premier bruit, tire en laisse comme s'il tractait un traîneau, et vous regarde d'un œil vide quand vous tentez un rappel&nbsp;? Vous êtes face à l'un des <a href="/education-canine/comportement/problemes/">problèmes de comportement du chien</a> les plus fréquents&nbsp;: la perte de contrôle émotionnel. On confond souvent ce tableau avec de l'hyperactivité, de la réactivité, ou un souci de sociabilité. C'est autre chose&nbsp;: votre chien n'arrive pas à canaliser ce qu'il ressent.</p>
+
+        <p>Un chien qui ne sait pas gérer ses émotions vit en surexcitation quasi permanente. Le moindre stimulus déclencheur (une sonnette, un vélo qui passe, une friandise sortie du placard, un chien croisé au loin) fait décoller son seuil émotionnel. La surexcitation devient un mode par défaut&nbsp;: il monte vite, très haut, et ne redescend pas seul. Ça se traduit par des symptômes très concrets. Aboiements excessifs, mordillements, saut sur les gens, <a href="/education-canine/comportement/problemes/tirage-laisse/">tirage en laisse</a>, rappel qui ne prend plus dès qu'il y a de la stimulation, incapacité à se poser au repos, comportement explosif dès que la journée s'anime un peu.</p>
+
+        <p>Cet article n'est pas là pour vous expliquer la mécanique fine du seuil émotionnel ou la physiologie du contrôle de l'impulsion (une page dédiée s'en charge). Il est là pour vous aider à reconnaître ce que vit votre chien, à comprendre pourquoi vous en êtes arrivé là, et à voir par où commencer pour poser du calme dans votre quotidien.</p>
+
+        <h2 id="reconnaitre">Comment reconnaître un chien qui perd le contrôle au quotidien</h2>
+
+        <h3 id="a-la-maison">À la maison : saute, mordille, aboie, tourne en rond quand vous rentrez</h3>
+
+        <p>Le premier signe, celui que vous voyez tous les jours, c'est l'accueil. Vous rentrez, le chien saute, tourne, mordille les vêtements, aboie, se couche brièvement, se relève, saute encore. Certains chiens vont jusqu'au chevauchement de jambe&nbsp;: c'est le stade final, l'évacuation nerveuse d'un trop-plein qui ne trouve pas d'issue.</p>
+
+        <p>J'ai suivi Vince, un jeune staffie qui présentait exactement ce tableau&nbsp;: sauts, mordillements, incapacité totale à se poser à l'arrivée des invités. Son sevrage lui avait fait défaut, et il n'avait jamais appris à se contrôler. Ce n'était pas un chien méchant, ni un chien «&nbsp;dominant&nbsp;». C'était un chien qui ne savait pas quoi faire de ce qu'il ressentait.</p>
+
+        <p>Chez vous, ça peut aussi se manifester par un chien qui suit tout le monde de pièce en pièce, qui vient réclamer de l'attention en poussant du museau ou en aboyant, qui ne parvient pas à rester couché quand vous êtes assis sur le canapé.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le test que je fais en séance</p>
+            <p class="art-callout__text">Je regarde comment le chien se comporte pendant les dix premières minutes où je discute avec les propriétaires, sans lui prêter attention. Un chien équilibré va renifler, s'installer, m'observer un peu, puis se poser. Un chien qui ne gère pas ses émotions va tourner, réclamer, sauter, aboyer, et surtout&nbsp;: ne jamais trouver de position stable. C'est souvent plus parlant qu'une démonstration en balade.</p>
+          </div>
+        </aside>
+
+        <h3 id="dehors">Dehors : fixe, s'enflamme au moindre stimulus, tire au bout de la laisse</h3>
+
+        <p>La balade est souvent le moment où le problème saute aux yeux. Le chien tire dès la sortie de l'immeuble, réagit à chaque congénère aperçu au loin, se fige sur un jogger, un vélo, une trottinette. Le rappel devient aléatoire&nbsp;: ça marche à la maison, ça marche parfois dans un endroit calme, ça ne marche plus du tout quand il y a de la stimulation. J'ai consacré un article entier à ce cas précis&nbsp;: <a href="/education-canine/comportement/problemes/gestion-emotions/balade/">gérer ses émotions en balade</a>, avec les exercices concrets à poser dehors.</p>
+
+        <p>Certains chiens fixent avant d'exploser. La fixation est le signal qui précède la perte de contrôle. Sur le terrain, je le vois dans neuf cas sur dix&nbsp;: le chien se ferme, tend le corps, ne répond plus à son nom. Ce qui suit est mécanique. Aboiement, tirage, montée d'excitation qui bascule en <a href="/education-canine/comportement/problemes/reactivite/">réactivité</a> même chez un chien à la base sociable.</p>
+
+        <h3 id="au-repos">Seul ou au repos : ne parvient plus à s'arrêter ni à se poser</h3>
+
+        <p>Un chien qui gère ses émotions sait s'éteindre. Il se pose, dort, observe sans intervenir. Un chien qui ne les gère pas reste en tension même quand rien ne se passe. Il change de position toutes les deux minutes, se relève au moindre bruit, halète sans raison apparente. Nova, une jeune chienne dynamique en pleine <a href="/education-canine/comportement/comprendre/adolescence-chien/">adolescence</a> que j'ai accompagnée, ne savait pas rester posée&nbsp;: dès qu'un contexte évoquait le jeu, elle décollait et n'était plus disponible pour aucun apprentissage.</p>
+
+        <p>C'est peut-être le signe le plus révélateur, parce que le vrai calme (celui qui vient de l'intérieur, pas de l'épuisement physique) est ce qui manque.</p>
+
+        <h3 id="ne-fait-pas-expres">Un chien qui « ne fait pas exprès » : ce que ça n'est pas</h3>
+
+        <p>Il faut sortir tout de suite d'une lecture répandue et fausse. Non, votre chien ne cherche pas à «&nbsp;prendre le pouvoir&nbsp;». Non, il n'est pas mal élevé. Il n'est pas non plus, dans la grande majorité des cas, malade d'un trouble hormonal ou d'une pathologie qui expliquerait tout. Il vit avec un système émotionnel qui n'a pas appris à se réguler. Ce n'est pas une intention. Une compétence, ça se construit.</p>
+
+        <h2 id="par-ou-commencer">Par où commencer pour poser le calme et travailler le renoncement</h2>
+
+        <h3 id="combler-besoins">Combler ses besoins d'abord, sinon rien ne rentre</h3>
+
+        <p>J'appelle ça un chien en cocotte-minute&nbsp;: ses besoins ne sont pas comblés, sa réceptivité au calme est nulle. Vous pouvez lui demander tout ce que vous voulez, ça ne rentre pas. Son organisme est en tension permanente. La dépense physique et intellectuelle est un prérequis, pas un accessoire.</p>
+
+        <p>Ce que je vois le plus souvent en séance, c'est des balades trop courtes, trop molles, sans temps de flair, sans travail. Vingt minutes de trottoir en laisse deux fois par jour ne comblent rien du tout. Un chien a besoin de sortir vraiment, de renifler, de rencontrer, de se dépenser mentalement (ce qui fatigue dix fois plus qu'une course pure).</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Attention au piège inverse</p>
+            <p class="art-callout__text">Vouloir «&nbsp;épuiser&nbsp;» son chien à coups de lancers de balle ou de courses derrière le vélo empire tout. Vous créez un chien avec un cardio de marathonien qui monte de plus en plus haut, plus il en fait, moins il sait s'arrêter. La qualité de la dépense compte plus que la quantité.</p>
+          </div>
+        </aside>
+
+        <h3 id="temps-faibles">Instaurer des temps faibles où il ne se passe strictement rien</h3>
+
+        <p>Un chien qui vit en sollicitation constante (jouets partout, attention permanente, télé, allers-retours) reste en tension. Il faut lui apprendre à ne rien faire. Concrètement, ça veut dire des plages de la journée où vous n'interagissez pas, où les jouets sont rangés, où le chien apprend à se poser dans son coin. C'est un apprentissage à part entière du calme, pas une punition.</p>
+
+        <h3 id="pas-toucher">Travailler le « pas toucher » et la maîtrise de soi comme un muscle</h3>
+
+        <p>Le contrôle de l'impulsion se travaille comme un exercice physique. On commence petit, on augmente la difficulté progressivement. Le «&nbsp;pas toucher&nbsp;» (une friandise posée devant le chien qu'il doit ignorer jusqu'à autorisation) est un excellent point de départ. Bonnie, une cocker de cinq mois que j'ai suivie, avait exactement ce chantier&nbsp;: gestion des émotions et de la frustration. On a construit le renoncement par palier, d'abord à la maison, puis en extérieur, puis avec des appâts de haute valeur. En quelques semaines, elle passait devant une friandise au sol sans même y penser.</p>
+
+        <p>Ce qui compte, c'est ce que l'exercice enseigne au chien&nbsp;: je peux différer, je peux renoncer, ce n'est pas grave.</p>
+
+        <h3 id="signal-de-fin">Poser un signal de fin clair pour éteindre les feux</h3>
+
+        <p>Un chien a besoin de savoir quand une séquence s'arrête. Sans mot de fin, le jeu ne finit pas, l'excitation ne redescend pas, et le chien reste en attente perpétuelle. Un mot simple («&nbsp;c'est fini&nbsp;», «&nbsp;stop&nbsp;», «&nbsp;terminé&nbsp;») utilisé systématiquement à la fin d'une interaction devient un signal fiable. Le chien apprend à basculer d'un état d'excitation à un état de repos parce qu'un signal lui dit que c'est le moment.</p>
+
+        <h3 id="casser-fixation">Casser la fixation avant qu'elle ne devienne explosion</h3>
+
+        <p>Si vous voyez votre chien se figer sur quelque chose (un chien au loin, un chat, un jogger), n'attendez pas qu'il explose. Bougez, appelez, changez de direction, mettez-vous entre le stimulus et lui. La fixation est la porte d'entrée du comportement explosif. Le propriétaire pense souvent que «&nbsp;ça va aller&nbsp;», il continue d'avancer, il parle au chien pour le rassurer. Résultat&nbsp;: l'excitation monte au lieu de redescendre. Rompre la fixation dès qu'elle apparaît change littéralement l'issue de la balade.</p>
+
+        <!-- CTA inline — visible sur mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous ne savez pas par où commencer avec votre chien&nbsp;?</p>
+          <p class="art-inline-cta-desc">On regarde ensemble ce qui manque dans ses journées et on pose un plan concret pour installer du calme. Bilan à domicile gratuit, sans engagement.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+        </aside>
+
+        <h2 id="ce-que-ca-change">Ce que ça change dans votre vie et celle de votre chien</h2>
+
+        <h3 id="sorties-sous-tension">Des sorties sous tension et un quotidien qu'on subit</h3>
+
+        <p>Vivre avec un chien qui ne se gère pas transforme les sorties en corvée. Vous appréhendez chaque coin de rue, chaque croisement, chaque sonnette. Vous choisissez vos horaires pour éviter les autres chiens, vous changez de trottoir en permanence, vous refusez des invitations parce que «&nbsp;ce sera compliqué avec le chien&nbsp;». C'est fatigant, oui, mais surtout c'est un poids mental permanent.</p>
+
+        <h3 id="surtension">Un chien qui ne se repose plus vraiment et vit en surtension</h3>
+
+        <p>De son côté, votre chien ne va pas bien. Un chien qui ne redescend jamais vraiment vit avec un taux de cortisol élevé en continu. C'est mauvais pour son système nerveux, pour sa digestion, pour son sommeil, pour sa capacité à apprendre. Un chien qui vit en cocotte-minute finit par développer des troubles secondaires&nbsp;: problèmes gastriques, comportements compulsifs, difficultés relationnelles avec ses congénères.</p>
+
+        <h3 id="comportement-ancre">Le risque quand rien ne bouge : le comportement s'ancre</h3>
+
+        <p>Un défaut de gestion émotionnelle qui persiste plus de six mois devient un trouble ancré. Les circuits neurologiques se tracent, le chien tire une forme de satisfaction interne de son propre dysfonctionnement, et la rééducation devient plus longue. Ce n'est pas une raison de paniquer, c'est une raison de ne pas attendre. Plus tôt vous mettez du cadre, moins le chantier est lourd.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Ce que je vois arriver en séance</p>
+            <p class="art-callout__text">Des propriétaires qui viennent me voir après deux ou trois ans à «&nbsp;faire avec&nbsp;». Le chien a huit ans, il n'a jamais su se poser, tout le monde a fini par s'adapter à lui plutôt que l'inverse. Le travail est possible, il l'est toujours, mais il aurait pris trois fois moins de temps deux ans plus tôt.</p>
+          </div>
+        </aside>
+
+        <h2 id="causes-surexcitation">Ce qui se cache derrière la surexcitation</h2>
+
+        <h3 id="besoins-sous-evalues">Des besoins physiques et mentaux sous-évalués (effet cocotte-minute)</h3>
+
+        <p>Neuf fois sur dix, la première cause d'une mauvaise gestion émotionnelle est là. Le chien ne se dépense pas assez, pas de la bonne façon, ou pas dans le bon environnement. Il accumule une tension qui doit sortir. Et elle sort par le seul canal qu'il connaît&nbsp;: l'excitation désordonnée.</p>
+
+        <p>Le besoin de réfléchir est encore plus sous-estimé que le besoin de courir. Un chien qui pense fatigue infiniment plus qu'un chien qui court. Une randonnée avec topographie variée, une session de flair dans un parc inconnu, un exercice d'obéissance en environnement nouveau font plus pour poser un chien qu'une heure de balle lancée dans le jardin.</p>
+
+        <h3 id="peu-interactions">Trop peu d'interactions vraies et de balades qui font réfléchir</h3>
+
+        <p>Beaucoup de chiens vivent avec zéro interaction réelle. Toujours les mêmes trottoirs, jamais un endroit fréquenté, pas de vraie rencontre avec des congénères adultes bien codés. Résultat&nbsp;: ils n'ont aucun vocabulaire pour gérer la nouveauté, et la moindre stimulation fait exploser leur seuil émotionnel.</p>
+
+        <p>La socialisation, c'est aussi ça&nbsp;: construire un chien capable de rencontrer le monde sans que chaque événement soit une décharge.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Rareté = obsession</p>
+            <p class="art-callout__text">Un chien qui ne voit un congénère qu'une fois par semaine se jettera dessus la fois où il en croise un. Un chien qui en voit dix par jour finit par ignorer le onzième. Le principe vaut pour tout&nbsp;: plus une ressource est rare dans le quotidien du chien, plus elle devient obsessionnelle et plus le contrôle émotionnel s'écroule à son approche.</p>
+          </div>
+        </aside>
+
+        <h3 id="cadre-incoherent">Un cadre incohérent ou trop souple à la maison</h3>
+
+        <p>Un chien à qui on demande tout et son contraire (aujourd'hui sur le canapé, demain non, aujourd'hui on l'ignore, demain on répond à sa demande) vit dans une insécurité qui alimente l'excitation. Pas parce qu'il «&nbsp;teste&nbsp;» les limites, mais parce que l'environnement n'est pas lisible. Sans lisibilité, il ne peut pas se poser.</p>
+
+        <!-- CTA inline — visible sur mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Envie de rendre son quotidien plus lisible&nbsp;?</p>
+          <p class="art-inline-cta-desc">On regarde ce qui alimente sa tension à la maison et en balade, et on pose un cadre cohérent qu'il comprend. Bilan à domicile gratuit.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
+        </aside>
+
+        <h2 id="reflexes-aggravants">Les réflexes qui aggravent le problème sans que vous le voyiez</h2>
+
+        <h3 id="lui-parler">Lui parler pour le calmer, le fixer du regard</h3>
+
+        <p>Parler à un chien excité («&nbsp;doucement&nbsp;», «&nbsp;calme-toi&nbsp;», «&nbsp;chuuuut&nbsp;») fait exactement l'inverse de l'effet recherché. La voix agit comme un stimulant nerveux. Idem pour le regard&nbsp;: plonger vos yeux dans les siens quand il est déjà chargé émotionnellement le pousse à monter encore. Moins on parle, plus on est neutre, mieux c'est.</p>
+
+        <h3 id="punir-la-joie">Punir la joie ou l'accueil désordonné</h3>
+
+        <p>Sanctionner un chien qui vous accueille avec enthousiasme est un contresens. Il vous offre une émotion positive, il reçoit de l'hostilité en retour. À terme, ça crée un conflit de sentiments qui peut transformer son élan en anxiété, voire en hostilité envers vous ou les visiteurs. La solution passe par lui apprendre à exprimer cet accueil autrement, pas par la sanction.</p>
+
+        <h3 id="ignorer-emballe">L'ignorer une fois qu'il est déjà emballé</h3>
+
+        <p>L'ignorance est souvent présentée comme une solution universelle. Elle ne l'est pas. Ignorer un chien dont le système nerveux est déjà activé revient à lui retirer toute guidance au moment où il en a le plus besoin. Résultat&nbsp;: le cortisol monte, l'excitation aussi. L'ignorance fonctionne pour un chien qui va bien, en préventif. Sur un chien en pleine montée, c'est une erreur technique.</p>
+
+        <h3 id="lancer-de-balle">Le lancer de balle en boucle et les rituels ultra-stimulants</h3>
+
+        <p>Le lancer de balle systématique est probablement la pire habitude qu'on puisse installer chez un chien qui a du mal à gérer ses émotions. Ça crée une boucle dopaminergique qui transforme votre chien en «&nbsp;drogué&nbsp;» de la stimulation. Sa capacité à se poser s'effondre, sa fixation devient exclusive, et son seuil de tolérance à la frustration s'écroule. Idem pour les courses derrière un vélo ou les jeux de traction interminables. Ce sont des activités qui excitent sans jamais apprendre à redescendre.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">La règle des 20 dernières minutes</p>
+            <p class="art-callout__text">Terminez chaque balade par vingt minutes de marche calme en laisse ou en longe. C'est le temps qu'il faut à la dopamine pour redescendre. Sans ça, votre chien franchit le seuil de la maison en pic d'excitation et ne se pose pas de la soirée.</p>
+          </div>
+        </aside>
+
+        <h2 id="accompagnement">Vous n'y arrivez plus seul ? Quand un accompagnement fait la différence</h2>
+
+        <h3 id="signaux-pro">Les signaux qui montrent qu'il est temps d'appeler un pro</h3>
+
+        <p>Il y a des situations où lire un article et appliquer trois exercices ne suffira pas. Quelques signes qui doivent vous alerter&nbsp;:</p>
+
+        <ul class="art-list" role="list">
+          <li>Vous avez essayé plusieurs choses sur plusieurs semaines et vous ne voyez pas de progrès.</li>
+          <li>La situation empire au lieu de s'améliorer.</li>
+          <li>Vous ne prenez plus de plaisir à sortir avec votre chien.</li>
+          <li>Vous vous sentez dépassé, en colère ou découragé de manière régulière.</li>
+          <li>Votre chien commence à développer des comportements secondaires (agressivité vers des humains ou des chiens, destructions massives, malpropreté).</li>
+        </ul>
+
+        <p>Aucun de ces signes n'est un aveu d'échec. Ce sont des indicateurs que vous êtes arrivé au bout de ce que vos outils actuels vous permettent.</p>
+
+        <h3 id="regard-exterieur">Ce qu'un regard extérieur change dans ce type de situation</h3>
+
+        <p>Un éducateur qui connaît la gestion émotionnelle voit en quelques minutes des choses que vous ne pouvez plus voir. Les micro-réflexes que vous avez développés sans vous en rendre compte, les moments où vous parlez alors qu'il faut se taire, les endroits où votre chien fixe avant que vous l'ayez remarqué. Un accompagnement adapté n'est pas plaqué&nbsp;: c'est un plan construit sur votre chien, votre quotidien, votre logement, votre organisation.</p>
+
+        <p>Sur les cas de perte de contrôle, les premiers résultats arrivent souvent vite quand le cadre est enfin cohérent. Vince, dont je parlais plus haut, s'est posé pour la première fois de sa vie au bout de vingt à trente minutes lors de notre première séance. Il n'y a pas de magie. Il y a un cadre qui, enfin, dit la même chose du début à la fin.</p>
+
+        <p>Dans quelques semaines, cette arrivée à la maison qui vous met la boule au ventre peut devenir un moment ordinaire&nbsp;: votre chien vient vous voir, quelques secondes de retrouvailles, puis il repart se coucher de lui-même. Aucune promesse marketing là-dedans&nbsp;: c'est le résultat concret d'un travail fait dans le bon ordre, avec un chien à qui on a enfin donné de la lisibilité.</p>
+
+        <!-- CTA inline — visible sur mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Prête à ne plus subir le quotidien avec votre chien&nbsp;?</p>
+          <p class="art-inline-cta-desc">Premier bilan gratuit à votre domicile, je me déplace à Bordeaux et sa métropole. Sans engagement, on pose un plan de travail adapté à votre chien.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
+        </aside>
+
+      </div><!-- /.art-content -->
+
+      <!-- Sidebar sticky — desktop uniquement -->
+      <aside class="art-sidebar" aria-labelledby="art-toc-heading">
+        <nav class="art-toc" aria-labelledby="art-toc-heading">
+          <details class="art-toc-details">
+            <summary class="art-toc-title" id="art-toc-heading">
+              Sommaire
+              <svg class="art-toc-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="art-toc-links">
+              {toc.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+                >
+                  <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        </nav>
+
+        <div class="art-sidebar-cta">
+          <p class="art-sidebar-cta-title">Votre chien ne sait pas se poser&nbsp;?</p>
+          <p class="art-sidebar-cta-desc">Bilan comportemental à domicile pour comprendre ce qui alimente sa surexcitation et poser un cadre qui l'apaise</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            Prendre RDV
+            <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
+          </a>
+        </div>
+      </aside>
+
+    </div><!-- /.art-layout -->
+
+    <!-- Like / Dislike -->
+    <section class="art-feedback-wrap" aria-label="Votre avis sur cet article">
+      <div class="container">
+        <div class="art-feedback" id="art-feedback">
+          <p class="art-feedback-question">Cet article vous a été utile&nbsp;?</p>
+          <div class="art-feedback-buttons">
+            <button type="button" class="art-feedback-btn art-feedback-btn--like" id="art-like-btn" aria-label="J'aime cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>
+              </svg>
+              Oui
+            </button>
+            <button type="button" class="art-feedback-btn art-feedback-btn--dislike" id="art-dislike-btn" aria-label="Je n'aime pas cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>
+              </svg>
+              Non
+            </button>
+          </div>
+
+          <div class="art-feedback-form" id="art-feedback-form" hidden>
+            <label for="art-feedback-text" class="art-feedback-label">Qu'est-ce qui pourrait être amélioré&nbsp;?</label>
+            <textarea
+              id="art-feedback-text"
+              class="art-feedback-textarea"
+              rows="3"
+              maxlength="500"
+              placeholder="Votre retour nous aide à améliorer nos contenus…"
+            ></textarea>
+            <div class="art-feedback-form-footer">
+              <span class="art-feedback-hint" id="art-feedback-hint">10 caractères minimum</span>
+              <button type="button" class="btn btn-primary art-feedback-submit" id="art-feedback-submit" disabled>Envoyer</button>
+            </div>
+          </div>
+
+          <div class="art-feedback-thanks" id="art-feedback-thanks" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span>Merci ! Je prends en compte tous vos retours pour améliorer la qualité des articles et vous aider le plus possible :)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Biographie auteure -->
+    <footer class="art-bio-wrap">
+      <div class="container">
+        <div class="art-bio">
+          <div class="art-bio-avatar" aria-hidden="true">
+            <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="64" height="64" loading="lazy" decoding="async" style="display:block;" />
+          </div>
+          <div>
+            <p class="art-bio-name">À propos de {article.author}</p>
+            <p class="art-bio-role">{article.authorRole}</p>
+            <p class="art-bio-desc">{article.authorDesc}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </article><!-- /article -->
+
+
+  <!-- ── FAQ ───────────────────────────────────────────────────────── -->
+  {faqItems.length > 0 && (
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 750px;">
+        <h2 id="faq-heading" style="text-align: center;">Questions fréquentes sur le chien qui ne gère pas ses <span class="accent">émotions</span></h2>
+        <div class="faq-list" style="margin-top: var(--sp-8);">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>{item.question}</span>
+                <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────────────── -->
+  <section class="section-dark art-cta-section" aria-labelledby="art-cta-h">
+    <div class="container art-cta-inner">
+      <h2 class="art-cta-title" id="art-cta-h">Votre chien vit encore en cocotte-minute au quotidien&nbsp;?</h2>
+      <p>Bilan comportemental gratuit à domicile, à Bordeaux et sa métropole</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Réserver mon bilan gratuit
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── ARTICLES QUI PEUVENT VOUS INTÉRESSER ───────────────────────── -->
+  <section class="art-related" aria-labelledby="art-related-h">
+    <div class="container">
+      <p class="art-related-divider" id="art-related-h">Articles qui peuvent vous intéresser</p>
+      <div class="art-related-grid">
+        {related.map((card) => (
+          <a href={card.url} class="art-related-card">
+            <img
+              src={card.img}
+              alt={card.imgAlt}
+              class="art-related-card-img"
+              width="360"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="art-related-card-body">
+              <p class="art-related-card-title">{card.title}</p>
+              <p class="art-related-card-meta">{card.readTime} de lecture</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
+  <ArticleProgressBar />
+
+  <script is:inline>
+    (function () {
+      var MIN_CHARS = 10;
+      var feedbackWrap = document.getElementById('art-feedback');
+      var likeBtn = document.getElementById('art-like-btn');
+      var dislikeBtn = document.getElementById('art-dislike-btn');
+      var feedbackForm = document.getElementById('art-feedback-form');
+      var feedbackText = document.getElementById('art-feedback-text');
+      var feedbackHint = document.getElementById('art-feedback-hint');
+      var feedbackSubmit = document.getElementById('art-feedback-submit');
+      var feedbackThanks = document.getElementById('art-feedback-thanks');
+
+      if (!feedbackWrap || !likeBtn || !dislikeBtn) return;
+
+      function sendGA4Event(eventName, params) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: eventName }, params));
+      }
+
+      function getArticleTitle() {
+        var h1 = document.querySelector('h1');
+        return h1 ? h1.textContent.trim() : document.title;
+      }
+
+      function showThanks() {
+        feedbackWrap.querySelectorAll('.art-feedback-buttons, .art-feedback-form, .art-feedback-question').forEach(
+          function (el) { el.hidden = true; }
+        );
+        feedbackThanks.hidden = false;
+      }
+
+      likeBtn.addEventListener('click', function () {
+        sendGA4Event('article_like', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+        });
+        showThanks();
+      });
+
+      dislikeBtn.addEventListener('click', function () {
+        likeBtn.hidden = true;
+        dislikeBtn.classList.add('art-feedback-btn--selected');
+        dislikeBtn.disabled = true;
+        feedbackForm.hidden = false;
+        feedbackText.focus();
+      });
+
+      feedbackText.addEventListener('input', function () {
+        var len = feedbackText.value.trim().length;
+        var valid = len >= MIN_CHARS;
+        feedbackSubmit.disabled = !valid;
+        if (len === 0) {
+          feedbackHint.textContent = MIN_CHARS + ' caractères minimum';
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else if (!valid) {
+          feedbackHint.textContent = 'Encore ' + (MIN_CHARS - len) + ' caractère' + (MIN_CHARS - len > 1 ? 's' : '');
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else {
+          feedbackHint.textContent = 'Prêt à envoyer';
+          feedbackHint.classList.add('art-feedback-hint--ok');
+        }
+      });
+
+      feedbackSubmit.addEventListener('click', function () {
+        var text = feedbackText.value.trim();
+        if (text.length < MIN_CHARS) return;
+        sendGA4Event('article_dislike', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+          user_feedback: text,
+        });
+        showThanks();
+      });
+    })();
+  </script>
+
+  <script>
+    const btn = document.getElementById('art-copy-link');
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+        } catch {
+          const el = Object.assign(document.createElement('input'), { value: window.location.href });
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          el.remove();
+        }
+        btn.setAttribute('data-copied', '');
+        setTimeout(() => btn.removeAttribute('data-copied'), 2000);
+      });
+    }
+  </script>
+
+</Layout>

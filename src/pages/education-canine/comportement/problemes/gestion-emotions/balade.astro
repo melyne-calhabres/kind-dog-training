@@ -8,8 +8,8 @@ import '../../../../../styles/article.css';
 
 // ── Page SEO ──────────────────────────────────────────────────────────────────
 const page = {
-  metaTitle:       'Mon Chien a du Mal à Gérer ses Émotions en Balade, Que Faire ?',
-  metaDescription: 'Votre chien a du mal à gérer ses émotions en balade ? Voici 4 leviers pour qu\'il apprenne à redescendre, à renoncer et à se poser près de vous.',
+  metaTitle:       'Mon Chien a du Mal à Gérer ses Émotions en Balade : Que Faire',
+  metaDescription: 'Votre chien déborde en balade ? Comprenez ce qui se joue, changez vos réflexes et apprenez-lui à monter puis à redescendre en excitation.',
 };
 
 // ── Article metadata ──────────────────────────────────────────────────────────
@@ -18,34 +18,44 @@ const article = {
   categoryUrl:    '/education-canine/comportement/',
   parentLabel:    'Problèmes',
   parentUrl:      '/education-canine/comportement/problemes/',
-  breadcrumbLabel:'Gérer ses émotions en balade : solutions',
+  hubLabel:       'Gérer ses émotions',
+  hubUrl:         '/education-canine/comportement/problemes/gestion-emotions/',
+  breadcrumbLabel:'Gérer ses émotions en balade',
   titleBefore:    'Mon chien a du mal à ',
   titleAccent:    'gérer ses émotions en balade',
-  titleAfter:     ' : que faire concrètement',
-  publishDate:    '29 juin 2026',
-  publishDateIso: '2026-06-29',
-  updateDate:     '10 septembre 2026',
-  updateDateIso:  '2026-09-10',
-  readTime:       '8 min',
+  titleAfter:     ' : comprendre et reprendre la main',
+  publishDate:    '26 juin 2026',
+  publishDateIso: '2026-06-26',
+  updateDate:     '11 septembre 2026',
+  updateDateIso:  '2026-09-11',
+  readTime:       '17 min',
   author:         'Mélyne',
   authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
   authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
-  coverAlt:       'Chien en balade qui apprend à se canaliser et à rester attentif à son maître en extérieur',
+  coverAlt:       'Chien en balade en extérieur, en pleine montée émotionnelle face à un stimulus',
 };
 
 // ── FAQ ───────────────────────────────────────────────────────────────────────
 const faqItems: { question: string; answer: string }[] = [
   {
-    question: 'Par quel exercice commencer si mon chien déborde déjà beaucoup ?',
-    answer:   'C\'est une question difficile et trop large sans avoir vu votre chien. Commencez par combler ses besoins, physiques ET mentaux. Augmentez la dépense mentale et olfactive, ajoutez de vrais moments de jeu cadré. En parallèle, travaillez le calme à la maison ou dans un endroit peu stimulant : le couché, l\'observation sans réaction, le prend-lâche. Ces bases-là se posent au calme, pas au milieu d\'un parc bondé dès le départ. Vous transférerez en balade avec plus de stimulations seulement quand elles seront acquises dans un contexte facile. Vouloir tout régler directement dehors, c\'est l\'échec assuré.',
+    question: 'Combien de temps faut-il pour qu\'un chien apprenne à se canaliser en sortie ?',
+    answer:   'Il n\'y a pas de durée fixe, ça dépend du chien, de son passé et surtout de la régularité du travail. Certains chiens montrent des progrès nets en quelques semaines, d\'autres ont besoin de plus de temps, notamment s\'ils sont jeunes ou en pleine phase hormonale. Ce qui compte, c\'est la constance plutôt que l\'intensité. Des séances courtes et régulières valent mieux que de longues sessions espacées. Un repère utile : un trouble installé depuis plus de six mois demande généralement plus de patience, car le comportement est devenu une habitude ancrée. Mais avec un travail adapté, un chien progresse presque toujours dans le bon sens.',
   },
   {
-    question: 'En combien de temps voit-on des résultats en sortie ?',
-    answer:   'Il n\'y a pas de durée fixe : ça dépend du chien, de son passé, de son tempérament et surtout de votre régularité. Certains montrent des progrès nets en quelques jours, d\'autres ont besoin de plus de temps, en particulier les jeunes chiens en pleine phase hormonale où la montée émotionnelle reste très rapide. Ce qui compte, c\'est la constance plutôt que l\'intensité : des séances courtes et fréquentes valent mieux que de longues sessions espacées. Vous verrez souvent les premiers signes à la maison avant la balade, un chien qui se pose plus vite, qui se réfère davantage à vous.',
+    question: 'Par quel exercice commencer si mon chien déborde déjà beaucoup ?',
+    answer:   'Commencez par combler ses besoins, physiques ET mentaux. Augmentez la dépense mentale et olfactive, ajoutez de vrais moments de jeu cadré et de mastication. En parallèle, travaillez le calme à la maison ou dans un endroit peu stimulant : le couché, l\'observation sans réaction, le prend-lâche. Ces bases-là se posent au calme, pas au milieu d\'un parc bondé dès le départ. Vous transférerez en balade avec plus de stimulations seulement quand elles seront acquises dans un contexte facile. Vouloir tout régler directement dehors, c\'est l\'échec assuré.',
+  },
+  {
+    question: 'Mon chien dépense-t-il vraiment assez si je le sors 30 minutes par jour ?',
+    answer:   'Pas forcément, parce que tout dépend de la qualité de ces 30 minutes. Une demi-heure en laisse courte, toujours sur le même trajet, ne couvre presque que le besoin physique, et de façon limitée. Une balade en laisse réduit la stimulation mentale de 80 à 90 % par rapport à une sortie où le chien explore librement. À l\'inverse, 30 minutes où votre chien renifle, cherche, observe et réfléchit le fatiguent réellement. Ajoutez de la mastication et un vrai moment de jeu cadré à la maison, et vous comblez bien plus de besoins qu\'avec une longue marche mécanique.',
   },
   {
     question: 'Faut-il éviter les autres chiens pendant le travail ?',
-    answer:   'Éviter, non. Empêcher l\'accès systématique, oui. Si vous laissez votre chien aller voir chaque congénère, vous lui apprenez qu\'il obtient tout, tout de suite, et il devient capricieux et ingérable. En laisse, instaurez le « zéro contact » : il peut voir les autres chiens, mais sans aller au contact. Ce n\'est pas de la fuite, vous ne changez pas de trottoir, vous lui apprenez l\'indifférence. En parallèle, gardez des interactions libres et cadrées dans de bons contextes, parce que des rencontres régulières banalisent les congénères. C\'est l\'équilibre entre les deux qui stabilise un chien dehors.',
+    answer:   'Éviter, non. Empêcher l\'accès systématique en laisse, oui. Si vous laissez votre chien aller voir chaque congénère, vous lui apprenez qu\'il obtient tout, tout de suite, et il devient ingérable. En laisse, instaurez le « zéro contact » : il peut voir les autres chiens, mais sans aller au contact. En parallèle, gardez des interactions libres et cadrées dans de bons contextes, parce que des rencontres régulières banalisent les congénères. C\'est l\'équilibre entre les deux qui stabilise un chien dehors.',
+  },
+  {
+    question: 'Faut-il continuer à promener un chien qui déborde à chaque fois ?',
+    answer:   'Oui. Arrêter les balades parce qu\'elles sont difficiles, c\'est la pire solution. L\'évitement ne règle rien : il renforce l\'incapacité du chien à gérer le monde extérieur, et le prive du seul vrai vecteur de dépense et de socialisation qu\'il a. Un chien qu\'on enferme pour le « protéger » des stimulations devient encore moins capable de les affronter. Ce qu\'il faut changer, ce n\'est pas la quantité de sorties, c\'est leur contenu et votre façon de les mener. Adaptez le lieu, l\'horaire, la distance avec les déclencheurs, travaillez la gestion émotionnelle progressivement, et si besoin faites-vous accompagner.',
   },
 ];
 
@@ -66,9 +76,9 @@ const jsonLd = {
       url:           pageUrl,
       image: {
         '@type':  'ImageObject',
-        url:      siteUrl + '/images/article-gestion-emotions-balade-solutions.webp',
-        width:    1000,
-        height:   750,
+        url:      siteUrl + '/images/article-gestion-emotions-balade.webp',
+        width:    1116,
+        height:   398,
       },
       author: {
         '@type':    'Person',
@@ -98,7 +108,8 @@ const jsonLd = {
         { '@type': 'ListItem', position: 2, name: 'Éducation canine',           item: siteUrl + '/education-canine/' },
         { '@type': 'ListItem', position: 3, name: article.category,             item: siteUrl + article.categoryUrl },
         { '@type': 'ListItem', position: 4, name: article.parentLabel,          item: siteUrl + article.parentUrl },
-        { '@type': 'ListItem', position: 5, name: article.breadcrumbLabel },
+        { '@type': 'ListItem', position: 5, name: article.hubLabel,             item: siteUrl + article.hubUrl },
+        { '@type': 'ListItem', position: 6, name: article.breadcrumbLabel },
       ],
     },
     ...(faqItems.length > 0
@@ -116,28 +127,52 @@ const jsonLd = {
 
 // ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
 const tldr = [
-  'Aucun exercice ne tiendra dehors tant que les besoins de votre chien ne sont pas comblés : la dépense mentale, la mastication et le jeu cadré passent avant la technique.',
+  'Quand un chien a du mal à gérer ses émotions en balade, le problème vient rarement de la balade elle-même. Il vient le plus souvent de besoins mal comblés au quotidien.',
+  'Au-delà d\'un certain seuil d\'excitation, votre chien n\'est plus joignable. Lui parler à ce moment-là ne sert à rien.',
+  'Deux réflexes très courants nourrissent la surexcitation : lui parler sans arrêt pour le calmer, et le laisser foncer sur tout ce qu\'il croise en laisse.',
+  'Le matériel peut saboter tout votre travail : le harnais anti-traction et la laisse enrouleuse entretiennent l\'excitation au lieu de la réduire.',
   'La gestion émotionnelle s\'apprend par le jeu : le prend-lâche entraîne votre chien à monter très haut en excitation, puis à redescendre très bas sur demande.',
   'Le renoncement est la compétence qui change tout en balade. Un chien qui sait renoncer à une balle ou à un congénère est un chien capable de croiser sans exploser.',
-  'Le calme s\'installe avant de demander quoi que ce soit, pas pendant. Apprenez-lui à observer le monde sans y réagir, le couché comme point d\'ancrage.',
+  'Votre état émotionnel est le premier régulateur du sien. Si votre voix grimpe et se tend, la sienne suit.',
 ];
 
 // ── Table of contents ─────────────────────────────────────────────────────────
 const toc = [
-  { label: 'Combler ses besoins d\'abord',             href: '#combler-besoins',        sub: false },
-  { label: 'La dépense mentale fatigue le plus',       href: '#depense-mentale',        sub: true  },
-  { label: 'Mastication et jeu cadré',                 href: '#mastication-jeu',        sub: true  },
-  { label: 'Des interactions régulières',              href: '#interactions-regulieres',sub: true  },
-  { label: 'Monter puis redescendre en excitation',   href: '#monter-redescendre',     sub: false },
-  { label: 'Le jeu du prend-lâche',                    href: '#prend-lache',            sub: true  },
-  { label: 'Un début, une fin, un mot pour arrêter',   href: '#cadre-du-jeu',           sub: true  },
-  { label: 'Le renoncement, ce qui change tout',       href: '#renoncement',            sub: false },
-  { label: '« Pas bouger » face à la balle',           href: '#pas-bouger',             sub: true  },
-  { label: 'Le rappel en pleine course',               href: '#rappel-course',          sub: true  },
-  { label: 'L\'exercice du « pas toucher »',           href: '#pas-toucher',            sub: true  },
-  { label: 'Installer le calme avant la demande',      href: '#installer-calme',        sub: false },
-  { label: 'Observer le monde sans y réagir',          href: '#observer-sans-reagir',   sub: true  },
-  { label: 'Le couché comme point d\'ancrage',         href: '#couche-ancrage',         sub: true  },
+  { label: 'Ce qui se passe quand votre chien déborde',   href: '#ce-qui-se-passe',             sub: false },
+  { label: 'Le seuil émotionnel qui saute',               href: '#seuil-emotionnel',            sub: true  },
+  { label: 'L\'effet cocotte-minute',                     href: '#effet-cocotte-minute',        sub: true  },
+  { label: 'Repérer les signaux précoces',                href: '#signaux-precoces',            sub: true  },
+  { label: 'Quand votre chien n\'est plus joignable',     href: '#plus-joignable',              sub: true  },
+  { label: 'Combler ses besoins : la base',               href: '#combler-besoins',             sub: false },
+  { label: 'La dépense mentale fatigue le plus',          href: '#depense-mentale',             sub: true  },
+  { label: 'Mastication et jeu cadré',                    href: '#mastication-jeu',             sub: true  },
+  { label: 'Des interactions régulières',                 href: '#interactions-regulieres',     sub: true  },
+  { label: 'Physique avant mental en début de balade',    href: '#physique-avant-mental',       sub: true  },
+  { label: 'Ce que vous faites qui nourrit la surexcitation', href: '#ce-que-vous-faites',      sub: false },
+  { label: 'Parler à votre chien pour le calmer',         href: '#parler-pour-calmer',          sub: true  },
+  { label: 'Autoriser tous les contacts',                 href: '#autoriser-tous-contacts',     sub: true  },
+  { label: 'Figer la situation en cas de croisement',     href: '#figer-situation',             sub: true  },
+  { label: 'Le matériel qui aide ou qui sabote',          href: '#materiel',                    sub: false },
+  { label: 'La longe : liberté sous contrôle',            href: '#longe-liberte',               sub: true  },
+  { label: 'Le mensonge du harnais anti-traction',        href: '#harnais-anti-traction',       sub: true  },
+  { label: 'Bannir la laisse enrouleuse',                 href: '#laisse-enrouleuse',           sub: true  },
+  { label: 'Le code matériel-contexte',                   href: '#code-materiel',               sub: true  },
+  { label: 'Monter puis redescendre en excitation',       href: '#monter-redescendre',          sub: false },
+  { label: 'Le jeu du prend-lâche',                       href: '#prend-lache',                 sub: true  },
+  { label: 'Un début, une fin, un mot pour arrêter',      href: '#cadre-du-jeu',                sub: true  },
+  { label: 'Le renoncement, ce qui change tout',          href: '#renoncement',                 sub: false },
+  { label: '« Pas bouger » face à la balle',              href: '#pas-bouger',                  sub: true  },
+  { label: 'Le rappel en pleine course',                  href: '#rappel-course',               sub: true  },
+  { label: 'L\'exercice du « pas toucher »',              href: '#pas-toucher',                 sub: true  },
+  { label: 'Face à un stimulus qui le fait vriller',      href: '#stimulus-vriller',            sub: true  },
+  { label: 'Installer le calme avant la demande',         href: '#installer-calme',             sub: false },
+  { label: 'Observer le monde sans y réagir',             href: '#observer-sans-reagir',        sub: true  },
+  { label: 'Le couché comme point d\'ancrage',            href: '#couche-ancrage',              sub: true  },
+  { label: 'Le focus : capter le regard',                 href: '#focus-regard',                sub: true  },
+  { label: 'Votre état émotionnel régule le sien',        href: '#etat-emotionnel-maitre',      sub: false },
+  { label: 'Posture, respiration, laisse détendue',       href: '#posture-respiration',         sub: true  },
+  { label: 'Gérer une rencontre non consentie',           href: '#rencontre-non-consentie',     sub: true  },
+  { label: 'Quand vous faire accompagner',                href: '#accompagnement',              sub: false },
 ];
 
 // ── Articles connexes (rotation aléatoire à chaque build) ────────────────────
@@ -160,6 +195,7 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
         <li><a href="/education-canine/">Éducation canine</a></li>
         <li><a href={article.categoryUrl}>{article.category}</a></li>
         <li><a href={article.parentUrl}>{article.parentLabel}</a></li>
+        <li><a href={article.hubUrl}>{article.hubLabel}</a></li>
         <li aria-current="page">{article.breadcrumbLabel}</li>
       </ol>
     </div>
@@ -197,19 +233,16 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
     <div class="art-hero-wrap">
       <div class="container">
         <figure class="art-hero">
-          <picture>
-            <source media="(max-width: 767px)" srcset="/images/article-gestion-emotions-balade-solutions-mobile.webp" width="400" height="351" />
-            <img
-              src="/images/article-gestion-emotions-balade-solutions.webp"
-              alt={article.coverAlt}
-              width="925"
-              height="456"
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-              class="art-hero-img"
-            />
-          </picture>
+          <img
+            src="/images/article-gestion-emotions-balade.webp"
+            alt={article.coverAlt}
+            width="1116"
+            height="398"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="art-hero-img"
+          />
         </figure>
       </div>
     </div>
@@ -261,15 +294,65 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
       <!-- Colonne principale -->
       <div class="art-content">
 
-        <p>Vous l'avez sûrement déjà vécu&nbsp;: à peine sorti, votre chien <a href="/education-canine/comportement/problemes/tirage-laisse/">tire sur la laisse</a>, couine, fixe le premier congénère à cinquante mètres et n'entend plus un mot de ce que vous lui dites. Si votre chien a du mal à gérer ses émotions en balade, ça se travaille avec quelques compétences à construire dans le bon ordre. C'est l'un des <a href="/education-canine/comportement/problemes/">problèmes de comportement</a> les plus courants, et il se règle avec de la méthode. Cet article est la suite pratique de <a href="/education-canine/comportement/comprendre/gestion-emotions/balade/">celui qui explique pourquoi votre chien déborde dehors</a>. Ici, on passe au comment faire.</p>
+        <p>Vous l'avez sûrement déjà vécu&nbsp;: à peine sorti, votre chien tire sur la laisse, couine, fixe le premier congénère à cinquante mètres et n'entend plus un mot de ce que vous lui dites. Une balade qui déborde, ce n'est jamais un caprice ni un problème de dressage isolé. C'est presque toujours le même signal&nbsp;: des besoins mal comblés, un cadre flou et quelques réflexes contre-productifs qui entretiennent la surexcitation. Cet article est le prolongement dehors du dossier plus large sur le <a href="/education-canine/comportement/problemes/gestion-emotions/">chien qui ne sait pas gérer ses émotions</a>&nbsp;: si vous n'avez pas encore lu ce cadre général, commencez par là. Pour bien lire ce qui se joue au bout de la laisse, il faut d'abord savoir <a href="/education-canine/comportement/comprendre/">comprendre son chien</a> dans son ensemble, et savoir reconnaître, plus concrètement, <a href="/education-canine/comportement/problemes/tirage-laisse/">un chien qui tire sur la laisse</a>.</p>
+
+        <h2 id="ce-qui-se-passe">Ce qui se passe vraiment quand votre chien déborde en sortie</h2>
+
+        <p>Avant de parler d'exercices, il faut comprendre ce qui traverse votre chien pendant que vous, vous cherchez à le rappeler à l'ordre. Sans ça, vous risquez de travailler au mauvais moment et de vous épuiser.</p>
+
+        <h3 id="seuil-emotionnel">Le seuil émotionnel qui saute et pourquoi il n'entend plus rien</h3>
+
+        <p>Votre chien a un seuil. En dessous, il vous entend, il réfléchit, il peut choisir un comportement. Au-dessus, il bascule. Et une fois passé ce seuil, ce n'est plus de la mauvaise volonté&nbsp;: il n'est tout simplement plus disponible.</p>
+
+        <p>C'est un point que les propriétaires ont du mal à accepter, parce qu'on a l'impression que notre chien nous ignore exprès. Un jeune chien que je suivais montait très vite en pression dès qu'il croisait un autre chien. Une fois dans sa bulle émotionnelle, lui parler, le raisonner, répéter son nom&nbsp;: inutile. Il n'entendait plus rien. La seule chose qui fonctionnait, c'était d'attendre qu'il redescende avant de tenter de reprendre contact. Et respecter les temps de pause, sans forcer.</p>
+
+        <p>Comprendre ça change votre façon d'agir. Tant que le chien est sous le seuil, vous pouvez travailler. Au-dessus, vous ne faites que vous épuiser à parler dans le vide pendant que lui s'enfonce un peu plus dans sa surexcitation.</p>
+
+        <h3 id="effet-cocotte-minute">L'effet cocotte-minute&nbsp;: pourquoi il explose dehors et pas à la maison</h3>
+
+        <p>À la maison, tout est connu, prévisible, calme. Dehors, c'est l'inverse. Chaque sortie est une avalanche d'informations&nbsp;: des odeurs partout, des bruits, des humains, des vélos, des chiens, un sol qui change. Le chien doit analyser tout ça en temps réel, à très haute intensité. Pour un chien qui gère mal ses émotions, cette charge est déjà énorme avant même qu'il se passe quoi que ce soit.</p>
+
+        <p>Ajoutez à ça un chien dont les besoins ne sont pas comblés au quotidien&nbsp;: pas assez de dépense, pas assez d'interactions, pas assez de mastication. La pression monte un peu chaque jour. Tant qu'il est à la maison, le couvercle tient. Dehors, au premier stimulus un peu fort, ça déborde.</p>
+
+        <p>La balade n'est donc pas la cause du problème. Elle est le moment où toute la pression accumulée trouve une sortie. Un chien dont les besoins sont largement satisfaits par ailleurs encaisse une contrariété sans exploser. Un chien en privation, non&nbsp;: il n'a plus aucune marge.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Un chien biologiquement en manque est incapable de traiter une frustration. La fatigue saine, celle d'un chien dépensé physiquement et mentalement, c'est le socle sur lequel tout le reste se construit. Sans elle, aucun exercice ne tiendra dehors.</p>
+          </div>
+        </aside>
+
+        <h3 id="signaux-precoces">Repérer les signaux précoces avant l'explosion</h3>
+
+        <p>Le débordement ne sort pas de nulle part. Il y a toujours des signaux avant, et ils sont lisibles si on sait où regarder. Sur un chien que j'accompagnais pour de fortes montées en excitation, le tableau était net&nbsp;: port de queue très haut et très droit avec de légers battements, oreilles bien dressées, pupilles dilatées. Tout ça apparaissait avant le premier aboiement.</p>
+
+        <p>Ces signes vous donnent une fenêtre. C'est le moment où votre chien commence à fixer, à se figer légèrement, à accélérer, où sa respiration change. Il y a d'ailleurs une nuance importante entre <strong>observer</strong> et <strong>fixer</strong>&nbsp;: observer, c'est prendre les informations de manière apaisée&nbsp;; fixer, c'est se tendre, se concentrer et se surcharger émotionnellement. Si vous agissez sur la fixation, vous travaillez encore avec un chien qui vous entend. Si vous attendez l'explosion, vous avez raté la fenêtre.</p>
+
+        <h3 id="plus-joignable">Le moment où votre chien n'est plus joignable</h3>
+
+        <p>Après les signaux précoces vient le point de bascule. Le chien entre dans sa bulle, et tout ce qui vient de vous glisse sur lui. C'est le fameux seuil franchi.</p>
+
+        <p>Apprendre à reconnaître ce moment précis vous évite beaucoup de frustration inutile. Tirer, crier, supplier&nbsp;: à ce stade, plus rien ne passe. La seule option, c'est de mettre de la distance avec le déclencheur et d'attendre que la pression redescende. Avec le temps et du travail, ce seuil recule&nbsp;: un chien que je suivais déclenchait au premier croisement, mais lors d'un second passage avec le même chien, il était déjà beaucoup plus calme. La preuve qu'il pouvait redescendre, une fois la surprise digérée.</p>
+
+        <!-- CTA inline — visible sur mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Votre chien dépasse son seuil dès la sortie&nbsp;?</p>
+          <p class="art-inline-cta-desc">Un bilan à domicile, c'est l'occasion d'observer ensemble ce qui le fait basculer et de poser les bons repères avant la balade. C'est gratuit, sans engagement.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+        </aside>
 
         <h2 id="combler-besoins">Commencez par combler ses besoins, c'est la base du retour au calme</h2>
 
-        <p>Avant le moindre exercice, une question&nbsp;: votre chien est-il vraiment dépensé&nbsp;? Un chien dont les besoins ne sont pas satisfaits vit sous pression permanente, et aucune technique ne tiendra dehors tant que cette pression reste haute. C'est le socle du retour au calme, et c'est presque toujours par là que je commence.</p>
+        <p>Avant le moindre exercice, une question&nbsp;: votre chien est-il vraiment dépensé&nbsp;? Un chien dont les besoins ne sont pas satisfaits vit sous pression permanente, et aucune technique ne tiendra dehors tant que cette pression reste haute. C'est le socle, et c'est presque toujours par là que je commence.</p>
 
         <h3 id="depense-mentale">La dépense mentale fatigue bien plus que la course</h3>
 
-        <p>On croit souvent qu'un chien fatigué est un chien qui a couru. C'est faux. Faire réfléchir un chien le fatigue au moins dix fois plus que de le faire courir. Une balade où il renifle, piste, analyse le sol et lit les odeurs des chiens passés avant lui le vide bien plus qu'un footing au pied. Méfiez-vous du trajet identique en laisse courte&nbsp;: il réduit la stimulation mentale de 80 à 90&nbsp;% par rapport à une sortie où votre chien explore librement. Pour un chien qui peine à se canaliser en balade, commencez par lui offrir des sorties qui sollicitent sa tête, pas seulement ses pattes.</p>
+        <p>Un chien, à l'état sauvage, parcourrait entre 30 et 50&nbsp;km. Le chien domestique, lui, se dépense environ 60&nbsp;% en dessous de ce dont il aurait besoin. Quand les sorties se résument à un tour de pâté de maisons en laisse, toujours le même, vous lui offrez le strict minimum. Et ce minimum est surtout physique.</p>
+
+        <p>La vraie fatigue, celle qui apaise, est mentale. Faire réfléchir un chien le fatigue au moins dix fois plus que de le faire courir. Une balade en liberté où le chien renifle, analyse le sol, lit les odeurs des autres chiens passés avant lui, ça le vide bien plus qu'un footing au pied. Une balade en laisse réduit la stimulation mentale de 80 à 90&nbsp;% par rapport à une sortie où votre chien explore librement. Méfiez-vous du trajet identique&nbsp;: pour un chien qui peine à se canaliser, commencez par lui offrir des sorties qui sollicitent sa tête, pas seulement ses pattes.</p>
 
         <aside class="art-callout art-callout--soft" role="note">
           <div class="art-callout__icon" aria-hidden="true">
@@ -282,13 +365,93 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <h3 id="mastication-jeu">Mastication et jeu cadré, les deux grands oubliés</h3>
 
-        <p>Deux besoins passent presque toujours à la trappe&nbsp;: mâcher et jouer. La mastication est un comportement inné, c'est par là que le chien évacue sa pression interne. Un chien qui n'a rien à mastiquer garde cette tension en lui, puis la déverse au premier stimulus de la balade. Le jeu, lui, est carrément déficitaire chez la plupart de nos compagnons. Et laisser traîner trois jouets dans le salon, ce n'est pas jouer&nbsp;: un vrai jeu a un début, une fin, et c'est vous qui les décidez. On y revient juste après.</p>
+        <p>Deux besoins passent presque toujours à la trappe&nbsp;: mâcher et jouer. La mastication est un comportement inné et obligatoire, c'est par là que le chien évacue sa pression interne. Un chien qui n'a rien à mastiquer garde cette tension en lui, puis la déverse au premier stimulus de la balade.</p>
+
+        <p>Le jeu, lui, est carrément déficitaire chez la plupart de nos compagnons. Et laisser traîner trois jouets dans le salon, ce n'est pas jouer&nbsp;: c'est même souvent le contraire. J'ai accompagné un chien qui avait en permanence ses jouets à disposition. Résultat&nbsp;: il ne savait jamais quand le jeu commençait ni quand il s'arrêtait, et il passait sa journée à réclamer, à chouiner, à insister. L'absence de cadre autour du jeu entretenait sa frustration en continu. Un vrai jeu a un début, une fin, et c'est vous qui les décidez. On y revient plus loin.</p>
 
         <h3 id="interactions-regulieres">Des interactions régulières pour banaliser les rencontres</h3>
 
-        <p>Beaucoup de chiens ne croisent jamais de congénère autrement que de loin, en laisse. Le problème, c'est que ce qui est rare devient obsessionnel. Un chien qui ne rencontre presque jamais d'autres chiens traite chaque croisement comme un événement énorme. C'est souvent là que se construit une <a href="/education-canine/comportement/problemes/reactivite/chiens/">réactivité envers les autres chiens en balade</a>. Plus un chien interagit régulièrement, moins chaque rencontre a de valeur, et plus il devient capable de passer son chemin. Offrir des interactions régulières banalise les congénères et, à terme, calme vos balades.</p>
+        <p>Beaucoup de chiens vivent avec zéro vraie interaction. Ils voient d'autres chiens de loin, en laisse, sans jamais pouvoir les rencontrer normalement. Le problème, c'est ce que ça crée&nbsp;: ce qui est rare devient obsessionnel. Un chien qui ne croise jamais de congénère librement finit par traiter chaque rencontre comme un événement énorme, impossible à gérer calmement.</p>
 
-        <p>Appliquer ce conseil pourra peut-être vous demander un peu d'effort de recherche mais rencontrez d'autres chiens avec des profils différents&nbsp;: des chiens stables quoi qu'il arrive (bien codés), des chiens plutôt calmes, des chiens plutôt joueurs, toutes races, etc. Veillez cependant à ce que les rencontres ne livrent pas les chiens à eux-mêmes. Une bonne rencontre est une rencontre en mouvement, pendant laquelle les chiens peuvent passer d'une phase à l'autre et communiquer sereinement. Si votre chien est très excité, évitez en premier lieu les rencontres statiques ou celles où vous laissez les chiens faire ce qui leur chante pendant que vous discutez avec l'autre propriétaire sans bouger. Votre chien n'apprend rien comme ça. Si votre chien a vécu une attaque, la démarche de resocialisation est spécifique et détaillée dans <a href="/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/">que faire après une attaque</a>.</p>
+        <p>C'est exactement l'inverse qu'il faut viser. Plus un chien interagit régulièrement, moins chaque rencontre a de valeur, et plus il devient capable de renoncer. C'est souvent là que se construit une <a href="/education-canine/comportement/problemes/reactivite/chiens/">réactivité envers les autres chiens en balade</a>. Cherchez des rencontres avec des profils différents&nbsp;: des chiens stables quoi qu'il arrive, des chiens plutôt calmes, des chiens plutôt joueurs, toutes races. Veillez à ce que ces rencontres ne livrent pas les chiens à eux-mêmes. Une bonne rencontre est une rencontre en mouvement : les chiens passent d'une phase à l'autre et communiquent. Si votre chien est très excité, évitez d'abord les rencontres statiques. Évitez aussi celles où vous laissez les chiens faire ce qui leur chante pendant que vous discutez avec l'autre propriétaire. Votre chien n'apprend rien comme ça. Si votre chien a vécu une attaque, la démarche de resocialisation est spécifique et détaillée dans <a href="/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/">que faire après une attaque</a>.</p>
+
+        <h3 id="physique-avant-mental">Physique avant mental&nbsp;: la structure d'une balade qui apaise</h3>
+
+        <p>Un motif de consultation revient sans arrêt&nbsp;: «&nbsp;mon chien est une furie dehors, je ne sais pas comment le canaliser&nbsp;». Trois explications possibles&nbsp;: manque de dépense physique, manque de dépense mentale, mauvaise gestion des émotions. Souvent, les trois se cumulent.</p>
+
+        <p>Un programme simple change beaucoup de choses&nbsp;: intégrer la dépense physique <strong>avant</strong> la dépense mentale. La dépense physique fait monter le rythme cardiaque et aide à vider le trop-plein d'énergie. La dépense mentale, ensuite, fait redescendre le rythme cardiaque et apaise le chien. Résultat&nbsp;: un chien qui commence sa balade ingérable et qui la termine posé, réceptif au maître. C'est simple à mettre en place et ça débloque souvent une situation qui semblait figée.</p>
+
+        <!-- CTA inline — visible sur mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Votre chien monte vite et ne redescend plus&nbsp;?</p>
+          <p class="art-inline-cta-desc">On regarde ensemble ce qui manque dans ses journées et on pose un plan concret. Bilan à domicile gratuit, sans engagement.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
+        </aside>
+
+        <h2 id="ce-que-vous-faites">Ce que vous faites en balade qui nourrit la surexcitation</h2>
+
+        <p>Les besoins sont comblés, très bien. Reste à regarder ce que <em>vous</em> faites au bout de la laisse, parce que trois réflexes très courants alimentent le débordement au lieu de le calmer.</p>
+
+        <h3 id="parler-pour-calmer">Parler à votre chien pour le calmer</h3>
+
+        <p>C'est le réflexe le plus naturel du monde, et l'un des plus contre-productifs. Le chien monte, alors on lui parle&nbsp;: «&nbsp;non, non, c'est bon, doucement, regarde-moi, stop, stop, stop&nbsp;». On enchaîne les mots en croyant l'apaiser.</p>
+
+        <p>Sauf qu'au-dessus de son seuil, il ne vous entend pas. Et en dessous, ce flot de paroles l'agite plutôt qu'il ne le calme. Je le vois souvent : un propriétaire qui parle trop, surtout avec du stress dans la voix, pousse son chien à prendre des initiatives au lieu de se référer à lui. Votre voix devient un bruit de fond que le chien apprend à ignorer&nbsp;: vous l'avez rendu résistant à vos ordres. Votre état émotionnel est le premier régulateur du sien. Si votre voix grimpe et se tend, la sienne suit.</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Le bon réflexe à la place</p>
+            <p class="art-callout__text">Quand votre chien est très excité, taisez-vous. Restez en mouvement, gardez une posture calme, attendez qu'il redescende. Vous reprendrez le travail quand il sera de nouveau capable de vous écouter, pas avant.</p>
+          </div>
+        </aside>
+
+        <h3 id="autoriser-tous-contacts">Autoriser tous les contacts avec ce qu'il croise</h3>
+
+        <p>L'autre piège, c'est de laisser votre chien foncer voir chaque congénère, chaque humain, chaque chose qui l'attire. On se dit qu'on lui fait plaisir, qu'on le «&nbsp;sociabilise&nbsp;». En réalité, on lui apprend qu'il a le droit d'obtenir tout ce qu'il veut, immédiatement. Un chien qui n'a jamais appris à renoncer est déstabilisé en permanence. Chaque stimulation devient une demande à laquelle il faut répondre.</p>
+
+        <p>Et surtout, laisser deux chiens en laisse se rencontrer tête contre tête est une erreur tactique majeure. Naturellement, les chiens n'arrivent jamais face contre face&nbsp;: ils font des détours, des huit, arrivent de côté, se tournent autour. En laisse, vous les mettez en position de combat, tête contre tête. Ils n'ont plus accès aux zones où ils dégagent leurs phéromones, et ils ne peuvent pas communiquer normalement. Les laisses s'emmêlent, les humains se rapprochent pour faire cercle, et là, c'est la bagarre. Si ce scénario s'est déjà produit avec le vôtre, l'article dédié à <a href="/education-canine/comportement/problemes/agressivite/comment-reagir-chien-attaque-autre-chien/">un chien qui attaque les autres chiens</a> détaille la marche à suivre. La règle est simple, sans compromis&nbsp;: <strong>en laisse, pas de contact&nbsp;; en liberté, on socialise</strong>. Un chien qui a intégré cette règle croise sans exploser.</p>
+
+        <h3 id="figer-situation">Figer la situation quand un déclencheur arrive</h3>
+
+        <p>Le troisième réflexe, plus discret&nbsp;: se figer sur place quand un chien approche, tendre la laisse, retenir son souffle. C'est très souvent ce qui déclenche l'explosion, parce que les situations figées sont celles qui dégénèrent le plus. Dans la nature, une meute reste en mouvement. Un chien qui s'arrête net face à un autre chien tendu passe en position de combat, sans échappatoire.</p>
+
+        <p>La bonne réponse&nbsp;: rester en mouvement, détendre la laisse, marcher. Ça peut paraître contre-intuitif quand la pression monte, mais c'est exactement ce dont votre chien a besoin pour ne pas basculer. Ce point rejoint ce que je détaille plus loin sur la posture du maître&nbsp;: votre corps parle avant votre voix.</p>
+
+        <h2 id="materiel">Le matériel qui aide la gestion émotionnelle (ou qui la sabote)</h2>
+
+        <p>On sous-estime beaucoup l'impact du matériel sur l'état émotionnel du chien. Certains outils entretiennent la surexcitation au lieu de la réduire, et vous vous demandez ensuite pourquoi le travail ne prend pas.</p>
+
+        <h3 id="longe-liberte">La longe&nbsp;: liberté sous contrôle</h3>
+
+        <p>La longe est l'outil transitoire par excellence pour un chien qui gère mal ses émotions. Avec une longe, votre chien s'écarte d'une source d'inquiétude au lieu de se figer, il renifle, il explore. Vous gardez un moyen d'action si besoin. En ville, une longe de 5 à 8&nbsp;mètres laisse à votre chien de quoi bouger raisonnablement. En nature ou en forêt, on peut monter à 20&nbsp;mètres pour qu'il explore vraiment.</p>
+
+        <p>Un point important&nbsp;: si vous laissez traîner la longe à 15 ou 20&nbsp;mètres de vous, l'outil ne sert plus à rien, parce que vous ne pouvez plus intervenir. Pour qu'une longe soit utile, vous devez pouvoir marcher dessus ou la saisir instantanément. Et sur un chien nerveux au rappel, mettez un harnais pendant le travail en longe&nbsp;: un chien lancé qui prend un à-coup au collier peut se blesser au dos ou aux cervicales.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__text">Avec un jeune chien qui montait très vite en pression dehors, le travail en longe de 5&nbsp;mètres a tout changé. Le cadre de la longe, plus le couché, lui ont permis de redescendre lorsqu'on lui laissait le temps. Les positions statiques l'aidaient clairement à mieux gérer ses émotions.</p>
+          </div>
+        </aside>
+
+        <h3 id="harnais-anti-traction">Le mensonge du harnais anti-traction</h3>
+
+        <p>Les harnais dits «&nbsp;anti-traction&nbsp;» agissent sur le thorax en désaxant mécaniquement le squelette. Sur le long terme, c'est dangereux pour la santé physique. Plus grave pour ce qui nous occupe&nbsp;: la pression thoracique fait monter l'excitation et le stress. Si votre chien tire pour aller voir un congénère et que vous maintenez cette pression, vous transformez sa frustration en agressivité. Ce qui était une envie de jouer devient une envie d'en découdre.</p>
+
+        <p>Le harnais reste légitime dans quatre cas seulement&nbsp;: le sport canin, la sécurité (gilet de sauvetage), le travail au rappel en longe chez un chien énergique, et les chiens guides d'aveugles formés spécifiquement. Pour l'apprentissage de la marche et le travail émotionnel en balade, le collier plat classique reste l'outil le plus adapté.</p>
+
+        <h3 id="laisse-enrouleuse">Bannir la laisse enrouleuse</h3>
+
+        <p>La laisse enrouleuse est une aberration pédagogique pour un chien qui a du mal à gérer ses émotions. Elle apprend au chien que la distance est variable, que la tension est permanente, et qu'il obtient toujours un peu plus de longueur s'il tire. Pour qu'un cadre soit compris, il doit être fixe. Deuxième problème&nbsp;: quand le chien est loin, le temps que le mécanisme se réenroule, vous n'avez plus aucun contrôle. Une seule décision&nbsp;: à la poubelle.</p>
+
+        <h3 id="code-materiel">Le code matériel-contexte&nbsp;: un signal instantané pour votre chien</h3>
+
+        <p>Le chien vit dans l'instant et a besoin de codes binaires clairs. Utilisez un code matériel qui lui dit immédiatement quel comportement adopter&nbsp;: collier plat + laisse courte = travail, marche stricte, pas de contact. Harnais + longe = détente, exploration, liberté. Votre chien sait instantanément où il en est, sans que vous ayez à parler. Sur un chien qui déborde en balade, ce cadrage matériel simple peut débloquer beaucoup de situations.</p>
 
         <h2 id="monter-redescendre">Apprenez-lui à monter puis à redescendre en excitation</h2>
 
@@ -310,13 +473,6 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
         <h3 id="cadre-du-jeu">Un début, une fin, et un mot pour tout arrêter</h3>
 
         <p>Le jeu doit avoir un cadre net. Choisissez un mot de fin, «&nbsp;fini&nbsp;» ou «&nbsp;stop&nbsp;», et utilisez-le toujours pour clore la partie. Si votre chien mordille trop fort, «&nbsp;non&nbsp;» clair, vous vous levez, vous tournez le dos, vous l'ignorez. Le jeu reprend une fois qu'il est redescendu. Il comprend vite que c'est lui qui fait durer le plaisir, en se contrôlant. Ce cadre-là, anodin en apparence, lui apprend que monter en excitation a toujours une sortie&nbsp;: le calme.</p>
-
-        <!-- CTA inline — visible sur mobile uniquement -->
-        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
-          <p class="art-inline-cta-title">Votre chien monte vite et ne redescend plus&nbsp;?</p>
-          <p class="art-inline-cta-desc">On met en place ensemble les bons exercices de jeu et de retour au calme, adaptés à votre chien. Bilan à domicile gratuit, sans engagement.</p>
-          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
-        </aside>
 
         <h2 id="renoncement">Le renoncement, la compétence qui change tout dehors</h2>
 
@@ -343,6 +499,25 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <p>Chien couché, posez une friandise sur sa patte en disant «&nbsp;pas toucher&nbsp;» une fraction de seconde avant le contact, pour court-circuiter son envie de l'attraper. Gardez une main au-dessus pour couvrir la friandise s'il craque. Variez ensuite&nbsp;: une friandise, puis deux, puis sur les deux pattes, et alternez les libérations pour qu'il reste attentif. C'est un exercice sans matériel, faisable partout, même le soir chez vous. Un chien maître de lui face à une friandise gère bien mieux les frustrations dehors.</p>
 
+        <h3 id="stimulus-vriller">Face à un stimulus qui le fait vriller&nbsp;: le protocole de désensibilisation</h3>
+
+        <p>Certains chiens perdent le contrôle devant un stimulus donné&nbsp;: un ballon, un vélo, un jogger, un chien en particulier. Voici un protocole qui fonctionne quand la stimulation est tellement forte qu'il ne comprend plus rien. Attention&nbsp;: ce n'est pas du dressage. C'est de l'attitude, de la gestion de la frustration, du renoncement pur.</p>
+
+        <ol>
+          <li><strong>Le stimulus à distance.</strong> Vous posez le déclencheur à environ 5&nbsp;mètres de votre chien, laisse détendue. Vous ne dites rien. Pas de couché, pas d'assis, rien. On veut du contrôle spontané, pas un ordre exécuté. Vous attendez l'attitude souhaitée&nbsp;: qu'il se couche, qu'il s'apaise, qu'il arrête de se mettre en tension. Quand il y arrive, hop, vous déclenchez l'accès.</li>
+          <li><strong>Exigence graduée.</strong> Une fois qu'il commence à comprendre, on demande plus&nbsp;: un couché réel (bassin qui décale sur le côté), une respiration qui redescend, un regard vers vous. Le chien commence à réfléchir&nbsp;: <em>pourquoi il ne déclenche pas&nbsp;?</em>. C'est le signe qu'il est sur la bonne voie.</li>
+          <li><strong>Renonciation active.</strong> Laisse tout le temps détendue. Ce qu'on attend&nbsp;: il a envie d'y aller, il vous regarde, il vous suit, il renonce. Là, on est arrivé.</li>
+        </ol>
+
+        <p>En 30 à 40 minutes de travail, on peut passer d'un chien qui perd le contrôle devant un déclencheur à un chien qui passe devant sans y aller. Il n'y a pas de fatalité, il n'y a que des méthodes de travail. Quand ce débordement s'est déjà cristallisé en vraie <a href="/education-canine/comportement/problemes/reactivite/">réactivité</a>, le dossier dédié détaille les trois formes possibles et par où reprendre.</p>
+
+        <!-- CTA inline — visible sur mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Envie de changer vos réflexes en balade&nbsp;?</p>
+          <p class="art-inline-cta-desc">On regarde ensemble ce qui se joue au bout de la laisse et on construit une façon de marcher qui n'alimente plus la surexcitation. Bilan gratuit à votre domicile.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV</a>
+        </aside>
+
         <h2 id="installer-calme">Installez le calme avant de demander quoi que ce soit</h2>
 
         <p>On veut souvent que le chien écoute alors qu'il est déjà à cent à l'heure. Le calme s'installe avant la demande, pas pendant. Et il s'apprend comme le reste.</p>
@@ -353,24 +528,59 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <h3 id="couche-ancrage">Le couché comme point d'ancrage</h3>
 
-        <p>Le couché est votre meilleur allié pour le retour au calme. L'astuce, c'est de récompenser les moments de relâchement, pas seulement la position tenue. Quand mon propre chien était jeune, ces moments où il soufflait enfin valaient toutes les positions parfaites du monde.</p>
+        <p>Le couché est votre meilleur allié pour le retour au calme. L'astuce, c'est de récompenser les moments de relâchement, pas seulement la position tenue. Quand mon propre chien était jeune, ces moments où il soufflait enfin valaient toutes les positions parfaites du monde. J'ai accompagné un chien qui débordait très vite dehors. Un travail par petites vagues a très bien fonctionné&nbsp;: environ 3 minutes en statique sur un banc, libération immédiate, puis on recommence quelques minutes plus tard. L'exercice reproduit sur les balades, 4 à 6 répétitions par sortie, installe progressivement une vraie capacité à se poser.</p>
+
+        <h3 id="focus-regard">Le focus&nbsp;: capter son regard avant l'autorisation</h3>
+
+        <p>Le focus est la base de tous les apprentissages. On peut avoir le meilleur rappel du monde à la maison&nbsp;; sans focus à l'extérieur, on n'a rien. Le protocole est simple&nbsp;: attendez que votre chien vous regarde avant de lui donner l'autorisation d'aller chercher son jouet, sa gamelle, ou de rejoindre un congénère. Appliquez-le en toutes circonstances.</p>
+
+        <p>Si vous avez l'impression de ne plus progresser, revenez à ça&nbsp;: travailler le focus, attendre le regard, apprendre au chien à se poser avant de foncer. Un exercice utile en début de balade&nbsp;: allers-retours simples, prénom, récompense immédiate dès qu'il vous regarde. Cinq minutes de focus posent le reste de la sortie.</p>
+
+        <h2 id="etat-emotionnel-maitre">Votre état émotionnel, premier régulateur du sien</h2>
+
+        <p>Le chien lit votre état interne&nbsp;: votre rythme cardiaque, votre micro-gestuelle, votre respiration. Rien ne lui échappe. Tenter une neutralité de façade ne marche pas&nbsp;: le chien détecte l'odeur du stress que vous ne pouvez pas masquer. Sans stabilité émotionnelle du maître, aucun exercice ne prend vraiment.</p>
+
+        <h3 id="posture-respiration">Posture, respiration, laisse détendue</h3>
+
+        <p>Concrètement, avant même de sortir&nbsp;: respirez, posez votre attitude, prenez la laisse détendue. En balade, dès que vous sentez la pression monter chez votre chien, la première chose à vérifier, c'est vous. Une main crispée sur la laisse, une respiration coupée, un pas qui accélère&nbsp;: votre chien lit tout ça avant même de voir le déclencheur. Une posture calme et assurée, une laisse détendue, un rythme cardiaque stable&nbsp;: c'est ce qui lui dit «&nbsp;pas de raison de s'inquiéter&nbsp;».</p>
+
+        <h3 id="rencontre-non-consentie">Gérer une rencontre non consentie</h3>
+
+        <p>Croiser un chien détaché quand le vôtre est en travail peut être extrêmement frustrant. Beaucoup y voient un manque de respect. Personnellement, j'ai choisi d'y voir une opportunité&nbsp;: renforcer ce qui est déjà en place et consolider la confiance entre nous. Voici ce qui fonctionne&nbsp;:</p>
+
+        <ul>
+          <li>Respirez, adoptez une posture calme et assurée.</li>
+          <li>Détendez la laisse, restez en mouvement, prenez de la distance si possible.</li>
+          <li>Placez-vous entre votre chien et l'autre.</li>
+          <li>Parlez peu, utilisez une commande courte pour rediriger l'attention sur vous.</li>
+          <li>S'il se fige, avancez légèrement devant lui pour lui montrer que vous gérez.</li>
+          <li>Renforcez chaque micro-bonne décision&nbsp;: regard, renoncement, retour vers vous.</li>
+        </ul>
+
+        <p>Ce qu'il faut éviter&nbsp;: paniquer, s'énerver, crier, porter son chien, tendre la laisse. Votre chien a besoin d'un guide fiable. Si vous perdez le contrôle, il peut penser que c'est à lui de gérer la situation. Le chien observe tout&nbsp;: si vous paniquez, il interprète qu'il y a un danger.</p>
 
         <aside class="art-callout art-callout--soft" role="note">
           <div class="art-callout__icon" aria-hidden="true">
             <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
           </div>
           <div>
-            <p class="art-callout__text">Avec un jeune chien qui montait très vite en pression dehors, le travail en longe de 5&nbsp;mètres a tout changé. Le cadre de la longe, plus le couché, lui ont permis de redescendre lorsqu'on lui laissait le temps. Les positions statiques l'aidaient clairement à mieux gérer ses émotions.</p>
+            <p class="art-callout__text">Le scénario que je vois le plus souvent&nbsp;: le maître se sent mal, stressé à chaque croisement. La balade devient une corvée, et le chien s'enfonce peu à peu dans ses difficultés. Prendre soin de vous, ce n'est pas accessoire, c'est aussi préserver l'équilibre de la relation.</p>
           </div>
         </aside>
 
-        <p>Quand ce débordement en balade s'est déjà cristallisé en vraie <a href="/education-canine/comportement/problemes/reactivite/">réactivité</a>, le dossier dédié détaille les trois formes possibles et par où reprendre le travail.</p>
+        <h2 id="accompagnement">Quand vous faire accompagner devient le bon choix</h2>
+
+        <p>On peut travailler la gestion émotionnelle en balade soi-même, surtout si on s'y prend tôt. Mais il y a des moments où se faire accompagner change tout.</p>
+
+        <p>Si la situation s'aggrave malgré vos efforts, si les sorties sont devenues une source d'angoisse au point que vous les écourtez ou que vous les évitez, ou si le débordement dure depuis plusieurs mois, c'est le bon moment. Un schéma émotionnel installé depuis plus de six mois se fige en habitude profonde, plus longue à défaire. Plus tôt on intervient, plus c'est simple. C'est particulièrement vrai chez un jeune chien&nbsp;: les débordements en balade explosent souvent à <a href="/education-canine/comportement/comprendre/adolescence-chien/">l'adolescence du chien</a>, et c'est le meilleur moment pour poser un vrai cadre.</p>
+
+        <p>Je connais bien cette situation, parce que je l'ai vécue avec mon propre chien, Ramsey. Se retrouver seul face à un comportement qu'on ne comprend pas, avec des conseils contradictoires de partout, c'est épuisant. Ça n'a rien d'une fatalité, et ce n'est jamais trop tard. Dans quelques semaines de travail mené dans le bon sens, cette balade qui vous nouait le ventre dès la porte franchie peut redevenir un moment que vous attendez, tous les deux.</p>
 
         <!-- CTA inline — visible sur mobile uniquement -->
         <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
-          <p class="art-inline-cta-title">Envie d'un chien plus posé en balade&nbsp;?</p>
-          <p class="art-inline-cta-desc">On construit ensemble un plan concret pour combler ses besoins, l'aider à renoncer et à retrouver le calme dehors. Premier bilan gratuit à domicile, à Bordeaux et sa métropole.</p>
-          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+          <p class="art-inline-cta-title">Prête à reprendre la main sur les balades&nbsp;?</p>
+          <p class="art-inline-cta-desc">Premier bilan gratuit à votre domicile, je me déplace à Bordeaux et sa métropole. Sans engagement, on pose un plan de travail adapté à votre chien.</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
         </aside>
 
       </div><!-- /.art-content -->
@@ -400,8 +610,8 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
         </nav>
 
         <div class="art-sidebar-cta">
-          <p class="art-sidebar-cta-title">Votre chien déborde encore en balade&nbsp;?</p>
-          <p class="art-sidebar-cta-desc">Bilan comportemental à domicile pour poser les bons exercices et l'aider à gérer ses émotions dehors</p>
+          <p class="art-sidebar-cta-title">Votre chien déborde en balade&nbsp;?</p>
+          <p class="art-sidebar-cta-desc">Bilan comportemental à domicile pour comprendre ce qui se joue et construire un plan adapté à votre chien</p>
           <a href="/prendre-rdv/" class="btn btn-primary">
             Prendre RDV
             <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
@@ -479,7 +689,7 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
   {faqItems.length > 0 && (
     <section class="section" id="faq" aria-labelledby="faq-heading">
       <div class="container" style="max-width: 750px;">
-        <h2 id="faq-heading" style="text-align: center;">Questions fréquentes pour <span class="accent">apaiser les émotions</span> du chien en balade</h2>
+        <h2 id="faq-heading" style="text-align: center;">Questions fréquentes sur la <span class="accent">gestion des émotions</span> du chien en balade</h2>
         <div class="faq-list" style="margin-top: var(--sp-8);">
           {faqItems.map((item) => (
             <details class="faq-item">
