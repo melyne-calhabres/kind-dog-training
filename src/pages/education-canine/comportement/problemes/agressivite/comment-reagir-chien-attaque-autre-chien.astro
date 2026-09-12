@@ -18,14 +18,16 @@ const article = {
   categoryUrl:    '/education-canine/comportement/',
   parentLabel:    'Problèmes',
   parentUrl:      '/education-canine/comportement/problemes/',
+  subParentLabel: 'Agressivité',
+  subParentUrl:   '/education-canine/comportement/problemes/agressivite/',
   breadcrumbLabel:'Chien qui attaque',
   titleBefore:    'Mon chien ',
   titleAccent:    'attaque les autres chiens',
   titleAfter:     ' en balade : comment réagir ?',
   publishDate:    '17 juillet 2026',
   publishDateIso: '2026-07-17',
-  updateDate:     '9 septembre 2026',
-  updateDateIso:  '2026-09-09',
+  updateDate:     '11 septembre 2026',
+  updateDateIso:  '2026-09-11',
   readTime:       '16 min',
   author:         'Mélyne',
   authorInitial:  'M',
@@ -98,8 +100,9 @@ const jsonLd = {
         { '@type': 'ListItem', position: 1, name: 'Accueil',                item: siteUrl + '/' },
         { '@type': 'ListItem', position: 2, name: 'Éducation canine',       item: siteUrl + '/education-canine/' },
         { '@type': 'ListItem', position: 3, name: article.category,         item: siteUrl + article.categoryUrl },
-        { '@type': 'ListItem', position: 4, name: article.parentLabel,          item: siteUrl + article.parentUrl },
-        { '@type': 'ListItem', position: 5, name: article.breadcrumbLabel },
+        { '@type': 'ListItem', position: 4, name: article.parentLabel,      item: siteUrl + article.parentUrl },
+        { '@type': 'ListItem', position: 5, name: article.subParentLabel,   item: siteUrl + article.subParentUrl },
+        { '@type': 'ListItem', position: 6, name: article.breadcrumbLabel },
       ],
     },
     ...(faqItems.length > 0
@@ -169,6 +172,7 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
         <li><a href="/education-canine/">Éducation canine</a></li>
         <li><a href={article.categoryUrl}>{article.category}</a></li>
         <li><a href={article.parentUrl}>{article.parentLabel}</a></li>
+        <li><a href={article.subParentUrl}>{article.subParentLabel}</a></li>
         <li aria-current="page">{article.breadcrumbLabel}</li>
       </ol>
     </div>
@@ -270,7 +274,7 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
       <!-- Colonne principale -->
       <div class="art-content">
 
-        <p>Votre chien s'est jeté sur un autre chien en pleine balade. Peut-être qu'il a juste chargé, peut-être qu'il y a eu contact. Dans tous les cas, vous êtes reparti le cœur battant, en vous demandant ce que vous étiez censé faire à ce moment-là et surtout comment éviter que ça recommence. Je vais vous donner de quoi comprendre ce qui se passe et réagir sans vous mettre en danger. Pas un protocole à appliquer seul dans votre coin, parce que ce serait vous mentir sur la difficulté réelle du travail. Ce cas de figure fait partie des <a href="/education-canine/comportement/problemes/">problèmes de comportement</a> qui demandent le plus de méthode et d'accompagnement.</p>
+        <p>Votre chien s'est jeté sur un autre chien en pleine balade. Peut-être qu'il a juste chargé, peut-être qu'il y a eu contact. Dans tous les cas, vous êtes reparti le cœur battant, en vous demandant ce que vous étiez censé faire à ce moment-là et surtout comment éviter que ça recommence. Je vais vous donner de quoi comprendre ce qui se passe et réagir sans vous mettre en danger. Pas un protocole à appliquer seul dans votre coin, parce que ce serait vous mentir sur la difficulté réelle du travail. Ce cas de figure est l'expression la plus visible de l'<a href="/education-canine/comportement/problemes/agressivite/">agressivité canine</a>, l'un des travaux qui demandent le plus de méthode et d'accompagnement.</p>
 
         <h2 id="reagir-dans-l-instant">Ce qu'il faut faire dans l'instant où votre chien se jette sur un congénère</h2>
 

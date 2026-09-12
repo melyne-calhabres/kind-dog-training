@@ -1,0 +1,761 @@
+---
+import Layout from '../../../../../layouts/Layout.astro';
+import Icon from '../../../../../components/Icon.astro';
+import ArticleProgressBar from '../../../../../components/ArticleProgressBar.astro';
+import { pickRandomArticles } from '../../../../../utils/pickRandomArticles';
+import '../../../../../styles/services.css';
+import '../../../../../styles/article.css';
+
+// ── Page SEO ──────────────────────────────────────────────────────────────────
+const page = {
+  metaTitle:       'Pourquoi Votre Chien est Agressif ? Aucun cas n\'est désespéré',
+  metaDescription: 'Agressivité chien : causes réelles (peur, douleur, socialisation), différence avec la réactivité, premières décisions à prendre face à un chien qui mord.',
+};
+
+// ── Article metadata ──────────────────────────────────────────────────────────
+const article = {
+  category:       'Comportement',
+  categoryUrl:    '/education-canine/comportement/',
+  parentLabel:    'Problèmes',
+  parentUrl:      '/education-canine/comportement/problemes/',
+  breadcrumbLabel:'Agressivité chez le chien',
+  titleBefore:    '',
+  titleAccent:    'Agressivité',
+  titleAfter:     ' chez le chien : comprendre, prévenir, rééduquer',
+  publishDate:    '11 septembre 2026',
+  publishDateIso: '2026-09-11',
+  updateDate:     '11 septembre 2026',
+  updateDateIso:  '2026-09-11',
+  readTime:       '20 min',
+  author:         'Mélyne',
+  authorInitial:  'M',
+  authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
+  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
+  coverAlt:       'Chien montrant les crocs en posture défensive, illustrant l\'agressivité canine et ses signaux d\'avertissement',
+};
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqItems: { question: string; answer: string }[] = [
+  {
+    question: 'Peut-on vraiment rééduquer un chien agressif à l\'âge adulte ?',
+    answer:   'Oui, dans l\'immense majorité des cas. La rééducation d\'un chien adulte demande plus de temps et de rigueur que l\'éducation d\'un chiot, mais elle est possible. Les séquelles d\'une mauvaise gestion peuvent limiter une réhabilitation totale, votre chien n\'aimera peut-être jamais ses congénères ou tous les humains, mais il est toujours possible de supprimer le passage à l\'acte et de restaurer une vie sociale sereine. J\'ai accompagné des chiens de six, huit, dix ans avec des progressions significatives. La bonne question à se poser porte sur votre disponibilité à changer les choses, jamais sur l\'âge du chien.',
+  },
+  {
+    question: 'Faut-il envisager l\'euthanasie après une morsure ?',
+    answer:   'Pas en première intention, et surtout pas sans analyse comportementale sérieuse. L\'euthanasie pour trouble du comportement est presque toujours l\'aveu d\'un échec humain ou d\'un professionnel qui ne sait pas travailler ce type de problème. La bonne question, après une morsure, porte sur le contexte : dans quelles conditions cette morsure s\'est produite, et qu\'est-ce qu\'on peut modifier. Dans certains cas rares, quand la sécurité de personnes vulnérables ne peut plus être garantie, l\'euthanasie devient une décision responsable. Elle doit alors venir d\'une vraie évaluation, jamais d\'un réflexe de panique ni d\'un professionnel qui abdique.',
+  },
+  {
+    question: 'La castration réduit-elle l\'agressivité ?',
+    answer:   'Ça dépend beaucoup du type d\'agressivité et du profil du chien. Pour une agressivité congénère hormonale, où un mâle ne supporte pas les autres mâles entiers, une castration au bon moment peut apporter 20 à 30 % de gain, en réduisant la testostérone et en augmentant les œstrogènes. Pour toutes les autres formes d\'agressivité (par peur, territoriale, par protection de ressources, redirigée), la castration ne change rien. Attention aussi aux femelles : la stérilisation augmente parfois la testostérone et baisse les œstrogènes, ce qui peut au contraire aggraver certaines réactivités. Décision à prendre au cas par cas, jamais en réflexe.',
+  },
+  {
+    question: 'Mon chien grogne sur mon enfant, comment réagir ?',
+    answer:   'D\'abord, ne surtout pas punir le grognement. Le grognement est un avertissement précieux : il vous dit que votre chien est mal à cet endroit et à ce moment. Si vous le sanctionnez, vous supprimez le signal mais pas le malaise, et vous augmentez le risque d\'une morsure sans prévenir. Ensuite, mettez l\'enfant en sécurité immédiatement, sans dramatiser mais sans négocier. Un enfant n\'est pas en âge de comprendre qu\'il faut respecter le repos du chien. La responsabilité vous appartient. Enfin, appelez un éducateur ou un comportementaliste sérieux tout de suite, avant qu\'un incident plus grave n\'arrive. Dans le cas particulier d\'une prédation intra-foyer sur enfant, où le chien fixe et cherche à poursuivre son propre enfant, la décision responsable est de replacer le chien dans un foyer sans enfant. Techniquement, ça peut se travailler, mais on ne met jamais un enfant en jeu comme cobaye d\'une rééducation.',
+  },
+];
+
+// ── JSON-LD structured data ───────────────────────────────────────────────────
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type':       'Article',
+      headline:      article.titleBefore + article.titleAccent + article.titleAfter,
+      description:   page.metaDescription,
+      datePublished: `${article.publishDateIso}T09:00:00+02:00`,
+      dateModified:  `${article.updateDateIso}T09:00:00+02:00`,
+      inLanguage:    'fr-FR',
+      url:           pageUrl,
+      image: {
+        '@type':  'ImageObject',
+        url:      siteUrl + '/images/article-agressivite-chien.webp',
+        width:    925,
+        height:   456,
+      },
+      author: {
+        '@type':    'Person',
+        name:       article.author,
+        url:        siteUrl + '/qui-suis-je/',
+        jobTitle:   'Éducatrice & comportementaliste canin',
+        description: article.authorDesc,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name:    'Kind Dog Training',
+        url:     siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url:     siteUrl + '/images/logo.png',
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id':   pageUrl,
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil',                    item: siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Éducation canine',           item: siteUrl + '/education-canine/' },
+        { '@type': 'ListItem', position: 3, name: article.category,             item: siteUrl + article.categoryUrl },
+        { '@type': 'ListItem', position: 4, name: article.parentLabel,          item: siteUrl + article.parentUrl },
+        { '@type': 'ListItem', position: 5, name: article.breadcrumbLabel },
+      ],
+    },
+    ...(faqItems.length > 0
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ question, answer }) => ({
+            '@type': 'Question',
+            name: question,
+            acceptedAnswer: { '@type': 'Answer', text: answer },
+          })),
+        }]
+      : []),
+  ],
+};
+
+// ── TL;DR — L'essentiel ───────────────────────────────────────────────────────
+const tldr = [
+  'L\'agressivité chien est presque toujours l\'expression d\'une peur, d\'une douleur, d\'un défaut de socialisation ou d\'une gestion humaine défaillante. La génétique compte pour environ 20 %, le reste se joue dans l\'éducation et l\'environnement',
+  'Il existe plusieurs types d\'agressivité : par peur, territoriale, par protection de ressources, par irritation, redirigée, par douleur, maternelle. La prédation, elle, relève d\'un instinct de poursuite et non de l\'agressivité',
+  'Agressivité, réactivité et dangerosité ne veulent pas dire la même chose. Un chien réactif en laisse n\'est presque jamais un chien agressif au sens strict',
+  'Un chien ne « craque » jamais du jour au lendemain. Les signaux étaient là depuis des semaines, parfois des mois, sous forme de grognements, de raidissements, de mises en boule',
+  'Face à un chien agressif, quelques décisions se prennent tout de suite : muselière apprise à la cool, longe, mouvement, chiens stables autour de lui, éducateur qui ne parle ni d\'euthanasie ni de Prozac en première intention',
+  'Aucun chien n\'est un cas désespéré. Y compris ceux qu\'on vous a présentés comme irrécupérables',
+];
+
+// ── Table of contents ─────────────────────────────────────────────────────────
+const toc = [
+  { label: 'Pourquoi votre chien passe à l\'acte',            href: '#pourquoi-passe-a-lacte',           sub: false },
+  { label: 'La peur, cause n°1 des morsures',                 href: '#peur-cause-n1-morsures',           sub: true  },
+  { label: 'Une douleur physique qu\'on n\'a pas vue',        href: '#douleur-physique-non-vue',         sub: true  },
+  { label: 'Une socialisation ratée entre 0 et 5 mois',       href: '#socialisation-ratee',              sub: true  },
+  { label: 'Ce que la génétique explique vraiment',           href: '#ce-que-la-genetique-explique',     sub: true  },
+  { label: 'Quand c\'est vous, le maillon faible',            href: '#maillon-faible',                   sub: true  },
+  { label: 'Les différentes formes d\'agressivité',           href: '#differentes-formes-agressivite',   sub: false },
+  { label: 'Agressivité, réactivité, dangerosité',            href: '#agressivite-reactivite-dangerosite', sub: false },
+  { label: 'La dangerosité, c\'est le potentiel physique',    href: '#dangerosite-potentiel-physique',   sub: true  },
+  { label: 'L\'agressivité, c\'est un comportement',          href: '#agressivite-comportement',         sub: true  },
+  { label: 'La réactivité en laisse n\'est pas de l\'agressivité', href: '#reactivite-laisse',            sub: true  },
+  { label: 'Un chien ne « craque » jamais sans prévenir',     href: '#chien-ne-craque-jamais',           sub: false },
+  { label: 'Les signaux que vous n\'avez pas su lire',        href: '#signaux-non-lus',                  sub: true  },
+  { label: 'Les deux seules exceptions',                      href: '#deux-exceptions',                  sub: true  },
+  { label: 'Le grognement est un avertissement',              href: '#grognement-avertissement',         sub: true  },
+  { label: 'Que faire face à un chien agressif',              href: '#que-faire-chien-agressif',         sub: false },
+  { label: 'Sécuriser tout le monde tout de suite',           href: '#securiser-tout-le-monde',          sub: true  },
+  { label: 'Apprendre la muselière avant que ce soit urgent', href: '#apprendre-museliere',              sub: true  },
+  { label: 'Sortir avec une longe et rester en mouvement',    href: '#longe-mouvement',                  sub: true  },
+  { label: 'S\'entourer de chiens stables',                   href: '#chiens-stables',                   sub: true  },
+  { label: 'Trouver un pro compétent',                        href: '#trouver-un-pro',                   sub: true  },
+  { label: 'Ce qu\'il ne faut surtout pas faire',             href: '#ne-pas-faire',                     sub: true  },
+  { label: 'Les idées reçues qui empêchent de résoudre',      href: '#idees-recues',                     sub: false },
+  { label: '« C\'est un staffie, c\'est normal »',            href: '#cest-une-race',                    sub: true  },
+  { label: '« Il a pris le goût du sang »',                   href: '#gout-du-sang',                     sub: true  },
+  { label: '« Il verrouille sa mâchoire »',                   href: '#verrouille-machoire',              sub: true  },
+  { label: '« Il est dominant »',                             href: '#il-est-dominant',                  sub: true  },
+  { label: '« Il est trop tard »',                            href: '#trop-tard',                        sub: true  },
+];
+
+// ── Articles connexes (rotation aléatoire à chaque build) ────────────────────
+const related = pickRandomArticles(3, '/education-canine/comportement/problemes/agressivite/');
+---
+
+<Layout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  type="article"
+  jsonLd={jsonLd}
+>
+
+  <!-- ── FIL D'ARIANE ──────────────────────────────────────────────── -->
+  <nav aria-label="Fil d'Ariane" class="art-breadcrumb-wrap">
+    <div class="container">
+      <ol class="art-breadcrumb">
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/education-canine/">Éducation canine</a></li>
+        <li><a href={article.categoryUrl}>{article.category}</a></li>
+        <li><a href={article.parentUrl}>{article.parentLabel}</a></li>
+        <li aria-current="page">{article.breadcrumbLabel}</li>
+      </ol>
+    </div>
+  </nav>
+
+
+  <!-- ── ARTICLE ───────────────────────────────────────────────────── -->
+  <article aria-labelledby="art-h1">
+
+    <!-- En-tête de l'article -->
+    <header class="art-header">
+      <div class="container">
+        <h1 class="art-title" id="art-h1">
+          {article.titleBefore}<span class="accent">{article.titleAccent}</span>{article.titleAfter}
+        </h1>
+        <div class="art-meta">
+          <div class="art-author">
+            <div class="art-avatar" aria-hidden="true">
+              <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="40" height="40" loading="lazy" decoding="async" style="display:block;" />
+            </div>
+            <p class="art-author-info">
+              <strong>{article.author}</strong>&nbsp;· Dernière mise à jour&nbsp;: <time datetime={article.updateDateIso}>{article.updateDate}</time>&nbsp;· {article.readTime} de lecture
+            </p>
+          </div>
+          <div class="art-share">
+            <button id="art-copy-link" class="art-share-btn" type="button" aria-label="Copier le lien de l'article">
+              <Icon name="link" width={16} height={16} strokeWidth={2} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Image hero -->
+    <div class="art-hero-wrap">
+      <div class="container">
+        <figure class="art-hero">
+          <picture>
+            <source media="(max-width: 767px)" srcset="/images/article-agressivite-chien-mobile.webp" width="400" height="351" />
+            <img
+              src="/images/article-agressivite-chien.webp"
+              alt={article.coverAlt}
+              width="925"
+              height="456"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              class="art-hero-img"
+            />
+          </picture>
+        </figure>
+      </div>
+    </div>
+
+    <!-- L'essentiel -->
+    <div class="container">
+      <aside class="art-tldr" role="note" aria-label="L'essentiel de l'article">
+        <span class="art-tldr-badge" aria-hidden="true">L'essentiel</span>
+        <p class="art-tldr-title">Ce qu'il faut retenir</p>
+        <ul class="art-tldr-list" role="list">
+          {tldr.map((item) => (
+            <li>
+              <Icon name="check" width={18} height={18} strokeWidth={2.5} />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="art-tldr-footer">
+          <Icon name="clock" width={14} height={14} strokeWidth={2} />
+          Lecture complète&nbsp;: {article.readTime} · Pour aller plus loin, lisez l'article entier
+        </p>
+      </aside>
+    </div>
+
+    <!-- Sommaire accordéon — mobile uniquement -->
+    <div class="container art-toc-mobile">
+      <details class="art-toc-accordion">
+        <summary class="art-toc-accordion-header">
+          Sommaire
+          <Icon name="chevron-down" width={16} height={16} strokeWidth={2} class="art-toc-chevron" />
+        </summary>
+        <nav class="art-toc-accordion-body" aria-label="Sommaire de l'article">
+          {toc.map((item) => (
+            <a
+              href={item.href}
+              class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+            >
+              <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+
+    <!-- Corps à deux colonnes : contenu + sidebar sticky -->
+    <div class="container art-layout">
+
+      <!-- Colonne principale -->
+      <div class="art-content">
+
+        <p>L'agressivité chien, c'est probablement la peur la plus lourde à porter quand on vit avec un compagnon à quatre pattes. Un grognement au moment du repas, un aboiement qui vire à la charge sur un congénère au parc, une posture menaçante à l'arrivée d'un invité&nbsp;: chaque incident vous laisse avec la même question. Est-ce que mon chien est devenu dangereux&nbsp;? Est-ce qu'il va mordre&nbsp;?</p>
+
+        <p>Ce que vous avez sous les yeux, presque toujours, c'est un chien en souffrance. Pas un chien «&nbsp;méchant&nbsp;»&nbsp;: un chien qui n'a plus d'autre issue. Derrière l'agression se cache souvent une peur mal gérée, un traumatisme ancien, une douleur physique qu'on n'a pas repérée, un défaut de socialisation dans les premiers mois, ou une protection de ressources qui n'a jamais été cadrée. Les types d'agressivité sont nombreux&nbsp;: agressivité territoriale, agressivité par irritation, agressivité redirigée, prédation confondue à tort avec de la violence. Chacun demande une lecture précise du comportement et une rééducation adaptée. L'agressivité reste l'un des <a href="/education-canine/comportement/problemes/">problèmes de comportement du chien</a> les plus lourds à porter, mais rarement le plus désespéré quand on démêle ce qui se joue.</p>
+
+        <p>Je pose les choses simplement. On regarde d'abord pourquoi votre chien en arrive à l'agression, ensuite comment reconnaître ces différentes formes, puis on démêle ce qui distingue l'agressivité de la réactivité et de la dangerosité, deux notions qu'on confond tout le temps. Je vous montre aussi pourquoi un chien ne «&nbsp;craque&nbsp;» jamais du jour au lendemain&nbsp;: les signaux étaient là. Je vous donne les premières décisions à prendre, muselière comprise. On termine par les idées reçues qui bloquent la plupart des propriétaires. Aucun chien n'est un cas désespéré. Aucun.</p>
+
+        <h2 id="pourquoi-passe-a-lacte">Pourquoi votre chien passe à l'acte</h2>
+
+        <p>Un chien ne devient pas agressif par hasard, ni parce qu'il aurait un vice de fabrication. Il passe à l'acte parce qu'à un moment donné, plus rien d'autre ne fonctionne pour lui. La morsure ou la charge sont toujours l'aboutissement d'une histoire qu'on peut retracer, presque à chaque fois.</p>
+
+        <h3 id="peur-cause-n1-morsures">La peur, cause n°1 des morsures</h3>
+
+        <p>La peur est la forme la plus fréquente d'agressivité canine. Un chien qui a peur cherche d'abord à fuir. S'il ne peut pas fuir, parce qu'il est en laisse, dans un ascenseur, coincé contre un mur, il finit par mordre pour faire reculer la menace. Et comme mordre marche (l'humain recule, le congénère s'en va), il retient la leçon&nbsp;: la morsure est la solution la plus efficace pour reprendre le contrôle de sa vie.</p>
+
+        <p>C'est le cas de Jim, un cocker que j'ai accompagné après une attaque récente. Depuis cet évènement, sa lecture de l'environnement a complètement basculé. Sa réactivité aux autres chiens était fluctuante, mais quand elle apparaissait, les signaux étaient nets&nbsp;: port de queue haut, fixation intense, abaissement du centre de gravité, aboiements, grognements. Le retour au calme prenait un temps fou. Jim n'avait rien de «&nbsp;méchant&nbsp;». Il avait peur, et il avait appris à s'exprimer par la charge parce que rien d'autre ne l'avait rassuré à temps. Quand cette peur ne redescend plus, même hors des situations à risque, on bascule sur un autre terrain&nbsp;: celui du <a href="/education-canine/comportement/problemes/anxiete/">chien anxieux au quotidien</a>.</p>
+
+        <h3 id="douleur-physique-non-vue">Une douleur physique qu'on n'a pas vue</h3>
+
+        <p>C'est probablement la cause la plus sous-diagnostiquée. Un chien qui a mal, qui souffre d'une dysplasie, d'une otite sévère, d'une fracture non détectée ou d'une douleur neurologique, va mordre par pur instinct de défense. Peu importe qu'on l'aime&nbsp;: quand on l'approche au mauvais endroit, il attaque parce qu'il pense qu'on va aggraver sa souffrance.</p>
+
+        <p>Avant tout travail comportemental sur un chien qui devient soudainement agressif, un check vétérinaire complet est non négociable. Une visite ostéopathique en complément ne fait jamais de mal. Beaucoup de «&nbsp;chiens agressifs&nbsp;» que j'ai vus étaient en réalité des chiens qui souffraient et qu'on avait pris pour des chiens problématiques.</p>
+
+        <h3 id="socialisation-ratee">Une socialisation ratée entre 0 et 5 mois</h3>
+
+        <p>À peu près 99&nbsp;% des troubles comportementaux qu'on rencontre à l'âge adulte prennent racine avant l'âge de 5 mois. C'est la période où le chiot absorbe le monde. S'il grandit isolé, en jardin, sans exposition aux bruits urbains, aux enfants, aux congénères adultes bien codés, il arrive à l'adolescence avec des trous immenses dans sa carte du monde.</p>
+
+        <p>Un chiot maintenu dans un jardin pendant ses premiers mois vit dans un vide sensoriel. À l'inverse, la ville, avec ses odeurs, ses bruits, ses passages incessants, offre un chaos sensoriel qui prépare le chien à traiter l'inconnu sans basculer dans la peur. Priver un chiot de cette exposition sous prétexte des rappels de vaccins fabrique un chien peureux. À l'âge adulte, la peur se traduit souvent par de l'agression.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Cas concret</p>
+            <p class="art-callout__text">Mia, une bully XL de 50 kg, a été récupérée à quatre mois et demi dans un élevage catastrophique&nbsp;: sevrage précoce, vie en box, compétition permanente pour la nourriture. À cette carence de socialisation initiale se sont ajoutées des méthodes coercitives dès son premier suivi éducatif. Résultat&nbsp;: à l'arrivée chez moi, deux ans et demi plus tard, elle chargeait tout humain qui pénétrait dans son périmètre. Aucune mauvaise volonté là-dedans, juste une carte du monde entièrement construite sur la méfiance envers les hommes.</p>
+          </div>
+        </aside>
+
+        <h3 id="ce-que-la-genetique-explique">Ce que la génétique explique vraiment (et ce qu'elle n'explique pas)</h3>
+
+        <p>La génétique pèse environ 20&nbsp;% dans le comportement d'un chien adulte. Les 80&nbsp;% restants viennent de la socialisation, des expériences vécues et de l'éducation. Ce que la génétique transmet vraiment, ce sont des prédispositions&nbsp;: un tempérament plus sensible, plus réactif, un seuil de tolérance au stress plus bas, des patrons moteurs plus intenses.</p>
+
+        <p>Ce que la génétique ne transmet pas, c'est un destin. J'ai en clientèle beaucoup de staffies, de staffs, de bullies. Aucun d'entre eux n'est devenu réactif du jour au lendemain à cause de sa race. Ils le sont devenus à la suite de mauvaises expériences, ou parce qu'ils n'ont pas reçu ce dont ils avaient besoin au moment où il le fallait. «&nbsp;C'est un staffie, il sera réactif vers deux ans&nbsp;»&nbsp;: cette phrase, encore trop répandue chez certains éleveurs, est une excuse. Pas une donnée scientifique.</p>
+
+        <p>Le vrai facteur héréditaire souvent oublié, c'est le stress prénatal. Une mère qui vit un traumatisme intense pendant la gestation transmet biologiquement son anxiété aux fœtus via le cortisol. Les chiots naissent alors avec une prédisposition chimique à l'hyper-réactivité. Ce n'est pas irrémédiable, mais ça demande d'intervenir tôt et de savoir ce qu'on fait.</p>
+
+        <h3 id="maillon-faible">Quand c'est vous, le maillon faible</h3>
+
+        <p>Ce n'est jamais agréable à entendre, mais c'est le cœur du sujet. Le maître est le pivot. Face à une tension, votre chien vous observe. S'il vous voit paniquer, tirer sur la laisse, hurler, ou au contraire lui emboîter le pas quand il fuit, il tire une conclusion&nbsp;: personne n'est aux commandes, c'est à lui de gérer.</p>
+
+        <p>Un chiot n'est pas programmé pour ce rôle. S'il doit endosser la fonction de leader et de décideur parce que son propriétaire ne le fait pas, il finit par prendre des décisions à votre place, dont certaines par la morsure. C'est là que beaucoup de propriétaires basculent&nbsp;: ils pensent avoir un chien dominant, alors qu'ils ont un chien qui a fini par assumer un rôle dont personne ne voulait.</p>
+
+        <h2 id="differentes-formes-agressivite">Les différentes formes d'agressivité chez le chien</h2>
+
+        <p>L'agressivité prend plusieurs formes. Avant de rééduquer, il faut poser un vrai diagnostic sur ce que vit votre chien. Traiter une agressivité par peur comme une agressivité territoriale, ça ne peut pas marcher.</p>
+
+        <ul class="art-list" role="list">
+          <li><strong>Agressivité par peur</strong>&nbsp;: la plus répandue. Le chien attaque parce qu'il ne peut pas fuir. Souvent liée à un défaut de socialisation ou à un traumatisme.</li>
+          <li><strong>Agressivité territoriale</strong>&nbsp;: hostilité liée à la protection d'un lieu. Souvent aggravée par un confinement prolongé et un manque d'ouverture sur l'extérieur.</li>
+          <li><strong>Protection de ressources</strong>&nbsp;: défense d'un objet, d'une gamelle, d'un panier, d'un humain considéré comme vital. Peut se déclencher entre congénères ou contre l'humain.</li>
+          <li><strong>Agressivité par irritation</strong>&nbsp;: rupture du seuil de tolérance face à des sollicitations excessives. Cas classique&nbsp;: l'enfant qui ne respecte pas le repos du chien.</li>
+          <li><strong>Agressivité redirigée</strong>&nbsp;: le chien est dans un état de frustration extrême et mord le premier support disponible, souvent son propre humain, sans intention ciblée.</li>
+          <li><strong>Agressivité par douleur</strong>&nbsp;: réaction réflexe à une souffrance physique. Doit toujours être écartée par un check vétérinaire avant tout travail comportemental.</li>
+          <li><strong>Agressivité maternelle</strong>&nbsp;: rare, liée à des états hormonaux post-mise bas ou à certaines lignées.</li>
+          <li><strong>Prédation</strong>&nbsp;: à ne pas confondre avec l'agressivité. Le chien exécute une séquence de chasse instinctive (fixer, poursuivre, attraper), présente chez tous les canidés. Courir après un vélo relève de la chasse mal canalisée, pas de la violence.</li>
+        </ul>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Ce qui compte à l'œil nu</p>
+            <p class="art-callout__text">Le type d'agressivité se lit dans le contexte du déclenchement, pas dans la puissance apparente de la morsure. Où, avec qui, sur quoi, à quel moment. C'est ça que je passe le plus de temps à observer en bilan.</p>
+          </div>
+        </aside>
+
+        <p>Dobby, par exemple, présentait deux problématiques imbriquées&nbsp;: une <a href="/education-canine/comportement/problemes/agressivite/comment-reagir-chien-attaque-autre-chien/">agressivité congénère avec passage à l'attaque</a>, et des morsures par redirection sur ses propres propriétaires. Les morsures par redirection n'étaient pas dirigées volontairement contre eux, elles arrivaient lors de <a href="/education-canine/comportement/problemes/gestion-emotions/">pertes totales de contrôle émotionnel</a> face à un chien. Diagnostiquer ces deux mécanismes séparément a été indispensable pour poser un plan de travail cohérent.</p>
+
+        <!-- CTA inline — mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous n'arrivez pas à identifier de quelle forme d'agressivité souffre votre chien&nbsp;?</p>
+          <p class="art-inline-cta-desc">Bilan comportemental gratuit à domicile pour poser un vrai diagnostic entre peur, protection de ressources, redirection ou territorialité, et savoir par où commencer</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+        </aside>
+
+        <h2 id="agressivite-reactivite-dangerosite">Agressivité, réactivité, dangerosité&nbsp;: trois choses qu'on confond tout le temps</h2>
+
+        <p>Ces trois mots sont utilisés à peu près comme synonymes dans la plupart des conversations sur le sujet. Ils désignent des réalités très différentes, et confondre les trois vous mène presque toujours vers une mauvaise décision.</p>
+
+        <h3 id="dangerosite-potentiel-physique">La dangerosité, c'est le potentiel physique</h3>
+
+        <p>La dangerosité, c'est la capacité de destruction d'un chien en cas de passage à l'acte. Elle dépend de sa taille, de sa puissance de mâchoire, de sa masse. Un enfant de 5 ans qui vous met une gifle vous fait moins mal qu'un adulte qui fait la même chose&nbsp;: personne n'est plus «&nbsp;violent&nbsp;» que l'autre, la différence est physique. C'est pareil chez les chiens. À agressivité égale, un bichon et un rottweiler ne provoquent pas les mêmes dégâts. La dangerosité, c'est une donnée statique. Elle n'a aucun rapport avec l'intention.</p>
+
+        <h3 id="agressivite-comportement">L'agressivité, c'est un comportement</h3>
+
+        <p>L'agressivité, c'est un état émotionnel qui produit une réaction comportementale. Elle est indépendante de la morphologie. Un petit chien peut être bien plus agressif qu'un molosse tout en étant beaucoup moins dangereux au sens physique. C'est pour ça que les morsures de chihuahua ou de bichon ne font pas la Une des journaux, alors qu'elles sont statistiquement nombreuses.</p>
+
+        <h3 id="reactivite-laisse">La réactivité en laisse n'est presque jamais de l'agressivité</h3>
+
+        <p>C'est probablement la confusion la plus coûteuse pour les propriétaires. Un chien qui aboie, tire, se dresse au bout de sa laisse à la vue d'un congénère n'est presque jamais un chien agressif au sens strict. Il est <a href="/education-canine/comportement/problemes/reactivite/chiens/">réactif</a>, et les ressorts sont différents&nbsp;: un manque de cadre, une mauvaise gestion des émotions, une incapacité à renoncer, une position de combat imposée par la laisse tendue.</p>
+
+        <p>Sur le terrain, 90&nbsp;% des chiens qu'on m'amène «&nbsp;pour agressivité en laisse&nbsp;» sont en fait des chiens qui fixent, se tendent, s'excitent, et finissent par exploser parce qu'aucun humain ne leur a appris à traiter l'information autrement. Détaché en forêt avec les mêmes chiens, la plupart d'entre eux sont parfaitement gérables. La laisse crée le problème autant qu'elle protège du problème. Pour le travail de fond sur ce mécanisme, j'ai ouvert un dossier complet sur la <a href="/education-canine/comportement/problemes/reactivite/">réactivité canine</a> et ses trois formes.</p>
+
+        <h2 id="chien-ne-craque-jamais">Un chien ne «&nbsp;craque&nbsp;» jamais sans prévenir</h2>
+
+        <p>Les humains se racontent volontiers qu'un chien peut «&nbsp;vriller&nbsp;» d'un coup, sans raison et sans avertissement. C'est rassurant. C'est aussi faux, et c'est cette croyance qui empêche de voir les signaux présents depuis longtemps.</p>
+
+        <h3 id="signaux-non-lus">Les signaux que vous n'avez pas su lire</h3>
+
+        <p>Avant la première morsure, il y a presque toujours des mois, parfois des années, de micro-signaux. Le chien se met en boule à l'arrivée de tel type d'humain. Il évite certains lieux. Il se raidit quand un enfant passe trop près. Il détourne le regard au moment où on lui tend la main. Il émet des «&nbsp;appels de phares&nbsp;» constants que personne ne lit parce que rien de grave ne s'est encore produit.</p>
+
+        <p>Ces signaux relèvent du langage corporel canin et des signaux d'apaisement. Apprendre à les lire est la première compétence d'un propriétaire responsable, avant même de connaître trois ordres de dressage. Un chien qui grogne, qui montre les dents, qui fige sa posture, vous prévient. Ignorer ces avertissements sous prétexte que «&nbsp;ça passe encore&nbsp;» est une négligence dont le chien va finir par payer le prix.</p>
+
+        <h3 id="deux-exceptions">Les deux seules exceptions&nbsp;: trauma violent et douleur aiguë</h3>
+
+        <p>Il y a exactement deux cas où un chien peut basculer sans progression préalable dans l'agression. Le premier&nbsp;: un traumatisme violent immédiat, quelqu'un qui frappe ou brutalise physiquement le chien, et provoque un basculement instantané dans la défense réactive. Le second&nbsp;: une douleur physique aiguë, une fracture, une pathologie neurologique, où le chien mord parce que la souffrance dépasse tout raisonnement.</p>
+
+        <p>En dehors de ces deux cas, l'agressivité s'installe crescendo. Toujours. Se raconter que «&nbsp;c'est venu tout d'un coup&nbsp;» est un moyen de ne pas se sentir responsable des mois pendant lesquels on n'a rien vu.</p>
+
+        <h3 id="grognement-avertissement">Le grognement est un avertissement, pas un défaut à corriger</h3>
+
+        <p>Beaucoup de propriétaires paniquent au moindre grognement et essaient de le sanctionner. C'est une erreur majeure. Le grognement est un cadeau. Le chien vous prévient qu'il est mal et qu'il faut reculer. Si vous punissez le grognement, vous ne réglez pas le malaise, vous coupez juste le signal. Le chien apprend à mordre sans prévenir.</p>
+
+        <p>Grogner, montrer les dents, pincer légèrement font partie des comportements normaux d'un chien qui pose ses limites. On a vu ça à la maison entre Ramsey, mon staffie adulte, et Vi, une petite staffie de 8 mois qui l'excitait au-delà du raisonnable&nbsp;: Ramsey a fini par aboyer et pincer la petite pour la calmer. Ce n'était ni un trouble ni un danger. Il apprenait les règles à la plus jeune, exactement comme le ferait une chienne adulte bien codée.</p>
+
+        <!-- CTA inline — mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Vous voyez des signaux mais vous ne savez pas comment réagir&nbsp;?</p>
+          <p class="art-inline-cta-desc">Bilan à domicile sans engagement pour apprendre à lire votre chien avant l'incident, poser un cadre clair et faire redescendre la pression au quotidien</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Réserver mon bilan gratuit</a>
+        </aside>
+
+        <h2 id="que-faire-chien-agressif">Que faire face à un chien agressif&nbsp;: vos premières décisions</h2>
+
+        <p>Une fois qu'on a compris pourquoi et de quel type d'agressivité on parle, restent les décisions concrètes à prendre. Certaines sont urgentes, d'autres se posent dans les semaines qui suivent. Toutes sont accessibles à un propriétaire motivé.</p>
+
+        <h3 id="securiser-tout-le-monde">Sécuriser tout le monde tout de suite, sans culpabiliser</h3>
+
+        <p>La première décision est de mettre les tiers en sécurité. Ça peut vouloir dire changer d'horaire de balade, éviter certains lieux pendant quelques semaines, poser une barrière physique à la maison, prévenir l'entourage. Cette étape n'a rien d'un aveu d'échec. C'est la base minimale pour pouvoir travailler ensuite avec du recul. Un chien qui mord n'est pas seulement un problème pour vous&nbsp;: c'est un problème pour tous ceux qu'il croise.</p>
+
+        <h3 id="apprendre-museliere">Apprendre la muselière avant que ce soit urgent</h3>
+
+        <p>La muselière ouvre au chien des libertés qu'il n'aurait pas autrement. Un chien qui sait porter sa muselière sereinement, vous pouvez l'emmener dans des situations qu'il ne gérerait pas autrement&nbsp;: un groupe de balade, une rencontre avec un chien inconnu, une visite chez le vétérinaire. Sans muselière, un chien difficile finit isolé, sans amis, sans sorties. Avec elle, il retrouve une vie sociale.</p>
+
+        <p>L'apprentissage se fait à la cool, par étapes&nbsp;: friandise donnée à travers la muselière, mise en place brève, allongement progressif du temps de port, marche avec muselière et récompense. Compter quelques semaines pour ancrer un port serein. Le chien doit porter la muselière au moins une fois par mois lors d'une activité plaisante, pour que l'objet ne soit jamais associé uniquement au conflit.</p>
+
+        <aside class="art-callout art-callout--soft" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">La comparaison qui parle</p>
+            <p class="art-callout__text">Une muselière, c'est comme un plâtre sur un bras cassé. Ça gratte, ça incommode, mais c'est la condition de la guérison. Vous ne diriez pas d'un enfant qu'il vaudrait mieux ne pas soigner son bras pour ne pas «&nbsp;lui infliger&nbsp;» le plâtre. Pour un chien agressif, c'est exactement la même logique.</p>
+          </div>
+        </aside>
+
+        <h3 id="longe-mouvement">Sortir avec une longe et rester en mouvement</h3>
+
+        <p>Une longe de 10, 15 ou 20 mètres change complètement la dynamique. Elle permet au chien de gérer sa distance de sécurité sans être verrouillé par une laisse courte tendue. Elle vous laisse un contrôle en cas de besoin, sans transformer chaque sortie en bras de fer physique.</p>
+
+        <p>Deuxième règle, aussi importante&nbsp;: rester en mouvement. Les situations dégénèrent presque toujours quand elles se figent. Un chien qui reste planté face à un autre chien, avec un humain crispé qui tient la laisse à deux mains, va monter en pression et finir par exploser. Un chien en mouvement, dans une marche fluide, avec un humain calme, redescend beaucoup plus vite.</p>
+
+        <h3 id="chiens-stables">S'entourer de chiens stables plutôt que d'éviter les congénères</h3>
+
+        <p>Isoler un chien réactif ou agressif est la pire chose à faire. Sans contact social régulier avec des congénères bien dans leurs pattes, il perd tout code, toute lecture, toute nuance. Chaque rencontre devient un évènement exceptionnel, donc anxiogène.</p>
+
+        <p>Cherchez des chiens calmes et stables, capables de snober le vôtre. On ne leur demande pas de le recadrer, on leur demande de l'ignorer poliment. Le message envoyé à votre chien est&nbsp;: «&nbsp;on est tous cool, personne ne s'excite, tu peux te détendre&nbsp;». C'est le principe qu'on a appliqué avec Walter, un staffie devenu réactif à un an après une altercation avec un shiba. En introduisant Billy, une chienne très calme et neutre, en balade encadrée puis en balade libre, Walter est passé de plusieurs charges par sortie à quelques déclenchements légers, puis à des balades entières sans réaction.</p>
+
+        <h3 id="trouver-un-pro">Trouver un pro qui ne vous parle pas d'euthanasie ou de médication d'emblée</h3>
+
+        <p>C'est une réalité du milieu&nbsp;: beaucoup de «&nbsp;professionnels&nbsp;» ne savent pas travailler l'agressivité et se rabattent trop vite sur deux réponses. Soit l'euthanasie de confort, présentée comme la «&nbsp;seule solution&nbsp;», soit la mise sous Prozac ou fluoxétine comme réflexe automatique.</p>
+
+        <p>Mia, dont je parlais plus haut, avait vu quatre éducateurs avant d'arriver chez moi. La seule réponse qu'on lui avait proposée était la médication. Pour moi, c'est un aveu d'échec. On ne médicamente jamais un chien avant d'avoir travaillé sérieusement en thérapie comportementale. Un pro compétent commence par poser un vrai diagnostic, puis adapte son plan à votre chien. La médication ne vient qu'en dernier recours, décidée avec un vétérinaire comportementaliste.</p>
+
+        <h3 id="ne-pas-faire">Ce qu'il ne faut surtout pas faire&nbsp;: détourner, éviter, isoler</h3>
+
+        <p>Trois réflexes reviennent chez les propriétaires débordés, et les trois aggravent la situation&nbsp;:</p>
+
+        <ul class="art-list" role="list">
+          <li><strong>Détourner l'attention</strong> avec des friandises jetées au sol quand un chien approche&nbsp;: ça confirme au vôtre que le stimulus est une menace à diversifier.</li>
+          <li><strong>Éviter en changeant de trottoir</strong> dès qu'un chien apparaît&nbsp;: ça grave l'idée qu'il faut fuir.</li>
+          <li><strong>Isoler le chien</strong> de tout congénère «&nbsp;pour son bien&nbsp;»&nbsp;: ça le désocialise et fabrique le chien réactif que vous cherchez à éviter.</li>
+        </ul>
+
+        <p>Le travail se fait dans la confrontation progressive. L'évitement, lui, entretient le problème. Le rôle de l'éducateur est de doser cette confrontation pour qu'elle soit toujours dans les capacités du chien du moment, jamais au-delà.</p>
+
+        <h2 id="idees-recues">Les idées reçues qui empêchent de résoudre le problème</h2>
+
+        <p>Certaines croyances circulent depuis si longtemps qu'elles sont devenues du bon sens populaire. Elles sont fausses, et elles bloquent la plupart des rééducations. Faire le ménage vaut le coup.</p>
+
+        <h3 id="cest-une-race">«&nbsp;C'est un staffie / un malinois / un rottweiler, c'est normal&nbsp;»</h3>
+
+        <p>Non. Aucune race ne rend un chien agressif par magie. La génétique explique environ 20&nbsp;% du comportement, ce qui laisse 80&nbsp;% pour l'éducation, la socialisation et les expériences. Les attaques médiatisées concernent majoritairement les races puissantes parce que les blessures sont plus graves, pas parce que ces chiens sont plus agressifs. Un pincement de border collie n'atterrit ni chez le médecin ni dans la presse. Une morsure de rottweiler, si.</p>
+
+        <h3 id="gout-du-sang">«&nbsp;Il a pris le goût du sang&nbsp;»</h3>
+
+        <p>Cette croyance vient du Moyen Âge, quand on tuait les chiens qui avaient mordu un mouton parce qu'on croyait qu'ils allaient tous les manger. En 2026, ça ne tient toujours pas. Un chien ne mord pas par «&nbsp;pulsion de sang&nbsp;». Il mord dans un contexte précis pour une raison précise. Si le «&nbsp;goût du sang&nbsp;» existait, tous les chiens nourris au cru seraient devenus des mordeurs d'humains. Ils ne se sont pas transformés en vampires.</p>
+
+        <h3 id="verrouille-machoire">«&nbsp;Il verrouille sa mâchoire&nbsp;»</h3>
+
+        <p>Il n'existe aucun mécanisme anatomique de verrouillage dans la mâchoire d'un chien, aucune race confondue. Ce qu'on prend pour un verrouillage, c'est une puissance musculaire et une détermination comportementale. Un chien qui «&nbsp;ne lâche pas&nbsp;» n'a pas la gueule bloquée&nbsp;: il a décidé de ne pas lâcher, ce qui n'est pas la même chose et se travaille.</p>
+
+        <h3 id="il-est-dominant">«&nbsp;Il est dominant&nbsp;»</h3>
+
+        <p>Les chiens réactifs à l'humain sont massivement des chiens peureux. Chercher à imposer une hiérarchie n'a rien à voir là-dedans. C'est l'un des pires diagnostics posés à la va-vite, parce qu'il conduit à des méthodes dures sur un chien déjà fragile, qui s'écroule ensuite complètement. Avant de penser dominance, on regarde la peur.</p>
+
+        <h3 id="trop-tard">«&nbsp;Il est trop tard, il n'y a plus rien à faire&nbsp;»</h3>
+
+        <p>C'est probablement la phrase que je combats le plus. Aucun chien n'est un cas désespéré. Ni la race, ni le sexe, ni l'âge n'empêchent la rééducation. Mia, dont on parlait plus haut, était présentée comme irrécupérable après deux ans et demi de suivis inefficaces. En quelques mois, elle passait en centre-ville de Bordeaux, en tramway, avec des enfants qui jouaient à trois mètres, sans réagir. Aucune magie là-dedans, juste du travail fait dans le bon sens.</p>
+
+        <p>On ne cherche pas à transformer un chien difficile en pot de colle universel qui aimerait tout le monde. On cherche à ce qu'il cesse d'être une menace pour son entourage, tout en gardant une vie qui lui ressemble. Ça, c'est atteignable pour presque tous les chiens.</p>
+
+      </div><!-- /.art-content -->
+
+      <!-- Sidebar sticky — desktop uniquement -->
+      <aside class="art-sidebar" aria-labelledby="art-toc-heading">
+        <nav class="art-toc" aria-labelledby="art-toc-heading">
+          <details class="art-toc-details">
+            <summary class="art-toc-title" id="art-toc-heading">
+              Sommaire
+              <svg class="art-toc-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="art-toc-links">
+              {toc.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={['art-toc-item', { 'art-toc-item--sub': item.sub }]}
+                >
+                  <Icon name="arrow-right" width={item.sub ? 10 : 12} height={item.sub ? 10 : 12} strokeWidth={2} />
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        </nav>
+
+        <div class="art-sidebar-cta">
+          <p class="art-sidebar-cta-title">Votre chien mord, charge ou grogne&nbsp;?</p>
+          <p class="art-sidebar-cta-desc">Bilan comportemental à domicile pour poser un vrai diagnostic et construire un plan de rééducation adapté, sans médication ni jugement</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            Prendre RDV
+            <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
+          </a>
+        </div>
+      </aside>
+
+    </div><!-- /.art-layout -->
+
+    <!-- Like / Dislike -->
+    <section class="art-feedback-wrap" aria-label="Votre avis sur cet article">
+      <div class="container">
+        <div class="art-feedback" id="art-feedback">
+          <p class="art-feedback-question">Cet article vous a été utile&nbsp;?</p>
+          <div class="art-feedback-buttons">
+            <button type="button" class="art-feedback-btn art-feedback-btn--like" id="art-like-btn" aria-label="J'aime cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>
+              </svg>
+              Oui
+            </button>
+            <button type="button" class="art-feedback-btn art-feedback-btn--dislike" id="art-dislike-btn" aria-label="Je n'aime pas cet article">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>
+              </svg>
+              Non
+            </button>
+          </div>
+
+          <div class="art-feedback-form" id="art-feedback-form" hidden>
+            <label for="art-feedback-text" class="art-feedback-label">Qu'est-ce qui pourrait être amélioré&nbsp;?</label>
+            <textarea
+              id="art-feedback-text"
+              class="art-feedback-textarea"
+              rows="3"
+              maxlength="500"
+              placeholder="Votre retour nous aide à améliorer nos contenus…"
+            ></textarea>
+            <div class="art-feedback-form-footer">
+              <span class="art-feedback-hint" id="art-feedback-hint">10 caractères minimum</span>
+              <button type="button" class="btn btn-primary art-feedback-submit" id="art-feedback-submit" disabled>Envoyer</button>
+            </div>
+          </div>
+
+          <div class="art-feedback-thanks" id="art-feedback-thanks" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <span>Merci ! Je prends en compte tous vos retours pour améliorer la qualité des articles et vous aider le plus possible :)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Biographie auteure -->
+    <footer class="art-bio-wrap">
+      <div class="container">
+        <div class="art-bio">
+          <div class="art-bio-avatar" aria-hidden="true">
+            <img src="/images/melyne-auteur.webp" alt="Mélyne, éducatrice canine" width="64" height="64" loading="lazy" decoding="async" style="display:block;" />
+          </div>
+          <div>
+            <p class="art-bio-name">À propos de {article.author}</p>
+            <p class="art-bio-role">{article.authorRole}</p>
+            <p class="art-bio-desc">{article.authorDesc}</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </article><!-- /article -->
+
+
+  <!-- ── FAQ ──────────────────────────────────────────────────────────── -->
+  {faqItems.length > 0 && (
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 750px;">
+        <h2 id="faq-heading" style="text-align: center;">Questions fréquentes sur l'<span class="accent">agressivité canine</span></h2>
+        <div class="faq-list" style="margin-top: var(--sp-8);">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>{item.question}</span>
+                <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+
+  <!-- ── CTA FINAL ──────────────────────────────────────────────────── -->
+  <section class="section-dark art-cta-section" aria-labelledby="art-cta-h">
+    <div class="container art-cta-inner">
+      <h2 class="art-cta-title" id="art-cta-h">On vous a dit que votre chien était un cas désespéré&nbsp;? On peut en reparler.</h2>
+      <p>Bilan comportemental gratuit à domicile, Bordeaux et métropole</p>
+      <a href="/prendre-rdv/" class="btn btn-primary">
+        Réserver mon bilan gratuit
+        <Icon name="arrow-right" width={18} height={18} strokeWidth={2} />
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── ARTICLES QUI PEUVENT VOUS INTÉRESSER ───────────────────────── -->
+  <section class="art-related" aria-labelledby="art-related-h">
+    <div class="container">
+      <p class="art-related-divider" id="art-related-h">Articles qui peuvent vous intéresser</p>
+      <div class="art-related-grid">
+        {related.map((card) => (
+          <a href={card.url} class="art-related-card">
+            <img
+              src={card.img}
+              alt={card.imgAlt}
+              class="art-related-card-img"
+              width="360"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="art-related-card-body">
+              <p class="art-related-card-title">{card.title}</p>
+              <p class="art-related-card-meta">{card.readTime} de lecture</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BARRE DE PROGRESSION ──────────────────────────────────────── -->
+  <ArticleProgressBar />
+
+  <script is:inline>
+    (function () {
+      var MIN_CHARS = 10;
+      var feedbackWrap = document.getElementById('art-feedback');
+      var likeBtn = document.getElementById('art-like-btn');
+      var dislikeBtn = document.getElementById('art-dislike-btn');
+      var feedbackForm = document.getElementById('art-feedback-form');
+      var feedbackText = document.getElementById('art-feedback-text');
+      var feedbackHint = document.getElementById('art-feedback-hint');
+      var feedbackSubmit = document.getElementById('art-feedback-submit');
+      var feedbackThanks = document.getElementById('art-feedback-thanks');
+
+      if (!feedbackWrap || !likeBtn || !dislikeBtn) return;
+
+      function sendGA4Event(eventName, params) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: eventName }, params));
+      }
+
+      function getArticleTitle() {
+        var h1 = document.querySelector('h1');
+        return h1 ? h1.textContent.trim() : document.title;
+      }
+
+      function showThanks() {
+        feedbackWrap.querySelectorAll('.art-feedback-buttons, .art-feedback-form, .art-feedback-question').forEach(
+          function (el) { el.hidden = true; }
+        );
+        feedbackThanks.hidden = false;
+      }
+
+      likeBtn.addEventListener('click', function () {
+        sendGA4Event('article_like', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+        });
+        showThanks();
+      });
+
+      dislikeBtn.addEventListener('click', function () {
+        likeBtn.hidden = true;
+        dislikeBtn.classList.add('art-feedback-btn--selected');
+        dislikeBtn.disabled = true;
+        feedbackForm.hidden = false;
+        feedbackText.focus();
+      });
+
+      feedbackText.addEventListener('input', function () {
+        var len = feedbackText.value.trim().length;
+        var valid = len >= MIN_CHARS;
+        feedbackSubmit.disabled = !valid;
+        if (len === 0) {
+          feedbackHint.textContent = MIN_CHARS + ' caractères minimum';
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else if (!valid) {
+          feedbackHint.textContent = 'Encore ' + (MIN_CHARS - len) + ' caractère' + (MIN_CHARS - len > 1 ? 's' : '');
+          feedbackHint.classList.remove('art-feedback-hint--ok');
+        } else {
+          feedbackHint.textContent = 'Prêt à envoyer';
+          feedbackHint.classList.add('art-feedback-hint--ok');
+        }
+      });
+
+      feedbackSubmit.addEventListener('click', function () {
+        var text = feedbackText.value.trim();
+        if (text.length < MIN_CHARS) return;
+        sendGA4Event('article_dislike', {
+          page_url: window.location.href,
+          article_title: getArticleTitle(),
+          user_feedback: text,
+        });
+        showThanks();
+      });
+    })();
+  </script>
+
+  <script>
+    const btn = document.getElementById('art-copy-link');
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+        } catch {
+          const el = Object.assign(document.createElement('input'), { value: window.location.href });
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          el.remove();
+        }
+        btn.setAttribute('data-copied', '');
+        setTimeout(() => btn.removeAttribute('data-copied'), 2000);
+      });
+    }
+  </script>
+
+</Layout>

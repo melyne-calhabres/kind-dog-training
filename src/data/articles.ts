@@ -90,4 +90,11 @@ export const articles: Article[] = [
     imgAlt:   'Chien en surexcitation à la maison, illustrant un chien qui ne sait pas gérer ses émotions',
     url:      '/education-canine/comportement/problemes/gestion-emotions/',
   },
+  {
+    title:    'Agressivité chez le chien : comprendre, prévenir, rééduquer',
+    readTime: '20 min',
+    img:      '/images/article-agressivite-chien.webp',
+    imgAlt:   'Chien montrant les crocs en posture défensive, illustrant l\'agressivité canine et ses signaux d\'avertissement',
+    url:      '/education-canine/comportement/problemes/agressivite/',
+  },
 ];

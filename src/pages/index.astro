@@ -739,6 +739,19 @@ const steps = [
     </div>
   </section>
 
+  <!-- ── LIEN DISCRET VERS PAGE MÈRE ────────────────────────────────── -->
+  <section class="home-hub-link" aria-label="Guide éducation canine">
+    <div class="container">
+      <p>
+        Vous cherchez des ressources plus complètes ?
+        <a href="/education-canine/">
+          Retrouvez tous mes guides sur l'éducation canine
+          <Icon name="arrow-right" width={14} height={14} strokeWidth={2} />
+        </a>
+      </p>
+    </div>
+  </section>
+
   <!-- ── ARTICLES POUR VOUS AIDER AVEC CHIEN ───────────────────────── -->
   <section class="art-related" aria-labelledby="home-related-h">
     <div class="container">
@@ -888,5 +901,34 @@ const steps = [
     .svo__grid {
       grid-template-columns: 1fr;
     }
+  }
+
+  /* ── Lien discret vers la page mère éducation-canine ── */
+  .home-hub-link {
+    padding: var(--sp-12) 0 var(--sp-12);
+    background-color: var(--kd-paper);
+  }
+
+  .home-hub-link p {
+    text-align: center;
+    font-size: var(--fs-sm);
+    color: var(--color-fg-muted);
+    margin: 0;
+  }
+
+  .home-hub-link a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    color: var(--kd-terracotta);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.18s ease-out, gap 0.18s ease-out;
+  }
+
+  .home-hub-link a:hover {
+    border-bottom-color: var(--kd-terracotta);
+    gap: var(--sp-3);
   }
 </style>

@@ -35,6 +35,7 @@ const pages = [
   '/education-canine/comportement/problemes/anxiete/separation/',
   '/education-canine/comportement/problemes/fugue/',
   '/education-canine/comportement/problemes/tirage-laisse/',
+  '/education-canine/comportement/problemes/agressivite/',
   '/education-canine/comportement/problemes/agressivite/comment-reagir-chien-attaque-autre-chien/',
 ];
 
