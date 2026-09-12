@@ -1,0 +1,833 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import '../styles/homepage.css';
+import '../styles/services.css';
+import '../styles/article.css';
+
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Kind Dog Training',
+  description: "Éducateur canin au Taillan-Médoc. Approche personnalisée et bienveillante pour chiots et chiens adultes, toutes races. Bilan comportemental gratuit à domicile.",
+  url: `${siteUrl}/educateur-canin-le-taillan-medoc/`,
+  email: 'kindogtraining@gmail.com',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '415 route du Médoc',
+    postalCode: '33520',
+    addressLocality: 'Bruges',
+    addressRegion: 'Nouvelle-Aquitaine',
+    addressCountry: 'FR',
+  },
+  areaServed: {
+    '@type': 'GeoCircle',
+    geoMidpoint: {
+      '@type': 'GeoCoordinates',
+      latitude: 44.8378,
+      longitude: -0.5792,
+    },
+    geoRadius: '30000',
+  },
+  telephone: '+33642648914',
+  priceRange: '€€',
+  image: `${siteUrl}/images/og-default.jpg`,
+  sameAs: [
+    'https://www.instagram.com/kind_dog_training/',
+    'https://share.google/poUDnO7iW9wDW4Om7',
+  ],
+  hasMap: 'https://share.google/poUDnO7iW9wDW4Om7',
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5',
+    reviewCount: '16',
+    bestRating: '5',
+    worstRating: '1',
+  },
+};
+
+const problemes = [
+  {
+    icon: 'paw-print',
+    title: 'Education chiot',
+    desc: 'Poser des bases saines pour avoir un bon chien citoyen et construire une relation durable.',
+  },
+  {
+    icon: 'dog',
+    title: 'Education chien adulte',
+    desc: 'Travailler sur des petits manques, des petites difficultés ou apprendre de nouvelles choses.',
+  },
+  {
+    icon: 'shield-alert',
+    title: 'Chiens réactifs/agressifs',
+    desc: 'Sortir des situations compliquées à travers une méthode personnalisée et adaptée à votre quotidien.',
+  },
+  {
+    icon: 'heart',
+    title: 'Anxiété globale ou spécifique',
+    desc: 'Aider votre chien à se sentir plus serein dans certaines situations.',
+  },
+];
+
+const services = [
+  {
+    href: '/services/bilan-comportemental/',
+    icon: 'clipboard-list',
+    title: 'Bilan comportemental',
+    desc: 'Premier rendez-vous à domicile pour comprendre votre chien et définir un plan d\'action sur-mesure.',
+    price: 'Gratuit · Sans engagement',
+    cta: 'En savoir plus sur le bilan',
+    featured: true,
+  },
+  {
+    href: '/services/cours-individuel-education-canine-bordeaux/',
+    icon: 'target',
+    title: 'Cours individuels',
+    desc: 'Des séances personnalisées, pensées pour votre chien. On avance à votre rythme sur les points qui comptent.',
+    price: '50 €',
+    cta: 'En savoir plus sur les cours individuels',
+    featured: false,
+  },
+  {
+    href: '/services/cours-collectifs/',
+    icon: 'users',
+    title: 'Cours collectifs',
+    desc: 'En petit groupe pour progresser en contexte social. Idéal pour travailler la réactivité aux congénères.',
+    price: '30 € / chien',
+    cta: 'En savoir plus sur les cours collectifs',
+    featured: false,
+  },
+  {
+    href: '/services/stage-intensif/',
+    icon: 'calendar',
+    title: 'Stage intensif',
+    desc: 'Un programme concentré sur plusieurs jours pour les situations qui demandent un travail plus approfondi.',
+    price: 'Sur devis',
+    cta: 'En savoir plus sur le stage intensif',
+    featured: false,
+  },
+];
+
+const steps = [
+  {
+    icon: 'home',
+    title: 'Bilan comportemental à domicile',
+    desc: "Chaque accompagnement débute par un bilan gratuit à votre domicile (20 € si > 20 km). Un état des lieux, sans engagement.",
+  },
+  {
+    icon: 'clipboard-list',
+    title: "Plan d'action sur-mesure",
+    desc: "Je vous propose un plan adapté à votre chien, votre quotidien, vos objectifs. Cours individuel ou pack, à vous de choisir.",
+  },
+  {
+    icon: 'clock',
+    title: "Cours d'une heure maximum",
+    desc: "Vous avez l'assurance que votre chien progresse à chaque cours. Je suis éducateur & comportementaliste canin et je suis donc là pour vous aider à faire progresser votre chien et à améliorer votre relation avec lui, pas pour vous prendre votre argent à travers des dizaines de cours inutiles.",
+  },
+  {
+    icon: 'book-open',
+    title: 'Bilan écrit après chaque cours',
+    desc: "Après chaque cours, vous aurez accès à un bilan écrit de manière à vous rappeler les objectifs du cours, les exercices travaillés, les progrès de votre chien et les petits devoirs que vous aurez à faire (exercices à travailler chez vous).",
+  },
+  {
+    icon: 'message-circle',
+    title: 'Suivi WhatsApp 7j/7',
+    desc: "Vous aurez également un suivi WhatsApp 7j/7 pour toute question. Je réponds à tous les messages sous 48h maximum.",
+  },
+];
+
+---
+
+<Layout
+  title="Educateur Canin Comportementaliste Le Taillan-Médoc (33320)"
+  description="Besoin d'un éducateur canin comportementaliste au Taillan-Médoc ? Kind Dog Training est là ✓ Chiens agressifs/réactifs, problèmes de comportement/obéissance ou chiots"
+  jsonLd={jsonLd}
+  preloadImages={[
+    { href: '/images/hero-banner-mobile-photo.webp', media: '(max-width: 767px)' },
+    { href: '/images/hero-banner-desktop-photo.webp', media: '(min-width: 768px)' },
+  ]}
+>
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="container">
+      <div class="hero-content">
+        <p class="eyebrow" aria-hidden="true">Kind Dog Training</p>
+        <h1 id="hero-heading">Educateur canin au <span class="accent">Taillan-Médoc</span></h1>
+        <p class="hero-subtitle">
+          Education & rééducation pour chiots et chiens adultes <span class="accent">toutes races</span>.
+        </p>
+        <div class="hero-actions">
+          <a href="/tarif-educateur-canin-bordeaux/" class="btn btn-secondary">
+            Voir les tarifs
+            <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
+          </a>
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            Prendre RDV
+            <Icon name="calendar" width={16} height={16} strokeWidth={2} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLÈMES -->
+  <section class="section problemes-section" id="problemes" aria-labelledby="problemes-heading">
+    <div class="container">
+      <div class="problemes-header">
+        <h2 id="problemes-heading">Les problèmes fréquents sur lesquels <span class="accent">j'interviens au Taillan-Médoc</span></h2>
+        <div class="separator"></div>
+        <p class="problemes-subtitle">Je vous accompagne sur tous types de problèmes avec votre chien, que ce soit pour des petits réglages ou des situations qui vous mettent en difficulté.</p>
+      </div>
+      <div class="problemes-grid">
+        {problemes.map((p) => (
+          <div class="problemes-card">
+            <span class="problemes-icon" aria-hidden="true">
+              <Icon name={p.icon} width={26} height={26} strokeWidth={1.75} />
+            </span>
+            <div class="problemes-card-body">
+              <h3 class="problemes-card-title">{p.title}</h3>
+              <p class="problemes-card-desc">{p.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section class="section" id="methode" aria-labelledby="methode-heading">
+    <div class="container">
+      <div class="approach-grid">
+        <div class="approach-sticky">
+          <h2 id="methode-heading">La méthode <span class="accent">Kind Dog Training</span></h2>
+          <img src="/images/melyneetramsey.webp" alt="Mélyne, éducateur canin au Taillan-Médoc, avec son chien Ramsey" width="610" height="508" class="approach-photo" loading="lazy" decoding="async" />
+        </div>
+
+        <div>
+          <ol>
+            {steps.map((step) => (
+              <li class="step-item">
+                <span class="icon-box icon-box-lg" aria-hidden="true">
+                  <Icon name={step.icon} width={22} height={22} strokeWidth={1.75} />
+                </span>
+                <div>
+                  <h3 class="step-title">{step.title}</h3>
+                  <p class="step-desc">{step.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+        </div>
+      </div>
+      <div class="approach-ctas">
+        <a href="/tarif-educateur-canin-bordeaux/" class="btn btn-secondary">
+          Voir les tarifs
+          <Icon name="arrow-right" width={16} height={16} strokeWidth={2} />
+        </a>
+        <a href="/prendre-rdv/" class="btn btn-primary">
+          Prendre RDV
+          <Icon name="calendar" width={16} height={16} strokeWidth={2} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <div class="wave-separator" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C320,80 640,0 960,50 C1120,70 1320,30 1440,40 L1440,80 L0,80 Z" fill="#2A1E15"/>
+    </svg>
+  </div>
+  <section class="kdtA" aria-label="Avis Google clients" id="temoignages">
+    <div class="kdtA__header">
+      <div class="kdtA__intro">
+        <div class="kdtA__eyebrow">Avis Google</div>
+        <h2 class="kdtA__title">Ce qu'en disent <span class="accent">les humains & leurs chiens</span></h2>
+        <p class="kdtA__lede">Des binômes du Taillan-Médoc et alentours qui ont retrouvé du calme, de la complicité et de la confiance.</p>
+      </div>
+      <div class="kdtA__rating">
+        <div class="kdtA__rating-num" data-kdt-rating-num>5.0</div>
+        <div class="kdtA__rating-meta">
+          <div class="kdtA__rating-stars" data-kdt-rating-stars></div>
+          <div>Basé sur <span data-kdt-rating-count>16</span> avis Google</div>
+          <a class="kdtA__rating-link" data-kdt-rating-link href="#" target="_blank" rel="noopener">
+            <span data-kdt-rating-link-icon></span> Voir sur Google
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="kdtA__carousel">
+      <div class="kdtA__viewport" data-kdt-viewport>
+        <div class="kdtA__track" data-kdt-track></div>
+      </div>
+      <div class="kdtA__controls">
+        <div class="kdtA__dots" data-kdt-dots></div>
+        <div class="kdtA__arrows">
+          <button class="kdtA__arrow" data-kdt-prev aria-label="Précédent">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="11 6 5 12 11 18"/></svg>
+          </button>
+          <button class="kdtA__arrow" data-kdt-next aria-label="Suivant">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+  (function() {
+    var KDT_REVIEWS = [
+      { name: "Rousseau Annabelle", rating: 5, date: "Il y a une semaine",
+        text: "Un super accompagnement de Mélyne, nous avons des problèmes de protection des ressources de notre berger américain, elle nous a beaucoup aidé, surtout vis à vis des autres chiens que nous côtoyons en intérieur. Elle est très présente pour nous aider même pas message. Merci beaucoup à toi !" },
+      { name: "Fiona Le Nahuec", rating: 5, date: "Il y a un mois",
+        text: "Nous avons contacté Mélyne pour Koda, notre staffie de 2 ans, devenu réactif mâle. Notre quotidien était devenu compliqué et nous appréhendions beaucoup nos balades et les rencontres avec les chiens. Mélyne nous a permis de retrouver confiance envers Koda et de travailler sur sa réactivité. Nous sommes contents de notre suivi et poursuivons donc ce dernier sur d'autres axes de travail pour avoir un toutou bien dans ses pattes. Les cours individuels, les cours collectifs et autres sont tous très agréables grâce à Mélyne qui dynamise et rend ses cours vraiment cool.\nOn recommande ++++\nMerci à toi Mélyne !\n🐶" },
+      { name: "M H", rating: 5, date: "Il y a 2 mois",
+        text: "Quand vous pensez que rien ne fonctionnera et que vous êtes à deux doigts de renoncer, allez il faut y croire encore une dernière fois et appeler Mélyne (en vrai, faites le dès le début, vous gagnerez du temps et beaucoup beaucoup d'énergie). Au-delà de ses qualités personnelles (Mélyne est vraiment super), elle est une professionnelle qui ne s'est pas improvisée éducateur canin du jour au lendemain. Il y a du boulot derrière, de l'expérience, de la formation, etc. Et quand on a eu affaire à d'autres éducateurs, ça se voit mais alors de suite et on peut dire que ça fait une énorme différence, évidemment. Ce qui est aussi cool, c'est que les séances sont très agréables, Mélyne s'adapte tant à l'humain qu'à son chien. Les exercices sont très efficaces et demandent de la régularité mais pas non plus d'y passer des heures entières chaque jour. Ma petite Staffie n'écoutait rien du tout, quasi aucun rappel, la marche en laisse c'était plutôt du tirage en laisse, bref, le quotidien était vraiment compliqué. Et grâce à Mélyne, en très peu de temps (la marche en laisse ça a été réglé en 1/2 séance par exemple), les bases (et même plus) sont désormais acquises et ça change la vie! Et même quand ça roule, on a envie de progresser sur d'autres aspects éducatifs, juste parce que c'est cool d'apprendre et de travailler avec notre chien, pas uniquement parce que c'est nécessaire. Donc mille mercis à Mélyne." },
+      { name: "Bastien Dupont", rating: 5, date: "Il y a 2 mois",
+        text: "Ma compagne et moi avons fait appel à Mélyne car nous étions en difficulté. Elle a su nous conseiller et nous orienter de la meilleur façon possible de façon très réactive et à notre écoute ! Elle aide autant nos amis à quatre pattes que leurs propriétaires." },
+      { name: "Coralie Bonnet", rating: 5, date: "Il y a 2 mois",
+        text: "Mélyne est d'une écoute précieuse et s'adapte parfaitement au chien comme à son maître. Elle nous a aidé grandement à faire évoluer Mucho qui est beaucoup plus serein dans les rencontres avec les congénères et beaucoup moins réactif ! C'est LA meilleure éducatrice de Bordeaux." },
+      { name: "Aub'Animaux", rating: 5, date: "Il y a 3 mois",
+        text: "Mélyne est une passionnée du chien et de son travail d'éducatrice. Elle est le genre de professionnelle à persévérer : elle ne s'arrête pas à un protocole ou à une méthode qui ne correspond pas à un chien. Elle a tout un tas d'outils dans sa besace, elle sort des sentiers battus et se creuse la tête pour trouver ce qui correspond au chien. Mon chien est un cas très complexe. J'ai vu des éducateurs l'ayant considéré comme « le pire chien qu'ils aient vu », « un tueur », et qui agit par « méchanceté gratuite ». Mélyne, elle, a vu plus loin. Elle a pris le temps, elle a observé dans tous les contextes possibles. Aucun jugement de sa part, uniquement des faits, des conseils, des explications. Nous avons du coup pu trouver des pistes et des choses à travailler pour avancer dans la bonne direction. Merci KDT, À bientôt 🐾" },
+      { name: "Victoria Pointet", rating: 5, date: "Il y a 3 mois",
+        text: "J'ai commencé à travailler avec Mélyne quand Brooklyn avait 4 mois, et honnêtement… quelle chance on a eue de la rencontrer ! Elle nous a accompagnés sur toutes les bases à instaurer, ainsi que la gestion des émotions, le rappel, la marche en laisse… toujours avec douceur et bonne humeur. Les résultats ont été rapides et durables." },
+      { name: "twinzeko", rating: 5, date: "Il y a 4 mois",
+        text: "Mélyne nous suit depuis bientôt un an et c'est un réel bonheur. Une écoute attentive et de très bons conseils. On voit une vraie différence dans le comportement de notre petite Appa qui a frôlé la réactivité mais qu'on a réussi à corriger ! Une éducatrice qui met le chien au centre de la discussion et fait passer le bien-être animal en priorité." },
+      { name: "Cleora", rating: 5, date: "Il y a 4 mois",
+        text: "J'ai contacté Mélyne car je voulais mieux comprendre mon chien Vaillant, récemment adopté en refuge. Le contact a tout de suite été très naturel et Vaillant a eu un vrai coup de cœur pour notre coach ! Mélyne est très bienveillante et à l'écoute. Petit bonus, chaque séance fait l'objet d'un compte-rendu écrit, ce qui est très appréciable !" },
+      { name: "Cathy Le Corre", rating: 5, date: "Il y a 4 mois",
+        text: "Une Educ au top, plein de bons conseils, consultée pour un toutou réactif ayant une mauvaise gestion des émotions (frustration, difficulté de renoncement, tirage en laisse, aboiements…) et des progrès dès la première séance ! Un accompagnement étape par étape avec un bilan à chaque séance, rien à dire, parfait !" },
+      { name: "Jacques", rating: 5, date: "Il y a 5 mois",
+        text: "J'ai fait appel à Mélyne pour régler quelques problèmes avec mon staffy de 7 ans, notamment pour un problème de communication avec ses congénères. Les cours ont été très concluants, les exercices sont simples et efficaces. Bilan gratuit, éducation positive et rempli d'amour. On voit que c'est pour Mélyne une vraie passion avant tout." },
+      { name: "axelmrquand", rating: 5, date: "Il y a 5 mois",
+        text: "Mélyne suit notre Shikoku depuis plusieurs mois à distance et fait un travail remarquable, à tel point que nous avons fait un stage avec elle. Elle donne des exercices faciles à mettre en place et efficaces. Son bilan est très synthétique, clair et ordonné. Mélyne ne fuit pas la difficulté, propose un service honnête, efficace, bienveillant et fonctionnel." },
+      { name: "Pauline", rating: 5, date: "Il y a 5 mois",
+        text: "Je recommande Mélyne sans hésiter. J'ai une staffie de 2 ans qui montait beaucoup en excitation avec son grand frère chien, qui avait peur des vélos et pour qui la marche en laisse au pied était compliquée. Grâce à l'écoute et le professionnalisme de Mélyne, les progrès ont été rapides et concrets." },
+      { name: "Marie L.", rating: 5, date: "Il y a 6 mois",
+        text: "Mélyne est une éducatrice exceptionnelle. Patiente, à l'écoute et toujours dans la bienveillance, elle a su comprendre Nala et nous donner les clés pour mieux communiquer avec elle. Les progrès ont été visibles dès les premières séances. Je la recommande chaudement !" }
+    ];
+
+    var KDT_GOOGLE_URL = "https://share.google/y9oqE2AvoPW7WO68S";
+    var KDT_RATING = 5.0;
+    var KDT_REVIEW_COUNT = 16;
+
+    var PALETTES = [
+      ["#C8623A", "#E8A33D"], ["#9B6B47", "#C8623A"], ["#5A8084", "#8FB4B8"],
+      ["#C8623A", "#E8B89A"], ["#7A5A3F", "#C8623A"], ["#A0764D", "#E8A33D"]
+    ];
+    function initials(name) {
+      if (!name) return "?";
+      var parts = name.trim().split(/\s+/).filter(Boolean);
+      if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    function avatarBg(idx) {
+      var p = PALETTES[idx % PALETTES.length];
+      return "linear-gradient(135deg, " + p[0] + ", " + p[1] + ")";
+    }
+    function starSvg(filled, size) {
+      size = size || 17;
+      return '<svg viewBox="0 0 24 24" width="' + size + '" height="' + size + '" aria-hidden="true">' +
+        '<path d="M12 2.5l2.95 6.6 7.05.7-5.35 4.85 1.6 7.35L12 18l-6.25 4 1.6-7.35L2 9.8l7.05-.7L12 2.5z" ' +
+        'fill="' + (filled ? '#E8A33D' : 'transparent') + '" stroke="#E8A33D" stroke-width="1.2" stroke-linejoin="round"/></svg>';
+    }
+    function starsHtml(rating, size) {
+      var html = '';
+      for (var i = 0; i < 5; i++) html += starSvg(i < rating, size);
+      return html;
+    }
+    function googleMark(size) {
+      size = size || 22;
+      return '<svg viewBox="0 0 48 48" width="' + size + '" height="' + size + '" aria-hidden="true">' +
+        '<path fill="#4285F4" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.3-.4-3.5z"/>' +
+        '<path fill="#34A853" d="M6.3 14.1l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.1z"/>' +
+        '<path fill="#FBBC05" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2c-2 1.4-4.5 2.4-7.2 2.4-5.2 0-9.6-3.3-11.2-7.9l-6.5 5C9.6 39.6 16.2 44 24 44z"/>' +
+        '<path fill="#EA4335" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.5l6.2 5.2C40.7 35.7 44 30.3 44 24c0-1.2-.1-2.3-.4-3.5z"/></svg>';
+    }
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function(c) {
+        return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+      });
+    }
+
+    var widget = document.getElementById('temoignages');
+    if (!widget) return;
+
+    widget.querySelector('[data-kdt-rating-num]').textContent = KDT_RATING.toFixed(1);
+    widget.querySelector('[data-kdt-rating-count]').textContent = KDT_REVIEW_COUNT;
+    widget.querySelector('[data-kdt-rating-stars]').innerHTML = starsHtml(5, 16);
+    var ratingLink = widget.querySelector('[data-kdt-rating-link]');
+    ratingLink.href = KDT_GOOGLE_URL;
+    widget.querySelector('[data-kdt-rating-link-icon]').innerHTML = googleMark(14);
+
+    var track = widget.querySelector('[data-kdt-track]');
+    KDT_REVIEWS.forEach(function(r, i) {
+      var card = document.createElement('article');
+      card.className = 'kdtA__card';
+      card.innerHTML =
+        '<div class="kdtA__card-head">' +
+          '<div class="kdtA__avatar" style="background:' + avatarBg(i) + '">' + escapeHtml(initials(r.name)) + '</div>' +
+          '<div class="kdtA__name-block">' +
+            '<div class="kdtA__name">' + escapeHtml(r.name) + '</div>' +
+            '<div class="kdtA__date">' + escapeHtml(r.date) + '</div>' +
+          '</div>' +
+          googleMark(20) +
+        '</div>' +
+        '<div class="kdtA__stars">' + starsHtml(r.rating, 17) + '</div>' +
+        '<p class="kdtA__text">' + escapeHtml(r.text) + '</p>';
+      track.appendChild(card);
+    });
+
+    var index = 0, perView = 3;
+    var paused = false;
+    var dotsContainer = widget.querySelector('[data-kdt-dots]');
+    var prevBtn = widget.querySelector('[data-kdt-prev]');
+    var nextBtn = widget.querySelector('[data-kdt-next]');
+    var viewport = widget.querySelector('[data-kdt-viewport]');
+
+    function computePerView() {
+      var w = window.innerWidth;
+      if (w < 640) return 1;
+      if (w < 960) return 2;
+      return 3;
+    }
+    function maxIndex() { return Math.max(0, KDT_REVIEWS.length - perView); }
+
+    function renderDots() {
+      dotsContainer.innerHTML = '';
+      for (var i = 0; i <= maxIndex(); i++) {
+        var d = document.createElement('button');
+        d.className = 'kdtA__dot' + (i === Math.min(index, maxIndex()) ? ' kdtA__dot--active' : '');
+        d.setAttribute('aria-label', 'Aller à la position ' + (i + 1));
+        (function(i) { d.addEventListener('click', function() { goTo(i); }); })(i);
+        dotsContainer.appendChild(d);
+      }
+    }
+
+    function update() {
+      var safe = Math.min(index, maxIndex());
+      index = safe;
+      var gap = 20;
+      var cardPx = (viewport.offsetWidth - 16 - gap * (perView - 1)) / perView;
+      var offset = safe > 0 ? safe * (cardPx + gap) : 0;
+      [].forEach.call(track.children, function(c) { c.style.flexBasis = cardPx + 'px'; });
+      track.style.transform = safe > 0 ? 'translateX(-' + offset + 'px)' : 'translateX(0)';
+      prevBtn.disabled = safe === 0;
+      nextBtn.disabled = safe >= maxIndex();
+      renderDots();
+    }
+
+    function goTo(i) {
+      index = Math.max(0, Math.min(maxIndex(), i));
+      update();
+    }
+
+    prevBtn.addEventListener('click', function() { goTo(index - 1); });
+    nextBtn.addEventListener('click', function() { goTo(index + 1); });
+
+    window.addEventListener('resize', function() {
+      perView = computePerView();
+      update();
+    });
+
+    widget.addEventListener('mouseenter', function() { paused = true; });
+    widget.addEventListener('mouseleave', function() { paused = false; });
+    setInterval(function() {
+      if (paused) return;
+      if (index >= maxIndex()) goTo(0); else goTo(index + 1);
+    }, 5500);
+
+    var dragStart = null;
+    function onDown(e) {
+      dragStart = (e.touches ? e.touches[0].clientX : e.clientX);
+    }
+    function onUp(e) {
+      if (dragStart === null) return;
+      var endX = (e.changedTouches ? e.changedTouches[0].clientX : e.clientX);
+      var dx = endX - dragStart;
+      if (Math.abs(dx) > 50) goTo(index + (dx < 0 ? 1 : -1));
+      dragStart = null;
+    }
+    viewport.addEventListener('mousedown', onDown);
+    viewport.addEventListener('mouseup', onUp);
+    viewport.addEventListener('touchstart', onDown, { passive: true });
+    viewport.addEventListener('touchend', onUp);
+
+    perView = computePerView();
+    update();
+  })();
+  </script>
+
+  <div class="wave-separator wave-separator--from-dark" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C360,70 720,10 1080,50 C1260,65 1380,35 1440,40 L1440,80 L0,80 Z" fill="#FBF6EC"/>
+    </svg>
+  </div>
+
+  <!-- SERVICES OVERVIEW -->
+  <section class="section svo" id="services" aria-labelledby="svo-heading">
+    <div class="container">
+      <div class="svo__head">
+        <h2 id="svo-heading">Mes services d'éducation canine <span class="accent">au Taillan-Médoc</span></h2>
+        <p class="svo__lede">Chaque accompagnement débute par un bilan comportemental gratuit. Ensemble, on définit ensuite la formule la plus adaptée à votre chien.</p>
+      </div>
+      <div class="svo__grid">
+        {services.map((svc) => (
+          <a href={svc.href} class={`svo__card${svc.featured ? ' svo__card--featured' : ''}`}>
+            <span class="svo__card-icon">
+              <Icon name={svc.icon} width={22} height={22} strokeWidth={1.75} />
+            </span>
+            <div class="svo__card-body">
+              <h3 class="svo__card-title">{svc.title}</h3>
+              <p class="svo__card-desc">{svc.desc}</p>
+            </div>
+            <p class="svo__card-price">{svc.price}</p>
+            <span class="svo__card-cta">
+              {svc.cta}
+              <Icon name="arrow-right" width={14} height={14} strokeWidth={2} />
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT MELYNE -->
+  <section class="section melyne-section" id="melyne" aria-labelledby="melyne-heading">
+    <div class="container">
+      <div class="melyne-inner">
+        <h2 class="melyne-title" id="melyne-heading">Mélyne, <span class="accent">éducatrice canin</span> certifiée au Taillan-Médoc</h2>
+        <p class="melyne-text">Titulaire de l'ACACED et formée auprès d'éducateurs canins reconnus du monde francophone, j'interviens sur Le Taillan-Médoc et la métropole pour vous aider à <strong>construire une relation saine et durable</strong> avec votre chien.</p>
+        <p class="melyne-text">Mon approche n'est pas née dans un manuel. Elle est née de Ramsey, mon staffie qui a rencontré des problèmes de comportement et d'agressivité, et des mois passés à chercher, <strong>puis à trouver</strong>, ce qui fonctionne vraiment. Aujourd'hui, je mets cette expérience au service de votre chien, qu'il soit chiot en apprentissage ou turbulent ou chien adulte en difficulté. Chaque chien est un cas unique. Chaque accompagnement l'est aussi.</p>
+        <a href="/qui-suis-je/" class="melyne-cta">
+          En savoir plus sur mon parcours
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="16" y2="12"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="16" x2="16" y2="12"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZONE -->
+  <section class="kdt-map" id="zone" aria-label="Zone d'intervention de Kind Dog Training">
+    <div class="kdt-map__body">
+
+      <div class="kdt-map__content">
+        <p class="eyebrow">Zone d'intervention</p>
+        <h2 class="kdt-map__title">Education canine au Taillan-Médoc <span class="accent">&amp;</span> alentours</h2>
+        <p class="kdt-map__lede">Je me déplace à votre domicile au Taillan-Médoc et dans toutes les communes alentours, jusqu'à 30&nbsp;km. Cela comprend notamment Ambarès-et-Lagrave, Ambès, Artigues-près-Bordeaux, Bassens, Bègles, Blanquefort, Bouliac, Le Bouscat, Bordeaux, Bruges, Canéjan, Cenon, Eysines, Floirac, Gradignan, Le Haillan, Lormont, Martignas-sur-Jalle, Mérignac, Parempuyre, Pessac, Saint-Aubin-de-Médoc, Saint-Jean-d'Illac, Saint-Médard-en-Jalles, Talence, Villenave-d'Ornon…</p>
+        <p class="kdt-map__meta">~30&nbsp;km de rayon · 28&nbsp;communes</p>
+      </div>
+
+      <div class="kdt-map__visual">
+        <svg class="kdt-map__svg" viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <defs>
+            <filter id="kdtWobble" x="-5%" y="-5%" width="110%" height="110%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="3"/>
+              <feDisplacementMap in="SourceGraphic" scale="3"/>
+            </filter>
+            <filter id="kdtGrain">
+              <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+              <feColorMatrix values="0 0 0 0 0.165  0 0 0 0 0.118  0 0 0 0 0.082  0 0 0 0.08 0"/>
+            </filter>
+          </defs>
+
+          <rect x="-200" y="-200" width="1400" height="1200" fill="#F4ECDC"/>
+          <rect x="-200" y="-200" width="1400" height="1200" filter="url(#kdtGrain)" opacity="0.6"/>
+
+          <path d="M 240,270 C 200,310 200,380 240,440 C 260,500 250,580 310,620 C 380,660 480,680 560,660 C 640,650 720,610 740,540 C 770,470 770,380 740,300 C 710,230 640,200 560,210 C 490,215 400,210 340,225 C 290,235 260,250 240,270 Z"
+                fill="#E6A487" fill-opacity="0.18" filter="url(#kdtWobble)"/>
+          <path d="M 240,270 C 200,310 200,380 240,440 C 260,500 250,580 310,620 C 380,660 480,680 560,660 C 640,650 720,610 740,540 C 770,470 770,380 740,300 C 710,230 640,200 560,210 C 490,215 400,210 340,225 C 290,235 260,250 240,270 Z"
+                fill="none" stroke="#2A1E15" stroke-opacity="0.4" stroke-width="1.5" stroke-dasharray="4 5" filter="url(#kdtWobble)"/>
+
+          <path d="M 720,780 C 700,720 640,650 600,560 C 570,490 540,440 520,390 C 500,340 510,290 530,220 C 545,165 560,110 580,40"
+                fill="none" stroke="#A8B8C2" stroke-opacity="0.55" stroke-width="14" stroke-linecap="round" filter="url(#kdtWobble)"/>
+          <path d="M 720,780 C 700,720 640,650 600,560 C 570,490 540,440 520,390 C 500,340 510,290 530,220 C 545,165 560,110 580,40"
+                fill="none" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="1" stroke-linecap="round"/>
+          <text x="640" y="710" font-size="14" fill="#8A9EA8" font-style="italic" letter-spacing="0.2em" font-family="Nunito, sans-serif">La Garonne</text>
+
+          <g font-family="Nunito, sans-serif" font-size="13" font-weight="500" fill="#2A1E15">
+            <circle cx="406" cy="247" r="4"/><text x="415" y="251">Blanquefort</text>
+            <circle cx="456" cy="326" r="4"/><text x="465" y="330">Bruges</text>
+            <circle cx="466" cy="348" r="4"/><text x="475" y="352">Le Bouscat</text>
+            <circle cx="389" cy="308" r="4"/><text x="398" y="312">Eysines</text>
+            <circle cx="349" cy="353" r="4"/><text x="358" y="357">Le Haillan</text>
+            <circle cx="282" cy="280" r="4"/><text x="273" y="284" text-anchor="end">Saint-Médard-en-Jalles</text>
+            <circle cx="396" cy="398" r="4"/><text x="405" y="402">Mérignac</text>
+            <circle cx="418" cy="479" r="4"/><text x="427" y="483">Pessac</text>
+            <circle cx="481" cy="475" r="4"/><text x="490" y="479">Talence</text>
+            <circle cx="443" cy="555" r="4"/><text x="434" y="559" text-anchor="end">Gradignan</text>
+            <circle cx="549" cy="475" r="4"/><text x="558" y="479">Bègles</text>
+            <circle cx="521" cy="538" r="4"/><text x="530" y="542">Villenave-d'Ornon</text>
+            <circle cx="577" cy="368" r="4"/><text x="586" y="372">Cenon</text>
+            <circle cx="598" cy="414" r="4"/><text x="606" y="433">Floirac</text>
+            <circle cx="597" cy="326" r="4"/><text x="606" y="330">Lormont</text>
+            <circle cx="630" cy="470" r="4"/><text x="639" y="474">Bouliac</text>
+            <circle cx="657" cy="220" r="4"/><text x="666" y="224">Ambarès-et-Lagrave</text>
+            <circle cx="638" cy="392" r="4"/><text x="647" y="396">Artigues-près-Bordeaux</text>
+            <circle cx="500" cy="410" r="4"/><text x="509" y="414">Bordeaux</text>
+          </g>
+
+          <g>
+            <circle cx="330" cy="290" r="18" fill="none" stroke="#C8623A" stroke-width="2" opacity="0">
+              <animate attributeName="r" from="18" to="220" dur="3s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" from="0.7" to="0" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="330" cy="290" r="18" fill="none" stroke="#C8623A" stroke-width="2" opacity="0">
+              <animate attributeName="r" from="18" to="220" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" from="0.7" to="0" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="330" cy="290" r="14" fill="#F4ECDC" stroke="#C8623A" stroke-width="3"/>
+            <circle cx="330" cy="290" r="6" fill="#C8623A"/>
+            <text x="352" y="296" font-family="Newsreader, Georgia, serif" font-size="22" font-weight="600" fill="#2A1E15" letter-spacing="-0.01em">Le Taillan-Médoc</text>
+          </g>
+        </svg>
+
+        <div class="kdt-map__footer">
+          <div class="kdt-map__compass">
+            <svg width="22" height="22" viewBox="-12 -12 24 24" aria-hidden="true">
+              <polygon points="0,-10 3,0 0,10 -3,0" fill="#C8623A" opacity="0.9"/>
+              <text x="0" y="-12" font-size="7" fill="#2A1E15" text-anchor="middle" font-weight="700" font-family="Nunito, sans-serif">N</text>
+            </svg>
+            <div class="kdt-map__scale">
+              <span class="kdt-map__scale-bar"></span>
+              <span>5 km</span>
+            </div>
+          </div>
+          <div class="kdt-map__credit">Kind Dog Training · Educateur canin</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section-dark cta-section" aria-labelledby="cta-heading">
+    <div class="container">
+      <div class="cta-bilan-card">
+        <h2 id="cta-heading" style="text-align: center; margin-bottom: var(--sp-5);">Réservez votre bilan comportemental <span class="accent">100% GRATUIT</span>*</h2>
+        <p style="text-align: center; margin-bottom: var(--sp-4);">
+          Chaque accompagnement débute par un bilan comportemental <strong>à votre domicile</strong>. Le but est de comprendre en profondeur votre situation, les problèmes que vous rencontrez, l'historique de votre chien et de vous proposer un plan d'action.
+        </p>
+        <p style="text-align: center; margin-bottom: var(--sp-6);">
+          <strong>Aucun engagement</strong> n'est demandé à ce stade et c'est la politique de Kind Dog Training ! Si vous êtes satisfait de ce premier rdv et de la méthode alors on fixe une date pour un premier cours, sinon vous n'aurez rien perdu.
+        </p>
+        <div style="text-align: center;">
+          <a href="/prendre-rdv/" class="btn btn-primary">
+            <Icon name="calendar" width={18} height={18} strokeWidth={1.75} />
+            Prendre RDV
+          </a>
+        </div>
+        <p style="text-align: center; margin-top: var(--sp-5); font-size: 0.8rem; color: var(--kd-fawn);">
+          *Bilan comportemental à 20&nbsp;€ si &gt;20&nbsp;km.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* ── Problèmes ── */
+  .problemes-section {
+    background-color: var(--kd-white);
+  }
+
+  .problemes-header {
+    text-align: center;
+    max-width: 720px;
+    margin-inline: auto;
+    margin-bottom: var(--sp-12);
+  }
+
+  .problemes-header h2 {
+    margin-bottom: var(--sp-6);
+  }
+
+  .problemes-subtitle {
+    font-size: var(--fs-md);
+    color: var(--color-fg-muted);
+    line-height: var(--lh-relaxed);
+    margin-top: var(--sp-6);
+  }
+
+  .problemes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-5);
+  }
+
+  .problemes-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    padding: var(--sp-8);
+    background: var(--kd-cream);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.18s ease-out, transform 0.18s ease-out;
+  }
+
+  .problemes-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+  }
+
+  .problemes-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--kd-terracotta-soft);
+    color: var(--kd-terracotta);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  .problemes-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+
+  .problemes-card-title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    line-height: var(--lh-snug);
+    color: var(--color-fg);
+    margin-bottom: 0;
+  }
+
+  .problemes-card-desc {
+    font-size: var(--fs-base);
+    line-height: var(--lh-relaxed);
+    color: var(--kd-bark);
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    .problemes-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Services overview ── */
+  .svo {
+    background-color: var(--kd-paper);
+  }
+
+  .svo__head {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto var(--sp-12);
+  }
+
+  .svo__lede {
+    font-size: var(--fs-md);
+    color: var(--color-fg-muted);
+    line-height: var(--lh-relaxed);
+    margin-top: var(--sp-4);
+  }
+
+  .svo__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-5);
+    margin-bottom: var(--sp-10);
+  }
+
+  .svo__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    padding: var(--sp-8);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.18s ease-out, transform 0.18s ease-out;
+  }
+
+  .svo__card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+  }
+
+  .svo__card--featured {
+    border-top: 3px solid var(--kd-terracotta);
+  }
+
+  .svo__card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background-color: var(--kd-cream-warm);
+    color: var(--kd-terracotta);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .svo__card--featured .svo__card-icon {
+    background-color: var(--kd-terracotta);
+    color: var(--kd-paper);
+  }
+
+  .svo__card-body {
+    flex: 1;
+  }
+
+  .svo__card-title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    line-height: var(--lh-snug);
+    color: var(--color-fg);
+    margin-bottom: var(--sp-3);
+  }
+
+  .svo__card-desc {
+    font-size: var(--fs-base);
+    line-height: var(--lh-relaxed);
+    color: var(--color-fg-muted);
+  }
+
+  .svo__card-price {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--kd-terracotta);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .svo__card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--kd-terracotta);
+    transition: gap 0.18s ease-out;
+  }
+
+  .svo__card:hover .svo__card-cta {
+    gap: var(--sp-3);
+  }
+
+  @media (max-width: 960px) {
+    .svo__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .svo__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
