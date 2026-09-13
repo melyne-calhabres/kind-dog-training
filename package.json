@@ -5,10 +5,17 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "netlify-dev": "netlify dev"
   },
   "dependencies": {
-    "astro": "^5.7.10",
-    "@astrojs/sitemap": "^3.3.1"
+    "@anthropic-ai/sdk": "^0.32.0",
+    "@astrojs/sitemap": "^3.3.1",
+    "@netlify/blobs": "^8.2.0",
+    "@supabase/supabase-js": "^2.45.4",
+    "astro": "^5.7.10"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
   }
 }

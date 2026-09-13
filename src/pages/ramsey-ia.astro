@@ -1,0 +1,788 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+
+const suggestions = [
+  'Mon chien tire en laisse',
+  'Le rappel ne fonctionne pas',
+  'Il aboie sur les autres chiens',
+  'Par où commencer avec un chiot ?',
+];
+---
+
+<Layout
+  title="Ramsey IA — Assistant Kind Dog Training"
+  description="Posez vos questions d'éducation canine à Ramsey IA, l'assistant conversationnel de Kind Dog Training. Réponses fondées sur les fiches, articles et cas clients de Mélyne Calhabres."
+>
+  <main class="chat-app" id="chat-app" data-state="empty" aria-label="Assistant Ramsey IA">
+
+    <!-- Écran d'accueil (avant premier message) -->
+    <section class="chat-landing" id="chat-landing">
+      <div class="chat-landing__inner">
+        <img
+          class="chat-landing__avatar"
+          src="/images/ramsey-ia-avatar.webp"
+          alt="Portrait de Ramsey, le staffie de Mélyne"
+          width="72"
+          height="72"
+          loading="eager"
+        />
+        <h1 class="chat-landing__title">Bonjour, je suis Ramsey IA.</h1>
+        <p class="chat-landing__subtitle">
+          L'assistant conversationnel de Kind Dog Training. Je m'appuie sur les fiches,
+          articles et cas clients de Mélyne pour vous aider. Racontez-moi votre situation.
+        </p>
+
+        <div class="composer composer--landing" id="composer-landing-wrap">
+          <!-- La forme réelle est unique et déplacée par JS entre landing et bottom. -->
+        </div>
+
+        <div class="suggestions" role="list" aria-label="Suggestions">
+          {suggestions.map((s) => (
+            <button type="button" class="suggestion" data-suggestion={s} role="listitem">
+              {s}
+            </button>
+          ))}
+        </div>
+
+        <button type="button" class="chat-landing__notice-btn" id="open-help">
+          Comment ça marche&nbsp;?
+        </button>
+      </div>
+    </section>
+
+    <!-- Modale : Comment ça marche -->
+    <dialog class="chat-modal" id="help-modal" aria-labelledby="help-modal-title">
+      <div class="chat-modal__inner">
+        <div class="chat-modal__header">
+          <h2 id="help-modal-title">Comment ça marche&nbsp;?</h2>
+          <button type="button" class="chat-modal__close" id="close-help" aria-label="Fermer">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 6L6 18"/><path d="M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+        <ul class="chat-modal__list">
+          <li>Commencez par directement décrire votre situation ou poser votre question.</li>
+          <li>Selon votre demande, l'assistant peut vous poser plusieurs questions avant de répondre. C'est normal. Dans beaucoup de cas il faudra certains éléments de contexte pour vous donner la meilleure réponse.</li>
+          <li>Il ne remplace pas un vrai bilan. Pour les cas complexes, il vous orientera vers Mélyne.</li>
+          <li>Chaque rechargement de la page démarre une nouvelle conversation.</li>
+        </ul>
+      </div>
+    </dialog>
+
+    <!-- Conversation (après premier message) -->
+    <section class="chat-conversation" id="chat-conversation" hidden>
+      <header class="chat-topbar">
+        <div class="chat-topbar__brand">
+          <img
+            class="chat-topbar__avatar"
+            src="/images/ramsey-ia-avatar.webp"
+            alt=""
+            width="28"
+            height="28"
+            aria-hidden="true"
+          />
+          <span>Ramsey IA</span>
+        </div>
+        <button type="button" class="chat-topbar__new" id="chat-new" aria-label="Nouvelle conversation">
+          Nouvelle conversation
+        </button>
+      </header>
+
+      <div class="chat-thread" id="chat-messages" aria-live="polite" role="log"></div>
+
+      <div class="composer composer--bottom" id="composer-bottom-wrap"></div>
+    </section>
+
+    <!-- Formulaire unique déplacé par JS entre landing et bottom -->
+    <template id="composer-template">
+      <form class="chat-form" id="chat-form" autocomplete="off">
+        <label for="chat-input" class="sr-only">Votre message</label>
+        <textarea
+          id="chat-input"
+          name="message"
+          rows="1"
+          maxlength="4000"
+          placeholder="Racontez-moi votre situation…"
+          required
+        ></textarea>
+        <button type="submit" class="chat-send" id="chat-send" aria-label="Envoyer">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 19V5"/>
+            <path d="M5 12l7-7 7 7"/>
+          </svg>
+        </button>
+      </form>
+    </template>
+
+    {turnstileSiteKey && (
+      <div
+        id="turnstile-widget"
+        class="cf-turnstile"
+        data-sitekey={turnstileSiteKey}
+        data-size="invisible"
+        data-callback="onTurnstileSuccess"
+        data-error-callback="onTurnstileError"
+      />
+    )}
+  </main>
+
+  {turnstileSiteKey && (
+    <script
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+      async
+      defer
+    />
+  )}
+</Layout>
+
+<style is:global>
+  /* ============================================================
+     Layout général — style ChatGPT / Claude
+     ============================================================ */
+  .chat-app {
+    min-height: calc(100vh - var(--header-h, 0px));
+    background: var(--kd-paper);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Priorité à l'attribut hidden sur les display flex */
+  .chat-app [hidden] { display: none !important; }
+
+  /* -------- ÉCRAN D'ACCUEIL -------- */
+  .chat-landing {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sp-10) var(--sp-5);
+  }
+
+  .chat-landing__inner {
+    width: 100%;
+    max-width: 720px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-6);
+  }
+
+  .chat-landing__avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--kd-cream);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    border: 2px solid var(--kd-paper);
+    display: block;
+  }
+
+  .chat-topbar__avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--kd-cream);
+    display: block;
+  }
+
+  .chat-landing__title {
+    font-size: clamp(1.75rem, 3.5vw, 2.4rem);
+    line-height: 1.15;
+    color: var(--kd-ink);
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .chat-landing__subtitle {
+    font-size: var(--fs-base);
+    line-height: var(--lh-relaxed);
+    color: var(--kd-bark);
+    margin: 0;
+    max-width: 560px;
+  }
+
+  .composer--landing {
+    width: 100%;
+  }
+
+  .suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sp-2);
+  }
+
+  .suggestion {
+    appearance: none;
+    background: var(--kd-paper);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    padding: var(--sp-2) var(--sp-4);
+    font-size: var(--fs-sm);
+    color: var(--kd-ink);
+    font-family: inherit;
+    cursor: pointer;
+    transition: background var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast);
+  }
+  .suggestion:hover {
+    background: var(--kd-cream);
+    border-color: var(--kd-terracotta);
+  }
+  .suggestion:active { transform: translateY(1px); }
+
+  .chat-landing__notice-btn {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    padding: var(--sp-2) var(--sp-3);
+    margin-top: var(--sp-2);
+    color: var(--kd-terracotta-deep);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .chat-landing__notice-btn:hover { color: var(--kd-terracotta); }
+
+  /* ---------- Modale ---------- */
+  .chat-modal {
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-lg);
+    max-width: 520px;
+    width: calc(100% - 2 * var(--sp-4));
+    background: var(--kd-paper);
+    color: var(--kd-ink);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    /* Centrage cross-browser */
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    max-height: calc(100vh - 2 * var(--sp-6));
+    overflow: auto;
+  }
+  .chat-modal::backdrop {
+    background: rgba(20, 15, 12, 0.55);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+  }
+  .chat-modal__inner {
+    padding: var(--sp-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+  }
+  .chat-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+  }
+  .chat-modal__header h2 {
+    margin: 0;
+    font-size: var(--fs-lg);
+    color: var(--kd-ink);
+  }
+  .chat-modal__close {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    color: var(--kd-bark);
+    padding: 4px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--dur-fast), color var(--dur-fast);
+  }
+  .chat-modal__close:hover {
+    background: var(--kd-cream);
+    color: var(--kd-ink);
+  }
+  .chat-modal__list {
+    list-style: disc;
+    padding-left: var(--sp-5);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    font-size: var(--fs-base);
+    line-height: var(--lh-relaxed);
+    color: var(--kd-bark);
+    text-align: left;
+  }
+
+  /* -------- CONVERSATION -------- */
+  .chat-conversation {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - var(--header-h, 0px));
+  }
+
+  .chat-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sp-3) var(--sp-5);
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: saturate(1.2) blur(8px);
+    -webkit-backdrop-filter: saturate(1.2) blur(8px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .chat-topbar__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-weight: 700;
+    color: var(--kd-ink);
+    font-size: var(--fs-sm);
+  }
+
+  .chat-topbar__new {
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    padding: 6px 12px;
+    font-size: var(--fs-sm);
+    color: var(--kd-bark);
+    cursor: pointer;
+    font-family: inherit;
+    transition: background var(--dur-fast), color var(--dur-fast);
+  }
+  .chat-topbar__new:hover {
+    background: var(--kd-cream);
+    color: var(--kd-ink);
+  }
+
+  .chat-thread {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--sp-6) var(--sp-5) var(--sp-10);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-5);
+    scroll-behavior: smooth;
+  }
+
+  .chat-msg {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+  }
+
+  .chat-msg--user { justify-content: flex-end; }
+  .chat-msg--assistant { justify-content: flex-start; }
+
+  .chat-bubble {
+    font-size: var(--fs-base);
+    line-height: 1.65;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    color: var(--kd-ink);
+  }
+
+  /* Bulles classiques : user à droite (terracotta), assistant à gauche (crème) */
+  .chat-msg--user .chat-bubble {
+    background: var(--kd-terracotta);
+    color: var(--kd-paper);
+    padding: var(--sp-3) var(--sp-4);
+    border-radius: 18px;
+    border-bottom-right-radius: 6px;
+    max-width: 80%;
+  }
+  .chat-msg--assistant .chat-bubble {
+    background: var(--kd-cream);
+    color: var(--kd-ink);
+    padding: var(--sp-3) var(--sp-4);
+    border-radius: 18px;
+    border-bottom-left-radius: 6px;
+    max-width: 80%;
+    border: 1px solid var(--color-border);
+  }
+
+  .chat-msg--user .chat-bubble a {
+    color: var(--kd-cream);
+    text-decoration: underline;
+  }
+
+  /* Loading dans une bulle assistant */
+  .chat-msg--assistant .chat-bubble.chat-loading {
+    padding: var(--sp-3) var(--sp-4);
+  }
+
+  .chat-bubble strong { font-weight: 700; }
+  .chat-bubble a {
+    color: var(--kd-terracotta-deep);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  /* Loading */
+  .chat-loading {
+    display: inline-flex;
+    gap: 5px;
+    align-items: center;
+    padding: 4px 0;
+  }
+  .chat-loading span {
+    width: 7px;
+    height: 7px;
+    background: var(--kd-fawn);
+    border-radius: 50%;
+    animation: bounce 1.2s infinite ease-in-out;
+  }
+  .chat-loading span:nth-child(2) { animation-delay: 0.15s; }
+  .chat-loading span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+    40%           { transform: translateY(-6px); opacity: 1; }
+  }
+
+  .chat-error {
+    color: var(--kd-vine) !important;
+  }
+
+  /* -------- COMPOSER (form) -------- */
+  .composer--bottom {
+    position: sticky;
+    bottom: 0;
+    padding: var(--sp-4) var(--sp-5) var(--sp-5);
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, var(--kd-paper) 30%);
+  }
+
+  .chat-form {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    gap: var(--sp-2);
+    align-items: flex-end;
+    background: #ffffff;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 24px;
+    padding: 8px 8px 8px 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  }
+  .chat-form textarea { background: #ffffff; }
+  .chat-form:focus-within {
+    border-color: var(--kd-terracotta);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+
+  .chat-form textarea {
+    flex: 1;
+    resize: none;
+    max-height: 200px;
+    padding: 10px 4px;
+    border: 0;
+    outline: none;
+    background: transparent;
+    font-family: var(--font-sans);
+    font-size: var(--fs-base);
+    line-height: 1.5;
+    color: var(--kd-ink);
+  }
+  .chat-form textarea::placeholder {
+    color: var(--kd-fawn);
+  }
+
+  .chat-send {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 0;
+    background: var(--kd-terracotta);
+    color: var(--kd-paper);
+    cursor: pointer;
+    transition: background var(--dur-fast), transform var(--dur-fast);
+  }
+  .chat-send:hover:not(:disabled) {
+    background: var(--kd-terracotta-deep);
+  }
+  .chat-send:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0);
+    white-space: nowrap; border: 0;
+  }
+
+  /* Turnstile invisible */
+  #turnstile-widget { position: fixed; bottom: 0; right: 0; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .chat-landing { padding: var(--sp-6) var(--sp-4); }
+    .chat-landing__title { font-size: 1.55rem; }
+    .chat-thread { padding: var(--sp-4) var(--sp-3) var(--sp-8); }
+    .composer--bottom { padding: var(--sp-3) var(--sp-3) var(--sp-4); }
+  }
+</style>
+
+<script>
+  // ============================================================
+  // Ramsey IA — logique chat (landing → conversation)
+  // ============================================================
+  const appEl = document.getElementById('chat-app') as HTMLElement;
+  const landingEl = document.getElementById('chat-landing') as HTMLElement;
+  const conversationEl = document.getElementById('chat-conversation') as HTMLElement;
+  const messagesEl = document.getElementById('chat-messages') as HTMLElement;
+  const landingComposerWrap = document.getElementById('composer-landing-wrap') as HTMLElement;
+  const bottomComposerWrap = document.getElementById('composer-bottom-wrap') as HTMLElement;
+  const template = document.getElementById('composer-template') as HTMLTemplateElement;
+  const newBtn = document.getElementById('chat-new') as HTMLButtonElement;
+
+  // Monte le formulaire dans le wrap landing au départ
+  landingComposerWrap.appendChild(template.content.cloneNode(true));
+
+  let formEl = document.getElementById('chat-form') as HTMLFormElement;
+  let inputEl = document.getElementById('chat-input') as HTMLTextAreaElement;
+  let sendBtn = document.getElementById('chat-send') as HTMLButtonElement;
+
+  const history: Array<{ role: 'user' | 'assistant'; content: string }> = [];
+
+  const sessionId: string = (crypto as any)?.randomUUID
+    ? (crypto as any).randomUUID()
+    : `${Date.now()}-${Math.random().toString(36).slice(2, 10)}-${Math.random().toString(36).slice(2, 10)}`;
+
+  function trackEvent(event: string, params: Record<string, any> = {}) {
+    try {
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({ event, session_id: sessionId, ...params });
+    } catch { /* silent */ }
+  }
+
+  // Turnstile
+  const turnstileEnabled = !!document.getElementById('turnstile-widget');
+  let turnstileResolver: ((token: string) => void) | null = null;
+  let turnstileToken: string | null = null;
+  (window as any).onTurnstileSuccess = (token: string) => {
+    turnstileToken = token;
+    if (turnstileResolver) { turnstileResolver(token); turnstileResolver = null; }
+  };
+  (window as any).onTurnstileError = () => {
+    if (turnstileResolver) { turnstileResolver(''); turnstileResolver = null; }
+  };
+  async function getTurnstileToken(): Promise<string> {
+    if (!turnstileEnabled) return '';
+    if (turnstileToken) return turnstileToken;
+    return new Promise((resolve) => {
+      turnstileResolver = resolve;
+      const ts = (window as any).turnstile;
+      if (ts && typeof ts.execute === 'function') {
+        try { ts.execute('#turnstile-widget'); } catch { resolve(''); }
+      } else {
+        setTimeout(() => {
+          const ts2 = (window as any).turnstile;
+          if (ts2) { try { ts2.execute('#turnstile-widget'); } catch { resolve(''); } }
+          else resolve('');
+        }, 1500);
+      }
+    });
+  }
+
+  function escapeHtml(str: string): string {
+    return str.replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[c]!));
+  }
+  function renderMarkdown(text: string): string {
+    let html = escapeHtml(text);
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(
+      /\[([^\]]+)\]\((https?:\/\/[^\s)]+|\/[^\s)]*)\)/g,
+      '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
+    return html;
+  }
+
+  function appendMessage(role: 'user' | 'assistant', content: string, extraClass = '') {
+    const wrap = document.createElement('div');
+    wrap.className = `chat-msg chat-msg--${role}`;
+    const bubble = document.createElement('div');
+    bubble.className = `chat-bubble ${extraClass}`.trim();
+    bubble.innerHTML = renderMarkdown(content);
+    wrap.appendChild(bubble);
+    messagesEl.appendChild(wrap);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return wrap;
+  }
+
+  function appendLoading(): HTMLElement {
+    const wrap = document.createElement('div');
+    wrap.className = 'chat-msg chat-msg--assistant';
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble chat-loading';
+    bubble.innerHTML = '<span></span><span></span><span></span>';
+    wrap.appendChild(bubble);
+    messagesEl.appendChild(wrap);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return wrap;
+  }
+
+  // Transition landing → conversation : déplace le formulaire du wrap landing vers le wrap bottom.
+  function activateConversation() {
+    if (appEl.dataset.state === 'active') return;
+    appEl.dataset.state = 'active';
+    landingEl.hidden = true;
+    conversationEl.hidden = false;
+    // Déplace physiquement le form (préserve son état, écouteurs, valeur)
+    bottomComposerWrap.appendChild(formEl);
+    inputEl.focus();
+  }
+
+  // Bouton "Nouvelle conversation" : recharge (la session_id est déjà unique par ouverture)
+  newBtn.addEventListener('click', () => {
+    if (history.length === 0 || confirm('Démarrer une nouvelle conversation ? Le fil actuel sera effacé.')) {
+      window.location.reload();
+    }
+  });
+
+  // Modale "Comment ça marche"
+  const helpModal = document.getElementById('help-modal') as HTMLDialogElement | null;
+  const openHelpBtn = document.getElementById('open-help');
+  const closeHelpBtn = document.getElementById('close-help');
+  openHelpBtn?.addEventListener('click', () => {
+    if (helpModal && typeof helpModal.showModal === 'function') helpModal.showModal();
+    else helpModal?.setAttribute('open', '');
+  });
+  closeHelpBtn?.addEventListener('click', () => helpModal?.close());
+  // Fermeture au clic sur le backdrop
+  helpModal?.addEventListener('click', (e) => {
+    const rect = (helpModal as HTMLDialogElement).getBoundingClientRect();
+    const inDialog =
+      e.clientY >= rect.top && e.clientY <= rect.bottom &&
+      e.clientX >= rect.left && e.clientX <= rect.right;
+    if (!inDialog) helpModal.close();
+  });
+
+  // Suggestions : pré-remplit le champ et envoie directement
+  document.querySelectorAll<HTMLButtonElement>('.suggestion').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const val = btn.dataset.suggestion || btn.textContent || '';
+      inputEl.value = val;
+      inputEl.dispatchEvent(new Event('input'));
+      formEl.requestSubmit();
+    });
+  });
+
+  // Auto-grow + Enter to send : attaché une seule fois car le form est le même élément DOM
+  inputEl.addEventListener('input', () => {
+    inputEl.style.height = 'auto';
+    inputEl.style.height = Math.min(inputEl.scrollHeight, 200) + 'px';
+  });
+  inputEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      formEl.requestSubmit();
+    }
+  });
+
+  formEl.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const text = inputEl.value.trim();
+    if (!text) return;
+
+    // Bascule sur la vue conversation dès le premier message
+    activateConversation();
+
+    appendMessage('user', text);
+    history.push({ role: 'user', content: text });
+
+    const userTurns = history.filter(m => m.role === 'user').length;
+    if (userTurns === 1) trackEvent('ramsey_chat_started');
+    trackEvent('ramsey_chat_message_sent', {
+      message_index: userTurns,
+      chars: text.length,
+    });
+
+    inputEl.value = '';
+    inputEl.style.height = 'auto';
+    inputEl.disabled = true;
+    sendBtn.disabled = true;
+
+    const loading = appendLoading();
+    const t0 = performance.now();
+
+    const isFirstUserMessage = userTurns === 1;
+    let tsToken = '';
+    if (isFirstUserMessage && turnstileEnabled) {
+      tsToken = await getTurnstileToken();
+    }
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ history, turnstileToken: tsToken, sessionId }),
+      });
+
+      loading.remove();
+
+      if (!res.ok) {
+        let msg = "Désolée, une erreur technique m'empêche de vous répondre. Réessayez dans un instant, ou contactez Mélyne directement via le formulaire du site.";
+        try {
+          const errData = await res.json();
+          if (errData?.error && (res.status === 429 || res.status === 403 || res.status === 400)) {
+            msg = errData.error;
+          }
+        } catch { /* garde le message générique */ }
+        appendMessage('assistant', msg, 'chat-error');
+        trackEvent('ramsey_chat_error', { status: res.status });
+        return;
+      }
+
+      const data = await res.json();
+      const reply = data.reply || '';
+      appendMessage('assistant', reply);
+      history.push({ role: 'assistant', content: reply });
+      trackEvent('ramsey_chat_response_received', {
+        message_index: userTurns,
+        chars: reply.length,
+        latency_ms: Math.round(performance.now() - t0),
+      });
+    } catch (err) {
+      loading.remove();
+      appendMessage(
+        'assistant',
+        "Problème de connexion. Vérifiez votre connexion internet et réessayez.",
+        'chat-error'
+      );
+      trackEvent('ramsey_chat_error', { status: 0, reason: 'network' });
+    } finally {
+      inputEl.disabled = false;
+      sendBtn.disabled = false;
+      inputEl.focus();
+    }
+  });
+</script>

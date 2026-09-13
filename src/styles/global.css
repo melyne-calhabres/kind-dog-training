@@ -639,6 +639,76 @@ p {
   justify-content: center;
 }
 
+/* ---------- Bouton menu Ramsey IA (mis en avant, ink foncé) ---------- */
+.nav-ramsey {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border: 1.5px solid var(--kd-ink);
+  border-radius: var(--radius-pill);
+  background: var(--kd-ink);
+  color: var(--kd-cream);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  line-height: 1;
+  transition: background var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
+  position: relative;
+}
+.nav-ramsey:hover {
+  background: var(--kd-bark);
+  border-color: var(--kd-bark);
+  color: var(--kd-cream);
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(42, 30, 21, 0.25);
+}
+.nav-ramsey[aria-current="page"] {
+  background: var(--kd-cream);
+  color: var(--kd-ink);
+  border-color: var(--kd-ink);
+}
+.nav-ramsey__avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--kd-paper);
+  border: 1px solid var(--kd-paper);
+  flex-shrink: 0;
+}
+.nav-ramsey__label { white-space: nowrap; }
+.nav-ramsey__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  background: var(--kd-cream);
+  color: var(--kd-ink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  line-height: 1;
+}
+.nav-ramsey[aria-current="page"] .nav-ramsey__badge {
+  background: var(--kd-ink);
+  color: var(--kd-cream);
+}
+
+/* Sur mobile (menu déroulé), on garde le bouton visible mais aligné à gauche comme les autres */
+.main-nav .nav-item--ramsey {
+  display: flex;
+  justify-content: center;
+  margin: var(--sp-2) var(--sp-4) 0;
+}
+@media (min-width: 900px) {
+  .main-nav .nav-item--ramsey {
+    display: inline-flex;
+    margin: 0;
+  }
+}
+
 /* ===== FOOTER ===== */
 .site-footer {
   margin-top: auto;

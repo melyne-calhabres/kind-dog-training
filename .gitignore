@@ -7,3 +7,6 @@ dist/
 .claude/
 memory/
 _local/
+
+# Local Netlify folder
+.netlify

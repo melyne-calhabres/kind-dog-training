@@ -59,14 +59,80 @@ import Layout from '../layouts/Layout.astro';
 
       <h3>Analytics</h3>
       <p>
-        Ce site utilise Google Analytics afin d'améliorer l'expérience utilisateur. Les données
-        collectées sont anonymisées et ne permettent pas de vous identifier personnellement.
+        Ce site utilise Google Analytics afin d'améliorer l'expérience utilisateur. Les mesures
+        sont réalisées uniquement après votre consentement explicite via le bandeau de gestion
+        des cookies. Sans ce consentement, aucun cookie de mesure d'audience n'est déposé.
+      </p>
+
+      <h3>Assistant IA (Ramsey)</h3>
+      <p>
+        Le site propose un assistant conversationnel accessible à l'adresse
+        <a href="/ramsey-ia/">/ramsey-ia/</a>. Les échanges avec cet assistant sont enregistrés
+        de manière pseudonymisée (identifiant technique de session généré à l'ouverture de la
+        page, sans lien avec votre identité, ni votre adresse IP, ni votre e-mail).
+      </p>
+      <p>
+        <strong>Finalité :</strong> amélioration continue de la qualité des réponses et
+        identification des besoins d'information non couverts.<br />
+        <strong>Base légale :</strong> intérêt légitime (article 6.1.f du RGPD).<br />
+        <strong>Durée de conservation :</strong> 1 an à compter du dernier échange, puis
+        suppression automatique.<br />
+        <strong>Destinataires :</strong> uniquement Kind Dog Training. Les données ne sont
+        jamais transmises à des tiers à des fins commerciales.
+      </p>
+      <p>
+        L'assistant s'appuie sur les services de sous-traitants techniques listés ci-dessous.
+        Chaque message que vous saisissez est transmis à ces services pour être traité, puis
+        supprimé de leurs systèmes conformément à leurs conditions.
+      </p>
+
+      <h3>Sous-traitants techniques</h3>
+      <p>Les prestataires suivants interviennent dans le fonctionnement du site et de l'assistant :</p>
+      <ul>
+        <li>
+          <strong>Netlify, Inc.</strong> (États-Unis) — hébergement du site et des fonctions
+          serveur. <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener">Politique de confidentialité</a>.
+        </li>
+        <li>
+          <strong>Google Ireland Ltd.</strong> (Irlande) — mesure d'audience via Google
+          Analytics 4 et Google Tag Manager, uniquement après consentement.
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Politique de confidentialité</a>.
+        </li>
+        <li>
+          <strong>Anthropic, PBC</strong> (États-Unis) — traitement des messages de l'assistant
+          par le modèle de langage Claude. Les données envoyées via API ne sont pas utilisées
+          pour l'entraînement des modèles.
+          <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Politique de confidentialité</a>.
+        </li>
+        <li>
+          <strong>Voyage AI</strong> (États-Unis) — génération d'embeddings et reclassement
+          sémantique pour la recherche documentaire de l'assistant.
+          <a href="https://www.voyageai.com/privacy-policy" target="_blank" rel="noopener">Politique de confidentialité</a>.
+        </li>
+        <li>
+          <strong>Supabase, Inc.</strong> (société américaine, données hébergées dans l'Union
+          européenne — région Paris) — stockage de la base de connaissances et des logs de
+          conversation.
+          <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Politique de confidentialité</a>.
+        </li>
+        <li>
+          <strong>Cloudflare, Inc.</strong> (États-Unis) — service anti-bot Turnstile pour
+          protéger l'assistant contre les abus automatisés.
+          <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Politique de confidentialité</a>.
+        </li>
+      </ul>
+      <p>
+        Les transferts hors Union européenne s'appuient sur les clauses contractuelles types
+        de la Commission européenne ou des mécanismes équivalents (Data Privacy Framework
+        pour les États-Unis).
       </p>
 
       <h3>Protection des données</h3>
       <p>
         Kind Dog Training met en œuvre les bonnes pratiques pour prévenir toute perte, mauvaise
-        utilisation ou accès non autorisé à vos informations.
+        utilisation ou accès non autorisé à vos informations : chiffrement des communications
+        (HTTPS), accès restreint aux bases de données, limitation du volume de requêtes et
+        protection anti-bot sur l'assistant.
       </p>
 
       <h3>Âge requis</h3>
@@ -76,8 +142,17 @@ import Layout from '../layouts/Layout.astro';
 
       <h3>Vos droits</h3>
       <p>
-        Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, de modification
-        et de suppression de vos données. Pour exercer ces droits, contactez-moi à kindogtraining@gmail.com.
+        Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'opposition,
+        de limitation, de portabilité et de suppression de vos données, ainsi que du droit de
+        retirer votre consentement à tout moment. Pour exercer ces droits, contactez Kind Dog
+        Training à kindogtraining@gmail.com. Vous disposez également du droit d'introduire une
+        réclamation auprès de la CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a>).
+      </p>
+      <p>
+        <em>Concernant l'assistant IA :</em> les échanges étant pseudonymisés (aucune donnée
+        directement identifiante n'y est associée), l'exercice du droit d'accès ou de
+        suppression nécessite de fournir l'identifiant technique de session de la conversation
+        concernée (visible dans les outils de développement du navigateur au moment de l'échange).
       </p>
 
       <h2>Responsabilité</h2>
