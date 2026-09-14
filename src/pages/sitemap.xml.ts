@@ -18,6 +18,7 @@ const pages = [
   '/qui-suis-je/',
   '/tarif-educateur-canin-bordeaux/',
   '/prendre-rdv/',
+  '/ramsey-ia/',
   '/partenaires/',
   '/services/',
   '/services/cours-individuel-education-canine-bordeaux/',
