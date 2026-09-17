@@ -26,9 +26,9 @@ const article = {
   titleAfter:     ' en balade : comprendre ce qui se passe et agir',
   publishDate:    '12 juin 2026',
   publishDateIso: '2026-06-12',
-  updateDate:     '10 septembre 2026',
-  updateDateIso:  '2026-09-10',
-  readTime:       '13 min',
+  updateDate:     '17 septembre 2026',
+  updateDateIso:  '2026-09-17',
+  readTime:       '22 min',
   author:         'Mélyne',
   authorInitial:  'M',
   authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
@@ -44,11 +44,31 @@ const faqItems: { question: string; answer: string }[] = [
   },
   {
     question: 'Faut-il éviter les autres chiens en attendant ?',
-    answer:   'L\'évitement total n\'est pas une stratégie. Il protège votre chien d\'une mauvaise expérience immédiate mais il n\'apprend rien et entretient un état dans lequel le chien n\'a jamais à traiter le stimulus. Si votre chien a des comportements relativement violents envers les autres chiens, mettez-lui une muselière. Cela peut être impressionnant, ça peut faire de la peine car on se dit que son chien n\'a jamais mordu, mais c\'est la meilleure solution pour mettre tout le monde en sécurité en attendant de voir un professionnel.',
+    answer:   'L\'évitement total n\'est pas une stratégie. Il protège votre chien d\'une mauvaise expérience immédiate mais il n\'apprend rien et entretient un état dans lequel le chien n\'a jamais à traiter le stimulus. Si votre chien a des comportements relativement violents envers les autres chiens, mettez lui une muselière. Cela peut être impressionnant, et ça peut faire de la peine parce qu\'on se dit que son chien n\'a jamais mordu. C\'est pourtant la meilleure solution pour mettre tout le monde en sécurité en attendant de voir un professionnel.',
   },
   {
     question: 'La muselière peut-elle aider un chien réactif ?',
     answer:   'Oui, et pas seulement comme outil de sécurité. Une muselière bien introduite permet au chien de haleter, boire et manger normalement. Elle peut changer la dynamique d\'une balade en sécurisant les tiers, ce qui permet de travailler dans des contextes plus stimulants. Elle change aussi l\'état du propriétaire : un conducteur qui ne craint plus d\'accident crispe moins sa laisse, marche différemment et ce calme se transmet. Elle s\'utilise comme un outil de travail, pas comme une solution permanente.',
+  },
+  {
+    question: 'Mon chien s\'est fait attaquer et il est devenu réactif : est-ce réversible ?',
+    answer:   'Oui, dans la grande majorité des cas. Une attaque laisse une empreinte, mais elle ne condamne pas votre chien à être réactif à vie. Ce qui compte ensuite, c\'est la façon dont vous gérez les balades. Si chaque congénère devient synonyme de tension, si vous raccourcissez la laisse à chaque silhouette au loin, vous ajoutez une couche d\'anticipation à la mauvaise expérience initiale. Si vous continuez à sortir, à croiser calmement, à faire vivre à votre chien des rencontres neutres puis positives avec des chiens stables, la mémoire de l\'attaque se dilue. Ramsey, mon staffie, a développé une réactivité après une attaque. Il m\'aide aujourd\'hui pour la plupart des chiens réactifs que j\'accompagne. Ce chemin est possible.',
+  },
+  {
+    question: 'Puis-je encore l\'emmener au parc canin ?',
+    answer:   'Non, pas tant qu\'il est réactif. Le parc canin, c\'est le pire endroit pour un chien qui n\'arrive pas à gérer ses émotions face à ses congénères. Trop de chiens, trop d\'interactions non filtrées, trop de propriétaires distraits. Un incident peut ruiner des semaines de travail en trente secondes. On resocialise un chien réactif avec des chiens choisis, dans un cadre maîtrisé, pas dans un enclos ouvert avec dix chiens inconnus. Le parc redeviendra une option quand la réactivité sera derrière vous, et encore, tout le monde n\'en a pas besoin.',
+  },
+  {
+    question: 'Mâle-mâle, femelle-femelle : la castration peut-elle aider ?',
+    answer:   'Parfois, sur une réactivité clairement hormonale, la castration bien conduite peut apporter un gain de 20 à 30 % chez un mâle. Elle ne règle rien sur une réactivité par peur, par frustration ou par manque de socialisation. Chez la femelle, la stérilisation peut avoir l\'effet inverse et augmenter la réactivité. Avant de trancher, l\'implant hormonal réversible permet de tester l\'effet sur quelques mois. Dans tous les cas, la castration accompagne un travail, elle ne le remplace pas.',
+  },
+  {
+    question: 'Combien de temps ça prend ?',
+    answer:   'Ça dépend de trois facteurs : l\'origine de la réactivité, l\'ancienneté du problème et la régularité du travail. Une réactivité par frustration récente chez un chien jeune peut se régler en quelques semaines de travail sérieux. Une réactivité par peur installée depuis des années sur un chien mal socialisé peut demander plusieurs mois. La plupart des cas se situent entre les deux. La vraie différence se joue au quotidien, entre les séances, plus que dans le nombre de rendez-vous avec un pro.',
+  },
+  {
+    question: 'Mon chien aboie en laisse mais devient parfait dès qu\'il est détaché : c\'est grave ?',
+    answer:   'Non, mais ça mérite qu\'on comprenne ce qui se passe. Ce type de chien sait très bien que la laisse est un filet de sécurité. Il « fait le fier » parce qu\'il ne peut pas s\'échapper et qu\'il vous sent au bout de la laisse pour tenir la scène. Une fois détaché, il retrouve ses codes, prend le temps de faire ses détours, se renifle, communique normalement. Ce chien n\'est pas faux. Il vit un déséquilibre entre la laisse (où il est en position de combat) et la liberté (où il peut communiquer). Le travail consiste à faire redescendre la version en laisse au niveau de la version détachée, en changeant ce que vous faites avec la laisse et en installant les rituels de rencontre au bon endroit.',
   },
 ];
 
@@ -122,7 +142,7 @@ const jsonLd = {
 const tldr = [
   'La réactivité congénères dit surtout comment votre chien gère ses émotions dans un contexte précis, pas grand-chose sur son caractère',
   'Un chien réactif n\'est pas un chien agressif. La distinction change tout à la façon dont on travaille',
-  'Ce que vous faites au moment où votre chien aperçoit un congénère compte autant que ce qu\'il fait, lui',
+  'La laisse est un outil. Ce que vous en faites au moment où votre chien aperçoit un congénère compte autant que ce qu\'il fait, lui',
   'Peur et frustration-excitation peuvent produire les mêmes comportements en surface, le moteur en dessous n\'est pas le même',
   'La réactivité a presque toujours une explication concrète : socialisation insuffisante, mauvaise rencontre, besoins non comblés',
   'On peut travailler la réactivité envers les autres chiens. Ce n\'est pas une fatalité, et l\'évitement ne règle rien sur le fond',
@@ -136,16 +156,24 @@ const toc = [
   { label: 'Ce que votre chien vit vraiment',        href: '#ce-que-votre-chien-vit',               sub: false },
   { label: 'Réactif ≠ agressif',                     href: '#reactif-pas-agressif',                 sub: true  },
   { label: 'Peur ou frustration-excitation',         href: '#peur-ou-frustration',                  sub: true  },
+  { label: 'Observer ou fixer',                      href: '#observer-ou-fixer',                    sub: true  },
   { label: 'Ce qui se joue au bout de la laisse',    href: '#ce-qui-se-joue-au-bout-de-la-laisse',  sub: false },
   { label: 'Le réflexe d\'opposition',               href: '#reflexe-d-opposition',                 sub: true  },
   { label: 'Gestion de la laisse',                   href: '#gestion-laisse-communication',         sub: true  },
+  { label: 'La position de combat',                  href: '#position-de-combat',                   sub: true  },
   { label: 'Les vraies raisons',                     href: '#les-vraies-raisons',                   sub: false },
   { label: 'Socialisation 0–5 mois',                 href: '#socialisation-0-5-mois',               sub: true  },
   { label: 'Une mauvaise rencontre',                 href: '#mauvaise-rencontre',                   sub: true  },
   { label: 'Besoins non comblés',                    href: '#besoins-fondamentaux',                 sub: true  },
+  { label: 'Le poids des hormones',                  href: '#poids-des-hormones',                   sub: true  },
+  { label: 'Morphologie et communication',           href: '#morphologie-communication',            sub: true  },
   { label: 'Rendre les balades vivables',            href: '#rendre-les-balades-vivables',          sub: false },
   { label: 'Décrochage et focus',                    href: '#decrochage-et-focus',                  sub: true  },
   { label: 'Laisse et longe',                        href: '#laisse-et-longe',                      sub: true  },
+  { label: 'Les quatre gestes',                      href: '#quatre-gestes',                        sub: true  },
+  { label: 'Rencontre non consentie',                href: '#rencontre-non-consentie',              sub: false },
+  { label: 'Balade collective et cani-rando',        href: '#balade-collective-cani-rando',         sub: false },
+  { label: 'Ce qui n\'aide pas',                     href: '#ce-qui-n-aide-pas',                    sub: false },
   { label: 'Accompagnement professionnel',           href: '#accompagnement-professionnel',         sub: false },
 ];
 
@@ -277,7 +305,7 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <p>La réactivité envers les congénères est l'une des formes les plus fréquentes de la <a href="/education-canine/comportement/problemes/reactivite/">réactivité canine</a>, et c'est celle sur laquelle j'accompagne le plus de propriétaires. Voici ce qui se joue vraiment quand votre chien explose face à un autre chien en balade, et ce que vous pouvez faire pour l'aider.</p>
 
-        <p>Votre chien vient de repérer un autre chien au loin. Avant même qu'il ait eu le temps de réagir, vous raccourcissez la laisse, vous cambrez légèrement le dos et vous retenez votre souffle. C'est un réflexe humain totalement naturel. Mais pour votre chien, ce changement dans votre corps est une information. Il dit&nbsp;: « Quelque chose d'anormal se prépare. »</p>
+        <p>Votre chien vient de repérer un autre chien au loin. Avant même qu'il ait eu le temps de réagir, vous raccourcissez la laisse, vous cambrez légèrement le dos et vous retenez votre souffle. C'est un réflexe humain naturel. Mais pour votre chien, ce changement dans votre corps est une information. Il dit&nbsp;: « Quelque chose d'anormal se prépare. »</p>
 
         <p>C'est là que beaucoup de choses se jouent, bien avant que quoi que ce soit de visible se passe. L'erreur technique la plus courante que j'observe sur le terrain, c'est l'à-coup de laisse administré avant toute communication verbale. On tire, on raccourcit, on crispe, et le chien associe immédiatement la présence du congénère à une tension physique. Après quelques semaines de ce schéma, la vue d'un autre chien devient prédictive d'une sensation désagréable. Votre chien anticipe avant même que vous n'ayez fait quoi que ce soit.</p>
 
@@ -286,11 +314,11 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
             <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
           </div>
           <div>
-            <p class="art-callout__text">J'ai accompagné un chien dont les propriétaires avaient développé une routine de contraction totalement inconsciente dès qu'un congénère apparaissait à cent mètres. Lui, il la lisait à la perfection. Sa montée en pression commençait bien avant le croisement.</p>
+            <p class="art-callout__text">J'ai accompagné un chien dont les propriétaires avaient développé une routine de contraction inconsciente dès qu'un congénère apparaissait à cent mètres. Lui, il la lisait à la perfection. Sa montée en pression commençait bien avant le croisement.</p>
           </div>
         </aside>
 
-        <p>La séquence correcte, c'est le mot d'abord, puis l'action si nécessaire. Énoncer une indication claire au chien, lui laisser un temps de traitement cognitif, intervenir physiquement seulement s'il ne s'exécute pas. Dans l'ordre inverse, on produit du conditionnement, pas de la compréhension.</p>
+        <p>La séquence correcte, c'est le mot d'abord, puis l'action si nécessaire. Vous énoncez d'abord une indication claire, vous laissez au chien un temps de traitement, et vous n'intervenez physiquement que s'il ne s'exécute pas. Dans l'ordre inverse, on produit du conditionnement, pas de la compréhension.</p>
 
         <h3 id="les-reflexes-humains">Les réflexes humains qui confirment au chien qu'il a raison de réagir</h3>
 
@@ -327,6 +355,14 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <p>La frustration-excitation, c'est l'autre moteur, et les deux sont quasiment indissociables. Votre chien veut aller voir l'autre chien, il est retenu, et plus il veut, plus son excitation monte. Les deux s'alimentent en boucle&nbsp;: la frustration de ne pas pouvoir y aller nourrit l'excitation et l'excitation rend la frustration encore plus explosive. Un chien avec la queue très haute, qui tracte, qui vocalise sans s'arrêter&nbsp;: il n'est pas en danger, il est en surcharge. Ce que vous voyez ressemble à de la réactivité agressive, mais ce que votre chien ressent c'est de l'impuissance face à quelque chose qu'il désire très fort et un état émotionnel qu'il n'arrive plus à réguler. Le travail, dans ce cas, commence bien avant la rencontre avec le congénère.</p>
 
+        <h3 id="observer-ou-fixer">Observer ou fixer&nbsp;: lire ce qui monte avant l'explosion</h3>
+
+        <p>Sur le terrain, dans 90&nbsp;% des cas, la crise se lit avant qu'elle éclate. Le chien fixe, ferme la gueule, sa pupille se dilate, puis il explose. Apprendre à lire ces signes vous donne plusieurs secondes d'avance, et ces secondes changent tout.</p>
+
+        <p>La différence entre observer et fixer est fine mais décisive. Un chien qui observe prend les informations de manière apaisée&nbsp;: il regarde le congénère, puis autre chose, puis revient. Un chien qui fixe se tend, se concentre, se surcharge émotionnellement. Le regard devient dur, le corps se raidit, la respiration se coupe. À ce moment-là, il ne reste que quelques secondes avant l'aboiement ou la charge.</p>
+
+        <p>Beaucoup de propriétaires me disent «&nbsp;il ne fait pas de bruit, il ne grogne pas, donc tout va bien&nbsp;». Certes, mais ses signaux corporels indiquent déjà son malaise. C'est là qu'on intervient, pas quand il aboie. On ne cache jamais le déclencheur, on apprend au chien à revenir à vous avant que la pression prenne le dessus.</p>
+
         <!-- CTA inline — mobile uniquement -->
         <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
           <p class="art-inline-cta-title">Peur ou frustration&nbsp;? Difficile à dire seul</p>
@@ -340,13 +376,13 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <p>Il existe un principe physique simple&nbsp;: quand on tire sur quelque chose, la résistance augmente dans la direction opposée. Les chiens n'échappent pas à ça. Une laisse tendue vers l'arrière produit une réponse physique vers l'avant. C'est mécanique, pas éducatif. (Je précise, parce que beaucoup de propriétaires se demandent pourquoi leur <a href="/education-canine/comportement/problemes/tirage-laisse/">chien tire encore plus fort</a> quand ils résistent. La réponse est là.)</p>
 
-        <p>La laisse n'est pas le problème. C'est un outil, et comme tout outil, c'est ce qu'on en fait qui compte. Le problème, c'est quand la laisse devient tendue en permanence, quand elle transmet votre propre stress ou quand elle sert de frein mécanique plutôt que de lien de communication. Une laisse tendue signale à votre chien qu'il est dans une situation de tension. Et pour un chien qui n'a pas appris à gérer ses émotions, tension physique et tension émotionnelle se mélangent très vite. Il tire plus, vous tirez plus, il monte en pression. La boucle est bouclée.</p>
+        <p>La laisse est un outil. Comme tout outil, tout se joue dans la façon dont on l'utilise. Le problème apparaît quand elle devient tendue en permanence, quand elle transmet votre stress ou quand elle sert de frein mécanique plutôt que de lien de communication. Une laisse tendue signale à votre chien qu'il est dans une situation de tension. Et pour un chien qui n'a pas appris à gérer ses émotions, tension physique et tension émotionnelle se mélangent très vite. Il tire plus, vous tirez plus, il monte en pression. La boucle est bouclée.</p>
 
         <h3 id="gestion-laisse-communication">Ce que votre gestion de la laisse change à la communication de votre chien</h3>
 
         <p>Les chiens communiquent avec leur corps. Ils font des courbes, ils s'approchent en arc de cercle, ils reniflent d'abord l'arrière-train plutôt que le museau. Ce sont des codes sociaux très précis, et ils fonctionnent quand le chien a de l'espace pour les utiliser.</p>
 
-        <p>Quand un propriétaire raccourcit sa laisse à l'approche d'un autre chien, il supprime cet espace. Deux chiens mis tête contre tête, bloqués par leurs laisses raccourcies, sans possibilité de réaliser les rituels habituels&nbsp;: c'est une configuration qui ressemble beaucoup à une posture de confrontation dans le vocabulaire canin. La tension monte mécaniquement, pas parce que les chiens ont envie de se battre, mais parce qu'on les a placés dans une situation qui y ressemble. Ce n'est pas la laisse qui crée le problème, c'est le réflexe de la raccourcir au mauvais moment.</p>
+        <p>Quand un propriétaire raccourcit sa laisse à l'approche d'un autre chien, il supprime cet espace. Deux chiens mis tête contre tête, bloqués par leurs laisses raccourcies, sans possibilité de réaliser les rituels habituels&nbsp;: c'est une configuration qui ressemble beaucoup à une posture de confrontation dans le vocabulaire canin. La tension monte mécaniquement, pas parce que les chiens ont envie de se battre, mais parce qu'on les a placés dans une situation qui y ressemble. Le problème vient du réflexe de la raccourcir au mauvais moment.</p>
 
         <aside class="art-callout art-callout--soft" role="note">
           <div class="art-callout__icon" aria-hidden="true">
@@ -357,13 +393,35 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
           </div>
         </aside>
 
+        <h3 id="position-de-combat">La position de combat&nbsp;: pourquoi la rencontre en laisse fabrique des chiens réactifs</h3>
+
+        <p>Un chien réactif se fabrique parfois en une seule mauvaise rencontre en laisse. Comprendre la mécanique évite de la reproduire.</p>
+
+        <p>Dans la nature, les chiens n'arrivent jamais face à face. Ils se rapprochent en arc de cercle, se croisent latéralement, font des huit, se tournent autour et se reniflent d'abord l'arrière-train. C'est là qu'ils dégagent leurs phéromones et lisent en quelques secondes qui ils ont en face&nbsp;: sexe, statut hormonal, tempérament, état de santé.</p>
+
+        <p>En laisse, on empêche tout ça. On amène les deux chiens tête contre tête, réellement de face. La plupart du temps, ils tirent pour se rejoindre. Les phéromones sont inaccessibles, la communication normale ne peut pas avoir lieu. On les place, sans le savoir, dans une posture qui ressemble beaucoup à une confrontation entre humains&nbsp;: deux personnes plantées front contre front avant que ça parte en bagarre. Les laisses s'emmêlent, les deux propriétaires se rapprochent pour démêler, ils forment un étau, et à ce moment-là il suffit d'un signal de trop pour que ça dégénère.</p>
+
+        <p>Le premier contact négatif est gagné. Dès le lendemain, un chien qui n'avait jamais rien dit sur personne peut se mettre à aboyer en laisse. La mauvaise expérience a été enregistrée, et le chien anticipe désormais chaque congénère de la même façon.</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">La règle qui économise des mois de rééducation</p>
+            <p class="art-callout__text">En laisse, on ne dit pas bonjour aux autres chiens. C'est net, c'est simple, et ça évite la quasi-totalité des accidents. Le contact se fait détaché, en milieu ouvert, avec un chien connu et stable. Jamais tenu au bout d'une laisse.</p>
+          </div>
+        </aside>
+
+        <p>Une nuance importante&nbsp;: certains chiens savent parfaitement que le maître tient la laisse et «&nbsp;partent au carton&nbsp;» gonflés par ce filet de sécurité. C'est très fréquent chez les petits chiens qui aboient en laisse et deviennent parfaitement calmes une fois détachés. Rien à voir avec de l'agressivité&nbsp;: le chien joue le rôle qu'on lui laisse jouer.</p>
+
         <h2 id="les-vraies-raisons">Les vraies raisons pour lesquelles votre chien est devenu réactif</h2>
 
         <h3 id="socialisation-0-5-mois">Le poids de la socialisation entre 0 et 5 mois</h3>
 
-        <p>95&nbsp;% des troubles du comportement canin prennent racine dans les cinq premiers mois de vie (chiffre sorti de mon chapeau mais vous comprenez l'idée). C'est la période d'imprégnation sensorielle&nbsp;: tout ce que le chiot rencontre dans cet intervalle, il l'intègre comme normal. Ce qu'il ne voit pas devient une source potentielle de méfiance.</p>
+        <p>Sur la réactivité congénères, la génétique compte pour environ 20&nbsp;%, la socialisation pour l'essentiel du reste. Autrement dit, ce que votre chien a vécu ou pas vécu avant 5 mois pèse infiniment plus lourd que sa race dans sa façon d'aborder les autres chiens aujourd'hui. C'est la période d'imprégnation sensorielle&nbsp;: tout ce que le chiot rencontre dans cet intervalle, il l'intègre comme normal. Ce qu'il ne voit pas devient une source potentielle de méfiance.</p>
 
-        <p>Un chiot qui reste à la maison « pour attendre les vaccins », qui ne croise que deux ou trois chiens dans ses premiers mois, qui n'a jamais vu de congénères de tailles et de morphologies différentes, grandit avec des lacunes sociales. À l'âge adulte, chaque chien inconnu peut devenir un problème à traiter. Pas parce que le chien est « mauvais ». Parce qu'il n'a jamais eu les outils pour faire autrement.</p>
+        <p>Un chiot qui reste à la maison « pour attendre les vaccins » grandit avec des lacunes sociales. Il ne croise que deux ou trois chiens dans ses premiers mois, ne voit jamais de congénères de tailles et de morphologies différentes. À l'âge adulte, chaque chien inconnu peut devenir un problème à traiter. Pas parce que le chien est « mauvais ». Parce qu'il n'a jamais eu les outils pour faire autrement.</p>
 
         <p>Pour diluer l'impact d'une mauvaise expérience, un chiot a besoin de croiser énormément de chiens différents. Une seule mauvaise rencontre parmi une centaine de bonnes, c'est une anecdote. La même mauvaise rencontre quand le chiot n'en a croisé que cinq, c'est une empreinte durable.</p>
 
@@ -377,18 +435,30 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <h3 id="besoins-fondamentaux">Des besoins fondamentaux non comblés</h3>
 
-        <p>Un chien qui ne se dépense pas suffisamment est en état de cocotte-minute permanente. La dépense physique des chiens domestiques est estimée à environ 60&nbsp;% inférieure à ce qu'elle devrait être. Un chien qui sort peu, qui n'a que des balades courtes sans liberté de mouvement, accumule une frustration motrice quotidienne qui le rend beaucoup moins stable face aux stimulations.</p>
+        <p>Un chien qui ne se dépense pas suffisamment est en état de cocotte-minute permanente. Les chiens domestiques se dépensent environ 60&nbsp;% moins qu'ils ne le devraient. Un chien qui sort peu, qui n'a que des balades courtes sans liberté de mouvement, accumule une frustration motrice quotidienne qui le rend beaucoup moins stable face aux stimulations.</p>
 
-        <p>Les besoins fondamentaux incluent aussi le contact social avec les congénères. Un chien qui ne croise jamais d'autres chiens de façon détendue, qui n'a pas d'occasions régulières de socialiser sans tension, finit par développer une relation au congénère qui ressemble à celle qu'on a avec quelque chose de rare et de très précieux. Ce qui est rare devient obsessionnel.</p>
+        <p>Les besoins fondamentaux incluent aussi le contact social avec les congénères. Un chien qui ne croise jamais d'autres chiens détendus et qui n'a pas d'occasions régulières de socialiser sans tension finit par voir chaque congénère comme quelque chose de rare et de précieux. Ce qui est rare devient obsessionnel.</p>
 
         <aside class="art-callout art-callout--soft" role="note">
           <div class="art-callout__icon" aria-hidden="true">
             <Icon name="message-circle" width={16} height={16} strokeWidth={2} />
           </div>
           <div>
-            <p class="art-callout__text">Pour qu'un chien accepte sereinement les contraintes du quotidien (la laisse, les croisements, les renoncements), il a besoin que ses besoins soient largement satisfaits par ailleurs. L'équilibre ne tient pas si on ne lui offre que des sorties courtes en laisse. Il tient si les balades en liberté, les interactions sociales et la dépense physique sont au rendez-vous.</p>
+            <p class="art-callout__text">Pour qu'un chien accepte les contraintes du quotidien (la laisse, les croisements, les renoncements), il faut que ses besoins soient satisfaits par ailleurs. L'équilibre ne tient pas si on ne lui offre que des sorties courtes en laisse. Il tient si les balades en liberté, les interactions sociales et la dépense physique sont au rendez-vous.</p>
           </div>
         </aside>
+
+        <h3 id="poids-des-hormones">Le poids des hormones&nbsp;: mâle-mâle, femelle-femelle</h3>
+
+        <p>Certaines réactivités congénères apparaissent ou explosent avec la puberté, et ce n'est pas un hasard&nbsp;: la testostérone chez le mâle et les cycles hormonaux chez la femelle changent la façon dont un chien perçoit ses semblables du même sexe. Un mâle qui «&nbsp;ne supportait pas&nbsp;» un autre mâle à l'adolescence peut se comporter très différemment avec les femelles ou avec des mâles castrés.</p>
+
+        <p>La castration au bon moment peut faire gagner 20 à 30&nbsp;% chez un mâle sur ce type de réactivité, en retirant de la testostérone et en augmentant les œstrogènes. Ce n'est pas une solution miracle et ce n'est pas systématique. Sur une réactivité par peur ou par frustration, elle ne changera rien au fond du problème. Avant le bistouri, un implant hormonal réversible permet de tester l'effet et de décider en connaissance de cause. Chez les femelles, attention&nbsp;: la stérilisation peut avoir l'effet inverse, la testostérone monte relativement pendant que les œstrogènes chutent, et une chienne un peu réactive peut le devenir davantage.</p>
+
+        <h3 id="morphologie-communication">La morphologie qui complique la communication</h3>
+
+        <p>Certains chiens partent avec un handicap dans le dialogue canin, sans que ce soit leur faute. Un Bouledogue français ne peut pas produire les mêmes mimiques faciales qu'un Malinois&nbsp;: sa gueule courte, ses plis, ses babines figées rendent ses signaux d'apaisement quasi illisibles pour les autres chiens. Un Akita a un port de queue naturellement enroulé et haut, qui ressemble en permanence à une posture de tension pour un congénère qui ne le connaît pas.</p>
+
+        <p>Ces chiens envoient malgré eux des messages qui peuvent être mal interprétés à l'autre bout. Cela ne les rend pas réactifs par nature. En revanche, ils se retrouvent plus souvent dans des situations où l'autre chien réagit mal, et ils finissent par devenir méfiants. Sur ces profils, un travail d'obéissance solide et la fréquentation de chiens régulateurs bien choisis évitent que les malentendus s'accumulent.</p>
 
         <!-- CTA inline — mobile uniquement -->
         <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
@@ -405,7 +475,7 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <p>Ce que j'observe dans la quasi-totalité des cas que j'accompagne, c'est que les propriétaires existent peu pour leur chien en balade. Le chien gère son environnement seul parce qu'il n'a jamais appris que se référer à l'humain pouvait être intéressant ou utile. Le premier travail, avant même de s'attaquer aux croisements, c'est souvent ça&nbsp;: redevenir quelqu'un de pertinent pour votre chien à l'extérieur.</p>
 
-        <p>La posture compte aussi. Épaules droites, respiration calme, mouvements fluides. Un conducteur qui respire, qui ne crispe pas, qui avance, donne à son chien un point d'ancrage stable.</p>
+        <p>La posture compte aussi. Épaules droites, respiration calme, mouvements posés. Un conducteur qui respire, ne crispe pas et avance donne à son chien un point d'ancrage stable.</p>
 
         <aside class="art-callout art-callout--dark" role="note">
           <div class="art-callout__icon" aria-hidden="true">
@@ -426,6 +496,64 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
         <p>Ni la laisse ni la longe ne sont une fin en soi. L'objectif reste de travailler vers un chien capable de gérer ses émotions et de se référer à vous dans les moments difficiles, quel que soit l'outil au bout duquel il se trouve. Dans quelques semaines de travail régulier, ce croisement qui vous donnait des sueurs froides peut devenir quelque chose que vous gérez simplement, sans saut d'adrénaline avant même d'avoir vu le chien au bout de la rue.</p>
 
         <p>Pour aller plus loin sur les compétences concrètes à construire, l'article dédié à <a href="/education-canine/comportement/problemes/gestion-emotions/balade/">gérer ses émotions en balade au quotidien</a> reprend le décrochage, le focus et le renoncement pas à pas.</p>
+
+        <h3 id="quatre-gestes">Les quatre gestes à mettre en place avant l'arrivée de l'éducateur</h3>
+
+        <p>Quatre décisions concrètes, sans matériel exotique ni méthode ésotérique, préparent le terrain pour tout le travail qui suivra. Elles valent pour la plupart des profils de réactivité congénères, quelle qu'en soit l'origine.</p>
+
+        <p><strong>Apprendre le port de la muselière</strong>, tranquillement, par étapes. Beaucoup de propriétaires refusent la muselière parce qu'ils pensent enlever de la liberté à leur chien. C'est l'inverse&nbsp;: un chien qui accepte la muselière peut être laissé en longe, croiser plus près, tenter des choses qui seraient trop risquées à visage découvert. La muselière donne des possibilités, elle n'en retire pas.</p>
+
+        <p><strong>Mettre en place la longe</strong>, cinq, dix, quinze mètres selon le contexte. La longe vous donne un filet de sécurité pour rappeler votre chien si la situation dérape, tout en lui laissant de quoi respirer et se positionner. C'est un outil de travail, pas une punition.</p>
+
+        <p><strong>Rester en mouvement.</strong> C'est le geste le plus sous-estimé. Une meute qui se déplace se dispute rarement, une meute qui se fige presque toujours. Quand vous êtes en balade et qu'un autre chien approche, ne vous plantez pas. Continuez d'avancer, changez d'angle si besoin, mais bougez. C'est quand les situations se figent qu'elles dégénèrent.</p>
+
+        <p><strong>S'entourer de chiens calmes qui snobent.</strong> On ne demande pas au chien d'en face de recadrer le vôtre, ce n'est pas son rôle. On lui demande d'être indifférent, de ne pas fixer, de ne pas se laisser embarquer. Ce simple message, «&nbsp;nous sommes tous cool, tu peux l'être aussi&nbsp;», fait redescendre énormément de chiens réactifs. C'est le rôle que Ramsey, mon staffie, joue dans presque tous mes suivis.</p>
+
+        <h2 id="rencontre-non-consentie">Gérer une rencontre non consentie&nbsp;: le chien libre qui arrive vers vous</h2>
+
+        <p>Vous travaillez proprement, en laisse, et un chien inconnu arrive au grand galop, en liberté, droit sur le vôtre. C'est la situation la plus stressante pour un propriétaire de chien réactif, et c'est aussi celle où votre réaction pèse le plus lourd. Voici l'ordre des choses.</p>
+
+        <p><strong>Respirez.</strong> Vraiment. Avant tout geste, deux secondes pour desserrer les épaules et les mâchoires. Votre chien lit votre corps en une fraction de seconde et cette pause change immédiatement l'information qu'il reçoit.</p>
+
+        <p><strong>Détendez la laisse.</strong> C'est contre-intuitif quand un chien fonce sur vous, mais une laisse tendue confirme à votre chien qu'il est dans une situation de tension et le met en position de combat. Une laisse détendue lui laisse la possibilité de gérer son corps.</p>
+
+        <p><strong>Restez en mouvement.</strong> Ne vous plantez pas face au chien qui arrive, prenez de la distance si vous le pouvez, obliquez, marchez. Si nécessaire, placez-vous entre votre chien et l'autre pour lui envoyer un message clair&nbsp;: c'est vous qui gérez.</p>
+
+        <p><strong>Parlez peu</strong>, à votre chien comme à l'autre humain. Une commande claire pour ramener l'attention sur vous («&nbsp;ici&nbsp;», «&nbsp;regarde&nbsp;»), une phrase courte au propriétaire d'en face si vous le voyez («&nbsp;mon chien est en travail, tenez le vôtre s'il vous plaît&nbsp;»). Ce n'est pas le moment des explications.</p>
+
+        <p><strong>Renforcez chaque micro-bonne décision de votre chien</strong>&nbsp;: un regard vers vous, un renoncement, un retour même minime. Vous consolidez ce que vous voulez voir revenir.</p>
+
+        <aside class="art-callout art-callout--dark" role="note">
+          <div class="art-callout__icon" aria-hidden="true">
+            <Icon name="shield-alert" width={18} height={18} strokeWidth={2} />
+          </div>
+          <div>
+            <p class="art-callout__title">Ces situations arriveront toujours</p>
+            <p class="art-callout__text">On ne peut pas rendre ces situations impossibles. L'objectif est de savoir comment y réagir quand elles se présentent. Une rencontre non consentie bien gérée renforce la confiance de votre chien en vous. Une rencontre paniquée lui apprend à ne compter que sur lui-même.</p>
+          </div>
+        </aside>
+
+        <p>À éviter absolument&nbsp;: crier, tirer fort sur la laisse, porter votre chien dans les bras s'il fait moins de dix kilos, taper des mains, faire de grands gestes. Tout ce qui augmente la tension augmente aussi la réaction de votre chien.</p>
+
+        <h2 id="balade-collective-cani-rando">La balade collective et la cani-rando&nbsp;: deux leviers sous-utilisés</h2>
+
+        <p>Bien constituée, la balade collective est l'un des leviers les plus efficaces pour un chien réactif congénères. Mal constituée, elle empire tout. La différence tient à trois règles.</p>
+
+        <p><strong>Le choix des chiens compte plus que tout.</strong> On ne mélange jamais un réactif avec d'autres réactifs. Le but est qu'il observe, qu'il se sente en sécurité, qu'il imite des congénères stables. On choisit donc des chiens calmes, non surstimulants, capables de renoncer. Minimum deux chiens en face du vôtre, pour éviter qu'il fixe une seule cible.</p>
+
+        <p><strong>La durée doit être suffisante.</strong> Une heure c'est déjà bien, deux heures c'est généralement l'idéal. Il faut que votre chien ait le temps d'observer, de baisser la garde, de se fondre dans le groupe. Une balade collective de quinze minutes ne suffit pas à ce que quoi que ce soit se passe vraiment. Attention cependant à certains profils, très fatigables ou hypersensibles, chez qui deux heures peuvent devenir trop.</p>
+
+        <p><strong>La cani-rando est l'activité par excellence.</strong> Plusieurs heures de marche ensemble, tous les chiens attachés à un harnais de traction&nbsp;: aucun débordement possible, chacun est occupé à avancer. Les chiens s'unissent dans l'effort, sans rituels d'approche, sans possibilité de conflit. Pour un chien réactif, c'est souvent l'activité qui débloque le plus vite. Trop peu proposée, dommage.</p>
+
+        <h2 id="ce-qui-n-aide-pas">Ce qui n'aide pas votre chien, même si tout le monde le conseille</h2>
+
+        <p><strong>Éviter systématiquement les autres chiens</strong> ne règle pas la réactivité. C'est le premier réflexe, celui qui semble responsable, et c'est aussi celui qui entretient le problème. Un chien qui ne croise plus personne perd ses derniers repères sociaux. Les zones de confort à respecter à tout prix sont un mythe&nbsp;: selon la personne qui vous conseille, cette fameuse distance peut varier de trois à cent mètres. Personne n'a jamais résolu un problème en l'évitant. On travaille l'exposition, pas l'isolement.</p>
+
+        <p><strong>Réconforter à voix basse</strong>, caresser en murmurant «&nbsp;c'est bon, calme-toi&nbsp;» quand le chien grogne ou tremble, c'est valider son état émotionnel. Le chien lit ces caresses comme une confirmation qu'il a raison d'être dans cet état. Il faut au contraire montrer par votre attitude que la situation est banale, continuer d'avancer, garder votre neutralité.</p>
+
+        <p><strong>Médicamenter avant d'avoir vraiment travaillé</strong> est un raccourci qui coûte cher. La médication peut faire partie du plan sur des profils très abîmés, en dernier recours, sur avis vétérinaire. Elle ne remplace jamais la thérapie comportementale. Un chien réactif dont personne n'a testé les leviers d'apprentissage n'a pas besoin d'un médicament, il a besoin d'un travail sérieux.</p>
+
+        <p><strong>Porter son chien dans les bras</strong> à chaque congénère, même sur les petits gabarits, fabrique de la réactivité plutôt que de la sécurité. En hauteur, le chien se sent fort et intouchable. Au sol, il est démuni, et la contradiction entre les deux états le rend plus tendu, pas moins.</p>
 
         <h2 id="accompagnement-professionnel">Quand la situation demande un accompagnement professionnel</h2>
 
