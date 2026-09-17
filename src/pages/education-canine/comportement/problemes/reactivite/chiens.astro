@@ -2,13 +2,15 @@
 import Layout from '../../../../../layouts/Layout.astro';
 import Icon from '../../../../../components/Icon.astro';
 import ArticleProgressBar from '../../../../../components/ArticleProgressBar.astro';
+import ExperienceTerrain from '../../../../../components/ExperienceTerrain.astro';
 import { pickRandomArticles } from '../../../../../utils/pickRandomArticles';
+import { getAuthorPerson, getPublisherOrganization } from '../../../../../data/author';
 import '../../../../../styles/services.css';
 import '../../../../../styles/article.css';
 
 // ── Page SEO ──────────────────────────────────────────────────────────────────
 const page = {
-  metaTitle:       'Mon Chien Est Réactif en Balade : Comprendre et Agir',
+  metaTitle:       'Mon Chien Est Réactif aux Autres Chiens en Balade : Comprendre et Agir',
   metaDescription: 'Mon chien est réactif en balade ? Il n\'est probablement pas agressif. Comprenez ce qui se joue réellement et comment vos réflexes influencent ses réactions.',
 };
 
@@ -93,27 +95,15 @@ const jsonLd = {
         width:    1116,
         height:   398,
       },
-      author: {
-        '@type':    'Person',
-        name:       article.author,
-        url:        siteUrl + '/qui-suis-je/',
-        jobTitle:   'Éducatrice & comportementaliste canin',
-        description: article.authorDesc,
-      },
-      publisher: {
-        '@type': 'Organization',
-        name:    'Kind Dog Training',
-        url:     siteUrl,
-        logo: {
-          '@type': 'ImageObject',
-          url:     siteUrl + '/images/logo.png',
-        },
-      },
+      author: { '@id': `${siteUrl}/qui-suis-je/#person` },
+      publisher: { '@id': `${siteUrl}/#organization` },
       mainEntityOfPage: {
         '@type': 'WebPage',
         '@id':   pageUrl,
       },
     },
+    getAuthorPerson(siteUrl),
+    getPublisherOrganization(siteUrl),
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
@@ -305,6 +295,15 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <p>La réactivité envers les congénères est l'une des formes les plus fréquentes de la <a href="/education-canine/comportement/problemes/reactivite/">réactivité canine</a>, et c'est celle sur laquelle j'accompagne le plus de propriétaires. Voici ce qui se joue vraiment quand votre chien explose face à un autre chien en balade, et ce que vous pouvez faire pour l'aider.</p>
 
+        <ExperienceTerrain
+          variante="donnee"
+          titre="Ce que je vois sur le terrain"
+          lieu="métropole bordelaise"
+          periode="depuis 2024"
+        >
+          <p>Plus de 18 bilans de réactivité congénères sont sortis de mon cabinet ces dernières années&nbsp;: peur suite à une mauvaise expérience, frustration-excitation qui déborde, socialisation déficitaire, réactivité hormonale entre mâles entiers, réactivité post-attaque. La grande majorité de ces chiens ont pu retrouver des balades vivables. Presque aucun ne présentait un profil «&nbsp;agressif&nbsp;» au sens strict, malgré des scènes très impressionnantes en laisse.</p>
+        </ExperienceTerrain>
+
         <p>Votre chien vient de repérer un autre chien au loin. Avant même qu'il ait eu le temps de réagir, vous raccourcissez la laisse, vous cambrez légèrement le dos et vous retenez votre souffle. C'est un réflexe humain naturel. Mais pour votre chien, ce changement dans votre corps est une information. Il dit&nbsp;: « Quelque chose d'anormal se prépare. »</p>
 
         <p>C'est là que beaucoup de choses se jouent, bien avant que quoi que ce soit de visible se passe. L'erreur technique la plus courante que j'observe sur le terrain, c'est l'à-coup de laisse administré avant toute communication verbale. On tire, on raccourcit, on crispe, et le chien associe immédiatement la présence du congénère à une tension physique. Après quelques semaines de ce schéma, la vue d'un autre chien devient prédictive d'une sensation désagréable. Votre chien anticipe avant même que vous n'ayez fait quoi que ce soit.</p>
@@ -336,7 +335,17 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <p>Un chien agressif cherche à infliger un dommage. Un chien réactif cherche à gérer une surcharge émotionnelle qu'il ne sait pas traiter autrement. La majorité des chiens réactifs en balade sont ce qu'on appelle des « faux agressifs »&nbsp;: leur comportement spectaculaire est une réponse à un état interne débordant, pas une intention de nuire. C'est généralement un <a href="/education-canine/comportement/problemes/gestion-emotions/balade/">problème de gestion des émotions en balade</a>.</p>
 
-        <p>J'ai accompagné une jeune chienne qui illustre bien ça. Elle aboyait, avançait vers les autres chiens, puis reculait et mettait la queue entre les jambes. Si on se contentait de regarder les aboiements, on pourrait conclure à une chienne agressive. En réalité, elle avait peur, elle restait curieuse des autres chiens, et elle ne savait tout simplement pas quoi faire de tout ça. Ce n'est pas la même chose qu'une chienne qui veut blesser. Le travail n'est pas le même non plus&nbsp;: <a href="/education-canine/comportement/problemes/agressivite/comment-reagir-chien-attaque-autre-chien/">quand un chien attaque réellement ses congénères</a>, la marche à suivre est différente.</p>
+        <p>Le travail à mener n'a rien à voir&nbsp;: <a href="/education-canine/comportement/problemes/agressivite/comment-reagir-chien-attaque-autre-chien/">quand un chien attaque réellement ses congénères</a>, la marche à suivre est différente.</p>
+
+        <ExperienceTerrain
+          variante="cas"
+          titre="Appy : réactivité par peur suite à une mauvaise expérience"
+          chien="Appy"
+          race="Teckel"
+          periode="mai 2026"
+        >
+          <p>Appy aboyait, avançait vers les autres chiens, puis reculait, queue entre les jambes ou balayée basse. Vue de loin, on aurait pu conclure à une chienne agressive. En réalité, elle avait peur, elle restait curieuse, elle ne savait pas quoi faire de tout ça. Le point qui a débloqué la suite&nbsp;: malgré son inquiétude, elle gardait de l'envie d'interaction. Une chienne qui veut blesser ne fonctionne pas comme ça, et le travail à mener n'a rien à voir.</p>
+        </ExperienceTerrain>
 
         <aside class="art-callout art-callout--soft" role="note">
           <div class="art-callout__icon" aria-hidden="true">
@@ -427,7 +436,18 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <h3 id="mauvaise-rencontre">Une mauvaise rencontre peut suffire</h3>
 
-        <p>Un chien parfaitement équilibré peut développer de la <a href="/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/">réactivité suite à une seule attaque</a> ou une mauvaise expérience mal gérée. J'ai accompagné un chien dont la réactivité était apparue après une attaque. Avant ça, ses propriétaires décrivaient un chien tout à fait serein avec ses congénères. Après, les signaux étaient nets&nbsp;: port de queue haut, fixation intense, abaissement du centre de gravité avant chaque croisement. Il ne redescendait pas facilement en pression.</p>
+        <p>Un chien parfaitement équilibré peut développer de la <a href="/education-canine/comportement/problemes/reactivite/attaque-chien-que-faire-apres/">réactivité suite à une seule attaque</a> ou une mauvaise expérience mal gérée.</p>
+
+        <ExperienceTerrain
+          variante="cas"
+          titre="Jim : réactivité congénères apparue après une attaque"
+          chien="Jim"
+          race="cocker"
+          periode="janvier 2026"
+        >
+          <p>Avant l'attaque, ses propriétaires décrivaient un chien tout à fait serein avec ses congénères. Après, les signaux étaient nets à chaque croisement&nbsp;: port de queue haut, fixation intense, abaissement du centre de gravité, aboiements et grognements. Il ne redescendait pas facilement en pression, avec du tirage en laisse et des déplacements désorganisés qui prolongeaient la crise longtemps après le déclencheur.</p>
+          <p>Ce qui a débloqué le travail&nbsp;: reprendre le début de balade (le moment où son excitation était la plus haute) avant même de toucher aux croisements, puis introduire des croisements répétés avec Ramsey. En quelques séances, Jim redescendait après le premier passage et acceptait de se placer côte à côte, dans le calme.</p>
+        </ExperienceTerrain>
 
         <p>La blessure de confiance peut être rapide. Ce qui l'est moins, c'est de la reconstruire.</p>
 
@@ -473,7 +493,12 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <p>Le décrochage, c'est la capacité du chien à détourner son attention du stimulus pour revenir à vous. C'est le travail central dans la réactivité. Il se construit progressivement, et il demande que votre chien ait d'abord une vraie raison de vous regarder.</p>
 
-        <p>Ce que j'observe dans la quasi-totalité des cas que j'accompagne, c'est que les propriétaires existent peu pour leur chien en balade. Le chien gère son environnement seul parce qu'il n'a jamais appris que se référer à l'humain pouvait être intéressant ou utile. Le premier travail, avant même de s'attaquer aux croisements, c'est souvent ça&nbsp;: redevenir quelqu'un de pertinent pour votre chien à l'extérieur.</p>
+        <ExperienceTerrain
+          variante="observation"
+          titre="Le point commun de la quasi-totalité de mes bilans réactivité"
+        >
+          <p>Sur la quasi-totalité des bilans réactivité congénères que je réalise, les propriétaires n'ont jamais travaillé l'auto-référence de leur chien en extérieur. Le chien gère son environnement seul parce qu'il n'a jamais appris que se référer à l'humain pouvait être intéressant ou utile. Le premier travail, avant même de s'attaquer aux croisements, c'est souvent ça&nbsp;: redevenir quelqu'un de pertinent pour votre chien à l'extérieur.</p>
+        </ExperienceTerrain>
 
         <p>La posture compte aussi. Épaules droites, respiration calme, mouvements posés. Un conducteur qui respire, ne crispe pas et avance donne à son chien un point d'ancrage stable.</p>
 
@@ -534,6 +559,13 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
         </aside>
 
         <p>À éviter absolument&nbsp;: crier, tirer fort sur la laisse, porter votre chien dans les bras s'il fait moins de dix kilos, taper des mains, faire de grands gestes. Tout ce qui augmente la tension augmente aussi la réaction de votre chien.</p>
+
+        <!-- CTA inline — mobile uniquement -->
+        <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
+          <p class="art-inline-cta-title">Gérer ces croisements seul, c'est épuisant</p>
+          <p class="art-inline-cta-desc">Un accompagnement à domicile pour reprendre confiance en balade et retrouver des sorties sereines, sans engagement</p>
+          <a href="/prendre-rdv/" class="btn btn-primary">Prendre RDV, c'est gratuit</a>
+        </aside>
 
         <h2 id="balade-collective-cani-rando">La balade collective et la cani-rando&nbsp;: deux leviers sous-utilisés</h2>
 

@@ -1,0 +1,140 @@
+---
+export interface Props {
+  variante: 'cas' | 'donnee' | 'observation';
+  titre: string;
+  chien?: string;
+  race?: string;
+  lieu?: string;
+  periode?: string;
+}
+
+const { variante, titre, chien, race, lieu, periode } = Astro.props;
+
+const labelVariante = {
+  cas: 'Vécu en séance',
+  donnee: 'Donnée terrain',
+  observation: 'Observation récurrente',
+}[variante];
+
+const metas = [chien, race, lieu, periode].filter(Boolean) as string[];
+---
+
+<aside
+  class:list={['experience-terrain', `variante-${variante}`]}
+  role="complementary"
+  aria-label={titre}
+  data-chien={chien}
+  data-lieu={lieu}
+  data-periode={periode}
+>
+  <div class="et-rail" aria-hidden="true">
+    <span class="et-rail-label">{labelVariante}</span>
+  </div>
+
+  <div class="et-inner">
+    {metas.length > 0 && (
+      <div class="et-header">
+        <span class="et-metas">
+          {metas.map((m) => (
+            <span class="et-meta">{m}</span>
+          ))}
+        </span>
+      </div>
+    )}
+    <p class="et-titre">{titre}</p>
+    <div class="et-body">
+      <slot />
+    </div>
+  </div>
+</aside>
+
+<style>
+  .experience-terrain {
+    display: flex;
+    background: #fff;
+    border: 1px solid #e6ddcd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 2.25rem 0;
+    box-shadow: 0 1px 3px rgba(60, 40, 20, 0.06);
+  }
+
+  .et-rail {
+    flex: 0 0 56px;
+    background: var(--color-accent, #c8763a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+  }
+
+  .variante-donnee .et-rail { background: #3a6ea5; }
+  .variante-observation .et-rail { background: #5a8a4c; }
+
+  .et-rail-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .et-inner {
+    flex: 1;
+    padding: 1.5rem 1.75rem;
+    min-width: 0;
+  }
+
+  .et-header {
+    margin-bottom: 0.5rem;
+  }
+
+  .et-metas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .et-meta {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid #d9cfbc;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: #6b6055;
+    background: #faf6f1;
+  }
+
+  .et-titre {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #2a2018;
+    margin: 0 0 0.85rem 0;
+    line-height: 1.35;
+  }
+
+  .et-body :global(p) {
+    margin: 0 0 0.75rem 0;
+  }
+
+  .et-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 600px) {
+    .experience-terrain { flex-direction: column; }
+    .et-rail {
+      flex: 0 0 auto;
+      padding: 0.5rem 1rem;
+      justify-content: flex-start;
+    }
+    .et-rail-label {
+      writing-mode: horizontal-tb;
+      transform: none;
+    }
+    .et-inner { padding: 1.25rem 1.25rem; }
+  }
+</style>

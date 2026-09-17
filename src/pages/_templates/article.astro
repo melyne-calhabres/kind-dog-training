@@ -2,7 +2,9 @@
 import Layout from '../../layouts/Layout.astro';
 import Icon from '../../components/Icon.astro';
 import ArticleProgressBar from '../../components/ArticleProgressBar.astro';
+import ExperienceTerrain from '../../components/ExperienceTerrain.astro';
 import { pickRandomArticles } from '../../utils/pickRandomArticles';
+import { getAuthorPerson, getPublisherOrganization } from '../../data/author';
 import '../../styles/services.css';
 import '../../styles/article.css';
 
@@ -48,25 +50,15 @@ const jsonLd = {
       dateModified:  `${article.updateDateIso}T09:00:00+02:00`,
       inLanguage:    'fr-FR',
       url:           pageUrl,
-      author: {
-        '@type': 'Person',
-        name:    article.author,
-        url:     siteUrl + '/',
-      },
-      publisher: {
-        '@type': 'Organization',
-        name:    'Kind Dog Training',
-        url:     siteUrl,
-        logo: {
-          '@type': 'ImageObject',
-          url:     siteUrl + '/images/logo.png',
-        },
-      },
+      author: { '@id': `${siteUrl}/qui-suis-je/#person` },
+      publisher: { '@id': `${siteUrl}/#organization` },
       mainEntityOfPage: {
         '@type': 'WebPage',
         '@id':   pageUrl,
       },
     },
+    getAuthorPerson(siteUrl),
+    getPublisherOrganization(siteUrl),
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
@@ -267,6 +259,51 @@ const related = pickRandomArticles(3, '<url-de-cet-article>');
           <div class="art-quote-mark" aria-hidden="true">"</div>
           <p class="art-quote-text">La réactivité, ce n'est pas un défaut de caractère — c'est un chien qui vous dit quelque chose.</p>
         </blockquote>
+
+        {/*
+          ── <ExperienceTerrain> — encart "vécu terrain" ─────────────────────
+          À utiliser à la place d'un blockquote pour toute observation issue
+          de l'expérience terrain de Mélyne (cas client, donnée agrégée,
+          pattern récurrent). Signal E-E-A-T fort pour Google.
+
+          Props :
+          - variante : 'cas' (rail ocre) | 'donnee' (rail bleu) | 'observation' (rail vert)
+          - titre    : titre court de l'encart (obligatoire)
+          - chien    : prénom réel — obligatoire pour variante="cas"
+          - race     : race ou type (ex : "cocker", "staffie")
+          - lieu     : ville ou zone (ex : "Bordeaux", "métropole bordelaise")
+          - periode  : période de prise en charge (ex : "2024", "printemps 2024")
+
+          Exemples des 3 variantes :
+        */}
+        <ExperienceTerrain
+          variante="cas"
+          titre="Titre du cas — ex. : Appy, réactivité par peur"
+          chien="Appy"
+          race="Teckel"
+          lieu="Bordeaux"
+          periode="mai 2026"
+        >
+          <p>Description du cas terrain, en un ou deux paragraphes. Décrire le contexte, ce qui a été observé, et ce qui a débloqué la suite du travail.</p>
+        </ExperienceTerrain>
+
+        {/*
+        <ExperienceTerrain
+          variante="donnee"
+          titre="Ce que je vois sur le terrain"
+          lieu="métropole bordelaise"
+          periode="depuis 2024"
+        >
+          <p>Donnée agrégée maison (ex : "sur X bilans, Y présentent…").</p>
+        </ExperienceTerrain>
+
+        <ExperienceTerrain
+          variante="observation"
+          titre="Le point commun de la quasi-totalité de mes bilans"
+        >
+          <p>Pattern récurrent observé, sans nom ni chiffre obligatoire.</p>
+        </ExperienceTerrain>
+        */}
 
         <h2 id="methode">La méthode qui fonctionne</h2>
         <p>Le travail repose sur un principe simple : changer l'émotion de votre chien face au déclencheur. On appelle cela le contre-conditionnement, et c'est la base de toute rééducation comportementale bienveillante.</p>
