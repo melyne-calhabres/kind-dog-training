@@ -3,6 +3,7 @@ import Layout from '../../../../layouts/Layout.astro';
 import Icon from '../../../../components/Icon.astro';
 import ArticleProgressBar from '../../../../components/ArticleProgressBar.astro';
 import { pickRandomArticles } from '../../../../utils/pickRandomArticles';
+import { getAuthorPerson, getPublisherOrganization } from '../../../../data/author';
 import '../../../../styles/services.css';
 import '../../../../styles/article.css';
 
@@ -71,27 +72,15 @@ const jsonLd = {
         width:    925,
         height:   456,
       },
-      author: {
-        '@type':    'Person',
-        name:       article.author,
-        url:        siteUrl + '/qui-suis-je/',
-        jobTitle:   'Éducatrice & comportementaliste canin',
-        description: article.authorDesc,
-      },
-      publisher: {
-        '@type': 'Organization',
-        name:    'Kind Dog Training',
-        url:     siteUrl,
-        logo: {
-          '@type': 'ImageObject',
-          url:     siteUrl + '/images/logo.png',
-        },
-      },
+      author: { '@id': `${siteUrl}/qui-suis-je/#person` },
+      publisher: { '@id': `${siteUrl}/#organization` },
       mainEntityOfPage: {
         '@type': 'WebPage',
         '@id':   pageUrl,
       },
     },
+    getAuthorPerson(siteUrl),
+    getPublisherOrganization(siteUrl),
     {
       '@type': 'BreadcrumbList',
       itemListElement: [

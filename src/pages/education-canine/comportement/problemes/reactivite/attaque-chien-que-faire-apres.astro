@@ -2,7 +2,9 @@
 import Layout from '../../../../../layouts/Layout.astro';
 import Icon from '../../../../../components/Icon.astro';
 import ArticleProgressBar from '../../../../../components/ArticleProgressBar.astro';
+import ExperienceTerrain from '../../../../../components/ExperienceTerrain.astro';
 import { pickRandomArticles } from '../../../../../utils/pickRandomArticles';
+import { getAuthorPerson, getPublisherOrganization } from '../../../../../data/author';
 import '../../../../../styles/services.css';
 import '../../../../../styles/article.css';
 
@@ -11,6 +13,11 @@ const page = {
   metaTitle:       'Mon Chien a été Attaqué par un Autre Chien : Que Faire Après ?',
   metaDescription: 'Mon chien a été attaqué par un autre chien : que faire après pour éviter qu\'il ne devienne réactif ? Repérer les signes, gérer votre stress et resocialiser.',
 };
+
+// ── Données auteur centralisées (source unique : src/data/author.ts) ─────────
+const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
+const pageUrl  = Astro.url.href;
+const authorPerson = getAuthorPerson(siteUrl);
 
 // ── Article metadata ──────────────────────────────────────────────────────────
 const article = {
@@ -26,11 +33,11 @@ const article = {
   publishDateIso: '2026-06-17',
   updateDate:     '9 septembre 2026',
   updateDateIso:  '2026-09-09',
-  readTime:       '10 min',
-  author:         'Mélyne',
-  authorInitial:  'M',
-  authorRole:     'Éducatrice & comportementaliste canin · Bordeaux',
-  authorDesc:     'Passionnée par la relation entre l\'humain et le chien, j\'accompagne les propriétaires dans l\'éducation et la rééducation de leur chien, quelle que soit la problématique.',
+  readTime:       '12 min',
+  author:         authorPerson.name,
+  authorInitial:  authorPerson.name.charAt(0),
+  authorRole:     `${authorPerson.jobTitle} · Bordeaux`,
+  authorDesc:     authorPerson.description,
   coverAlt:       'Deux chiens en pleine altercation dans un pré, gueule ouverte et posture de confrontation',
 };
 
@@ -38,7 +45,7 @@ const article = {
 const faqItems: { question: string; answer: string }[] = [
   {
     question: 'Est-ce que mon chien va garder une trace de cette attaque ?',
-    answer:   'Une trace, oui. Mais une trace ne veut pas dire un handicap durable. L\'objectif d\'une bonne rééducation après une attaque n\'est pas de transformer votre chien en chien fan de ses congénères : c\'est qu\'il devienne indifférent. Indifférent, ça signifie qu\'il peut croiser un chien sans réagir, sans monter en pression, sans avoir besoin d\'en faire quelque chose. Beaucoup de chiens marqués par une attaque retrouvent une vie sociale très correcte, parfois même des amis canins. Tout dépend de la rapidité de la prise en charge, de l\'âge au moment de l\'attaque, et du travail de fond mis en place ensuite.',
+    answer:   'Une trace, oui. Mais une trace ne veut pas dire un handicap durable. Une bonne rééducation ne cherche pas à transformer votre chien en fan de ses congénères. Elle vise l\'indifférence : il croise, il ne réagit pas. Indifférent, ça signifie qu\'il peut croiser un chien sans réagir, sans monter en pression, sans avoir besoin d\'en faire quelque chose. Beaucoup de chiens marqués par une attaque retrouvent une vie sociale très correcte, parfois même des amis canins. Tout dépend de la rapidité de la prise en charge, de l\'âge au moment de l\'attaque, et du travail de fond mis en place ensuite.',
   },
   {
     question: 'Mon chien semble normal à la maison, dois-je quand même m\'inquiéter ?',
@@ -48,12 +55,13 @@ const faqItems: { question: string; answer: string }[] = [
     question: 'À partir de quel moment faut-il recroiser des chiens ?',
     answer:   'Mon conseil serait de recroiser d\'autres chiens très rapidement après l\'attaque afin qu\'elle ne devienne qu\'une seule mauvaise expérience parmi des dizaines le même jour. Je ne vous dis pas de courir sur tous les chiens que vous croisez juste pour suivre ce conseil mais plutôt de maintenir le même rythme de balade que d\'habitude, si possible dans un environnement où vous croisez du monde.',
   },
+  {
+    question: 'Faut-il attendre que mon chien "aille mieux" avant de reprendre les rencontres ?',
+    answer:   'Non, et c\'est un des pièges les plus fréquents après une attaque. Attendre suppose que le temps seul va faire un travail que seule la répétition d\'expériences positives peut faire. Dans les faits, un chien laissé au repos social après une attaque ne va pas "mieux" tout seul : il consolide sa nouvelle grille de lecture et chaque semaine qui passe sans rencontre correctement gérée rend la réhabilitation plus longue. La règle : reprendre les rencontres avec des chiens choisis, dans un cadre maîtrisé, sans attendre que le chien "montre qu\'il est prêt". C\'est en faisant qu\'il va se remettre, pas en attendant que ça passe.',
+  },
 ];
 
 // ── JSON-LD structured data ───────────────────────────────────────────────────
-const siteUrl = Astro.site?.origin ?? 'https://kind-dog-training.fr';
-const pageUrl  = Astro.url.href;
-
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -71,27 +79,15 @@ const jsonLd = {
         width:    1200,
         height:   800,
       },
-      author: {
-        '@type':    'Person',
-        name:       article.author,
-        url:        siteUrl + '/qui-suis-je/',
-        jobTitle:   'Éducatrice & comportementaliste canin',
-        description: article.authorDesc,
-      },
-      publisher: {
-        '@type': 'Organization',
-        name:    'Kind Dog Training',
-        url:     siteUrl,
-        logo: {
-          '@type': 'ImageObject',
-          url:     siteUrl + '/images/logo.png',
-        },
-      },
+      author: { '@id': `${siteUrl}/qui-suis-je/#person` },
+      publisher: { '@id': `${siteUrl}/#organization` },
       mainEntityOfPage: {
         '@type': 'WebPage',
         '@id':   pageUrl,
       },
     },
+    getAuthorPerson(siteUrl),
+    getPublisherOrganization(siteUrl),
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
@@ -127,22 +123,22 @@ const tldr = [
 
 // ── Table of contents ─────────────────────────────────────────────────────────
 const toc = [
-  { label: 'Reconnaître les signes',               href: '#reconnaitre-les-signes',           sub: false },
-  { label: 'Dans les heures et les jours suivants', href: '#heures-et-jours-suivants',         sub: true  },
-  { label: 'Bien à la maison, change en balade',   href: '#maison-vs-balade',                 sub: true  },
-  { label: 'Signaux de tension qui s\'installent', href: '#signaux-de-tension',               sub: true  },
-  { label: 'La resocialisation après une attaque', href: '#resocialisation',                  sub: false },
-  { label: 'Choisir les bons chiens',              href: '#choisir-les-bons-chiens',          sub: true  },
-  { label: 'Le rôle d\'un chien référent',         href: '#chien-referent',                   sub: true  },
-  { label: 'Multiplier plutôt qu\'éviter',         href: '#multiplier-les-rencontres',        sub: true  },
-  { label: 'Votre état émotionnel pèse',           href: '#votre-etat-emotionnel',            sub: false },
-  { label: 'L\'attaque vous a marqué aussi',       href: '#attaque-vous-a-marque',            sub: true  },
-  { label: 'La crispation inconsciente',           href: '#crispation-inconsciente',          sub: true  },
-  { label: 'Continuer à sortir malgré la peur',    href: '#continuer-a-sortir',               sub: true  },
-  { label: 'Les premières semaines sont décisives', href: '#premieres-semaines',              sub: false },
-  { label: 'La fenêtre du souvenir',               href: '#fenetre-du-souvenir',              sub: true  },
-  { label: 'L\'âge du chien change tout',          href: '#age-du-chien',                     sub: true  },
-  { label: 'L\'histoire de Ramsey',                href: '#histoire-de-ramsey',               sub: true  },
+  { label: 'Reconnaître les signes',                 href: '#reconnaitre-les-signes',         sub: false },
+  { label: 'Dans les heures et les jours suivants',  href: '#heures-et-jours-suivants',       sub: true  },
+  { label: 'Bien à la maison, change en balade',     href: '#maison-vs-balade',               sub: true  },
+  { label: 'Signaux de tension qui s\'installent',   href: '#signaux-de-tension',             sub: true  },
+  { label: 'Redescendre vite ou rester en pression', href: '#redescendre-vite',               sub: true  },
+  { label: 'La resocialisation après une attaque',   href: '#resocialisation',                sub: false },
+  { label: 'Choisir les bons chiens',                href: '#choisir-les-bons-chiens',        sub: true  },
+  { label: 'Le rôle d\'un chien référent',           href: '#chien-referent',                 sub: true  },
+  { label: 'Votre état émotionnel pèse',             href: '#votre-etat-emotionnel',          sub: false },
+  { label: 'L\'attaque vous a marqué aussi',         href: '#attaque-vous-a-marque',          sub: true  },
+  { label: 'Continuer à sortir malgré la peur',      href: '#continuer-a-sortir',             sub: true  },
+  { label: 'Les premières semaines sont décisives',  href: '#premieres-semaines',             sub: false },
+  { label: 'La fenêtre du souvenir',                 href: '#fenetre-du-souvenir',            sub: true  },
+  { label: 'Le début de balade est critique',        href: '#debut-de-balade',                sub: true  },
+  { label: 'L\'âge du chien change tout',            href: '#age-du-chien',                   sub: true  },
+  { label: 'L\'histoire de Ramsey',                  href: '#histoire-de-ramsey',             sub: true  },
 ];
 
 // ── Articles connexes (rotation aléatoire à chaque build) ────────────────────
@@ -263,7 +259,15 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
       <!-- Colonne principale -->
       <div class="art-content">
 
-        <p>Quand mon chien a été attaqué par un autre chien, que faire après est une question souvent posée trop tard. Cet article fait partie de mon dossier sur la <a href="/education-canine/comportement/problemes/reactivite/">réactivité canine</a>, dont l'attaque subie est l'une des causes les plus fréquentes. La plupart des propriétaires viennent me voir plusieurs mois après l'incident, quand <a href="/education-canine/comportement/problemes/reactivite/chiens/">la réactivité envers les autres chiens</a> est déjà installée. Pour éviter que la trace de cette attaque ne devienne un trouble durable, vous avez besoin de repères concrets dès les premiers jours.</p>
+        <ExperienceTerrain
+          variante="donnee"
+          titre="Ce que je vois en accompagnement"
+          lieu="métropole bordelaise"
+        >
+          <p>La grande majorité des propriétaires de chiens marqués par une attaque me contactent entre 1 et 3 mois après l'incident, une fois que la réactivité est déjà installée. Les premières semaines, celles où le mauvais souvenir se range ou se cristallise, sont presque toujours passées seules. C'est précisément dans cette fenêtre que se joue la différence entre un chien qui garde une trace anecdotique et un chien qui devient réactif durablement.</p>
+        </ExperienceTerrain>
+
+        <p>Quand un chien a été attaqué par un autre chien, la question du «&nbsp;que faire après&nbsp;» est presque toujours posée trop tard. Cet article fait partie de mon dossier sur la <a href="/education-canine/comportement/problemes/reactivite/">réactivité canine</a>, dont l'attaque subie est l'une des causes les plus fréquentes. La plupart des propriétaires viennent me voir plusieurs mois après l'incident, quand <a href="/education-canine/comportement/problemes/reactivite/chiens/">la réactivité envers les autres chiens</a> est déjà installée. Pour éviter que la trace de cette attaque ne devienne un trouble durable, vous avez besoin de repères concrets dès les premiers jours.</p>
 
         <h2 id="reconnaitre-les-signes">Reconnaître les signes d'un chien traumatisé par ce qu'il a vécu</h2>
 
@@ -271,7 +275,7 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <p>Dans les heures qui suivent l'attaque, certains chiens montrent immédiatement un stress visible&nbsp;: tremblements, refus de manger, recherche d'un coin où se replier, posture basse. D'autres ne montrent rien dans les premiers jours, et c'est souvent là que les propriétaires se rassurent à tort.</p>
 
-        <p>J'ai accompagné un cocker récemment attaqué. Sa réactivité envers les autres chiens était fluctuante&nbsp;: certaines balades se passaient sans déclenchement, d'autres non. Quand il réagissait, les signaux étaient nets&nbsp;: port de queue haut, fixation intense, abaissement du centre de gravité, aboiements et grognements. Après une montée émotionnelle, il ne redescendait pas. Cette fluctuation est très classique d'un chien attaqué par un autre chien&nbsp;: que faire après dépend justement de la lecture fine de ces signaux. Un chien qui, à l'inverse, passe à l'acte sur un autre chien relève d'un travail différent, que j'ai détaillé côté <a href="/education-canine/comportement/problemes/agressivite/comment-reagir-chien-attaque-autre-chien/">comment réagir quand votre chien attaque</a>.</p>
+        <p>J'ai suivi Mucho, chien devenu réactif à ses congénères après une altercation. Ses signaux étaient nets à chaque croisement&nbsp;: port de queue très haut et très droit avec de légers battements, oreilles bien droites, pupilles dilatées, aboiements et grognements sans jamais aller jusqu'à la morsure. Il tirait énormément en laisse, ce qui renforçait chaque montée en pression et compliquait la gestion des stimulations. Ce type de tableau est très classique après une altercation. La suite dépend justement de la lecture fine de ces signaux. Un chien qui, à l'inverse, passe à l'acte sur un autre chien relève d'un travail différent, que j'ai détaillé côté <a href="/education-canine/comportement/problemes/agressivite/comment-reagir-chien-attaque-autre-chien/">comment réagir quand votre chien attaque</a>.</p>
 
         <aside class="art-callout art-callout--soft" role="note">
           <div class="art-callout__icon" aria-hidden="true">
@@ -287,13 +291,21 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <p>La maison est un contexte sans stimulus social. Pas de chien à croiser, pas d'incertitude. C'est précisément pour ça qu'elle ne révèle rien. La marque de l'attaque se voit dehors, là où les rencontres ont lieu.</p>
 
-        <p>J'ai accompagné un staffie de trois ans, devenu réactif vers son an d'âge suite à une altercation avec un autre chien. Ce qui m'a frappée dans son cas, c'est que sa réactivité n'apparaissait qu'avec sa propriétaire. Avec la nounou, aucun incident. La personne présente au moment de l'attaque joue un rôle dans ce que le chien rejoue ensuite. Si votre chien est calme à la maison mais se tend en balade, ce n'est pas une bonne nouvelle&nbsp;: c'est juste que vous ne le voyez pas tout le temps.</p>
+        <p>J'ai accompagné Walter, staffie de trois ans, devenu réactif vers ses 1 an suite à une altercation avec un Shiba. Ce qui m'a frappée dans son cas, c'est que sa réactivité n'apparaissait qu'avec sa propriétaire. Avec la nounou, aucun incident. La personne présente au moment de l'attaque joue un rôle dans ce que le chien rejoue ensuite. Si votre chien est calme à la maison mais se tend en balade, ne vous rassurez pas trop vite&nbsp;: vous ne le voyez simplement pas dans le contexte qui l'expose.</p>
 
         <h3 id="signaux-de-tension">Les signaux de tension qui s'installent doucement</h3>
 
         <p>Les signaux fins sont les plus utiles à repérer. Les pupilles qui se dilatent. Le rythme respiratoire qui s'accélère puis s'arrête une fraction de seconde. Le battement de queue rapide à l'extrémité, pas le grand balayage souple&nbsp;: ce micro-battement précède souvent une charge.</p>
 
-        <p>J'ai suivi une jeune chienne après une mauvaise expérience avec un autre chien. Elle aboyait, avançait puis reculait, mettait la queue entre les jambes ou la balayait légèrement. Le point positif&nbsp;: elle restait curieuse des autres chiens. La réactivité par peur n'efface pas systématiquement l'envie d'interaction, et c'est cette curiosité résiduelle qui rend le travail possible.</p>
+        <p>J'ai suivi Vaillant, dont la bascule vers la réactivité congénère a commencé après deux altercations rapprochées. Face à un chien calme, il croisait sans difficulté. Face à un chien lui-même excité, il montait rapidement et absorbait l'état émotionnel de celui d'en face jusqu'à réagir. Le point positif&nbsp;: entre deux croisements, il restait capable de recadrer un congénère sans aller dans les extrêmes et de redescendre relativement vite. Revenir à un état neutre entre deux stimulations rend le travail possible, même quand la bascule est déjà bien avancée.</p>
+
+        <h3 id="redescendre-vite">Le chien qui redescend vite, celui qui reste en pression</h3>
+
+        <p>La façon dont un chien redescend après un déclenchement dit beaucoup sur le pronostic. Deux chiens peuvent réagir de la même façon en surface et avoir des trajectoires très différentes selon ce qui se passe une fois la stimulation passée.</p>
+
+        <p>Mucho, dont je parlais plus haut, ne redescendait pas correctement après une montée émotionnelle. Il restait agité pendant de longues minutes, tirait, se déplaçait de manière désorganisée, restait imperméable aux sollicitations de ses propriétaires. Ce profil demande un travail supplémentaire spécifique&nbsp;: réapprendre à revenir à un état neutre après une stimulation forte, avant même de rebasculer sur les croisements. À l'inverse, prenez un chien qui aboie puis se secoue, renifle, repart normalement trente secondes plus tard&nbsp;: celui-là a beaucoup plus de marge. Le travail sur ce profil-là avance plus vite, même quand les signaux au moment du déclenchement sont impressionnants.</p>
+
+        <p>Vérifiez ce point chez vous. Combien de temps met votre chien pour retrouver sa base émotionnelle après un déclenchement&nbsp;? Trente secondes&nbsp;? Cinq minutes&nbsp;? Plus long&nbsp;? La réponse oriente la priorité du travail des semaines qui suivent l'attaque.</p>
 
         <!-- CTA inline — mobile uniquement -->
         <aside class="art-inline-cta" aria-label="Prendre rendez-vous">
@@ -306,7 +318,7 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <h3 id="choisir-les-bons-chiens">Choisir les bons chiens pour les premières rencontres</h3>
 
-        <p>Un chien qui a été attaqué par un autre chien&nbsp;: que faire après pour ses rencontres&nbsp;? Vous ne pouvez pas vous permettre une deuxième mauvaise expérience. Les premiers chiens à présenter doivent être stables, calmes, bien codés socialement. Pas excités, pas anxieux. Un chien excité aggrave la situation&nbsp;: votre chien absorbe l'état émotionnel de celui qu'il croise.</p>
+        <p>Après une attaque, la première question sur les rencontres est celle du choix des chiens à croiser. Vous ne pouvez pas vous permettre une deuxième mauvaise expérience dans les premières semaines. C'est la fenêtre la plus fragile&nbsp;: chaque incident qui s'ajoute à l'attaque initiale consolide la lecture menaçante du congénère. Les premiers chiens à présenter doivent être stables, calmes, bien codés socialement. Pas excités, pas anxieux. Un chien post-attaque absorbe l'état émotionnel de celui qu'il croise beaucoup plus fort qu'un chien stable, et cette perméabilité dure plusieurs semaines.</p>
 
         <p>Cependant, vous ne pouvez pas non plus vous permettre de trop attendre. Cela peut paraître contre-intuitif, mais une solution intéressante serait de remettre votre chien en contact avec d'autres chiens tout de suite après l'attaque pour qu'elle devienne anecdotique. Plus vous le mettez en contact avec d'autres chiens, plus vous augmentez vos chances de croiser des chiens stables.</p>
 
@@ -323,13 +335,7 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <p>Un chien référent, c'est un chien dont l'équilibre sert de modèle. Il diffuse une forme de calme par sa simple présence et permet au chien marqué de se caler sur lui plutôt que sur sa propre inquiétude. C'est par mimétisme que les codes se rétablissent, beaucoup plus que par les ordres humains.</p>
 
-        <p>Avec le cocker dont je parlais plus haut, j'ai utilisé mon propre staffie comme chien référent. Au début, il y avait de la réactivité par frustration&nbsp;: aboiements, pleurs. En répétant les croisements, le chien attaqué a fini par s'apaiser. À la fin de la séance, les deux chiens étaient côte à côte, dans le calme.</p>
-
-        <h3 id="multiplier-les-rencontres">Pourquoi multiplier les rencontres plutôt que les éviter</h3>
-
-        <p>L'instinct des propriétaires après une attaque, c'est l'évitement. Pas de parc, pas de balade aux heures où il y a du monde, traversées de rue pour ne croiser personne. Cette stratégie est compréhensible mais elle aggrave tout. Un chien qui ne croise plus de congénères perd ses codes, et chaque rencontre rare devient un événement, donc une bombe à retardement.</p>
-
-        <p>Avec le staffie marqué par son altercation, le travail a inclus une à deux heures de jeu par semaine avec ses «&nbsp;super potes&nbsp;», des chiens connus et stables. L'objectif&nbsp;: que les autres chiens redeviennent banals à ses yeux. Plus la rencontre est ordinaire, moins elle déclenche. Pour construire à côté les compétences de balade (décrochage, focus, renoncement), voir l'article <a href="/education-canine/comportement/problemes/gestion-emotions/balade/">gérer ses émotions en balade au quotidien</a>.</p>
+        <p>Avec Mucho, j'ai utilisé mon propre staffie Ramsey comme chien référent. Au début, il y avait de la réactivité par frustration&nbsp;: aboiements, pleurs. En répétant les croisements dans un cadre maîtrisé, Mucho a fini par s'apaiser. À la fin de la séance, les deux chiens étaient côte à côte, dans le calme. Un bon chien référent ne fixe pas, ne répond pas aux provocations, reste dans son propre calme. Transmis à un chien post-attaque, ce message-là fait plus redescendre que n'importe quel exercice d'obéissance. Pour construire à côté les compétences de balade (décrochage, focus, renoncement), voir l'article <a href="/education-canine/comportement/problemes/gestion-emotions/balade/">gérer ses émotions en balade au quotidien</a>.</p>
 
         <h2 id="votre-etat-emotionnel">Votre propre état émotionnel pèse sur celui de votre chien</h2>
 
@@ -337,11 +343,7 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <p>Quand votre chien a été attaqué, vous avez vu la scène. Vous avez peut-être eu peur pour lui, ou pour vous. Cette image revient à chaque fois que vous croisez un chien. Vous êtes peut-être plus tendu en balade, et c'est tout à fait compréhensible. Le problème, c'est que votre chien le sent.</p>
 
-        <h3 id="crispation-inconsciente">La crispation que vous mettez en place sans vous en rendre compte</h3>
-
-        <p>Avant même que vous en ayez conscience, votre corps se prépare. La laisse se tend. Vous changez de trottoir. Votre respiration s'accélère. Le chien lit tout ça en quelques secondes, et il en tire une seule conclusion&nbsp;: il y a une raison de s'inquiéter. L'animal détecte aussi les odeurs liées à l'anxiété humaine, ce qu'on appelle les chimiossignaux. Faire semblant d'être calme ne sert à rien&nbsp;: il faut vraiment l'être.</p>
-
-        <p>J'ai accompagné une propriétaire dont le bouvier bernois déclenchait sur les Golden mâles. Au fil des séances, son travail à elle a été aussi important que celui de son chien&nbsp;: apprendre à respirer, garder les épaules basses, ne pas anticiper le croisement.</p>
+        <p>J'ai accompagné Charly, bouvier bernois qui déclenchait particulièrement sur les Golden mâles. Au fil des séances, le travail de sa propriétaire a été aussi important que celui de son chien&nbsp;: apprendre à respirer, garder les épaules basses, ne pas anticiper le croisement. Dans les cas post-attaque, ce travail sur soi arrive au moment où l'émotion humaine est la plus fraîche. C'est à la fois plus urgent (le chien lit la scène en direct pendant que vous êtes encore bouleversée par l'incident) et plus difficile (le corps humain met plusieurs semaines à récupérer d'une frayeur intense).</p>
 
         <aside class="art-callout art-callout--dark" role="note">
           <div class="art-callout__icon" aria-hidden="true">
@@ -368,11 +370,31 @@ const related = pickRandomArticles(3, '/education-canine/comportement/problemes/
 
         <h3 id="fenetre-du-souvenir">La fenêtre où le mauvais souvenir s'installe ou se classe</h3>
 
-        <p>Le cerveau du chien classe ses expériences. Dans les premières semaines après l'incident, il décide en quelque sorte si cette attaque est un événement isolé ou une donnée structurante. Plus vous laissez de temps passer sans retravailler la rencontre congénère, plus le mauvais souvenir s'incruste. C'est pour ça que mon premier conseil dès lors qu'un chien a été attaqué par un autre chien&nbsp;: que faire après tout de suite, c'est ne pas attendre.</p>
+        <p>Le cerveau du chien classe ses expériences. Dans les premières semaines après l'incident, il décide en quelque sorte si cette attaque est un événement isolé ou une donnée structurante. Plus vous laissez de temps passer sans retravailler la rencontre congénère, plus le mauvais souvenir s'incruste et devient le filtre à travers lequel toutes les rencontres suivantes sont lues. C'est pour ça que mon premier conseil, dès qu'un chien vient d'être attaqué, est simple&nbsp;: ne pas attendre.</p>
+
+        <p>Concrètement, cette fenêtre se compte en semaines, pas en mois. Ce qui rentre pendant cette période, positif comme négatif, pèse plus lourd que ce qui viendra ensuite. Une dizaine de rencontres neutres ou positives dans les trois à quatre premières semaines dilue mécaniquement le poids de l'attaque. Trois mois d'évitement font l'inverse&nbsp;: ils installent la scène comme définitive et rendent chaque nouvelle rencontre plus tendue que la précédente.</p>
+
+        <h3 id="debut-de-balade">Le début de balade est le moment critique</h3>
+
+        <p>Chez un chien post-attaque, l'excitation est maximale dans les premières minutes de sortie. C'est là que tout se joue. À l'ouverture de la porte, à la sortie de voiture, à la mise du harnais&nbsp;: le niveau émotionnel de départ décide de la qualité de tous les croisements qui suivront.</p>
+
+        <p>Sur les chiens que j'accompagne en réactivité post-attaque, le travail commence presque toujours avant même le premier trottoir. À la porte&nbsp;: chien en assis, ouverture lente, on referme dès qu'il bouge, on recommence. À la voiture&nbsp;: même principe. À la mise du harnais&nbsp;: assis, calme, avant de partir. L'objectif ici n'a rien à voir avec la discipline&nbsp;: il s'agit d'associer les départs de balade à un état émotionnel bas. Un chien qui sort déjà à 8 sur 10 émotionnellement ne peut pas gérer un croisement. Un chien qui sort à 3 ou 4 en a la marge.</p>
+
+        <p>Dans le même esprit, une petite dépense mentale avant les rencontres à risque change nettement la qualité des croisements. Une quinzaine de minutes de reniflement ou de jeu de recherche olfactive suffisent souvent à ramener le niveau émotionnel à un plancher gérable. Le reniflement fait baisser le rythme cardiaque et favorise l'apaisement, bien plus efficacement qu'une longue balade en laisse tendue.</p>
 
         <h3 id="age-du-chien">L'âge du chien au moment de l'attaque change tout</h3>
 
         <p>Un chien de moins de cinq mois est dans sa fenêtre critique de socialisation. Une attaque à cet âge peut basculer sa lecture des congénères pour le reste de sa vie. À l'inverse, un adulte stable avec un bon historique social a plus de ressources pour absorber l'incident. L'adolescence reste une période fragile&nbsp;: la montée hormonale rend la réactivité plus probable, et de petites expériences passées peuvent ressortir à ce moment-là.</p>
+
+        <p>J'ai vu ce mécanisme sur Achibi, marqué par une attaque à 2,5-3 mois (arrachement d'un bout d'oreille). Devenu adolescent, il est globalement à l'aise avec ses congénères mais garde une sensibilité spécifique aux profils qui ressemblent à celui qui l'avait attaqué&nbsp;: les molossoïdes. La trace n'est pas généralisée à tous les chiens, elle est ciblée sur un type morphologique. C'est fréquent chez les chiens attaqués très jeunes&nbsp;: le cerveau enregistre la scène et généralise à ce qui ressemble à l'agresseur, pas à l'ensemble de l'espèce.</p>
+
+        <ExperienceTerrain
+          variante="cas"
+          titre="Ogust : récupération rapide malgré plusieurs attaques"
+          chien="Ogust"
+        >
+          <p>Ogust présentait une sensibilité accrue aux mâles entiers suite à plusieurs attaques passées. À la première séance en présence d'un autre chien mâle, aucune réaction&nbsp;: le travail de coupure de fixation a fonctionné dès le premier essai. La séance suivante, avec Aldo, un Golden Retriever mâle entier (le profil de chien le plus difficile pour lui), même résultat, comportement exemplaire. Quand la resocialisation est reprise sans attendre et bien constituée, un chien post-attaques peut retrouver des interactions calmes très vite, même après plusieurs incidents.</p>
+        </ExperienceTerrain>
 
         <h3 id="histoire-de-ramsey">L'histoire de Ramsey, point de départ de Kind Dog Training</h3>
 
